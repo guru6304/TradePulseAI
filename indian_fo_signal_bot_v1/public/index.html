@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TradePulse &amp; OrderBlock AI — Indian Equity &amp; Nifty/BankNifty F&amp;O Signal Terminal (Phase 1E)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background-color: #090d16;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(51, 65, 85, 0.65);
+      backdrop-filter: blur(10px);
+    }
+    .pulse-dot {
+      animation: pulseRing 2s infinite;
+    }
+    @keyframes pulseRing {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #090d16; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#090d16] text-slate-100">
+
+  <!-- Top Institutional Market Breadth, Health & Index Ribbon -->
+  <header class="border-b border-slate-800 bg-slate-950/95 sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center font-bold text-slate-950 shadow-lg shadow-emerald-500/20">
+          OB
+        </div>
+        <div>
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="font-bold text-base tracking-tight text-white">TradePulse &times; OrderBlock AI</span>
+            <span class="text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">Phase 1E Integrated</span>
+            <span id="headerDataModeBadge" class="text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 mono">CHECKING MODE...</span>
+          </div>
+          <p class="text-xs text-slate-400">NSE Intraday Equity &amp; Nifty 50 / Bank Nifty F&amp;O Signal Terminal (Read-Only Analytics &mdash; No Live Order Execution)</p>
+        </div>
+      </div>
+
+      <!-- Index Spot Pills (From GET /api/oi-snapshots) + Broker Status (From GET /api/health) + Actions -->
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        <div class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center gap-2" title="Populated from latest persisted NIFTY OI snapshot">
+          <span class="text-slate-400 font-medium">NIFTY 50</span>
+          <span id="headerNiftySpot" class="mono font-bold text-slate-300">--</span>
+          <span id="headerNiftyMeta" class="text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded mono">No Snapshot</span>
+        </div>
+        <div class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center gap-2" title="Populated from latest persisted BANKNIFTY OI snapshot">
+          <span class="text-slate-400 font-medium">BANK NIFTY</span>
+          <span id="headerBankNiftySpot" class="mono font-bold text-slate-300">--</span>
+          <span id="headerBankNiftyMeta" class="text-[10px] text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded mono">No Snapshot</span>
+        </div>
+        <div class="px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-800 flex items-center gap-2" title="Honest broker state from GET /api/health">
+          <span id="apiHealthDot" class="w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0"></span>
+          <span id="activeBrokerBadge" class="font-medium text-slate-200">Checking Backend...</span>
+          <span id="brokerStateBadge" class="text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">INIT</span>
+        </div>
+        <button id="btnRefreshDashboard" type="button" aria-label="Refresh dashboard data without running a scan" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+          <span>&#8635; Refresh Data</span>
+        </button>
+        <button id="btnRunLiveScan" type="button" aria-label="Trigger manual market scan via POST /api/scan" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-semibold transition flex items-center gap-1.5 shadow-md shadow-emerald-500/20 focus:outline-none focus:ring-2 focus:ring-emerald-300">
+          <span id="btnRunLiveScanText">&#9889; Scan Market Now</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Second Ribbon: Market Breadth, Telemetry & Navigation Tabs -->
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-3 flex-wrap">
+        <span class="text-slate-400">Scan Breadth:</span>
+        <div class="flex items-center gap-1.5">
+          <span class="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-semibold mono" id="breadthAdv">0 Adv</span>
+          <div class="w-20 h-2 rounded-full bg-slate-800 overflow-hidden">
+            <div id="breadthBarFill" class="h-full bg-emerald-500 transition-all" style="width: 0%;"></div>
+          </div>
+          <span class="px-2 py-0.5 rounded bg-rose-500/15 text-rose-400 font-semibold mono" id="breadthDec">0 Dec</span>
+        </div>
+        <span id="headerTelemetryText" class="text-slate-400 mono text-[11px]">DB: Checking | Scheduler: Checking | Last Refresh: Never</span>
+      </div>
+
+      <!-- Primary Navigation Tabs (4 Tabs — Setup Guide Tab Removed per Phase 1E Spec) -->
+      <nav class="flex flex-wrap items-center gap-1" aria-label="Primary Tabs">
+        <button type="button" data-tab="tab-terminal" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          1. Live Signal Terminal
+        </button>
+        <button type="button" data-tab="tab-option-apex" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          2. Nifty &amp; BankNifty Option Apex
+        </button>
+        <button type="button" data-tab="tab-strategies" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          3. Top 5 Strategies &amp; Backtester
+        </button>
+        <button type="button" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          4. System Health, Scan History &amp; Config
+        </button>
+      </nav>
+    </div>
+
+    <!-- Global Backend Connection / Error Banner (Hidden when healthy) -->
+    <div id="globalApiErrorBanner" class="hidden bg-rose-950/90 border-t border-rose-500/40 px-4 py-2 text-xs text-rose-200">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span class="font-bold uppercase px-1.5 py-0.5 rounded bg-rose-500/30 text-rose-100 mono">BACKEND ALERT</span>
+          <span id="globalApiErrorText">Unable to reach backend API server.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <label for="inputApiBaseUrlQuick" class="text-rose-300 text-[11px]">API Base URL:</label>
+          <input id="inputApiBaseUrlQuick" type="text" value="http://127.0.0.1:8080" class="bg-slate-950 border border-rose-500/40 rounded px-2 py-0.5 text-xs mono text-white w-48" />
+          <button id="btnSaveApiUrlQuick" type="button" class="px-2.5 py-0.5 rounded bg-rose-500 hover:bg-rose-400 text-slate-950 font-semibold transition">Connect</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-5 space-y-6">
+
+    <!-- ================================================================== -->
+    <!-- TAB 1: LIVE SIGNAL TERMINAL (Connected to GET /api/signals)        -->
+    <!-- ================================================================== -->
+    <section id="tab-terminal" class="tab-panel space-y-5">
+      <!-- Filter, Pagination & Capital Sizing Toolbar -->
+      <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-3">
+        <div class="flex flex-wrap items-end gap-2.5">
+          <div>
+            <label for="filterSegment" class="block text-[11px] text-slate-400 mb-1">Market Segment</label>
+            <select id="filterSegment" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              <option value="ALL">All Segments (Equity + F&amp;O)</option>
+              <option value="NSE_FO_INDEX">Nifty 50 &amp; Bank Nifty F&amp;O Only</option>
+              <option value="NSE_EQUITY_INTRADAY">Intraday Equity (NSE Cash) Only</option>
+            </select>
+          </div>
+          <div>
+            <label for="filterStrategy" class="block text-[11px] text-slate-400 mb-1">Strategy Engine</label>
+            <select id="filterStrategy" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              <option value="ALL">All 5 Strategies</option>
+              <option value="strat_1_order_block">1. Order Block + BOS &amp; FVG</option>
+              <option value="strat_2_vwap_pullback">2. Institutional VWAP Pullback</option>
+              <option value="strat_3_option_apex_oi">3. Option Apex OI Shift + PCR</option>
+              <option value="strat_4_orb_filtered">4. 15m Opening Range Breakout</option>
+              <option value="strat_5_supertrend_pullback">5. Supertrend (10,3) + 200 EMA</option>
+            </select>
+          </div>
+          <div>
+            <label for="filterDirection" class="block text-[11px] text-slate-400 mb-1">Direction</label>
+            <select id="filterDirection" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              <option value="ALL">All Directions (Bullish &amp; Bearish)</option>
+              <option value="BULLISH">▲ Bullish Only (BUY / BUY CE)</option>
+              <option value="BEARISH">▼ Bearish Only (SELL / BUY PE)</option>
+            </select>
+          </div>
+          <div>
+            <label for="filterDataMode" class="block text-[11px] text-slate-400 mb-1">Data Mode</label>
+            <select id="filterDataMode" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-emerald-500">
+              <option value="ALL">All Modes (Simulated &amp; Live)</option>
+              <option value="SIMULATED">SIMULATED Only</option>
+              <option value="LIVE">LIVE Only</option>
+            </select>
+          </div>
+          <div>
+            <label for="searchSymbol" class="block text-[11px] text-slate-400 mb-1">Symbol Filter</label>
+            <input id="searchSymbol" type="text" placeholder="e.g. NIFTY, RELIANCE, SBIN" class="w-36 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 mono" />
+          </div>
+          <button id="btnResetSignalFilters" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition border border-slate-700">
+            Reset Filters
+          </button>
+        </div>
+
+        <!-- Position Sizing Preview Controls -->
+        <div class="flex flex-wrap items-end gap-3">
+          <div>
+            <label for="inputCapital" class="block text-[11px] text-slate-400 mb-1">Sizing Capital (&#8377;)</label>
+            <input id="inputCapital" type="number" value="150000" min="10000" step="10000" class="w-28 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs mono text-emerald-400 font-semibold focus:outline-none focus:border-emerald-500" />
+          </div>
+          <div>
+            <label for="inputRiskPct" class="block text-[11px] text-slate-400 mb-1">Risk / Trade (%)</label>
+            <input id="inputRiskPct" type="number" value="1.0" min="0.25" max="5" step="0.25" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs mono text-amber-400 font-semibold focus:outline-none focus:border-emerald-500" />
+          </div>
+          <div>
+            <label for="selectPageLimit" class="block text-[11px] text-slate-400 mb-1">Page Size</label>
+            <select id="selectPageLimit" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs mono text-slate-200 focus:outline-none focus:border-emerald-500">
+              <option value="10">10 / page</option>
+              <option value="20" selected>20 / page</option>
+              <option value="50">50 / page</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Split View: Left Signal Cards & Pagination | Right Signal Detail & Level Structure Chart -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Left 7 Cols: Persisted Signals List -->
+        <div class="lg:col-span-7 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+              <span>Persisted Signals (<code class="text-xs text-cyan-400">GET /api/signals</code>)</span>
+              <span id="signalCountBadge" class="px-2 py-0.5 text-xs rounded-full bg-emerald-500/20 text-emerald-300 mono">Loading...</span>
+            </h2>
+            <div class="flex items-center gap-2 text-xs">
+              <span id="signalsPaginationInfo" class="text-slate-400 mono">Page 1</span>
+              <button id="btnPrevSignalsPage" type="button" disabled class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 mono text-xs transition">
+                &larr; Prev
+              </button>
+              <button id="btnNextSignalsPage" type="button" disabled class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed text-slate-200 mono text-xs transition">
+                Next &rarr;
+              </button>
+            </div>
+          </div>
+
+          <div id="signalCardsContainer" class="space-y-3" aria-live="polite"></div>
+        </div>
+
+        <!-- Right 5 Cols: Signal Detail Inspector & Level Structure Visualizer -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="glass-card rounded-xl p-4 space-y-4 sticky top-28">
+            <div class="flex items-start justify-between gap-2 border-b border-slate-800 pb-3">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <h3 id="detailSymbolTitle" class="text-lg font-bold text-white mono">No Signal Selected</h3>
+                  <span id="detailDirectionBadge" class="px-2 py-0.5 text-[11px] font-bold rounded bg-slate-800 text-slate-300 border border-slate-700">--</span>
+                  <span id="detailDataModeBadge" class="px-2 py-0.5 text-[10px] font-bold rounded bg-slate-800 text-slate-400 mono">--</span>
+                </div>
+                <p id="detailStrategySubtitle" class="text-xs text-slate-400 mt-0.5">Select a persisted signal card or run a scan to inspect levels</p>
+              </div>
+              <button id="btnCopySignalSummary" type="button" aria-label="Copy selected signal details to clipboard" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold text-xs transition">
+                &#128203; Copy Levels
+              </button>
+            </div>
+
+            <!-- Chart.js Trade Level Structure Visualizer -->
+            <div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 mb-1">
+                <span>Verified Signal Trade Levels (Stop / Invalidation / Entry Zone / T1 / T2)</span>
+                <span class="mono text-emerald-400" id="detailRrrBadge">R:R --</span>
+              </div>
+              <p class="text-[10px] text-slate-400 mb-1.5">
+                Note: <code class="text-slate-300">GET /api/signals</code> provides verified entry, zone, invalidation, stop-loss, and target levels; raw 5m OHLCV candle series are not exposed in Phase 1D.
+              </p>
+              <div class="relative h-64 w-full bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
+                <canvas id="signalPriceChart"></canvas>
+              </div>
+            </div>
+
+            <!-- Key Levels Grid (Including Invalidation Level & Entry Zone) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+              <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase">Entry Price</span>
+                <span id="detailEntryPrice" class="mono font-bold text-white text-sm">--</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                <span class="text-slate-400 block text-[10px] uppercase">Entry Zone</span>
+                <span id="detailEntryZone" class="mono font-semibold text-slate-200 text-xs">--</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-amber-950/30 border border-amber-500/30">
+                <span class="text-amber-300 block text-[10px] uppercase">Invalidation</span>
+                <span id="detailInvalidation" class="mono font-bold text-amber-300 text-sm">--</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-rose-950/30 border border-rose-500/30">
+                <span class="text-rose-300 block text-[10px] uppercase">Stop-Loss (S1)</span>
+                <span id="detailStopLoss" class="mono font-bold text-rose-400 text-sm">--</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30">
+                <span class="text-emerald-300 block text-[10px] uppercase">Target 1 (T1)</span>
+                <span id="detailTarget1" class="mono font-bold text-emerald-400 text-sm">--</span>
+              </div>
+              <div class="p-2.5 rounded-lg bg-cyan-950/30 border border-cyan-500/30">
+                <span class="text-cyan-300 block text-[10px] uppercase">Target 2 (T2)</span>
+                <span id="detailTarget2" class="mono font-bold text-cyan-400 text-sm">--</span>
+              </div>
+            </div>
+
+            <!-- Setup-Quality Score Breakdown (Explicitly Not Win Probability) -->
+            <div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800 text-xs space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-300 font-semibold">Setup-Quality Score (0&ndash;100 Confluence):</span>
+                <span id="detailQualityScore" class="mono font-bold text-cyan-400">-- / 100</span>
+              </div>
+              <p class="text-[10px] text-slate-400">
+                Deterministic evidence score (RVOL, VWAP alignment, ATR displacement, breadth). <strong>Not</strong> a calibrated probability of winning.
+              </p>
+              <div id="detailScoreBreakdown" class="grid grid-cols-2 gap-1.5 text-[11px] mono text-slate-300 pt-1 border-t border-slate-800/80"></div>
+            </div>
+
+            <!-- Position Sizing, Statutory Charges & Rationale Box -->
+            <div class="p-3 rounded-lg bg-slate-900/80 border border-slate-800 text-xs space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Position Type &amp; Qty:</span>
+                <span id="detailQty" class="mono font-bold text-amber-400">--</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Capital Risk vs Est. NSE Charges:</span>
+                <span id="detailRiskAndCharges" class="mono text-slate-200">--</span>
+              </div>
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-slate-400">Candle Timestamp &amp; Source:</span>
+                <span id="detailTimestampAndBroker" class="mono text-slate-300">--</span>
+              </div>
+              <p id="detailRationale" class="text-slate-300 pt-1.5 border-t border-slate-800/80 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- TAB 2: NIFTY 50 & BANK NIFTY OPTION APEX (GET /api/oi-snapshots)   -->
+    <!-- ================================================================== -->
+    <section id="tab-option-apex" class="tab-panel hidden space-y-5">
+      <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 class="text-base font-bold text-white">Option Apex &amp; Persisted OI Snapshot History (<code class="text-xs text-cyan-400">GET /api/oi-snapshots</code>)</h2>
+          <p class="text-xs text-slate-400">Strictly scoped to NIFTY 50 &amp; BANK NIFTY option-chain snapshots persisted in SQLite</p>
+        </div>
+        <div class="flex flex-wrap items-end gap-2.5 text-xs">
+          <div>
+            <span class="block text-[11px] text-slate-400 mb-1">Index Symbol</span>
+            <div class="flex items-center gap-1.5">
+              <button type="button" data-fo-index="NIFTY" class="fo-index-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition">
+                NIFTY 50
+              </button>
+              <button type="button" data-fo-index="BANKNIFTY" class="fo-index-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 transition">
+                BANK NIFTY
+              </button>
+            </div>
+          </div>
+          <div>
+            <label for="filterOiExpiry" class="block text-[11px] text-slate-400 mb-1">Expiry (YYYY-MM-DD)</label>
+            <input id="filterOiExpiry" type="text" placeholder="All expiries" class="w-32 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs mono text-slate-100" />
+          </div>
+          <div>
+            <label for="filterOiDataMode" class="block text-[11px] text-slate-400 mb-1">Data Mode</label>
+            <select id="filterOiDataMode" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100">
+              <option value="ALL">All Modes</option>
+              <option value="SIMULATED">SIMULATED</option>
+              <option value="LIVE">LIVE</option>
+            </select>
+          </div>
+          <div>
+            <label for="selectOiSnapshotHistory" class="block text-[11px] text-slate-400 mb-1">Select Persisted Snapshot</label>
+            <select id="selectOiSnapshotHistory" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs mono text-slate-100 min-w-[210px]">
+              <option value="0">Latest Snapshot</option>
+            </select>
+          </div>
+          <button id="btnRefreshOiSnapshots" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-medium transition">
+            &#8635; Load Snapshots
+          </button>
+        </div>
+      </div>
+
+      <!-- Option Apex Baseline & Scrip Master Readiness Banner (Phase 2B) -->
+      <div id="optionApexCapabilityBanner" class="glass-card rounded-xl p-3.5 text-xs flex flex-wrap items-center justify-between gap-2 border border-slate-800">
+        <div class="flex items-center gap-2 flex-wrap">
+          <span class="text-slate-400 font-semibold">Option Apex (Strategy 3) Status:</span>
+          <span id="optionApexCapabilityBadge" class="px-2 py-0.5 rounded font-bold mono bg-slate-800 text-slate-300">CHECKING...</span>
+          <span id="optionApexCapabilityText" class="text-slate-300 mono text-[11px]">Evaluating Scrip Master &amp; prior-session OI baseline...</span>
+        </div>
+        <span id="optionApexScripMasterBadge" class="text-[11px] mono text-slate-400">Scrip Master: --</span>
+      </div>
+
+      <!-- OI Snapshot Status Banner (Loading / Empty / Error) -->
+      <div id="oiSnapshotStateBanner" class="hidden glass-card rounded-xl p-5 text-center text-xs text-slate-300"></div>
+
+      <!-- Top Option Metrics Row (Driven Strictly by Actual Snapshot Fields) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="glass-card rounded-xl p-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-slate-400">Aggregate Put-Call Ratio (PCR)</span>
+            <span id="foDataModeBadge" class="text-[10px] font-bold mono px-2 py-0.5 rounded bg-slate-800 text-slate-300">--</span>
+          </div>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="foPcrValue" class="text-2xl font-bold mono text-emerald-400">--</span>
+            <span id="foPcrBias" class="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold">--</span>
+          </div>
+          <p id="foTotalOiSubtext" class="text-[11px] text-slate-400 mt-1 mono">CE OI: -- | PE OI: --</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4">
+          <span class="text-xs text-slate-400">Intraday Snapshot Comparison</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="foComparisonStatus" class="text-sm font-bold mono text-amber-400">--</span>
+          </div>
+          <p id="foComparisonSubtext" class="text-[11px] text-slate-400 mt-1 mono">Run multiple scans in the same session to diff OI</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4">
+          <span class="text-xs text-slate-400">Underlying Spot, ATM &amp; Expiry</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="foSpotAndAtm" class="text-base font-bold mono text-white">--</span>
+          </div>
+          <p id="foExpiryAndMeasure" class="text-[11px] text-slate-400 mt-1 mono">Expiry: -- | Max Pain: Unavailable in API</p>
+        </div>
+
+        <div class="glass-card rounded-xl p-4">
+          <span class="text-xs text-slate-400">Matching Option Apex Signal</span>
+          <div class="flex items-center justify-between mt-1">
+            <span id="foTopPickContract" class="text-sm font-bold mono text-cyan-400">No Active Signal</span>
+          </div>
+          <p id="foTopPickLevels" class="text-[11px] text-slate-300 mt-1 mono">--</p>
+        </div>
+      </div>
+
+      <!-- OI Change Bar Chart + Strike Option Chain Table -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div class="lg:col-span-5 glass-card rounded-xl p-4">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Strike-wise OI Change (Lakhs Contracts)</h3>
+            <span id="foChartMeasureTag" class="text-[10px] mono text-slate-400">--</span>
+          </div>
+          <div class="relative h-72 w-full">
+            <canvas id="optionOiChart"></canvas>
+          </div>
+        </div>
+        <div class="lg:col-span-7 glass-card rounded-xl p-4 overflow-x-auto">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300">Persisted Option Chain Strike Table</h3>
+            <span id="foSnapshotTimestampLabel" class="text-[11px] mono text-slate-400">--</span>
+          </div>
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="py-2 px-2">Call OI</th>
+                <th class="py-2 px-2">Call OI &Delta;</th>
+                <th class="py-2 px-2">Call LTP (IV)</th>
+                <th class="py-2 px-2 bg-slate-900 text-center font-bold text-amber-300">Strike</th>
+                <th class="py-2 px-2">Put LTP (IV)</th>
+                <th class="py-2 px-2">Put OI &Delta;</th>
+                <th class="py-2 px-2">Put OI</th>
+                <th class="py-2 px-2">OI Activity</th>
+              </tr>
+            </thead>
+            <tbody id="optionChainTableBody" class="divide-y divide-slate-800/60 mono"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- TAB 3: TOP 5 STRATEGIES BENCHMARK & STATUTORY FRICTION SIMULATOR   -->
+    <!-- ================================================================== -->
+    <section id="tab-strategies" class="tab-panel hidden space-y-5">
+      <div class="glass-card rounded-xl p-5 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base font-bold text-white">Top 5 Intraday Indian Equity &amp; Nifty/BankNifty F&amp;O Strategies (Bidirectional Phase 1C/1D Rules)</h2>
+            <p class="text-xs text-slate-400 mt-0.5">All 5 strategies evaluate symmetric Bullish (BUY / BUY CE) and Bearish (SELL / BUY PE) setups on completed 5-minute candles</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 mono">Strategy Reference</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-700 text-slate-300 bg-slate-900/90">
+                <th class="py-2.5 px-3">Strategy ID &amp; Name</th>
+                <th class="py-2.5 px-3">Target Segment</th>
+                <th class="py-2.5 px-3">Benchmark Citation</th>
+                <th class="py-2.5 px-3">Risk : Reward</th>
+                <th class="py-2.5 px-3">IST Session Window</th>
+                <th class="py-2.5 px-3">Implemented Bullish &amp; Bearish Rules</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-200">
+              <tr>
+                <td class="py-2.5 px-3 font-semibold text-cyan-400">1. Order Block + BOS &amp; FVG Retest (<code class="mono">strat_1_order_block</code>)</td>
+                <td class="py-2.5 px-3">NSE Equity &amp; F&amp;O Indices</td>
+                <td class="py-2.5 px-3 mono text-cyan-300">58%&ndash;64% (OrderBlock.com Rules)</td>
+                <td class="py-2.5 px-3 mono">1:2.0 / 1:3.0</td>
+                <td class="py-2.5 px-3 mono">09:15&ndash;15:30 (5m Closed)</td>
+                <td class="py-2.5 px-3 text-slate-300">Identifies unmitigated Bullish or Bearish 5m Order Block prior to 2-bar BOS + FVG/1.5x ATR displacement; blocks re-triggers after first retest or close-beyond-zone invalidation.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold text-emerald-400">2. Institutional VWAP Pullback (<code class="mono">strat_2_vwap_pullback</code>)</td>
+                <td class="py-2.5 px-3">NSE Equity &amp; F&amp;O Indices</td>
+                <td class="py-2.5 px-3 mono text-emerald-300">63%&ndash;68% (OneTradeJournal)</td>
+                <td class="py-2.5 px-3 mono">1:1.8 / 1:2.5</td>
+                <td class="py-2.5 px-3 mono">09:15&ndash;15:30 IST</td>
+                <td class="py-2.5 px-3 text-slate-300">Bullish reclaim above session VWAP &amp; 20 EMA (RSI 48&ndash;72) or Bearish rejection below VWAP &amp; 20 EMA (RSI 28&ndash;52) on &ge;1.4x 20-bar volume.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold text-amber-400">3. Option Apex OI Shift + PCR (<code class="mono">strat_3_option_apex_oi</code>)</td>
+                <td class="py-2.5 px-3">Strictly NIFTY &amp; BANKNIFTY</td>
+                <td class="py-2.5 px-3 mono text-amber-300">~60% (ICFM / TradeFinder)</td>
+                <td class="py-2.5 px-3 mono">1:1.6 / 1:2.4</td>
+                <td class="py-2.5 px-3 mono">09:15&ndash;15:30 IST</td>
+                <td class="py-2.5 px-3 text-slate-300">BUY CE on ATM Call unwinding + Put writing + PCR &ge; 1.10 + Spot &ge; VWAP; BUY PE on ATM Put unwinding + Call writing + PCR &le; 0.85 + Spot &le; VWAP.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold text-purple-400">4. 15m Opening Range Breakout (<code class="mono">strat_4_orb_filtered</code>)</td>
+                <td class="py-2.5 px-3">NSE Equity &amp; F&amp;O Indices</td>
+                <td class="py-2.5 px-3 mono text-purple-300">52% / 1.6 PF (Backx Study)</td>
+                <td class="py-2.5 px-3 mono">1:1.6 / 1:2.4</td>
+                <td class="py-2.5 px-3 mono">Post-09:30 IST</td>
+                <td class="py-2.5 px-3 text-slate-300">Marks 09:15&ndash;09:30 High/Low; triggers on fresh close above ORB High (RSI &ge; 55, &gt; VWAP) or below ORB Low (RSI &le; 45, &lt; VWAP) with RVOL &ge; 1.6x.</td>
+              </tr>
+              <tr>
+                <td class="py-2.5 px-3 font-semibold text-rose-400">5. Supertrend (10,3) + 200 EMA (<code class="mono">strat_5_supertrend_pullback</code>)</td>
+                <td class="py-2.5 px-3">NSE Equity &amp; F&amp;O Indices</td>
+                <td class="py-2.5 px-3 mono text-rose-300">44%&ndash;58% (LeadFinn Rules)</td>
+                <td class="py-2.5 px-3 mono">1:1.5 / 1:2.5</td>
+                <td class="py-2.5 px-3 mono">09:45&ndash;11:30 &amp; 13:30&ndash;15:30</td>
+                <td class="py-2.5 px-3 text-slate-300">Requires established Supertrend(10,3) aligned with 200 EMA &amp; VWAP, pullback touch, &ge;1.3x volume, and blocks 09:15&ndash;09:45 and 11:30&ndash;13:30 chop zones.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Offline Mathematical Statutory Friction & Expectancy Calculator -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div class="lg:col-span-5 glass-card rounded-xl p-4 space-y-4">
+          <div class="flex items-center justify-between gap-2">
+            <h3 class="text-sm font-bold text-white">Statutory Friction &amp; Expectancy Calculator</h3>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 mono">SIMULATED MATH MODEL</span>
+          </div>
+          <p class="text-[11px] text-slate-400">
+            Offline educational calculator illustrating the impact of Indian STT, NSE exchange fees, SEBI charges, stamp duty, brokerage, and GST across hypothetical trade sequences. (Historical candle backtesting is not part of the Phase 1D backend API.)
+          </p>
+          <div class="space-y-3 text-xs">
+            <div>
+              <label for="btStrategySelect" class="block text-slate-400 mb-1">Select Profile Parameters</label>
+              <select id="btStrategySelect" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-100">
+                <option value="vwap">1. Institutional VWAP Profile (65% Win, 1:1.8 R:R)</option>
+                <option value="ob">2. Order Block + BOS/FVG Profile (61% Win, 1:2.2 R:R)</option>
+                <option value="apex">3. Option Apex OI Shift Profile (60% Win, 1:1.8 R:R)</option>
+                <option value="orb">4. 15m ORB + RVOL Profile (54% Win, 1:1.8 R:R)</option>
+                <option value="st_filtered">5. Supertrend (10,3) + 200 EMA Profile (51% Win, 1:2.0 R:R)</option>
+                <option value="st_raw">Raw Unfiltered 5m Supertrend Flip Warning (35.7% Win)</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label for="btCapital" class="block text-slate-400 mb-1">Starting Capital (&#8377;)</label>
+                <input id="btCapital" type="number" value="150000" step="25000" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 mono text-emerald-400 font-bold" />
+              </div>
+              <div>
+                <label for="btTrades" class="block text-slate-400 mb-1">Number of Trades</label>
+                <input id="btTrades" type="number" value="50" min="10" max="200" step="10" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 mono text-white font-bold" />
+              </div>
+            </div>
+            <button id="btnRunBacktest" type="button" class="w-full py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition">
+              Recalculate Hypothetical Friction Curve (SIMULATED)
+            </button>
+          </div>
+
+          <div id="btSummaryMetrics" class="grid grid-cols-2 gap-2.5 pt-2 text-xs">
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <span class="text-slate-400 block">Hypothetical Gross P&amp;L</span>
+              <span id="btGrossPnl" class="text-base font-bold mono text-emerald-400">--</span>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <span class="text-slate-400 block">Est. Statutory Charges</span>
+              <span id="btCharges" class="text-base font-bold mono text-amber-400">--</span>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <span class="text-slate-400 block">Hypothetical Net P&amp;L</span>
+              <span id="btNetPnl" class="text-base font-bold mono text-emerald-400">--</span>
+            </div>
+            <div class="p-3 rounded-lg bg-slate-900 border border-slate-800">
+              <span class="text-slate-400 block">Net ROI &amp; Profit Factor</span>
+              <span id="btRoiPf" class="text-base font-bold mono text-cyan-400">--</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 glass-card rounded-xl p-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Hypothetical Curve: Gross vs Net After Indian Statutory Charges [SIMULATED MODEL]</h3>
+          <div class="relative h-72 w-full">
+            <canvas id="backtestEquityChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- TAB 4: SYSTEM HEALTH, SCAN HISTORY & READ-ONLY CONFIG              -->
+    <!-- ================================================================== -->
+    <section id="tab-brokers-telegram" class="tab-panel hidden space-y-5">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <!-- Left 5 Cols: GET /api/health & GET /api/config Read-Only Status -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="glass-card rounded-xl p-5 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div>
+                <h2 class="text-base font-bold text-white">System Health &amp; Broker Readiness</h2>
+                <p class="text-xs text-slate-400">Live status from <code class="text-cyan-400">GET /api/health</code> &amp; <code class="text-cyan-400">GET /api/config</code></p>
+              </div>
+              <span id="healthOverallBadge" class="px-2.5 py-1 rounded text-xs font-bold mono bg-slate-800 text-slate-300">CHECKING</span>
+            </div>
+
+            <!-- API Base URL & Polling Interval Control -->
+            <div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800 space-y-2 text-xs">
+              <label for="inputApiBaseUrl" class="block text-slate-300 font-semibold">Backend API Base URL</label>
+              <div class="flex items-center gap-2">
+                <input id="inputApiBaseUrl" type="text" value="http://127.0.0.1:8080" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1.5 mono text-slate-100 text-xs" />
+                <button id="btnApplyApiBaseUrl" type="button" class="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition">
+                  Apply
+                </button>
+              </div>
+              <div class="flex items-center justify-between pt-1">
+                <label for="selectAutoRefreshSec" class="text-slate-400">Read-Only Auto-Refresh Interval:</label>
+                <select id="selectAutoRefreshSec" class="bg-slate-950 border border-slate-700 rounded px-2 py-1 mono text-slate-200 text-xs">
+                  <option value="0">Off (Manual Refresh Only)</option>
+                  <option value="15">Every 15s (Read-Only)</option>
+                  <option value="30" selected>Every 30s (Read-Only)</option>
+                  <option value="60">Every 60s (Read-Only)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Honest Broker Connection & Scheduler Cards -->
+            <div id="healthDetailsContainer" class="space-y-2.5 text-xs"></div>
+
+            <!-- Read-Only Server Configuration Summary (Zero Secrets Exposed) -->
+            <div class="pt-3 border-t border-slate-800 space-y-2 text-xs">
+              <div class="flex items-center justify-between">
+                <h3 class="font-bold text-slate-200 uppercase tracking-wider text-[11px]">Read-Only Server Configuration (<code class="text-cyan-400">/api/config</code>)</h3>
+                <span class="text-[10px] text-emerald-400 mono">Secrets Redacted</span>
+              </div>
+              <div id="configDetailsContainer" class="space-y-2 text-xs"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 7 Cols: Persisted Scan-Run History (GET /api/scans) -->
+        <div class="lg:col-span-7 space-y-4">
+          <div class="glass-card rounded-xl p-5 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <div>
+                <h2 class="text-base font-bold text-white">Persisted Scan-Run History (<code class="text-xs text-cyan-400">GET /api/scans</code>)</h2>
+                <p class="text-xs text-slate-400">Distinguishes COMPLETED, COMPLETED_EMPTY (0 signals), FAILED, and SKIPPED_OVERLAP runs</p>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <label for="filterScanStatus" class="text-slate-400">Status:</label>
+                <select id="filterScanStatus" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100">
+                  <option value="ALL">All Statuses</option>
+                  <option value="COMPLETED">COMPLETED (&ge;1 Signal)</option>
+                  <option value="COMPLETED_EMPTY">COMPLETED_EMPTY (0 Signals)</option>
+                  <option value="FAILED">FAILED</option>
+                  <option value="SKIPPED_OVERLAP">SKIPPED_OVERLAP</option>
+                  <option value="SKIPPED_OUTSIDE_SESSION">SKIPPED_OUTSIDE_SESSION</option>
+                </select>
+                <button id="btnRefreshScans" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                  &#8635;
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs">
+              <span id="scansPaginationInfo" class="text-slate-400 mono">Loading scan runs...</span>
+              <div class="flex items-center gap-2">
+                <button id="btnPrevScansPage" type="button" disabled class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 mono text-xs">
+                  &larr; Prev
+                </button>
+                <button id="btnNextScansPage" type="button" disabled class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 disabled:opacity-40 text-slate-200 mono text-xs">
+                  Next &rarr;
+                </button>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr class="border-b border-slate-800 text-slate-400">
+                    <th class="py-2 px-2">Run ID &amp; Time (IST)</th>
+                    <th class="py-2 px-2">Status</th>
+                    <th class="py-2 px-2">Duration</th>
+                    <th class="py-2 px-2">Signals (New/Dup)</th>
+                    <th class="py-2 px-2">OI Snaps</th>
+                    <th class="py-2 px-2">Mode &amp; Broker</th>
+                    <th class="py-2 px-2">Details / Error</th>
+                  </tr>
+                </thead>
+                <tbody id="scanRunsTableBody" class="divide-y divide-slate-800/60 mono"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Non-blocking Toast Notification -->
+  <div id="toastNotification" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-50 hidden max-w-md rounded-xl bg-slate-900 border border-emerald-500/50 px-4 py-3 shadow-2xl text-xs text-slate-100 flex items-center gap-2.5">
+    <span id="toastDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0"></span>
+    <span id="toastMessageText">Ready</span>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      // ====================================================================
+      // 1. REUSABLE, SAFE FRONTEND API CLIENT (TradePulseApiClient)
+      //    - Configurable base URL (no hardcoded secrets or prod domains)
+      //    - Request timeout via AbortController
+      //    - Safe JSON parsing & structured HTTP error handling
+      //    - Sequence counters to prevent stale responses overwriting newer data
+      // ====================================================================
+      function detectDefaultBaseUrl() {
+        try {
+          const saved = localStorage.getItem('tp_api_base_url');
+          if (saved && saved.trim()) return saved.trim().replace(/\/+$/, '');
+        } catch (e) {}
+        if (window.location && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+          if (window.location.port === '8080' || window.location.pathname.indexOf('/public/') !== -1 || window.location.pathname === '/') {
+            return window.location.origin.replace(/\/+$/, '');
+          }
+        }
+        return 'http://127.0.0.1:8080';
+      }
+
+      function normalizeBaseUrl(raw) {
+        const cleaned = String(raw || '').trim().replace(/\/+$/, '');
+        if (!cleaned) return 'http://127.0.0.1:8080';
+        if (!/^https?:\/\/[a-zA-Z0-9._:-]+$/i.test(cleaned)) {
+          throw new Error('API Base URL must be an http:// or https:// origin (e.g. http://127.0.0.1:8080).');
+        }
+        return cleaned;
+      }
+
+      const apiClient = {
+        baseUrl: detectDefaultBaseUrl(),
+        setBaseUrl: function(newUrl) {
+          const norm = normalizeBaseUrl(newUrl);
+          this.baseUrl = norm;
+          try {
+            localStorage.setItem('tp_api_base_url', norm);
+          } catch (e) {}
+          return norm;
+        },
+        request: async function(method, path, queryParams, timeoutMs) {
+          const timeout = timeoutMs || 8000;
+          let url = this.baseUrl + path;
+          if (queryParams && typeof queryParams === 'object') {
+            const usp = new URLSearchParams();
+            Object.keys(queryParams).forEach(function(k) {
+              const v = queryParams[k];
+              if (v !== undefined && v !== null && String(v).trim() !== '') {
+                usp.append(k, String(v).trim());
+              }
+            });
+            const qs = usp.toString();
+            if (qs) url += '?' + qs;
+          }
+
+          const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+          const timerId = controller ? setTimeout(function() { controller.abort(); }, timeout) : null;
+
+          try {
+            const resp = await fetch(url, {
+              method: method,
+              headers: { 'Accept': 'application/json' },
+              signal: controller ? controller.signal : undefined
+            });
+            const rawText = await resp.text();
+            if (!rawText || !rawText.trim()) {
+              throw new Error('Empty response from server (HTTP ' + resp.status + ').');
+            }
+            let data;
+            try {
+              data = JSON.parse(rawText);
+            } catch (parseErr) {
+              throw new Error('Malformed JSON response from ' + path + ' (HTTP ' + resp.status + ').');
+            }
+            if (!resp.ok) {
+              const err = new Error((data && data.message) ? data.message : ('HTTP ' + resp.status + ' error on ' + path));
+              err.status = resp.status;
+              err.payload = data;
+              throw err;
+            }
+            return data;
+          } catch (err) {
+            if (err && err.name === 'AbortError') {
+              const timeoutErr = new Error('Request timed out after ' + (timeout / 1000).toFixed(1) + 's (' + path + ').');
+              timeoutErr.isTimeout = true;
+              throw timeoutErr;
+            }
+            throw err;
+          } finally {
+            if (timerId) clearTimeout(timerId);
+          }
+        },
+        getHealth: function() { return this.request('GET', '/api/health', null, 6000); },
+        getConfig: function() { return this.request('GET', '/api/config', null, 6000); },
+        getSignals: function(params) { return this.request('GET', '/api/signals', params, 8000); },
+        getScans: function(params) { return this.request('GET', '/api/scans', params, 8000); },
+        getOiSnapshots: function(params) { return this.request('GET', '/api/oi-snapshots', params, 8000); },
+        getOiBaselines: function(params) { return this.request('GET', '/api/oi-baselines', params, 8000); },
+        triggerScan: function() { return this.request('POST', '/api/scan', null, 20000); }
+      };
+
+      // Expose apiClient on window for deterministic testing & inspection
+      window.TradePulseApiClient = apiClient;
+
+      // ====================================================================
+      // 2. APPLICATION STATE & REQUEST SEQUENCE GUARDS
+      // ====================================================================
+      const state = {
+        health: null,
+        config: null,
+        signals: [],
+        signalsTotal: 0,
+        signalsOffset: 0,
+        signalsLimit: 20,
+        selectedSignalKey: null,
+        scans: [],
+        scansTotal: 0,
+        scansOffset: 0,
+        scansLimit: 15,
+        oiSnapshots: [],
+        selectedFoIndex: 'NIFTY',
+        selectedSnapshotIdx: 0,
+        scanInFlight: false,
+        lastRefreshIst: null,
+        refreshTimerId: null,
+        reqSeq: {
+          health: 0,
+          config: 0,
+          signals: 0,
+          scans: 0,
+          oi: 0,
+          headerIndexes: 0
+        }
+      };
+
+      let priceChartInstance = null;
+      let oiChartInstance = null;
+      let btChartInstance = null;
+
+      // ====================================================================
+      // 3. SAFE DOM & FORMATTING HELPERS (XSS Prevention via textContent)
+      // ====================================================================
+      function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text !== undefined && text !== null) {
+          node.textContent = String(text);
+        }
+        return node;
+      }
+
+      function clearChildren(node) {
+        while (node && node.firstChild) {
+          node.removeChild(node.firstChild);
+        }
+      }
+
+      function formatInr(val) {
+        const num = Number(val);
+        if (!Number.isFinite(num)) return '--';
+        return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function formatLakhs(val) {
+        const num = Number(val);
+        if (!Number.isFinite(num)) return '--';
+        const lakhs = num / 100000.0;
+        return (lakhs > 0 ? '+' : '') + lakhs.toFixed(2) + 'L';
+      }
+
+      function showToast(msg, isError) {
+        const toast = document.getElementById('toastNotification');
+        const text = document.getElementById('toastMessageText');
+        const dot = document.getElementById('toastDot');
+        if (!toast || !text || !dot) return;
+        text.textContent = String(msg);
+        dot.className = isError ? 'w-2.5 h-2.5 rounded-full bg-rose-400 shrink-0' : 'w-2.5 h-2.5 rounded-full bg-emerald-400 shrink-0';
+        toast.className = isError
+          ? 'fixed bottom-5 right-5 z-50 max-w-md rounded-xl bg-slate-900 border border-rose-500/60 px-4 py-3 shadow-2xl text-xs text-rose-100 flex items-center gap-2.5'
+          : 'fixed bottom-5 right-5 z-50 max-w-md rounded-xl bg-slate-900 border border-emerald-500/50 px-4 py-3 shadow-2xl text-xs text-slate-100 flex items-center gap-2.5';
+        if (window._tpToastTimer) clearTimeout(window._tpToastTimer);
+        window._tpToastTimer = setTimeout(function() {
+          toast.classList.add('hidden');
+        }, 3800);
+      }
+
+      function copyTextSafe(str, label) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = str;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast('Copied ' + label + ' to clipboard!', false);
+        } catch (e) {
+          showToast('Copied ' + label, false);
+        }
+      }
+
+      // ====================================================================
+      // 4. HEALTH, SYSTEM STATUS & HEADER RIBBON (GET /api/health & /api/config)
+      // ====================================================================
+      function describeConnectionState(connState) {
+        switch (connState) {
+          case 'CONNECTED_VERIFIED':
+            return {
+              label: 'CONNECTED (provider response)',
+              dotCls: 'w-2.5 h-2.5 rounded-full bg-emerald-400 pulse-dot shrink-0',
+              badgeCls: 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+            };
+          case 'SIMULATED':
+            return {
+              label: 'SIMULATED',
+              dotCls: 'w-2.5 h-2.5 rounded-full bg-amber-400 shrink-0',
+              badgeCls: 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40'
+            };
+          case 'CONFIGURED_UNVERIFIED':
+            return {
+              label: 'CONFIGURED_UNVERIFIED',
+              dotCls: 'w-2.5 h-2.5 rounded-full bg-cyan-400 shrink-0',
+              badgeCls: 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+            };
+          case 'UNAVAILABLE_MISSING_CREDENTIALS':
+            return {
+              label: 'UNAVAILABLE_MISSING_CREDENTIALS',
+              dotCls: 'w-2.5 h-2.5 rounded-full bg-rose-400 shrink-0',
+              badgeCls: 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40'
+            };
+          case 'ERROR':
+          case 'INVALID_CONFIG':
+            return {
+              label: connState,
+              dotCls: 'w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0',
+              badgeCls: 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-rose-500/25 text-rose-300 border border-rose-500/40'
+            };
+          default:
+            return {
+              label: connState || 'UNKNOWN',
+              dotCls: 'w-2.5 h-2.5 rounded-full bg-slate-400 shrink-0',
+              badgeCls: 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-slate-800 text-slate-300'
+            };
+        }
+      }
+
+      async function loadHealthAndConfig() {
+        const seq = ++state.reqSeq.health;
+        try {
+          const [healthData, configData] = await Promise.all([
+            apiClient.getHealth(),
+            apiClient.getConfig()
+          ]);
+          if (seq !== state.reqSeq.health) return;
+
+          state.health = healthData;
+          state.config = configData;
+          state.lastRefreshIst = new Date().toLocaleTimeString('en-IN', { hour12: false });
+
+          document.getElementById('globalApiErrorBanner').classList.add('hidden');
+          renderHeaderHealth(healthData);
+          renderSystemHealthTab(healthData, configData);
+          renderOptionApexCapabilityBanner();
+        } catch (err) {
+          if (seq !== state.reqSeq.health) return;
+          state.health = null;
+          renderHeaderOffline(err);
+          renderSystemHealthOffline(err);
+        }
+      }
+
+      function renderHeaderHealth(health) {
+        const broker = (health && health.broker) || {};
+        const db = (health && health.database) || {};
+        const sched = (health && health.scheduler) || {};
+        const lastScan = (health && health.last_scan) || null;
+
+        const connInfo = describeConnectionState(broker.connection_state);
+        document.getElementById('apiHealthDot').className = connInfo.dotCls;
+        document.getElementById('activeBrokerBadge').textContent = broker.broker_name || broker.active_broker || 'Unknown Broker';
+        const stateBadge = document.getElementById('brokerStateBadge');
+        stateBadge.textContent = connInfo.label;
+        stateBadge.className = connInfo.badgeCls;
+
+        const modeBadge = document.getElementById('headerDataModeBadge');
+        if (broker.is_simulated || broker.data_mode === 'SIMULATED') {
+          modeBadge.textContent = 'SIMULATED DATA MODE';
+          modeBadge.className = 'text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 mono';
+        } else if (health && health.live_acceptance && health.live_acceptance.accepted === true) {
+          modeBadge.textContent = 'LIVE ACCEPTANCE EVIDENCE VALID';
+          modeBadge.className = 'text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono';
+        } else {
+          modeBadge.textContent = 'LIVE ACCEPTANCE UNVERIFIED';
+          modeBadge.className = 'text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 mono';
+        }
+
+        const schedLabel = sched.running
+          ? 'RUNNING'
+          : (sched.enabled_in_config ? 'STOPPED (Enabled)' : 'DISABLED (Opt-In)');
+        const lastScanLabel = lastScan
+          ? (lastScan.scan_status + ' @ ' + (lastScan.completed_at_ist || '--'))
+          : 'No scan in current process';
+        const mktDataObs = broker.last_candle_timestamp_ist || broker.last_market_data_at_ist || 'None';
+        document.getElementById('headerTelemetryText').textContent =
+          'DB: ' + (db.status || 'UNKNOWN') + ' (' + (db.signals_count ?? 0) + ' sigs) | ' +
+          'Source Obs (IST): ' + mktDataObs + ' | ' +
+          'Scheduler: ' + schedLabel + ' | ' +
+          'Session: ' + (sched.session_state || '--') + ' | ' +
+          'Last Scan: ' + lastScanLabel + ' | ' +
+          'UI Poll: ' + (state.lastRefreshIst || '--');
+      }
+
+      function renderHeaderOffline(err) {
+        document.getElementById('apiHealthDot').className = 'w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0';
+        document.getElementById('activeBrokerBadge').textContent = 'Backend API Unreachable';
+        const stateBadge = document.getElementById('brokerStateBadge');
+        stateBadge.textContent = 'OFFLINE';
+        stateBadge.className = 'text-[10px] font-bold mono px-1.5 py-0.5 rounded bg-rose-500/25 text-rose-300 border border-rose-500/40';
+
+        const modeBadge = document.getElementById('headerDataModeBadge');
+        modeBadge.textContent = 'API DISCONNECTED';
+        modeBadge.className = 'text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 mono';
+
+        document.getElementById('headerNiftySpot').textContent = 'Unavailable';
+        document.getElementById('headerNiftyMeta').textContent = 'Offline';
+        document.getElementById('headerBankNiftySpot').textContent = 'Unavailable';
+        document.getElementById('headerBankNiftyMeta').textContent = 'Offline';
+
+        const banner = document.getElementById('globalApiErrorBanner');
+        const bannerText = document.getElementById('globalApiErrorText');
+        banner.classList.remove('hidden');
+        bannerText.textContent = 'Cannot reach backend at ' + apiClient.baseUrl + ' (' + (err && err.message ? err.message : 'Network error') + '). Start `python server.py` and click Refresh Data.';
+      }
+
+      function renderSystemHealthTab(health, configPayload) {
+        const container = document.getElementById('healthDetailsContainer');
+        const cfgContainer = document.getElementById('configDetailsContainer');
+        clearChildren(container);
+        clearChildren(cfgContainer);
+
+        const overallBadge = document.getElementById('healthOverallBadge');
+        overallBadge.textContent = (health && health.status === 'ok') ? 'HEALTHY (HTTP 200)' : 'DEGRADED';
+        overallBadge.className = (health && health.status === 'ok')
+          ? 'px-2.5 py-1 rounded text-xs font-bold mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+          : 'px-2.5 py-1 rounded text-xs font-bold mono bg-rose-500/20 text-rose-300 border border-rose-500/40';
+
+        const broker = (health && health.broker) || {};
+        const db = (health && health.database) || {};
+        const sched = (health && health.scheduler) || {};
+
+        const scripInfo = broker.scrip_master || {};
+        const oaInfo = broker.option_apex || {};
+        const oaIndices = oaInfo.indices || {};
+        const niftyOa = (oaIndices.NIFTY && oaIndices.NIFTY.status) || oaInfo.overall_status || '--';
+        const bnfOa = (oaIndices.BANKNIFTY && oaIndices.BANKNIFTY.status) || oaInfo.overall_status || '--';
+        const scripSummary = (scripInfo.status || '--') + (
+          scripInfo.index_options_loaded !== undefined
+            ? (' (' + scripInfo.index_options_loaded + ' opt contracts' + (scripInfo.file_age_hours !== null && scripInfo.file_age_hours !== undefined ? ', age ' + scripInfo.file_age_hours + 'h' : '') + ')')
+            : ''
+        );
+
+        const cFresh = broker.candle_freshness || {};
+        const candleFreshLabel = (cFresh.status || 'NOT_CHECKED') + (
+          cFresh.latest_candle_timestamp_ist ? (' (Bar: ' + cFresh.latest_candle_timestamp_ist + ' IST)') : ''
+        );
+        const rows = [
+          ['Broker Adapter', (broker.broker_name || '--') + ' [' + (broker.active_broker || '--') + ']'],
+          ['Broker Connection State', (broker.connection_state || '--') + (broker.error_category && broker.error_category !== 'NONE' && broker.error_category !== 'SIMULATED' ? (' [' + broker.error_category + ']') : '')],
+          ['Live Connectivity Verified', broker.connectivity_verified ? 'YES (Verified @ ' + (broker.last_verified_at_ist || '--') + ' IST)' : 'NO (Not Live-Verified)'],
+          ['Last Market-Data Time (IST)', (broker.last_market_data_at_ist || 'None') + (broker.last_quote_timestamp_ist ? (' | Quote Feed: ' + broker.last_quote_timestamp_ist + ' IST') : '')],
+          ['Candle Freshness Status', candleFreshLabel],
+          ['Data Mode', broker.data_mode || '--'],
+          ['Option Apex (Strategy 3) Readiness', (oaInfo.overall_status || '--') + ' [NIFTY: ' + niftyOa + ' | BANKNIFTY: ' + bnfOa + ']'],
+          ['Angel One Scrip Master Status', scripSummary],
+          ['Last Broker Error / Category', (broker.error_category || 'NONE') + ': ' + (broker.last_error || 'None')],
+          ['SQLite Database Status', (db.status || '--') + ' (Path: ' + (db.database_path || '--') + ')'],
+          ['Persisted Row Counts', 'Signals: ' + (db.signals_count ?? 0) + ' | Scans: ' + (db.scan_runs_count ?? 0) + ' | OI Snaps: ' + (db.oi_snapshots_count ?? 0) + ' | Closing Baselines: ' + (db.oi_closing_baselines_count ?? db.oi_baselines_count ?? 0) + ' (Intraday Obs: ' + (db.oi_intraday_observations_count ?? 0) + ') | Mitigated OBs: ' + (db.mitigated_order_blocks_count ?? 0)],
+          ['Scheduler Enabled in Config', sched.enabled_in_config ? 'TRUE (ENABLE_BACKGROUND_SCHEDULER=true)' : 'FALSE (Opt-In Disabled by Default)'],
+          ['Scheduler Thread Running', sched.running ? 'RUNNING (Cycles: ' + (sched.cycles_executed ?? 0) + ')' : 'STOPPED (Manual Scan Mode)'],
+          ['Market Session Window (IST)', (sched.session_start_ist || '09:15') + ' – ' + (sched.session_end_ist || '15:30') + ' (' + (sched.session_state || '--') + ')']
+        ];
+
+        rows.forEach(function(pair) {
+          const r = el('div', 'flex items-center justify-between py-1.5 border-b border-slate-800/70 gap-2');
+          r.appendChild(el('span', 'text-slate-400', pair[0]));
+          r.appendChild(el('span', 'mono font-semibold text-slate-200 text-right', pair[1]));
+          container.appendChild(r);
+        });
+
+        if (!sched.running) {
+          const note = el(
+            'div',
+            'p-2.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-[11px] text-amber-200 mt-2',
+            'Background scheduled scans are currently stopped (' +
+            (sched.enabled_in_config ? 'thread not active' : 'ENABLE_BACKGROUND_SCHEDULER=false') +
+            '). Opening this dashboard does not start background scans automatically; use "⚡ Scan Market Now" for on-demand scans or start server.py with ENABLE_BACKGROUND_SCHEDULER=true.'
+          );
+          container.appendChild(note);
+        }
+
+        const cfg = (configPayload && configPayload.config) || {};
+        const brokersCfg = cfg.brokers_configured || {};
+        const cfgRows = [
+          ['Account Capital (INR)', formatInr(cfg.account_capital_inr)],
+          ['Max Risk / Trade (%)', (cfg.max_risk_per_trade_pct ?? '--') + '%'],
+          ['Scan Interval', (cfg.scan_interval_seconds ?? '--') + 's'],
+          ['Telegram Dry-Run Mode', cfg.telegram_dry_run ? 'TRUE (Dry-Run Safe)' : 'FALSE (Live Push Enabled)'],
+          ['Telegram Credentials Configured', cfg.telegram_configured ? 'Configured' : 'Not Configured (Placeholder)'],
+          ['Broker Credentials Present', 'AngelOne: ' + (brokersCfg.angelone ? 'Yes' : 'No') + ' | Dhan: ' + (brokersCfg.dhan ? 'Yes' : 'No') + ' | Upstox: ' + (brokersCfg.upstox ? 'Yes' : 'No')],
+          ['Watchlist Coverage', (cfg.equity_watchlist_count ?? 0) + ' NSE Equities + NIFTY & BANKNIFTY']
+        ];
+
+        cfgRows.forEach(function(pair) {
+          const r = el('div', 'flex items-center justify-between py-1 border-b border-slate-800/50 gap-2');
+          r.appendChild(el('span', 'text-slate-400', pair[0]));
+          r.appendChild(el('span', 'mono text-slate-200 text-right', pair[1]));
+          cfgContainer.appendChild(r);
+        });
+      }
+
+      function renderSystemHealthOffline(err) {
+        const container = document.getElementById('healthDetailsContainer');
+        const cfgContainer = document.getElementById('configDetailsContainer');
+        clearChildren(container);
+        clearChildren(cfgContainer);
+        const overallBadge = document.getElementById('healthOverallBadge');
+        overallBadge.textContent = 'OFFLINE';
+        overallBadge.className = 'px-2.5 py-1 rounded text-xs font-bold mono bg-rose-500/20 text-rose-300 border border-rose-500/40';
+        container.appendChild(
+          el('div', 'p-3 rounded-lg bg-rose-950/40 border border-rose-500/40 text-rose-200 text-xs', 'Health endpoint unreachable: ' + (err && err.message ? err.message : 'Connection failed'))
+        );
+      }
+
+      // ====================================================================
+      // 5. SIGNALS TERMINAL (Connected to GET /api/signals)
+      // ====================================================================
+      function getSignalFilterParams() {
+        const seg = document.getElementById('filterSegment').value;
+        const strat = document.getElementById('filterStrategy').value;
+        const dir = document.getElementById('filterDirection').value;
+        const mode = document.getElementById('filterDataMode').value;
+        const symRaw = (document.getElementById('searchSymbol').value || '').trim().toUpperCase();
+        const limitVal = parseInt(document.getElementById('selectPageLimit').value, 10) || 20;
+        state.signalsLimit = Math.min(200, Math.max(1, limitVal));
+
+        const params = {
+          limit: state.signalsLimit,
+          offset: state.signalsOffset
+        };
+        if (seg && seg !== 'ALL') params.segment = seg;
+        if (strat && strat !== 'ALL') params.strategy_id = strat;
+        if (dir && dir !== 'ALL') params.direction = dir;
+        if (mode && mode !== 'ALL') params.data_mode = mode;
+        if (symRaw) {
+          if (!/^[A-Z0-9&-]{1,20}$/.test(symRaw)) {
+            throw new Error('Symbol filter may only contain letters, digits, & or - (e.g. NIFTY, M&M, SBIN).');
+          }
+          params.symbol = symRaw;
+        }
+        return params;
+      }
+
+      async function loadSignals() {
+        const container = document.getElementById('signalCardsContainer');
+        const badge = document.getElementById('signalCountBadge');
+        let params;
+        try {
+          params = getSignalFilterParams();
+        } catch (valErr) {
+          showToast(valErr.message, true);
+          return;
+        }
+
+        const seq = ++state.reqSeq.signals;
+        badge.textContent = 'Loading...';
+        clearChildren(container);
+        container.appendChild(
+          el('div', 'glass-card rounded-xl p-6 text-center text-xs text-slate-400 mono', 'Loading persisted signals from GET /api/signals...')
+        );
+
+        try {
+          const res = await apiClient.getSignals(params);
+          if (seq !== state.reqSeq.signals) return;
+          if (!res || !Array.isArray(res.items)) {
+            throw new Error('Malformed /api/signals payload: missing items array.');
+          }
+          state.signals = res.items;
+          state.signalsTotal = Number.isFinite(Number(res.total_count)) ? Number(res.total_count) : res.items.length;
+          renderSignalCards();
+        } catch (err) {
+          if (seq !== state.reqSeq.signals) return;
+          state.signals = [];
+          state.signalsTotal = 0;
+          badge.textContent = 'Error';
+          clearChildren(container);
+          const errBox = el('div', 'glass-card rounded-xl p-5 border border-rose-500/40 bg-rose-950/20 space-y-2 text-xs');
+          errBox.appendChild(el('div', 'font-bold text-rose-300', 'Failed to load signals from GET /api/signals'));
+          errBox.appendChild(el('p', 'text-rose-200 mono', err && err.message ? err.message : 'Unknown API error'));
+          const retryBtn = el('button', 'px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold transition', 'Retry Loading Signals');
+          retryBtn.type = 'button';
+          retryBtn.addEventListener('click', function() { loadSignals(); });
+          errBox.appendChild(retryBtn);
+          container.appendChild(errBox);
+          renderEmptySignalInspector('API Error');
+        }
+      }
+
+      function renderSignalCards() {
+        const container = document.getElementById('signalCardsContainer');
+        const badge = document.getElementById('signalCountBadge');
+        const pageInfo = document.getElementById('signalsPaginationInfo');
+        const prevBtn = document.getElementById('btnPrevSignalsPage');
+        const nextBtn = document.getElementById('btnNextSignalsPage');
+
+        clearChildren(container);
+        const items = state.signals || [];
+        const total = state.signalsTotal || 0;
+        badge.textContent = total + (total === 1 ? ' setup' : ' setups');
+
+        const startIdx = total === 0 ? 0 : state.signalsOffset + 1;
+        const endIdx = Math.min(total, state.signalsOffset + items.length);
+        pageInfo.textContent = total > 0 ? ('Showing ' + startIdx + '–' + endIdx + ' of ' + total) : '0 results';
+        prevBtn.disabled = state.signalsOffset <= 0;
+        nextBtn.disabled = (state.signalsOffset + state.signalsLimit) >= total;
+
+        if (items.length === 0) {
+          const emptyBox = el('div', 'glass-card rounded-xl p-6 text-center space-y-2.5 text-xs');
+          emptyBox.appendChild(el('div', 'text-slate-200 font-semibold text-sm', 'No Persisted Signals Found'));
+          emptyBox.appendChild(
+            el('p', 'text-slate-400', 'The database returned 0 signals for the current filter criteria. Click "⚡ Scan Market Now" to run a scan or reset filters.')
+          );
+          const scanBtn = el('button', 'px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition', '⚡ Scan Market Now');
+          scanBtn.type = 'button';
+          scanBtn.addEventListener('click', function() { triggerManualScan(); });
+          emptyBox.appendChild(scanBtn);
+          container.appendChild(emptyBox);
+          renderEmptySignalInspector('No Signal Selected');
+          return;
+        }
+
+        const hasSelected = items.some(function(s) {
+          return (s.dedup_key || String(s.id)) === state.selectedSignalKey;
+        });
+        if (!hasSelected) {
+          state.selectedSignalKey = items[0].dedup_key || String(items[0].id);
+        }
+
+        const cap = parseFloat(document.getElementById('inputCapital').value) || 150000;
+        const riskPct = parseFloat(document.getElementById('inputRiskPct').value) || 1.0;
+        const riskBudget = cap * (riskPct / 100.0);
+
+        items.forEach(function(s) {
+          const sigKey = s.dedup_key || String(s.id);
+          const isSelected = sigKey === state.selectedSignalKey;
+          const dirStr = String(s.direction || '').toUpperCase();
+          const isBull = dirStr.indexOf('BULLISH') !== -1;
+          const isSim = Boolean(s.is_simulated || s.data_mode === 'SIMULATED');
+          const qualityScore = Number.isFinite(Number(s.quality_score)) ? Number(s.quality_score) : Number(s.confidence_pct || 0);
+
+          const entryPrice = Number(s.entry_price || 0);
+          const stopLoss = Number(s.stop_loss || 0);
+          const riskPerUnit = Math.max(0.5, Math.abs(entryPrice - stopLoss));
+          const previewQty = Number(s.position_qty) || Math.max(1, Math.floor(riskBudget / riskPerUnit));
+
+          const borderCls = isSelected
+            ? 'border-emerald-500 ring-1 ring-emerald-500/40 bg-slate-900/95'
+            : 'border-slate-800 hover:border-slate-700';
+
+          const card = el('div', 'signal-card-item glass-card rounded-xl p-3.5 cursor-pointer transition border ' + borderCls);
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('role', 'button');
+          card.setAttribute('aria-label', 'Inspect signal ' + (s.instrument_label || s.symbol || ''));
+
+          // Top row: Instrument + Direction (with icon) + Segment + Data Mode + Quality Score
+          const topRow = el('div', 'flex flex-wrap items-center justify-between gap-2');
+          const leftBadges = el('div', 'flex flex-wrap items-center gap-1.5');
+          leftBadges.appendChild(el('span', 'font-bold text-sm text-white mono', s.instrument_label || s.symbol || 'UNKNOWN'));
+
+          const dirIcon = isBull ? '▲ ' : '▼ ';
+          const dirCls = isBull
+            ? 'px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 mono'
+            : 'px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/15 text-rose-300 border border-rose-500/30 mono';
+          leftBadges.appendChild(el('span', dirCls, dirIcon + (s.direction || 'UNKNOWN')));
+
+          const segCls = s.segment === 'NSE_FO_INDEX'
+            ? 'px-2 py-0.5 rounded text-[10px] font-semibold bg-amber-500/15 text-amber-300'
+            : 'px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/15 text-sky-300';
+          leftBadges.appendChild(el('span', segCls, s.segment === 'NSE_FO_INDEX' ? 'NIFTY/BNF F&O' : 'NSE EQUITY'));
+
+          const modeCls = isSim
+            ? 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 mono'
+            : 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono';
+          leftBadges.appendChild(el('span', modeCls, isSim ? 'SIMULATED' : 'LIVE'));
+          topRow.appendChild(leftBadges);
+
+          const rightMeta = el('div', 'flex items-center gap-2 text-xs');
+          rightMeta.appendChild(el('span', 'text-cyan-400 font-semibold mono', 'Quality ' + qualityScore + '/100'));
+          rightMeta.appendChild(el('span', 'text-slate-400 mono', s.timestamp || '--'));
+          topRow.appendChild(rightMeta);
+          card.appendChild(topRow);
+
+          // Second row: Strategy name + Position Type + Qty
+          const midRow = el('div', 'mt-1.5 flex flex-wrap items-center justify-between gap-2 text-xs');
+          midRow.appendChild(el('span', 'text-slate-300 font-medium', (s.strategy_name || s.strategy_id || '--') + ' • ' + (s.position_type || '--')));
+          midRow.appendChild(el('span', 'mono text-slate-400', 'Qty: ' + previewQty + ' | R:R ' + (s.risk_reward || '--')));
+          card.appendChild(midRow);
+
+          // Bottom row: Entry, Stop, Invalidation, T1, T2
+          const gridRow = el('div', 'mt-2.5 grid grid-cols-5 gap-2 pt-2 border-t border-slate-800/80 text-xs mono');
+          const cols = [
+            ['ENTRY', formatInr(s.entry_price), 'text-white font-semibold'],
+            ['INVALIDATION', formatInr(s.invalidation_level ?? s.stop_loss), 'text-amber-300 font-semibold'],
+            ['STOP (S1)', formatInr(s.stop_loss), 'text-rose-400 font-semibold'],
+            ['TARGET 1', formatInr(s.target_1), 'text-emerald-400 font-semibold'],
+            ['TARGET 2', formatInr(s.target_2), 'text-cyan-400 font-semibold']
+          ];
+          cols.forEach(function(c) {
+            const cell = el('div', '');
+            cell.appendChild(el('span', 'text-slate-400 text-[10px] block', c[0]));
+            cell.appendChild(el('span', c[2], c[1]));
+            gridRow.appendChild(cell);
+          });
+          card.appendChild(gridRow);
+
+          function selectCard() {
+            state.selectedSignalKey = sigKey;
+            renderSignalCards();
+          }
+          card.addEventListener('click', selectCard);
+          card.addEventListener('keydown', function(ev) {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              selectCard();
+            }
+          });
+          container.appendChild(card);
+        });
+
+        const selectedSig = items.find(function(s) {
+          return (s.dedup_key || String(s.id)) === state.selectedSignalKey;
+        }) || items[0];
+        if (selectedSig) {
+          renderSelectedSignalInspector(selectedSig);
+        }
+      }
+
+      function renderEmptySignalInspector(titleText) {
+        document.getElementById('detailSymbolTitle').textContent = titleText || 'No Signal Selected';
+        document.getElementById('detailDirectionBadge').textContent = '--';
+        document.getElementById('detailDataModeBadge').textContent = '--';
+        document.getElementById('detailStrategySubtitle').textContent = 'Run a scan or select a signal card to view levels';
+        document.getElementById('detailRrrBadge').textContent = 'R:R --';
+        document.getElementById('detailEntryPrice').textContent = '--';
+        document.getElementById('detailEntryZone').textContent = '--';
+        document.getElementById('detailInvalidation').textContent = '--';
+        document.getElementById('detailStopLoss').textContent = '--';
+        document.getElementById('detailTarget1').textContent = '--';
+        document.getElementById('detailTarget2').textContent = '--';
+        document.getElementById('detailQualityScore').textContent = '-- / 100';
+        clearChildren(document.getElementById('detailScoreBreakdown'));
+        document.getElementById('detailQty').textContent = '--';
+        document.getElementById('detailRiskAndCharges').textContent = '--';
+        document.getElementById('detailTimestampAndBroker').textContent = '--';
+        document.getElementById('detailRationale').textContent = 'No signal selected.';
+        if (priceChartInstance) {
+          priceChartInstance.destroy();
+          priceChartInstance = null;
+        }
+      }
+
+      function renderSelectedSignalInspector(sig) {
+        const dirStr = String(sig.direction || '').toUpperCase();
+        const isBull = dirStr.indexOf('BULLISH') !== -1;
+        const isSim = Boolean(sig.is_simulated || sig.data_mode === 'SIMULATED');
+        const qScore = Number.isFinite(Number(sig.quality_score)) ? Number(sig.quality_score) : Number(sig.confidence_pct || 0);
+
+        document.getElementById('detailSymbolTitle').textContent = sig.instrument_label || sig.symbol || 'UNKNOWN';
+        const dirEl = document.getElementById('detailDirectionBadge');
+        dirEl.textContent = (isBull ? '▲ ' : '▼ ') + (sig.direction || 'UNKNOWN');
+        dirEl.className = isBull
+          ? 'px-2 py-0.5 text-[11px] font-bold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mono'
+          : 'px-2 py-0.5 text-[11px] font-bold rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 mono';
+
+        const modeEl = document.getElementById('detailDataModeBadge');
+        modeEl.textContent = isSim ? 'SIMULATED DATA' : 'LIVE DATA';
+        modeEl.className = isSim
+          ? 'px-2 py-0.5 text-[10px] font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 mono'
+          : 'px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono';
+
+        document.getElementById('detailStrategySubtitle').textContent =
+          (sig.strategy_name || sig.strategy_id || '--') + ' • ' + (sig.segment || '--') + ' • ' + (sig.position_type || '--');
+        document.getElementById('detailRrrBadge').textContent = 'R:R ' + (sig.risk_reward || '--') + ' • Quality ' + qScore + '/100';
+
+        document.getElementById('detailEntryPrice').textContent = formatInr(sig.entry_price);
+        document.getElementById('detailEntryZone').textContent =
+          formatInr(sig.entry_zone_low) + ' – ' + formatInr(sig.entry_zone_high);
+        document.getElementById('detailInvalidation').textContent = formatInr(sig.invalidation_level ?? sig.stop_loss);
+        document.getElementById('detailStopLoss').textContent = formatInr(sig.stop_loss);
+        document.getElementById('detailTarget1').textContent = formatInr(sig.target_1);
+        document.getElementById('detailTarget2').textContent = formatInr(sig.target_2);
+        document.getElementById('detailQualityScore').textContent = qScore + ' / 100';
+
+        const bdContainer = document.getElementById('detailScoreBreakdown');
+        clearChildren(bdContainer);
+        const bd = sig.score_breakdown || {};
+        const norm = bd.features_normalized || {};
+        const raw = bd.raw_inputs || {};
+        const bdItems = [
+          ['RVOL', raw.rvol !== undefined && raw.rvol !== null ? (Number(raw.rvol).toFixed(2) + 'x (norm ' + Number(norm.rvol || 0).toFixed(2) + ')') : 'N/A'],
+          ['VWAP Dist (ATR)', raw.vwap_dist_atr !== undefined && raw.vwap_dist_atr !== null ? (Number(raw.vwap_dist_atr).toFixed(2) + ' ATR') : 'N/A'],
+          ['Displacement', raw.displacement_atr !== undefined && raw.displacement_atr !== null ? (Number(raw.displacement_atr).toFixed(2) + ' ATR') : 'N/A'],
+          ['Market Breadth', bd.breadth_available ? ('Aligned ' + Math.round(Number(raw.breadth_aligned_ratio || 0) * 100) + '%') : 'Unavailable (Renormalized)']
+        ];
+        bdItems.forEach(function(pair) {
+          const item = el('div', 'flex items-center justify-between bg-slate-950/60 px-2 py-1 rounded border border-slate-800/80');
+          item.appendChild(el('span', 'text-slate-400', pair[0]));
+          item.appendChild(el('span', 'text-slate-200 font-semibold', pair[1]));
+          bdContainer.appendChild(item);
+        });
+
+        const cap = parseFloat(document.getElementById('inputCapital').value) || 150000;
+        const riskPct = parseFloat(document.getElementById('inputRiskPct').value) || 1.0;
+        const riskBudget = cap * (riskPct / 100.0);
+        const riskPerUnit = Math.max(0.5, Math.abs(Number(sig.entry_price || 0) - Number(sig.stop_loss || 0)));
+        const customQty = Math.max(1, Math.floor(riskBudget / riskPerUnit));
+
+        document.getElementById('detailQty').textContent =
+          (sig.position_type || 'POSITION') + ' • Persisted Qty: ' + (sig.position_qty ?? '--') + ' (Preview @ ' + riskPct + '%: ' + customQty + ')';
+        document.getElementById('detailRiskAndCharges').textContent =
+          'Risk: ' + formatInr(sig.capital_risk_inr) + ' | Est. NSE Charges: ' + formatInr(sig.est_charges_inr);
+        document.getElementById('detailTimestampAndBroker').textContent =
+          (sig.timestamp || '--') + ' IST • ' + (sig.broker || '--');
+        document.getElementById('detailRationale').textContent = sig.rationale || 'No rationale text provided.';
+
+        // Plot verified signal price levels on #signalPriceChart
+        const ctx = document.getElementById('signalPriceChart').getContext('2d');
+        if (priceChartInstance) {
+          priceChartInstance.destroy();
+        }
+        const levelLabels = ['Stop-Loss (S1)', 'Invalidation', 'Zone Low', 'Entry Price', 'Zone High', 'Target 1 (T1)', 'Target 2 (T2)'];
+        const levelValues = [
+          Number(sig.stop_loss || 0),
+          Number(sig.invalidation_level ?? sig.stop_loss ?? 0),
+          Number(sig.entry_zone_low || sig.entry_price || 0),
+          Number(sig.entry_price || 0),
+          Number(sig.entry_zone_high || sig.entry_price || 0),
+          Number(sig.target_1 || 0),
+          Number(sig.target_2 || 0)
+        ];
+        const barColors = [
+          'rgba(244, 63, 94, 0.8)',
+          'rgba(245, 158, 11, 0.8)',
+          'rgba(148, 163, 184, 0.7)',
+          'rgba(255, 255, 255, 0.9)',
+          'rgba(148, 163, 184, 0.7)',
+          'rgba(16, 185, 129, 0.85)',
+          'rgba(6, 182, 212, 0.85)'
+        ];
+
+        priceChartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: levelLabels,
+            datasets: [
+              {
+                label: (sig.instrument_label || sig.symbol || 'Signal') + ' Level Price (₹)',
+                data: levelValues,
+                backgroundColor: barColors,
+                borderRadius: 4
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: '#94a3b8', font: { size: 10 } }
+              }
+            },
+            scales: {
+              x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(51,65,85,0.25)' } },
+              y: {
+                beginAtZero: false,
+                ticks: { color: '#94a3b8', font: { size: 10 } },
+                grid: { color: 'rgba(51,65,85,0.25)' }
+              }
+            }
+          }
+        });
+      }
+
+      // ====================================================================
+      // 6. OPTION APEX & OI SNAPSHOT HISTORY (Connected to GET /api/oi-snapshots)
+      // ====================================================================
+      async function refreshHeaderIndexPills() {
+        const seq = ++state.reqSeq.headerIndexes;
+        try {
+          const [niftyRes, bnfRes] = await Promise.all([
+            apiClient.getOiSnapshots({ index_symbol: 'NIFTY', limit: 1, offset: 0 }),
+            apiClient.getOiSnapshots({ index_symbol: 'BANKNIFTY', limit: 1, offset: 0 })
+          ]);
+          if (seq !== state.reqSeq.headerIndexes) return;
+
+          const nSnap = (niftyRes && Array.isArray(niftyRes.items) && niftyRes.items[0]) || null;
+          if (nSnap) {
+            document.getElementById('headerNiftySpot').textContent = Number(nSnap.spot).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const nTimeShort = String(nSnap.snapshot_timestamp || '').slice(11, 16) || '--';
+            document.getElementById('headerNiftyMeta').textContent = 'PCR ' + Number(nSnap.pcr).toFixed(2) + ' • ' + nTimeShort + ' IST [' + nSnap.data_mode + ']';
+          } else {
+            document.getElementById('headerNiftySpot').textContent = 'No Snapshot';
+            document.getElementById('headerNiftyMeta').textContent = 'Run Scan';
+          }
+
+          const bSnap = (bnfRes && Array.isArray(bnfRes.items) && bnfRes.items[0]) || null;
+          if (bSnap) {
+            document.getElementById('headerBankNiftySpot').textContent = Number(bSnap.spot).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            const bTimeShort = String(bSnap.snapshot_timestamp || '').slice(11, 16) || '--';
+            document.getElementById('headerBankNiftyMeta').textContent = 'PCR ' + Number(bSnap.pcr).toFixed(2) + ' • ' + bTimeShort + ' IST [' + bSnap.data_mode + ']';
+          } else {
+            document.getElementById('headerBankNiftySpot').textContent = 'No Snapshot';
+            document.getElementById('headerBankNiftyMeta').textContent = 'Run Scan';
+          }
+        } catch (err) {
+          // Handled by health error banner
+        }
+      }
+
+      function renderOptionApexCapabilityBanner() {
+        const badge = document.getElementById('optionApexCapabilityBadge');
+        const text = document.getElementById('optionApexCapabilityText');
+        const scripEl = document.getElementById('optionApexScripMasterBadge');
+        if (!badge || !text || !scripEl) return;
+
+        const broker = (state.health && state.health.broker) || {};
+        const oa = broker.option_apex || {};
+        const scrip = broker.scrip_master || {};
+        const idxInfo = (oa.indices && oa.indices[state.selectedFoIndex]) || {};
+        const st = idxInfo.status || oa.overall_status || 'UNKNOWN';
+
+        if (scrip.status && scrip.status !== 'NOT_APPLICABLE') {
+          const agePart = (scrip.file_age_hours !== null && scrip.file_age_hours !== undefined) ? (' • age ' + scrip.file_age_hours + 'h') : '';
+          scripEl.textContent = 'Scrip Master: ' + scrip.status + ' (' + (scrip.index_options_loaded ?? 0) + ' opt contracts' + agePart + ')';
+        } else {
+          scripEl.textContent = 'Scrip Master: ' + (scrip.status || 'N/A');
+        }
+
+        if (st === 'SIMULATED_READY') {
+          badge.textContent = 'SIMULATED_READY';
+          badge.className = 'px-2 py-0.5 rounded font-bold mono bg-amber-500/20 text-amber-300 border border-amber-500/40';
+          text.textContent = (idxInfo.reason || 'Simulated option chain active.') + ' [SIMULATED DATA]';
+        } else if (st === 'READY') {
+          if (broker.connection_state === 'CONNECTED_VERIFIED') {
+            badge.textContent = 'LIVE VERIFIED • READY';
+            badge.className = 'px-2 py-0.5 rounded font-bold mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+          } else {
+            badge.textContent = 'CONFIGURED (UNVERIFIED) • BASELINE READY';
+            badge.className = 'px-2 py-0.5 rounded font-bold mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/40';
+          }
+          const baseDate = idxInfo.baseline_session_date ? ('Prior-session baseline: ' + idxInfo.baseline_session_date + ' (' + (idxInfo.paired_strikes_ready ?? 0) + ' pairs) • ') : '';
+          text.textContent = baseDate + (idxInfo.reason || 'Option Apex ready.');
+        } else {
+          badge.textContent = st;
+          badge.className = 'px-2 py-0.5 rounded font-bold mono bg-rose-500/20 text-rose-300 border border-rose-500/40';
+          const fallbackNote = oa.other_strategies_operational ? ' (Strategies 1, 2, 4 & 5 remain operational on valid live candles.)' : '';
+          text.textContent = (idxInfo.reason || 'Option Apex unavailable due to missing/stale OI baseline or Scrip Master.') + fallbackNote;
+        }
+      }
+
+      async function loadOiSnapshots() {
+        renderOptionApexCapabilityBanner();
+        const banner = document.getElementById('oiSnapshotStateBanner');
+        const expiryVal = (document.getElementById('filterOiExpiry').value || '').trim();
+        const modeVal = document.getElementById('filterOiDataMode').value;
+
+        if (expiryVal && !/^\d{4}-\d{2}-\d{2}$/.test(expiryVal)) {
+          showToast('Expiry filter must be in YYYY-MM-DD format.', true);
+          return;
+        }
+
+        const params = {
+          index_symbol: state.selectedFoIndex,
+          limit: 20,
+          offset: 0
+        };
+        if (expiryVal) params.expiry = expiryVal;
+        if (modeVal && modeVal !== 'ALL') params.data_mode = modeVal;
+
+        const seq = ++state.reqSeq.oi;
+        banner.classList.remove('hidden');
+        banner.textContent = 'Loading persisted OI snapshots for ' + state.selectedFoIndex + ' from GET /api/oi-snapshots...';
+
+        try {
+          const res = await apiClient.getOiSnapshots(params);
+          if (seq !== state.reqSeq.oi) return;
+          if (!res || !Array.isArray(res.items)) {
+            throw new Error('Malformed /api/oi-snapshots response.');
+          }
+          state.oiSnapshots = res.items;
+          state.selectedSnapshotIdx = 0;
+          populateSnapshotSelector(res.items);
+
+          if (res.items.length === 0) {
+            banner.classList.remove('hidden');
+            banner.textContent = 'No persisted OI snapshots found for ' + state.selectedFoIndex + '. Click "⚡ Scan Market Now" to capture and persist option-chain snapshots.';
+            renderEmptyOptionApex();
+            return;
+          }
+          banner.classList.add('hidden');
+          renderOptionApexSnapshot(res.items[0]);
+        } catch (err) {
+          if (seq !== state.reqSeq.oi) return;
+          state.oiSnapshots = [];
+          banner.classList.remove('hidden');
+          banner.textContent = 'Error loading OI snapshots: ' + (err && err.message ? err.message : 'API error');
+          renderEmptyOptionApex();
+        }
+      }
+
+      function populateSnapshotSelector(items) {
+        const sel = document.getElementById('selectOiSnapshotHistory');
+        clearChildren(sel);
+        if (!items || items.length === 0) {
+          sel.appendChild(el('option', '', 'No snapshots available'));
+          return;
+        }
+        items.forEach(function(snap, idx) {
+          const opt = el(
+            'option',
+            '',
+            '#' + snap.id + ' • ' + snap.snapshot_timestamp + ' IST [' + snap.data_mode + '] (PCR ' + Number(snap.pcr).toFixed(2) + ')'
+          );
+          opt.value = String(idx);
+          sel.appendChild(opt);
+        });
+      }
+
+      function renderEmptyOptionApex() {
+        document.getElementById('foDataModeBadge').textContent = '--';
+        document.getElementById('foPcrValue').textContent = '--';
+        document.getElementById('foPcrBias').textContent = 'No Snapshot';
+        document.getElementById('foTotalOiSubtext').textContent = 'CE OI: -- | PE OI: --';
+        document.getElementById('foComparisonStatus').textContent = 'NO_SNAPSHOT';
+        document.getElementById('foComparisonSubtext').textContent = 'No persisted snapshot selected';
+        document.getElementById('foSpotAndAtm').textContent = '--';
+        document.getElementById('foExpiryAndMeasure').textContent = 'Expiry: -- | Max Pain: Unavailable in API';
+        document.getElementById('foTopPickContract').textContent = 'No Active Signal';
+        document.getElementById('foTopPickLevels').textContent = '--';
+        document.getElementById('foSnapshotTimestampLabel').textContent = '--';
+        clearChildren(document.getElementById('optionChainTableBody'));
+        if (oiChartInstance) {
+          oiChartInstance.destroy();
+          oiChartInstance = null;
+        }
+      }
+
+      function renderOptionApexSnapshot(snap) {
+        if (!snap) {
+          renderEmptyOptionApex();
+          return;
+        }
+        const isSim = Boolean(snap.is_simulated || snap.data_mode === 'SIMULATED');
+        const modeBadge = document.getElementById('foDataModeBadge');
+        modeBadge.textContent = isSim ? 'SIMULATED' : 'LIVE';
+        modeBadge.className = isSim
+          ? 'text-[10px] font-bold mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40'
+          : 'text-[10px] font-bold mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+
+        const pcr = Number(snap.pcr || 0);
+        document.getElementById('foPcrValue').textContent = pcr.toFixed(2);
+        const pcrBiasEl = document.getElementById('foPcrBias');
+        if (pcr >= 1.10) {
+          pcrBiasEl.textContent = 'Bullish Put Floor (&ge;1.10)';
+          pcrBiasEl.className = 'text-xs px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 font-semibold';
+        } else if (pcr <= 0.85) {
+          pcrBiasEl.textContent = 'Bearish Call Wall (&le;0.85)';
+          pcrBiasEl.className = 'text-xs px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 font-semibold';
+        } else {
+          pcrBiasEl.textContent = 'Neutral PCR (0.85–1.10)';
+          pcrBiasEl.className = 'text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-semibold';
+        }
+
+        document.getElementById('foTotalOiSubtext').textContent =
+          'CE OI: ' + Number(snap.total_ce_oi || 0).toLocaleString('en-IN') +
+          ' | PE OI: ' + Number(snap.total_pe_oi || 0).toLocaleString('en-IN');
+
+        // Rolling intraday comparison card
+        const diff = snap.intraday_oi_diff || {};
+        const compStatus = diff.comparison_status || 'NO_PRIOR_SNAPSHOT';
+        const compEl = document.getElementById('foComparisonStatus');
+        const compSub = document.getElementById('foComparisonSubtext');
+        compEl.textContent = compStatus;
+        if (compStatus === 'VALID_INTRADAY_DIFF') {
+          compEl.className = 'text-sm font-bold mono text-emerald-400';
+          compSub.textContent =
+            'Δt ' + (diff.elapsed_minutes ?? '--') + 'm vs ' + (diff.previous_snapshot_timestamp || '--') +
+            ' | ΔCE: ' + formatLakhs(diff.total_ce_oi_delta) +
+            ' | ΔPE: ' + formatLakhs(diff.total_pe_oi_delta) +
+            ' | ΔPCR: ' + (diff.pcr_delta !== null && diff.pcr_delta !== undefined ? Number(diff.pcr_delta).toFixed(3) : '--');
+        } else if (compStatus === 'STALE_PRIOR_SNAPSHOT') {
+          compEl.className = 'text-sm font-bold mono text-rose-400';
+          compSub.textContent = 'Prior snapshot (' + (diff.previous_snapshot_timestamp || '--') + ') is stale (>60m or prior day); deltas suppressed.';
+        } else {
+          compEl.className = 'text-sm font-bold mono text-amber-300';
+          compSub.textContent = 'First snapshot for (' + snap.index_symbol + ', ' + snap.expiry + ', ' + snap.data_mode + '). Run another scan within 60m to compute rolling delta.';
+        }
+
+        document.getElementById('foSpotAndAtm').textContent =
+          'Spot: ' + formatInr(snap.spot) + ' | ATM: ' + (snap.atm_strike || '--');
+        document.getElementById('foExpiryAndMeasure').textContent =
+          'Expiry: ' + (snap.expiry || '--') + ' | Measure: ' + (snap.oi_change_measure || '--') + ' | Max Pain: Unavailable';
+        document.getElementById('foChartMeasureTag').textContent = snap.oi_change_measure || '';
+        document.getElementById('foSnapshotTimestampLabel').textContent =
+          'Snapshot: ' + (snap.snapshot_timestamp || '--') + ' IST • ' + (snap.broker || '--');
+
+        // Matching Option Apex signal from loaded signals
+        const matchingSig = (state.signals || []).find(function(s) {
+          return s.symbol === snap.index_symbol && s.strategy_id === 'strat_3_option_apex_oi';
+        });
+        if (matchingSig) {
+          document.getElementById('foTopPickContract').textContent =
+            matchingSig.instrument_label + ' [' + matchingSig.data_mode + ']';
+          document.getElementById('foTopPickLevels').textContent =
+            'Entry ' + formatInr(matchingSig.entry_price) +
+            ' | SL ' + formatInr(matchingSig.stop_loss) +
+            ' | T1 ' + formatInr(matchingSig.target_1);
+        } else {
+          document.getElementById('foTopPickContract').textContent = 'No Active Option Apex Signal';
+          document.getElementById('foTopPickLevels').textContent = 'Current OI/PCR/VWAP conditions did not trigger Strategy 3';
+        }
+
+        // Render strike table safely using textContent
+        const tbody = document.getElementById('optionChainTableBody');
+        clearChildren(tbody);
+        const strikes = Array.isArray(snap.strikes) ? snap.strikes : [];
+        strikes.forEach(function(r) {
+          const isAtm = Number(r.strike) === Number(snap.atm_strike);
+          const tr = el('tr', isAtm ? 'bg-emerald-950/25' : '');
+
+          const ceChg = Number(r.ce_oi_change || 0);
+          const peChg = Number(r.pe_oi_change || 0);
+
+          tr.appendChild(el('td', 'py-2 px-2 text-slate-300', Number(r.ce_oi || 0).toLocaleString('en-IN')));
+          tr.appendChild(el('td', 'py-2 px-2 ' + (ceChg < 0 ? 'text-emerald-400 font-semibold' : 'text-rose-400'), formatLakhs(ceChg)));
+          tr.appendChild(el('td', 'py-2 px-2 text-white font-semibold', formatInr(r.ce_ltp) + ' (' + Number(r.ce_iv || 0).toFixed(1) + '%)'));
+          tr.appendChild(
+            el(
+              'td',
+              'py-2 px-2 text-center font-bold ' + (isAtm ? 'text-emerald-300 bg-emerald-500/15' : 'text-amber-300 bg-slate-900'),
+              String(r.strike) + (isAtm ? ' ★ ATM' : '')
+            )
+          );
+          tr.appendChild(el('td', 'py-2 px-2 text-white font-semibold', formatInr(r.pe_ltp) + ' (' + Number(r.pe_iv || 0).toFixed(1) + '%)'));
+          tr.appendChild(el('td', 'py-2 px-2 ' + (peChg > 0 ? 'text-emerald-400 font-semibold' : 'text-rose-400'), formatLakhs(peChg)));
+          tr.appendChild(el('td', 'py-2 px-2 text-slate-300', Number(r.pe_oi || 0).toLocaleString('en-IN')));
+
+          let activityTag = 'Balanced OI';
+          if (ceChg < 0 && peChg > 0) activityTag = '▲ Call Unwinding + Put Writing';
+          else if (peChg < 0 && ceChg > 0) activityTag = '▼ Put Unwinding + Call Writing';
+          else if (ceChg > 0 && peChg > 0) activityTag = 'Straddle / Both Writing';
+          tr.appendChild(el('td', 'py-2 px-2 text-[11px] font-sans text-cyan-300', activityTag));
+          tbody.appendChild(tr);
+        });
+
+        // Render Strike OI Change Chart
+        const ctx = document.getElementById('optionOiChart').getContext('2d');
+        if (oiChartInstance) oiChartInstance.destroy();
+        oiChartInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: strikes.map(function(s) { return String(s.strike); }),
+            datasets: [
+              {
+                label: 'Call OI Change (Lakhs)',
+                data: strikes.map(function(s) { return +(Number(s.ce_oi_change || 0) / 100000).toFixed(2); }),
+                backgroundColor: 'rgba(244, 63, 94, 0.75)'
+              },
+              {
+                label: 'Put OI Change (Lakhs)',
+                data: strikes.map(function(s) { return +(Number(s.pe_oi_change || 0) / 100000).toFixed(2); }),
+                backgroundColor: 'rgba(16, 185, 129, 0.75)'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { labels: { color: '#94a3b8', font: { size: 10 } } }
+            },
+            scales: {
+              x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(51,65,85,0.2)' } },
+              y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(51,65,85,0.2)' } }
+            }
+          }
+        });
+      }
+
+      // ====================================================================
+      // 7. SCAN HISTORY TABLE (Connected to GET /api/scans)
+      // ====================================================================
+      async function loadScanRuns() {
+        const tbody = document.getElementById('scanRunsTableBody');
+        const info = document.getElementById('scansPaginationInfo');
+        const statusFilter = document.getElementById('filterScanStatus').value;
+
+        const params = {
+          limit: state.scansLimit,
+          offset: state.scansOffset
+        };
+        if (statusFilter && statusFilter !== 'ALL') params.status = statusFilter;
+
+        const seq = ++state.reqSeq.scans;
+        info.textContent = 'Loading scan history...';
+
+        try {
+          const res = await apiClient.getScans(params);
+          if (seq !== state.reqSeq.scans) return;
+          if (!res || !Array.isArray(res.items)) {
+            throw new Error('Malformed /api/scans response.');
+          }
+          state.scans = res.items;
+          state.scansTotal = Number.isFinite(Number(res.total_count)) ? Number(res.total_count) : res.items.length;
+
+          // Update header breadth bar from most recent completed scan run with market_breadth
+          const latestWithBreadth = res.items.find(function(r) { return r.market_breadth && (r.market_breadth.advances || r.market_breadth.declines); });
+          if (latestWithBreadth) {
+            updateBreadthRibbon(latestWithBreadth.market_breadth);
+          }
+
+          renderScanRunsTable();
+        } catch (err) {
+          if (seq !== state.reqSeq.scans) return;
+          clearChildren(tbody);
+          info.textContent = 'Error loading scan runs';
+          const tr = el('tr', '');
+          const td = el('td', 'py-4 px-3 text-rose-300 text-center', 'Failed to load scan runs: ' + (err && err.message ? err.message : 'API error'));
+          td.colSpan = 7;
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        }
+      }
+
+      function updateBreadthRibbon(mb) {
+        if (!mb) return;
+        const adv = Number(mb.advances || 0);
+        const dec = Number(mb.declines || 0);
+        const total = adv + dec;
+        const pct = total > 0 ? Math.round((adv / total) * 100) : 0;
+        document.getElementById('breadthAdv').textContent = adv + ' Adv';
+        document.getElementById('breadthDec').textContent = dec + ' Dec';
+        document.getElementById('breadthBarFill').style.width = pct + '%';
+      }
+
+      function renderScanRunsTable() {
+        const tbody = document.getElementById('scanRunsTableBody');
+        const info = document.getElementById('scansPaginationInfo');
+        const prevBtn = document.getElementById('btnPrevScansPage');
+        const nextBtn = document.getElementById('btnNextScansPage');
+
+        clearChildren(tbody);
+        const items = state.scans || [];
+        const total = state.scansTotal || 0;
+        const startIdx = total === 0 ? 0 : state.scansOffset + 1;
+        const endIdx = Math.min(total, state.scansOffset + items.length);
+        info.textContent = total > 0 ? ('Showing ' + startIdx + '–' + endIdx + ' of ' + total + ' scan runs') : '0 scan runs recorded';
+        prevBtn.disabled = state.scansOffset <= 0;
+        nextBtn.disabled = (state.scansOffset + state.scansLimit) >= total;
+
+        if (items.length === 0) {
+          const tr = el('tr', '');
+          const td = el('td', 'py-4 px-3 text-slate-400 text-center font-sans', 'No scan runs recorded matching this filter.');
+          td.colSpan = 7;
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+          return;
+        }
+
+        items.forEach(function(r) {
+          const tr = el('tr', '');
+          tr.appendChild(el('td', 'py-2 px-2 text-slate-200', (r.run_id || '--') + ' • ' + (r.started_at_ist || '--')));
+
+          let statusBadgeCls = 'px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300';
+          let statusLabel = r.status || 'UNKNOWN';
+          if (r.status === 'COMPLETED') {
+            statusBadgeCls = 'px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+          } else if (r.status === 'COMPLETED_EMPTY') {
+            statusBadgeCls = 'px-2 py-0.5 rounded text-[10px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40';
+            statusLabel = 'COMPLETED_EMPTY (0 Signals)';
+          } else if (r.status === 'FAILED') {
+            statusBadgeCls = 'px-2 py-0.5 rounded text-[10px] font-bold bg-rose-500/25 text-rose-300 border border-rose-500/40';
+          } else if (r.status === 'SKIPPED_OVERLAP') {
+            statusBadgeCls = 'px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
+          }
+          const statusTd = el('td', 'py-2 px-2');
+          statusTd.appendChild(el('span', statusBadgeCls, statusLabel));
+          tr.appendChild(statusTd);
+
+          tr.appendChild(el('td', 'py-2 px-2 text-slate-300', r.duration_ms !== null && r.duration_ms !== undefined ? (Number(r.duration_ms).toFixed(1) + ' ms') : '--'));
+          tr.appendChild(
+            el(
+              'td',
+              'py-2 px-2 text-slate-200',
+              (r.total_signals ?? 0) + ' total (' + (r.persisted_signals ?? 0) + ' new / ' + (r.duplicate_signals ?? 0) + ' dup)'
+            )
+          );
+          tr.appendChild(el('td', 'py-2 px-2 text-slate-300', String(r.oi_snapshots_saved ?? 0)));
+          tr.appendChild(el('td', 'py-2 px-2 text-slate-300', '[' + (r.data_mode || '--') + '] ' + (r.broker || '--')));
+          tr.appendChild(
+            el(
+              'td',
+              'py-2 px-2 text-[11px] font-sans ' + (r.error_message ? 'text-rose-300' : 'text-slate-400'),
+              r.error_message ? ((r.error_type || 'Error') + ': ' + r.error_message) : 'OK'
+            )
+          );
+          tbody.appendChild(tr);
+        });
+      }
+
+      // ====================================================================
+      // 8. MANUAL SCAN ACTION (POST /api/scan) & NON-SCANNING REFRESH
+      // ====================================================================
+      async function refreshAllDashboardData() {
+        await Promise.all([
+          loadHealthAndConfig(),
+          loadSignals(),
+          loadScanRuns(),
+          refreshHeaderIndexPills(),
+          loadOiSnapshots()
+        ]);
+      }
+
+      async function triggerManualScan() {
+        if (state.scanInFlight) return;
+        state.scanInFlight = true;
+        const btn = document.getElementById('btnRunLiveScan');
+        const btnText = document.getElementById('btnRunLiveScanText');
+        btn.disabled = true;
+        btnText.textContent = '⏳ Scanning Market...';
+
+        try {
+          const res = await apiClient.triggerScan();
+          if (res && res.market_breadth) {
+            updateBreadthRibbon(res.market_breadth);
+          }
+          const scanStatus = (res && res.scan_status) || 'COMPLETED';
+          const totalSigs = (res && res.total_signals) ?? 0;
+          const newSigs = (res && res.persisted_signals) ?? 0;
+          if (scanStatus === 'COMPLETED_EMPTY') {
+            showToast('Scan completed cleanly with 0 signals triggered (COMPLETED_EMPTY).', false);
+          } else {
+            showToast('Scan completed (' + scanStatus + '): ' + totalSigs + ' signals (' + newSigs + ' newly persisted).', false);
+          }
+          state.signalsOffset = 0;
+          state.scansOffset = 0;
+          await refreshAllDashboardData();
+        } catch (err) {
+          if (err && err.status === 409) {
+            showToast('Scan skipped (HTTP 409 SKIPPED_OVERLAP): A scan is already in progress.', true);
+          } else if (err && err.status === 502) {
+            showToast('Live Broker Error (HTTP 502): ' + err.message, true);
+          } else if (err && err.status === 400) {
+            showToast('Configuration Error (HTTP 400): ' + err.message, true);
+          } else {
+            showToast('Manual scan failed: ' + (err && err.message ? err.message : 'Network error'), true);
+          }
+          await loadHealthAndConfig();
+          await loadScanRuns();
+        } finally {
+          state.scanInFlight = false;
+          btn.disabled = false;
+          btnText.textContent = '⚡ Scan Market Now';
+        }
+      }
+
+      // ====================================================================
+      // 9. OFFLINE MATHEMATICAL FRICTION SIMULATOR (TAB 3)
+      // ====================================================================
+      function runBacktestSimulation() {
+        const stratKey = document.getElementById('btStrategySelect').value;
+        const startCap = parseFloat(document.getElementById('btCapital').value) || 150000;
+        const numTrades = Math.min(200, Math.max(10, parseInt(document.getElementById('btTrades').value, 10) || 50));
+
+        const profiles = {
+          vwap:        { winRate: 0.65, rr: 1.8, chargePerTrade: 118 },
+          ob:          { winRate: 0.61, rr: 2.2, chargePerTrade: 122 },
+          apex:        { winRate: 0.60, rr: 1.8, chargePerTrade: 68 },
+          orb:         { winRate: 0.54, rr: 1.8, chargePerTrade: 120 },
+          st_filtered: { winRate: 0.51, rr: 2.0, chargePerTrade: 115 },
+          st_raw:      { winRate: 0.357, rr: 1.3, chargePerTrade: 128 }
+        };
+        const p = profiles[stratKey] || profiles.vwap;
+        const riskUnit = startCap * 0.01;
+
+        let grossEq = startCap;
+        let netEq = startCap;
+        const grossSeries = [startCap];
+        const netSeries = [startCap];
+        const labels = ['Start'];
+        let grossWins = 0;
+        let grossLoss = 0;
+
+        for (let i = 1; i <= numTrades; i++) {
+          const winFlag = (Math.floor(i * p.winRate) > Math.floor((i - 1) * p.winRate));
+          const delta = winFlag ? riskUnit * p.rr : -riskUnit;
+          if (delta > 0) grossWins += delta;
+          else grossLoss += Math.abs(delta);
+          grossEq += delta;
+          netEq += (delta - p.chargePerTrade);
+          grossSeries.push(Math.round(grossEq));
+          netSeries.push(Math.round(netEq));
+          labels.push('T' + i);
+        }
+
+        const totalGross = Math.round(grossEq - startCap);
+        const totalCharges = Math.round(numTrades * p.chargePerTrade);
+        const totalNet = Math.round(netEq - startCap);
+        const roiPct = ((totalNet / startCap) * 100).toFixed(1);
+        const pf = (grossWins / Math.max(1, grossLoss)).toFixed(2);
+
+        const grossEl = document.getElementById('btGrossPnl');
+        grossEl.textContent = (totalGross >= 0 ? '+₹' : '-₹') + Math.abs(totalGross).toLocaleString('en-IN');
+        grossEl.className = 'text-base font-bold mono ' + (totalGross >= 0 ? 'text-emerald-400' : 'text-rose-400');
+
+        document.getElementById('btCharges').textContent = '-₹' + totalCharges.toLocaleString('en-IN');
+
+        const netEl = document.getElementById('btNetPnl');
+        netEl.textContent = (totalNet >= 0 ? '+₹' : '-₹') + Math.abs(totalNet).toLocaleString('en-IN');
+        netEl.className = 'text-base font-bold mono ' + (totalNet >= 0 ? 'text-emerald-400' : 'text-rose-400');
+
+        document.getElementById('btRoiPf').textContent = (totalNet >= 0 ? '+' : '') + roiPct + '% (PF ' + pf + ')';
+
+        const ctx = document.getElementById('backtestEquityChart').getContext('2d');
+        if (btChartInstance) btChartInstance.destroy();
+        btChartInstance = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: 'Hypothetical Gross Equity (₹) [SIMULATED]',
+                data: grossSeries,
+                borderColor: '#38bdf8',
+                borderDash: [4, 4],
+                borderWidth: 2,
+                pointRadius: 0,
+                tension: 0.2
+              },
+              {
+                label: 'Hypothetical Net Equity After NSE Charges (₹) [SIMULATED]',
+                data: netSeries,
+                borderColor: totalNet >= 0 ? '#10b981' : '#f43f5e',
+                backgroundColor: totalNet >= 0 ? 'rgba(16, 185, 129, 0.12)' : 'rgba(244, 63, 94, 0.12)',
+                borderWidth: 2.5,
+                fill: true,
+                pointRadius: 0,
+                tension: 0.2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { labels: { color: '#94a3b8', font: { size: 10 } } }
+            },
+            scales: {
+              x: { ticks: { color: '#64748b', font: { size: 10 } }, grid: { color: 'rgba(51,65,85,0.2)' } },
+              y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(51,65,85,0.2)' } }
+            }
+          }
+        });
+      }
+
+      // ====================================================================
+      // 10. POLLING TIMER CLEANUP & EVENT LISTENERS
+      // ====================================================================
+      function configureAutoRefreshTimer(seconds) {
+        if (state.refreshTimerId !== null) {
+          clearInterval(state.refreshTimerId);
+          state.refreshTimerId = null;
+        }
+        const sec = parseInt(seconds, 10) || 0;
+        if (sec >= 10) {
+          state.refreshTimerId = setInterval(function() {
+            // Read-only refresh ONLY — never triggers a scan!
+            refreshAllDashboardData();
+          }, sec * 1000);
+        }
+      }
+
+      function switchTab(tabId) {
+        document.querySelectorAll('.tab-panel').forEach(function(p) {
+          p.classList.toggle('hidden', p.id !== tabId);
+        });
+        document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
+          const active = btn.getAttribute('data-tab') === tabId;
+          btn.className = active
+            ? 'nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500'
+            : 'nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500';
+        });
+        if (tabId === 'tab-option-apex') {
+          if (state.oiSnapshots.length > 0) renderOptionApexSnapshot(state.oiSnapshots[state.selectedSnapshotIdx] || state.oiSnapshots[0]);
+          else loadOiSnapshots();
+        }
+        if (tabId === 'tab-strategies') {
+          runBacktestSimulation();
+        }
+      }
+
+      function initEventListeners() {
+        document.getElementById('inputApiBaseUrl').value = apiClient.baseUrl;
+        document.getElementById('inputApiBaseUrlQuick').value = apiClient.baseUrl;
+
+        document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            switchTab(btn.getAttribute('data-tab'));
+          });
+        });
+
+        document.getElementById('btnRefreshDashboard').addEventListener('click', function() {
+          refreshAllDashboardData();
+          showToast('Refreshed dashboard data from backend (no scan triggered).', false);
+        });
+
+        document.getElementById('btnRunLiveScan').addEventListener('click', function() {
+          triggerManualScan();
+        });
+
+        ['filterSegment', 'filterStrategy', 'filterDirection', 'filterDataMode', 'selectPageLimit'].forEach(function(id) {
+          document.getElementById(id).addEventListener('change', function() {
+            state.signalsOffset = 0;
+            loadSignals();
+          });
+        });
+
+        let symDebounce = null;
+        document.getElementById('searchSymbol').addEventListener('input', function() {
+          if (symDebounce) clearTimeout(symDebounce);
+          symDebounce = setTimeout(function() {
+            state.signalsOffset = 0;
+            loadSignals();
+          }, 300);
+        });
+
+        document.getElementById('btnResetSignalFilters').addEventListener('click', function() {
+          document.getElementById('filterSegment').value = 'ALL';
+          document.getElementById('filterStrategy').value = 'ALL';
+          document.getElementById('filterDirection').value = 'ALL';
+          document.getElementById('filterDataMode').value = 'ALL';
+          document.getElementById('searchSymbol').value = '';
+          state.signalsOffset = 0;
+          loadSignals();
+        });
+
+        ['inputCapital', 'inputRiskPct'].forEach(function(id) {
+          document.getElementById(id).addEventListener('input', function() {
+            renderSignalCards();
+          });
+        });
+
+        document.getElementById('btnPrevSignalsPage').addEventListener('click', function() {
+          state.signalsOffset = Math.max(0, state.signalsOffset - state.signalsLimit);
+          loadSignals();
+        });
+        document.getElementById('btnNextSignalsPage').addEventListener('click', function() {
+          state.signalsOffset += state.signalsLimit;
+          loadSignals();
+        });
+
+        document.getElementById('btnCopySignalSummary').addEventListener('click', function() {
+          const sig = (state.signals || []).find(function(s) {
+            return (s.dedup_key || String(s.id)) === state.selectedSignalKey;
+          }) || state.signals[0];
+          if (!sig) {
+            showToast('No signal selected to copy.', true);
+            return;
+          }
+          const summary =
+            sig.instrument_label + ' (' + sig.direction + ' | ' + sig.data_mode + ')\n' +
+            'Strategy: ' + sig.strategy_name + ' | Quality: ' + sig.quality_score + '/100\n' +
+            'Entry: ₹' + sig.entry_price + ' | SL: ₹' + sig.stop_loss + ' | Invalidation: ₹' + sig.invalidation_level + '\n' +
+            'T1: ₹' + sig.target_1 + ' | T2: ₹' + sig.target_2 + ' | Timestamp: ' + sig.timestamp + ' IST';
+          copyTextSafe(summary, 'signal levels');
+        });
+
+        // Option Apex controls
+        document.querySelectorAll('.fo-index-btn').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            state.selectedFoIndex = btn.getAttribute('data-fo-index');
+            document.querySelectorAll('.fo-index-btn').forEach(function(b) {
+              const isAct = b.getAttribute('data-fo-index') === state.selectedFoIndex;
+              b.className = isAct
+                ? 'fo-index-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 text-slate-950 transition'
+                : 'fo-index-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 transition';
+            });
+            loadOiSnapshots();
+          });
+        });
+
+        document.getElementById('btnRefreshOiSnapshots').addEventListener('click', function() {
+          loadOiSnapshots();
+        });
+        document.getElementById('filterOiDataMode').addEventListener('change', function() {
+          loadOiSnapshots();
+        });
+        document.getElementById('selectOiSnapshotHistory').addEventListener('change', function(ev) {
+          const idx = parseInt(ev.target.value, 10) || 0;
+          state.selectedSnapshotIdx = idx;
+          if (state.oiSnapshots[idx]) {
+            renderOptionApexSnapshot(state.oiSnapshots[idx]);
+          }
+        });
+
+        // Tab 3 Backtest simulator
+        document.getElementById('btnRunBacktest').addEventListener('click', function() {
+          runBacktestSimulation();
+          showToast('Updated hypothetical statutory friction curve [SIMULATED].', false);
+        });
+
+        // Tab 4 API Base URL & Scan History controls
+        function applyBaseUrlFromInput(inputId) {
+          try {
+            const raw = document.getElementById(inputId).value;
+            const norm = apiClient.setBaseUrl(raw);
+            document.getElementById('inputApiBaseUrl').value = norm;
+            document.getElementById('inputApiBaseUrlQuick').value = norm;
+            showToast('API Base URL set to ' + norm, false);
+            refreshAllDashboardData();
+          } catch (err) {
+            showToast(err.message, true);
+          }
+        }
+        document.getElementById('btnApplyApiBaseUrl').addEventListener('click', function() {
+          applyBaseUrlFromInput('inputApiBaseUrl');
+        });
+        document.getElementById('btnSaveApiUrlQuick').addEventListener('click', function() {
+          applyBaseUrlFromInput('inputApiBaseUrlQuick');
+        });
+
+        document.getElementById('selectAutoRefreshSec').addEventListener('change', function(ev) {
+          configureAutoRefreshTimer(ev.target.value);
+          showToast('Read-only auto-refresh updated.', false);
+        });
+
+        document.getElementById('filterScanStatus').addEventListener('change', function() {
+          state.scansOffset = 0;
+          loadScanRuns();
+        });
+        document.getElementById('btnRefreshScans').addEventListener('click', function() {
+          loadScanRuns();
+        });
+        document.getElementById('btnPrevScansPage').addEventListener('click', function() {
+          state.scansOffset = Math.max(0, state.scansOffset - state.scansLimit);
+          loadScanRuns();
+        });
+        document.getElementById('btnNextScansPage').addEventListener('click', function() {
+          state.scansOffset += state.scansLimit;
+          loadScanRuns();
+        });
+
+        window.addEventListener('beforeunload', function() {
+          if (state.refreshTimerId !== null) {
+            clearInterval(state.refreshTimerId);
+            state.refreshTimerId = null;
+          }
+        });
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        initEventListeners();
+        runBacktestSimulation();
+        configureAutoRefreshTimer(document.getElementById('selectAutoRefreshSec').value);
+        refreshAllDashboardData();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,985 @@
+import json
+import logging
+import os
+import threading
+import urllib.parse
+from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
+from typing import Any, Dict, List, Optional, Tuple
+
+from config import BotConfig, ConfigValidationError
+from brokers import BrokerDataError
+from scanner_engine import IntradayBotEngine, MarketScanScheduler
+from storage import PersistenceError
+
+logger = logging.getLogger("tradepulse.api")
+
+_SERVER_INIT_LOCK = threading.Lock()
+PROJECT_ROOT = os.path.realpath(os.path.dirname(os.path.abspath(__file__)))
+PUBLIC_WEB_DIR = os.path.realpath(os.path.join(PROJECT_ROOT, "public"))
+
+# Configure standard-library ThreadingHTTPServer for concurrent browser Promise.all() bursts
+ThreadingHTTPServer.daemon_threads = True
+ThreadingHTTPServer.allow_reuse_address = True
+ThreadingHTTPServer.request_queue_size = 64
+
+
+class TradePulseThreadingHTTPServer(ThreadingHTTPServer):
+    """
+    Multi-threaded HTTP server based on Python's standard-library `ThreadingHTTPServer`.
+    - Spawns daemon worker threads per request so concurrent browser `Promise.all()` calls
+      (`/api/health`, `/api/config`, `/api/signals`, `/api/scans`, `/api/oi-snapshots`, `/api/oi-baselines`)
+      never block behind one another or behind an active `/api/scan` request.
+    - Expands the TCP listen backlog (`request_queue_size = 64`) so simultaneous connections
+      from Chrome/Edge on Windows never hit `WSAECONNREFUSED` (`Failed to fetch`).
+    """
+    daemon_threads = True
+    allow_reuse_address = True
+    request_queue_size = 64
+
+
+APPROVED_PUBLIC_CONTENT_TYPES: Dict[str, str] = {
+    ".html": "text/html; charset=utf-8",
+    ".css": "text/css; charset=utf-8",
+    ".js": "application/javascript; charset=utf-8",
+    ".svg": "image/svg+xml",
+    ".png": "image/png",
+    ".ico": "image/x-icon",
+}
+
+
+def _parse_int_param(
+    query_params: Dict[str, list],
+    name: str,
+    default: int,
+    min_val: int,
+    max_val: int,
+) -> int:
+    raw_list = query_params.get(name)
+    if not raw_list or raw_list[0] == "":
+        return default
+    try:
+        val = int(raw_list[0])
+    except ValueError as exc:
+        raise ValueError(f"Query parameter '{name}' must be an integer, got {raw_list[0]!r}.") from exc
+    if val < min_val or val > max_val:
+        raise ValueError(f"Query parameter '{name}' must be between {min_val} and {max_val}, got {val}.")
+    return val
+
+
+def _get_str_param(query_params: Dict[str, list], name: str) -> Optional[str]:
+    raw_list = query_params.get(name)
+    if not raw_list or not raw_list[0].strip():
+        return None
+    return raw_list[0].strip()
+
+
+class DashboardRequestHandler(BaseHTTPRequestHandler):
+    """
+    Phase 1D/1E/1F/2B Secure HTTP API & Locked-Down Public Dashboard Handler:
+    - Inherits from `BaseHTTPRequestHandler` (NEVER `SimpleHTTPRequestHandler`) so unrestricted
+      project-directory file serving is completely eliminated.
+    - Never serves `.env`, Python source files (`.py`), SQLite database files (`.db`, `.sqlite`),
+      configuration files, markdown reports, or path-traversal targets.
+    - Only serves explicitly approved static assets located inside `<project_root>/public/`
+      (such as `public/index.html`) when the resolved realpath is strictly inside `public/`
+      with an approved static asset extension and no dotfiles. Otherwise returns a safe JSON 404.
+    - Exposes documented API endpoints:
+      * GET  /api/health       (and /api/v1/health)
+      * GET  /api/scan         (and /api/v1/scan)
+      * POST /api/scan         (and /api/v1/scan)
+      * GET  /api/signals      (and /api/v1/signals)
+      * GET  /api/scans        (and /api/v1/scans)
+      * GET  /api/oi-snapshots (and /api/v1/oi-snapshots)
+      * GET  /api/oi-baselines (and /api/v1/oi-baselines)
+      * GET  /api/config       (and /api/v1/config)
+    """
+    engine: Optional[IntradayBotEngine] = None
+    scheduler: Optional[MarketScanScheduler] = None
+
+    def log_message(self, format: str, *args: Any) -> None:
+        logger.info("%s - %s", self.address_string(), format % args)
+
+    def _ensure_initialized(self) -> None:
+        if self.engine is not None and self.scheduler is not None:
+            return
+        configure_server_runtime()
+
+    def _send_json(self, status_code: int, payload: Dict[str, Any], send_body: bool = True) -> None:
+        body = json.dumps(payload).encode("utf-8")
+        try:
+            self.send_response(status_code)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS")
+            self.send_header("Access-Control-Allow-Headers", "Content-Type, Accept")
+            self.end_headers()
+            if send_body:
+                self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            logger.debug("Client disconnected before JSON response completed.")
+
+    def _try_serve_approved_public_asset(self, raw_path: str, send_body: bool = True) -> bool:
+        """
+        Serves an explicitly approved static file from `<project_root>/public/` ONLY if:
+        1. `<project_root>/public/` exists as a real directory.
+        2. The URL-decoded path contains no null bytes, no backslashes, no '..' segments,
+           and no dotfile segments (e.g., '.env', '.git').
+        3. The file's realpath is strictly inside `<project_root>/public/` and has an
+           allowlisted public extension (`.html`, `.css`, `.js`, `.svg`, `.png`, `.ico`).
+        Returns False for all other paths so the caller emits a safe 404 JSON response.
+        """
+        if not os.path.isdir(PUBLIC_WEB_DIR):
+            return False
+
+        unquoted = urllib.parse.unquote(raw_path or "")
+        if "\x00" in unquoted or "\\" in unquoted:
+            return False
+
+        rel_route = "index.html" if unquoted in ("", "/") else unquoted.lstrip("/")
+        if rel_route.startswith("public/"):
+            rel_route = rel_route[len("public/"):]
+        if not rel_route:
+            rel_route = "index.html"
+
+        segments = [seg for seg in rel_route.split("/") if seg]
+        if not segments:
+            return False
+        for seg in segments:
+            if seg in (".", "..") or seg.startswith("."):
+                return False
+
+        _, ext = os.path.splitext(segments[-1])
+        content_type = APPROVED_PUBLIC_CONTENT_TYPES.get(ext.lower())
+        if content_type is None:
+            return False
+
+        candidate = os.path.realpath(os.path.join(PUBLIC_WEB_DIR, *segments))
+        try:
+            if os.path.commonpath([PUBLIC_WEB_DIR, candidate]) != PUBLIC_WEB_DIR:
+                return False
+        except ValueError:
+            return False
+
+        if not os.path.isfile(candidate):
+            return False
+
+        try:
+            with open(candidate, "rb") as f:
+                data = f.read()
+        except OSError:
+            return False
+
+        try:
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "no-cache")
+            self.send_header("X-Content-Type-Options", "nosniff")
+            self.end_headers()
+            if send_body:
+                self.wfile.write(data)
+        except (BrokenPipeError, ConnectionResetError):
+            logger.debug("Client disconnected before static asset transfer completed.")
+        return True
+
+    def _handle_health(self) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None and self.scheduler is not None
+        broker_info = self.engine.get_broker_status()
+        sched_info = self.scheduler.get_status()
+        db_info: Dict[str, Any]
+        http_code = 200
+
+        if self.engine.store is not None:
+            try:
+                db_info = self.engine.store.check_health()
+            except Exception as exc:
+                db_info = {"status": "ERROR", "error": str(exc)}
+                http_code = 503
+        else:
+            db_info = {"status": "DISABLED"}
+
+        last_scan = None
+        if self.engine.last_scan_summary is not None:
+            s = self.engine.last_scan_summary
+            last_scan = {
+                "run_id": s.get("run_id"),
+                "scan_status": s.get("scan_status"),
+                "started_at_ist": s.get("started_at_ist"),
+                "completed_at_ist": s.get("completed_at_ist"),
+                "duration_ms": s.get("duration_ms"),
+                "total_signals": s.get("total_signals"),
+                "persistence_status": s.get("persistence_status"),
+            }
+
+        overall_status = "ok" if http_code == 200 and broker_info["connection_state"] != "INVALID_CONFIG" else "degraded"
+        from readiness_policy import live_acceptance
+        symbols = [str(m["symbol"]).upper() for m in self.engine.config.equity_watchlist]
+        clock = getattr(self.engine, "clock", None)
+        now = clock() if callable(clock) else None
+        acceptance = {s: live_acceptance(self.engine.config, self.engine.store,
+                                         self.engine.config.active_broker, s, now) for s in symbols}
+        return http_code, {
+            "status": overall_status,
+            "broker": broker_info,
+            "database": db_info,
+            "scheduler": sched_info,
+            "last_scan": last_scan,
+            "live_acceptance": {"accepted": bool(symbols) and all(r["accepted"] for r in acceptance.values()),
+                                "by_symbol": acceptance},
+        }
+
+    def _handle_scan(self) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None
+        try:
+            data = self.engine.run_single_scan()
+            if data.get("scan_status") == "SKIPPED_OVERLAP":
+                return 409, data
+            return 200, data
+        except ConfigValidationError as exc:
+            logger.error("Scan rejected due to invalid configuration: %s", exc)
+            return 400, {
+                "status": "error",
+                "error_type": "ConfigValidationError",
+                "message": str(exc),
+            }
+        except BrokerDataError as exc:
+            logger.error("Scan failed due to BrokerDataError: %s", exc)
+            return 502, {
+                "status": "error",
+                "scan_status": "FAILED",
+                "error_type": "BrokerDataError",
+                "message": str(exc),
+                "is_simulated": False,
+                "data_mode": "LIVE",
+                "freshness": getattr(exc, "freshness", None),
+                "identity_rejection": getattr(exc, "rejection", None),
+                "reason_code": getattr(exc, "rejection", getattr(exc, "freshness", {})).get("reason_code", "PROVIDER_ERROR"),
+            }
+        except Exception as exc:
+            logger.error("Unexpected internal error during scan: %s", exc)
+            return 500, {
+                "status": "error",
+                "error_type": type(exc).__name__,
+                "message": "Internal server error during scan execution.",
+            }
+
+    def _handle_signals(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceDisabledError",
+                "message": "Signal persistence is currently disabled.",
+            }
+        try:
+            limit = _parse_int_param(query_params, "limit", default=50, min_val=1, max_val=200)
+            offset = _parse_int_param(query_params, "offset", default=0, min_val=0, max_val=100000)
+            res = self.engine.store.query_signals(
+                limit=limit,
+                offset=offset,
+                symbol=_get_str_param(query_params, "symbol"),
+                segment=_get_str_param(query_params, "segment"),
+                strategy_id=_get_str_param(query_params, "strategy_id"),
+                direction=_get_str_param(query_params, "direction"),
+                data_mode=_get_str_param(query_params, "data_mode"),
+                provider=_get_str_param(query_params, "provider"),
+                state_context=_get_str_param(query_params, "state_context"),
+                start_time=_get_str_param(query_params, "start_time"),
+                end_time=_get_str_param(query_params, "end_time"),
+            )
+            return 200, {"status": "ok", **res}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_scans(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceDisabledError",
+                "message": "Scan-run persistence is currently disabled.",
+            }
+        try:
+            limit = _parse_int_param(query_params, "limit", default=20, min_val=1, max_val=200)
+            offset = _parse_int_param(query_params, "offset", default=0, min_val=0, max_val=100000)
+            status_filter = _get_str_param(query_params, "status")
+            res = self.engine.store.query_scan_runs(limit=limit, offset=offset, status=status_filter)
+            return 200, {"status": "ok", **res}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_oi_snapshots(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceDisabledError",
+                "message": "OI snapshot persistence is currently disabled.",
+            }
+        try:
+            limit = _parse_int_param(query_params, "limit", default=20, min_val=1, max_val=100)
+            offset = _parse_int_param(query_params, "offset", default=0, min_val=0, max_val=100000)
+            res = self.engine.store.query_oi_snapshots(
+                index_symbol=_get_str_param(query_params, "index_symbol"),
+                expiry=_get_str_param(query_params, "expiry"),
+                data_mode=_get_str_param(query_params, "data_mode"),
+                limit=limit,
+                offset=offset,
+            )
+            return 200, {"status": "ok", **res}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_oi_baselines(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceDisabledError",
+                "message": "OI baseline persistence is currently disabled.",
+            }
+        try:
+            limit = _parse_int_param(query_params, "limit", default=100, min_val=1, max_val=500)
+            offset = _parse_int_param(query_params, "offset", default=0, min_val=0, max_val=100000)
+            res = self.engine.store.query_oi_baselines(
+                index_symbol=_get_str_param(query_params, "index_symbol"),
+                expiry=_get_str_param(query_params, "expiry"),
+                session_date=_get_str_param(query_params, "session_date"),
+                data_mode=_get_str_param(query_params, "data_mode"),
+                baseline_kind=_get_str_param(query_params, "baseline_kind"),
+                limit=limit,
+                offset=offset,
+            )
+            return 200, {"status": "ok", **res}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    @staticmethod
+    def _get_query_param(
+        query_params: Dict[str, Any], key: str, default: Optional[str] = None
+    ) -> Optional[str]:
+        vals = query_params.get(key)
+        if not vals:
+            return default
+        return vals[0]
+
+    def _handle_historical_datasets(self, query_params: Dict[str, List[str]]) -> Tuple[int, Dict[str, Any]]:
+        engine = self.engine
+        assert engine is not None
+        if engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": "Database persistence is disabled.",
+            }
+        try:
+            limit = int(self._get_query_param(query_params, "limit", "50") or "50")
+            offset = int(self._get_query_param(query_params, "offset", "0") or "0")
+            symbol = self._get_query_param(query_params, "symbol")
+            data_mode = self._get_query_param(query_params, "data_mode")
+            provider = self._get_query_param(query_params, "provider")
+            quality_status = self._get_query_param(query_params, "quality_status")
+            res = engine.store.query_historical_datasets(
+                symbol=symbol,
+                data_mode=data_mode,
+                provider=provider,
+                quality_status=quality_status,
+                limit=limit,
+                offset=offset,
+            )
+            return 200, {"status": "ok", **res}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_historical_readiness(self, query_params: Dict[str, List[str]]) -> Tuple[int, Dict[str, Any]]:
+        from historical_data import evaluate_phase3a_backtest_readiness
+
+        engine = self.engine
+        assert engine is not None
+        data_mode = (self._get_query_param(query_params, "data_mode", "LIVE") or "LIVE").strip().upper()
+        if data_mode not in ("LIVE", "SIMULATED"):
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": "data_mode must be 'LIVE' or 'SIMULATED'.",
+            }
+        readiness = evaluate_phase3a_backtest_readiness(
+            config=engine.config,
+            store=engine.store,
+            broker_status=engine.get_broker_status(),
+            target_data_mode=data_mode,
+            provider=self._get_query_param(query_params, "provider", None),
+            symbol=self._get_query_param(query_params, "symbol", None),
+            strategy_id=self._get_query_param(query_params, "strategy_id", "strat_1_order_block"),
+            execution_scope=self._get_query_param(query_params, "execution_scope", None),
+            start_date=self._get_query_param(query_params, "evaluation_start_date", None),
+            end_date=self._get_query_param(query_params, "evaluation_end_date", None),
+            now=engine.clock() if callable(getattr(engine, "clock", None)) else None,
+        )
+        return 200, {"status": "ok", **readiness}
+
+    def _handle_backtest_eligibility(self, query_params: Dict[str, List[str]]) -> Tuple[int, Dict[str, Any]]:
+        from backtest_engine import (
+            BACKTEST_ENGINE_VERSION,
+            STRATEGY_BACKTEST_ELIGIBILITY,
+        )
+        from historical_data import evaluate_phase3a_backtest_readiness
+
+        engine = self.engine
+        assert engine is not None
+        data_mode = (self._get_query_param(query_params, "data_mode", "LIVE") or "LIVE").strip().upper()
+        if data_mode not in ("LIVE", "SIMULATED"):
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": "data_mode must be 'LIVE' or 'SIMULATED'.",
+            }
+        readiness = evaluate_phase3a_backtest_readiness(
+            config=engine.config,
+            store=engine.store,
+            broker_status=engine.get_broker_status(),
+            target_data_mode=data_mode,
+            provider=self._get_query_param(query_params, "provider", None),
+            symbol=self._get_query_param(query_params, "symbol", "RELIANCE"),
+            strategy_id=self._get_query_param(query_params, "strategy_id", "strat_1_order_block"),
+            execution_scope=self._get_query_param(query_params, "execution_scope", None),
+            start_date=self._get_query_param(query_params, "evaluation_start_date", None),
+            end_date=self._get_query_param(query_params, "evaluation_end_date", None),
+            now=engine.clock() if callable(getattr(engine, "clock", None)) else None,
+        )
+        return 200, {
+            "status": "ok",
+            "engine_version": BACKTEST_ENGINE_VERSION,
+            "implementation_status": "IMPLEMENTED_VERIFIED",
+            "data_acceptance_status": readiness["execution_gate"]["reason_code"],
+            "readiness": readiness,
+            "strategies": STRATEGY_BACKTEST_ELIGIBILITY,
+        }
+
+    def _handle_backtest_runs(self, query_params: Dict[str, List[str]]) -> Tuple[int, Dict[str, Any]]:
+        engine = self.engine
+        assert engine is not None
+        if engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": "Database persistence is disabled.",
+            }
+        try:
+            limit = _parse_int_param(query_params, "limit", default=50, min_val=1, max_val=200)
+            offset = _parse_int_param(query_params, "offset", default=0, min_val=0, max_val=100000)
+            res = engine.store.query_backtest_runs(
+                strategy_id=_get_str_param(query_params, "strategy_id"),
+                symbol=_get_str_param(query_params, "symbol"),
+                data_mode=_get_str_param(query_params, "data_mode"),
+                period_type=_get_str_param(query_params, "period_type"),
+                limit=limit,
+                offset=offset,
+            )
+            return 200, {"status": "ok", **res}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_backtest_run_detail(self, run_id: str) -> Tuple[int, Dict[str, Any]]:
+        engine = self.engine
+        assert engine is not None
+        if engine.store is None:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": "Database persistence is disabled.",
+            }
+        try:
+            detail = engine.store.get_backtest_run_detail(run_id)
+            if detail is None:
+                return 404, {
+                    "status": "error",
+                    "error_type": "NotFoundError",
+                    "message": f"Backtest run '{run_id}' not found.",
+                }
+            return 200, {"status": "ok", "backtest_run": detail}
+        except ValueError as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": str(exc),
+            }
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_post_backtest(self) -> Tuple[int, Dict[str, Any]]:
+        from backtest_engine import (
+            BacktestConfig,
+            BacktestEligibilityError,
+            BacktestReadinessError,
+            BacktestValidationError,
+            DeterministicBacktestEngine,
+            IndianCostModel,
+        )
+
+        engine = self.engine
+        assert engine is not None
+        try:
+            content_len = int(self.headers.get("Content-Length", "0") or "0")
+        except ValueError:
+            content_len = 0
+        if content_len <= 0 or content_len > 10 * 1024 * 1024:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": "POST /api/backtest requires a valid JSON request body.",
+            }
+        try:
+            raw_body = self.rfile.read(content_len).decode("utf-8")
+            body = json.loads(raw_body)
+            if not isinstance(body, dict):
+                raise ValueError("JSON body must be an object.")
+        except Exception as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "ValidationError",
+                "message": f"Invalid JSON request body: {exc}",
+            }
+
+        try:
+            strategy_id = str(body.get("strategy_id") or "").strip()
+            symbol = str(body.get("symbol") or "").strip().upper()
+            if not strategy_id or not symbol:
+                raise BacktestValidationError("Both 'strategy_id' and 'symbol' are required.")
+
+            data_mode = str(body.get("data_mode") or "SIMULATED").strip().upper()
+            cost_dict = body.get("cost_model") if isinstance(body.get("cost_model"), dict) else {}
+            for values, names in (
+                (body, ("starting_capital_inr", "risk_per_trade_pct", "max_daily_loss_inr",
+                        "daily_profit_target_inr", "slippage_bps_per_leg", "max_concurrent_positions")),
+                (cost_dict, ("brokerage_per_order_inr", "slippage_bps_per_leg", "other_cost_per_trade_inr")),
+            ):
+                if any(isinstance(values.get(name), bool) for name in names):
+                    raise BacktestValidationError("Risk, capital, costs and quantities cannot be booleans.")
+            cost_model = IndianCostModel(
+                brokerage_per_order_inr=float(cost_dict.get("brokerage_per_order_inr", 20.0)),
+                slippage_bps_per_leg=float(cost_dict.get("slippage_bps_per_leg", body.get("slippage_bps_per_leg", 5.0))),
+                other_cost_per_trade_inr=float(cost_dict.get("other_cost_per_trade_inr", 0.0)),
+            )
+            bt_cfg = BacktestConfig(
+                starting_capital_inr=float(body.get("starting_capital_inr", engine.config.account_capital_inr or 100000.0)),
+                risk_per_trade_pct=float(body.get("risk_per_trade_pct", engine.config.max_risk_per_trade_pct or 1.0)),
+                max_daily_loss_inr=(
+                    float(body["max_daily_loss_inr"])
+                    if "max_daily_loss_inr" in body and body["max_daily_loss_inr"] is not None
+                    else float(engine.config.max_daily_loss_inr or 2000.0)
+                ),
+                daily_profit_target_inr=(
+                    float(body["daily_profit_target_inr"])
+                    if "daily_profit_target_inr" in body and body["daily_profit_target_inr"] is not None
+                    else float(engine.config.daily_profit_target_inr or 4000.0)
+                ),
+                max_concurrent_positions=body.get("max_concurrent_positions", 1),
+                target_mode=str(body.get("target_mode") or "TARGET_1").strip().upper(),
+                instrument_type=str(body.get("instrument_type") or ("INDEX_SPOT" if symbol in ("NIFTY", "BANKNIFTY") else "EQ")).strip().upper(),
+                historical_lot_size=body.get("historical_lot_size"),
+                historical_instrument_identity=body.get("historical_instrument_identity"),
+                historical_instrument_archive_id=body.get("historical_instrument_archive_id"),
+                period_type=str(body.get("period_type") or "FULL").strip().upper(),
+                evaluation_start_date=body.get("evaluation_start_date"),
+                evaluation_end_date=body.get("evaluation_end_date"),
+                execution_scope=body.get("execution_scope"),
+                cost_model=cost_model,
+            )
+            bt_engine = DeterministicBacktestEngine(
+                bot_config=engine.config,
+                store=engine.store,
+                broker_status=engine.get_broker_status(),
+                clock=getattr(engine, "clock", None),
+            )
+            res = bt_engine.run_backtest(
+                strategy_id=strategy_id,
+                symbol=symbol,
+                candles=body.get("candles"),
+                segment=body.get("segment"),
+                exchange=str(body.get("exchange") or "NSE"),
+                provider=body.get("provider"),
+                instrument_token=str(body.get("instrument_token") or "2885"),
+                interval_min=int(body.get("interval_min", 5)),
+                data_mode=data_mode,
+                backtest_config=bt_cfg,
+                persist_run=bool(body.get("persist_run", True)),
+            )
+            return 200, {"status": "ok", **res}
+        except (BacktestValidationError, ValueError) as exc:
+            return 400, {
+                "status": "error",
+                "error_type": "BacktestValidationError",
+                "message": str(exc),
+            }
+        except (BacktestEligibilityError, BacktestReadinessError) as exc:
+            payload = {
+                "status": "error",
+                "error_type": type(exc).__name__,
+                "message": str(exc),
+            }
+            if exc.details:
+                payload["rejection"] = exc.details
+            return 422, payload
+        except PersistenceError as exc:
+            return 503, {
+                "status": "error",
+                "error_type": "PersistenceError",
+                "message": str(exc),
+            }
+
+    def _handle_paper_portfolio(self, query_params, *, accounts=False):
+        """Read existing simulated accounts only; never scan, mark, fill or create."""
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {"status": "error", "message": "Database persistence is disabled."}
+        try:
+            allowed = set() if accounts else {"account_id"}
+            if set(query_params) - allowed or any(len(v) != 1 for v in query_params.values()):
+                raise ValueError()
+            if accounts:
+                return 200, {"status": "ok", "execution_mode": "SIMULATED",
+                             "accounts": self.engine.store.list_paper_accounts()}
+            account_id = _get_str_param(query_params, "account_id")
+            if not account_id or len(account_id) > 128:
+                raise ValueError()
+            report = self.engine.store.get_paper_portfolio_report(account_id, as_of=self.engine._now_ist())
+            return (404 if report["status"] == "NOT_CONFIGURED" else 200), report
+        except ValueError:
+            return 400, {"status": "error", "message": "Invalid paper-report query."}
+        except Exception:
+            return 503, {"status": "error", "message": "Paper portfolio report is unavailable."}
+
+    def _handle_contract_inspection(self, query_params, *, resolve=False):
+        """Inspect retained local declarations; no broker/master download or activation."""
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {"status": "error", "message": "Database persistence is disabled."}
+        try:
+            allowed = ({"master_id", "provider", "instrument_type", "as_of", "identifier",
+                        "underlying", "expiry", "strike", "option_type"} if resolve else {"provider"})
+            if (set(query_params) - allowed or any(len(v) != 1 for v in query_params.values())
+                    or any(len(v[0]) > 256 for v in query_params.values())):
+                raise ValueError()
+            if not resolve:
+                candidates = self.engine.store.list_contract_master_candidates(_get_str_param(query_params, "provider"))
+                return 200, {"status": "ok", "eligible": False, "historical_replay_allowed": False,
+                             "masters": [{key: item[key] for key in
+                                          ("master_id", "status", "eligible", "record_count", "normalized_sha256")}
+                                         for item in candidates]}
+            required = ("master_id", "provider", "instrument_type", "as_of")
+            if any(not _get_str_param(query_params, key) for key in required):
+                raise ValueError()
+            request = {key: values[0] for key, values in query_params.items() if key != "master_id"}
+            if "strike" in request:
+                request["strike"] = float(request["strike"])
+            report = self.engine.store.inspect_contract_resolution(query_params["master_id"][0], **request)
+            return 200, report
+        except ValueError:
+            return 400, {"status": "error", "eligible": False, "message": "Invalid contract-inspection query or declaration."}
+        except Exception:
+            return 503, {"status": "error", "eligible": False, "message": "Contract inspection is unavailable."}
+
+    def _handle_config(self) -> Tuple[int, Dict[str, Any]]:
+        assert self.engine is not None and self.scheduler is not None
+        return 200, {
+            "status": "ok",
+            "config": self.engine.config.to_safe_dict(),
+            "broker_status": self.engine.get_broker_status(),
+            "scheduler": self.scheduler.get_status(),
+        }
+
+    def _dispatch_get_or_head(self, send_body: bool = True) -> None:
+        self._ensure_initialized()
+        parsed = urllib.parse.urlparse(self.path)
+        raw_path = parsed.path or "/"
+        route = raw_path.rstrip("/") or "/"
+        query_params = urllib.parse.parse_qs(parsed.query)
+
+        if route in ("/api/paper-accounts", "/api/v1/paper-accounts", "/api/paper-portfolio", "/api/v1/paper-portfolio"):
+            code, payload = self._handle_paper_portfolio(query_params, accounts=route.endswith("paper-accounts"))
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/contract-masters", "/api/v1/contract-masters", "/api/contract-resolution", "/api/v1/contract-resolution"):
+            code, payload = self._handle_contract_inspection(query_params, resolve=route.endswith("contract-resolution"))
+            self._send_json(code, payload, send_body=send_body)
+            return
+
+        if route in ("/api/health", "/api/v1/health"):
+            code, payload = self._handle_health()
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/scan", "/api/v1/scan"):
+            code, payload = self._handle_scan()
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/signals", "/api/v1/signals"):
+            code, payload = self._handle_signals(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/scans", "/api/v1/scans"):
+            code, payload = self._handle_scans(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/oi-snapshots", "/api/v1/oi-snapshots"):
+            code, payload = self._handle_oi_snapshots(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/oi-baselines", "/api/v1/oi-baselines"):
+            code, payload = self._handle_oi_baselines(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/historical-datasets", "/api/v1/historical-datasets"):
+            code, payload = self._handle_historical_datasets(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/historical-readiness", "/api/v1/historical-readiness"):
+            code, payload = self._handle_historical_readiness(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/backtest-eligibility", "/api/v1/backtest-eligibility"):
+            code, payload = self._handle_backtest_eligibility(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/backtest-runs", "/api/v1/backtest-runs"):
+            code, payload = self._handle_backtest_runs(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route.startswith("/api/backtest-runs/") or route.startswith("/api/v1/backtest-runs/"):
+            run_id_part = route.rsplit("/", 1)[-1]
+            code, payload = self._handle_backtest_run_detail(run_id_part)
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route in ("/api/config", "/api/v1/config"):
+            code, payload = self._handle_config()
+            self._send_json(code, payload, send_body=send_body)
+            return
+        if route.startswith("/api/") or route == "/api":
+            self._send_json(
+                404,
+                {
+                    "status": "error",
+                    "error_type": "NotFoundError",
+                    "message": f"Unknown API endpoint: {route}",
+                },
+                send_body=send_body,
+            )
+            return
+
+        if self._try_serve_approved_public_asset(raw_path, send_body=send_body):
+            return
+
+        self._send_json(
+            404,
+            {
+                "status": "error",
+                "error_type": "NotFoundError",
+                "message": "Resource not found.",
+            },
+            send_body=send_body,
+        )
+
+    def do_GET(self) -> None:
+        self._dispatch_get_or_head(send_body=True)
+
+    def do_HEAD(self) -> None:
+        self._dispatch_get_or_head(send_body=False)
+
+    def do_OPTIONS(self) -> None:
+        parsed = urllib.parse.urlparse(self.path)
+        route = (parsed.path or "/").rstrip("/") or "/"
+        if route.startswith("/api/") or route == "/api":
+            try:
+                self.send_response(204)
+                self.send_header("Access-Control-Allow-Origin", "*")
+                self.send_header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS")
+                self.send_header("Access-Control-Allow-Headers", "Content-Type, Accept")
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+            return
+        self._send_json(404, {
+            "status": "error",
+            "error_type": "NotFoundError",
+            "message": "Resource not found.",
+        })
+
+    def do_POST(self) -> None:
+        self._ensure_initialized()
+        parsed = urllib.parse.urlparse(self.path)
+        route = parsed.path.rstrip("/") or "/"
+        if route in ("/api/scan", "/api/v1/scan"):
+            code, payload = self._handle_scan()
+            self._send_json(code, payload)
+            return
+        if route in ("/api/backtest", "/api/v1/backtest"):
+            code, payload = self._handle_post_backtest()
+            self._send_json(code, payload)
+            return
+        self._send_json(405, {
+            "status": "error",
+            "error_type": "MethodNotAllowedError",
+            "message": f"POST is not supported on {route}. Live order execution is strictly disabled.",
+        })
+
+
+def configure_server_runtime(
+    config: Optional[BotConfig] = None,
+    start_scheduler: Optional[bool] = None,
+    clock: Optional[Any] = None,
+    broker_scanner: Optional[Any] = None,
+) -> Tuple[IntradayBotEngine, MarketScanScheduler]:
+    """
+    Thread-safe, idempotent initializer for `DashboardRequestHandler.engine` and
+    `DashboardRequestHandler.scheduler`.
+    """
+    with _SERVER_INIT_LOCK:
+        if config is not None or DashboardRequestHandler.engine is None:
+            if DashboardRequestHandler.scheduler is not None:
+                DashboardRequestHandler.scheduler.stop()
+            if DashboardRequestHandler.engine is not None:
+                try:
+                    DashboardRequestHandler.engine.close()
+                except Exception:
+                    pass
+            resolved_cfg = config or BotConfig(
+                database_url=os.getenv("DATABASE_URL", "sqlite:///tradepulse_phase1d.db")
+            )
+            if start_scheduler is not None:
+                resolved_cfg.enable_background_scheduler = bool(start_scheduler)
+            DashboardRequestHandler.engine = IntradayBotEngine(
+                resolved_cfg,
+                clock=clock,
+                broker_scanner=broker_scanner,
+            )
+            DashboardRequestHandler.scheduler = MarketScanScheduler(
+                DashboardRequestHandler.engine,
+                clock=clock,
+            )
+        else:
+            if DashboardRequestHandler.scheduler is None:
+                DashboardRequestHandler.scheduler = MarketScanScheduler(
+                    DashboardRequestHandler.engine,
+                    clock=clock,
+                )
+            if start_scheduler is not None:
+                DashboardRequestHandler.engine.config.enable_background_scheduler = bool(start_scheduler)
+
+        engine = DashboardRequestHandler.engine
+        scheduler = DashboardRequestHandler.scheduler
+        should_run = (
+            bool(start_scheduler)
+            if start_scheduler is not None
+            else bool(engine.config.enable_background_scheduler)
+        )
+        if should_run:
+            scheduler.start()
+        else:
+            scheduler.stop()
+        return engine, scheduler
+
+
+def create_http_server(
+    host: str = "127.0.0.1",
+    port: int = 8080,
+    handler_cls: type = DashboardRequestHandler,
+) -> ThreadingHTTPServer:
+    """
+    Factory returning a configured `ThreadingHTTPServer` instance for production and tests.
+    """
+    return TradePulseThreadingHTTPServer((host, port), handler_cls)
+
+
+def run_server(
+    host: str = "127.0.0.1",
+    port: int = 8080,
+    start_scheduler: Optional[bool] = None,
+    config: Optional[BotConfig] = None,
+) -> None:
+    os.chdir(PROJECT_ROOT)
+    configure_server_runtime(config=config, start_scheduler=start_scheduler)
+    server = ThreadingHTTPServer((host, port), DashboardRequestHandler)
+    print(f"TradePulse & OrderBlock Server (Phase 2C) running at http://{host}:{port}")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if DashboardRequestHandler.scheduler is not None:
+            DashboardRequestHandler.scheduler.stop()
+        server.server_close()
+
+
+if __name__ == "__main__":
+    host_env = os.getenv("SERVER_HOST", "127.0.0.1")
+    port_env = int(os.getenv("SERVER_PORT", "8080"))
+    sched_env = os.getenv("ENABLE_BACKGROUND_SCHEDULER", "false").strip().lower() in ("true", "1", "yes")
+    run_server(host=host_env, port=port_env, start_scheduler=sched_env)
