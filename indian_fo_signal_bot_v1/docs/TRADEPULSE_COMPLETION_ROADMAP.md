@@ -1,5 +1,10 @@
 # TradePulse AI remaining-work roadmap
 
+Latest execution evidence: [continuous acceptance report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md),
+2026-10-19. It preserves the dated phase evidence below and prioritizes the isolated
+Angel configuration/market-data path before further Upstox investigation. No provider
+switch or account request was made; the public master capture is separate evidence.
+
 Phase 5A/5B audit date: 2026-10-18. The current stage is offline scanner-to-paper integration and market-data
 acceptance preparation. Real provider cash-data acceptance is unestablished; LIVE
 historical replay and historical Strategy 3 remain blocked. The companion
@@ -56,10 +61,10 @@ tested. Profitable performance remains a separate research question.
 | Package / milestones | Deliverable and dependency | Regression and acceptance criteria |
 | --- | --- | --- |
 | P2.1 Qualified historical dataset (M04/M08) | Import real supported history only after P0.4. Prove full session coverage, warmup and intended evaluation range; implement replay pagination above the current 10,000-row cap without truncation. | Gaps/missing sessions/duplicates/provider-mode mixing/range changes reject. Pagination has no gaps/duplicates and no limit can silently cut a study short. Per-symbol readiness remains separate from aggregate common-period readiness. |
-| P2.2 Enforced chronological experiment protocol (M08) | Turn the existing split helper and explicit date controls into auditable train/validation/out-of-sample study orchestration. Current `period_type` labels alone do not select a split. | Disjoint chronological periods, strict selection and warmup-only earlier data; frozen parameters and dataset/config hashes; repeatable output; no overlap, look-ahead or use of out-of-sample data for fitting. |
+| P2.2 Enforced chronological experiment protocol (M08) | Frozen StudyProtocol and engine orchestration now enforce disjoint chronological sessions, dataset/source identity, phase prefixes, risk/cost parameters and declared sensitivity scenarios. Real evaluation remains source-blocked. Direct legacy period labels alone still do not select a split. | Offline tests reject overlaps, missing/undeclared sessions, changed datasets and synthetic/mixed input; positive dispatch has mock-only coverage. After source qualification, retain real metrics/trades, baseline/sensitivity and uncertainty without future-data fitting. |
 | P2.3 Historical Strategy 3 contract execution (M05/M07/M08) | Implement exact historical contract-candle entry/exit fills, chain snapshots at decision time, verified prior-session closing OI, expiry/strike selection, dated lot metadata and premium accounting. Depends on P1.3/P2.1. | Changing only option-contract candles changes fills/P&L; underlying changes cannot substitute premium fills; mismatch/missing contract data rejects. Cost/lot/gap/collision/EOD accounting reconciles. Remove the unconditional block only after this complete contract is accepted. |
-| P2.4 Durable forward paper portfolio (M07/M09) | Cash-only offline baseline plus Phase 5C deterministic multi-session interruption/EOD and 10,000-event reporting exercise delivered. Account-scoped bounded cursor pages and indexed streaming reconciliation are implemented. Remaining work includes unresolved-EOD recovery policy, dedicated export, operational soak and separately specified derivative/partial-fill support. | Offline regressions cover concurrent capital/duplicate competition, daily realized+unrealized loss, exact-once costs, write-boundary failures, restart, missing EOD, account isolation and complete stable pagination. See the Phase 5C report for counts and measurements without an invented SLA. Operational feeds remain separately authorized; fills remain SIMULATED and require valid completed observations. |
-| P2.5 EOD reconciliation and research evidence (M08-M10) | Produce a dedicated report from actual ledger/results, reconcile trade totals/equity/drawdown/costs and missing data, then evaluate frozen strategies on qualified out-of-sample history. | Empty-day/multi-day/report-retry tests; reconciled paper/replay statements; losses and uncertainty retained; no fixture profitability claim. Replay EOD square-off and OI closing-baseline storage are not an EOD performance report. |
+| P2.4 Durable forward paper portfolio (M07/M09) | Cash-only scanner-to-paper integration, deterministic multi-session/EOD acceptance, bounded ledger/inventory/queue reads, freeze-only recovery audit and read-only session-end summary delivered offline. Remaining work includes approved financial recovery, full event export, operational soak and separately specified derivative/partial fills. | Preserve exact-once costs, stale/missing-EOD freeze, transactional rollback, provider/account isolation, stable pages and current safety settings. Repeated measurements are software evidence, not an SLA or operational feed acceptance. |
+| P2.5 EOD reconciliation and research evidence (M08-M10) | Event-derived read-only EOD summary with accounting, unresolved state and reproducible hashes is delivered. Continue full ledger export and real strategy evaluation only after qualified history exists. | Empty-day, later-session exclusion, repeated/restarted read, corruption and missing-final-bar tests pass offline. Real out-of-sample results, empirical calibration and operational statements remain NOT_TESTED. |
 
 P2 exit: reproducible qualified cash research, separately accepted derivative execution
 where implemented, and a restart-safe paper ledger. No order-execution capability is
@@ -195,3 +200,50 @@ Under the unchanged rubric, M09 stays 50/50 and all other rows retain their scor
 **63.5% implementation / 35.5% verified readiness; 0/12 accepted**. Offline test
 growth cannot satisfy R=75's scoped operational requirement. Keep scheduler disabled,
 Telegram dry run enabled, LIVE historical replay blocked and Strategy 3 contained.
+
+## Continuous acceptance progression - 2026-10-19
+
+Delivered independent work: explicit isolated Angel preflight and single-session
+diagnostic policy; credential-free public master capture and four-class native
+observation inspection for RELIANCE/NIFTY/BANKNIFTY; source-bundle binding rejection
+and frozen chronological study orchestration; freeze-only recovery audit and
+read-only session-end summary; bounded account inventory / queued work; startup
+backfill correction and repeated actual software measurements. The continuous
+report owns executed commands, counts, regression counterexamples and limitations.
+
+Current next actions supersede the earlier phase-specific next-task paragraphs:
+
+1. Configure ANGEL_API_KEY, ANGEL_CLIENT_CODE, ANGEL_PIN and ANGEL_TOTP_SECRET
+   locally, without disclosure. Run the existing narrow command with the new
+   `--isolated-provider --check-config` flags; it does not change ACTIVE_BROKER.
+   Current preflight is BLOCKED because all four fields are absent. After it
+   passes, make one appropriate-session cash read-only attempt and retain sanitized
+   JSON plus exit. A quote/cash success cannot accept contracts or replay.
+2. Qualify the native master/date/units trust boundary and exact derivative data
+   path. The retained public bytes and 3,059 observed contracts are not accepted
+   executable identities. Expand the universe only from actual evidence.
+3. Obtain an independent historical master/price authentication mechanism and real
+   effective-date artifacts. Local bundle hashes/scope and a frozen study protocol
+   now exist; they remain source-blocked. No actual signal-quality study has run.
+4. Approve an explicit financial unresolved-position recovery/research-fork policy
+   and dated calendar/session inputs. Until then, keep positions reserved/frozen;
+   late repair requests are audited as blocked. The EOD summary is delivered, while
+   full event export, operational soak and backup/restore remain separate work.
+5. Address the documented Upstox V2 intraday deprecation with a scoped tested
+   migration when that provider path is next authorized; do not infer the old
+   HTTP 403's cause from deprecation or silently switch providers/endpoints.
+
+Offline reproduction commands, from the project directory:
+
+```powershell
+python -B .\diagnostics.py --market-data-only --symbol RELIANCE --isolated-provider --check-config --json
+python -B -W error::ResourceWarning -m unittest test_continuous_acceptance -v
+python -B -W error::ResourceWarning performance_acceptance.py --samples 5 --events 10000
+python -B -W error::ResourceWarning test_bot.py -v
+```
+
+The benchmark imports the repository's labelled offline fixtures, uses temporary
+databases and forbids live transport/delivery. Its output is software latency and
+Python allocation evidence, not trading performance or an SLA. No command above
+performs a live account diagnostic. Product scores remain **63.5% / 35.5%, 0/12
+accepted**, with production scheduler disabled and Telegram dry run enabled.

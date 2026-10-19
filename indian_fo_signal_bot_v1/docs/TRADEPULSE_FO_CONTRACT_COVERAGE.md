@@ -41,3 +41,51 @@ Original bounded bytes, schema/parser revision, declared source/version/capture 
 `test_phase5a_contracts` contributes **20 executed tests** to the final **78-test focused selection** (exit 0); the pre-closeout 19-test module passed separately. Tests cover all three providers/six types, malformed/duplicate masters, ID/underlying/expiry/side/lot/unit conflicts, ambiguity, stale/expired status, byte/metadata/flag substitution and transport prohibition. The added paired-quantity/date regression first failed in six provider/field subcases; the narrow validator correction now passes.
 
 `test_phase5a_integration` verifies actual store ingestion, restart/tamper rejection, additive migrations and read-only API behavior. Source inspection plus passing fixtures establish local consistency and failure behavior. They do not establish current master authority, an executable derivative universe, exchange calendars, provider entitlement or historical validity. The next contract task is to obtain an independently attributable original current-master artifact and specify a supported provider-native conversion/trust boundary before considering activation; keep all unqualified candidates blocked.
+
+## Continuous acceptance native observation addendum - 2026-10-19
+
+The [continuous report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md) records one real,
+credential-free public master capture: 153,621 records / 36,009,485 original bytes.
+`evidence/angel_public_master_20261019.json.gz` preserves the exact bytes losslessly;
+adjacent metadata records original/stored hashes, acquisition time and the explicit
+unqualified status. This is a public artifact observation, not account authentication
+or independently authenticated historical date evidence.
+
+`inspect_angel_native_contracts`, integrated into existing `prepare_contract_master`,
+now parses the initial RELIANCE/NIFTY/BANKNIFTY scope without activating it:
+
+| Class | Full file's observed NFO rows | Parsed initial-scope observations | Contract candles / fills |
+| --- | ---: | ---: | --- |
+| FUTIDX | 18 | 6 | NOT_TESTED / BLOCKED |
+| FUTSTK | 653 | 3 | NOT_TESTED / BLOCKED |
+| OPTIDX | 5791 | 2835 | NOT_TESTED / BLOCKED |
+| OPTSTK | 31908 | 215 | NOT_TESTED / BLOCKED |
+
+These counts describe that captured file, not authoritative current membership.
+Native underlying pins, AMXIDX versus auxiliary NSE rows, identifiers, exchange/type,
+provided expiry/lot, unit conventions and strike-to-label scaling are checked. No
+listing date, lot or expiry is invented. Tests reject duplicates, ambiguity, wrong
+units/side/strike/expiry, nonfinite values and conflicting call/put lots. Same-date
+inspection rejects expired contracts and requires explicit rollover terms; other
+capture dates reject as stale/undated. No implicit nearest-expiry selection occurs.
+
+The existing candidate store retains/reparses originals and detects changed facts.
+Native observations have **valid_from=null, valid_to=null**, a separate observed
+digest and **BLOCKED_NATIVE_MASTER_AUTHORITY_AND_EFFECTIVE_DATES**. Lookup returns
+`observed_contract`, `identity=null`, `eligible=false`; it cannot authorize a
+proposal, candle fill, historical replay or Strategy 3. Dhan/Upstox still have only
+their previously documented normalized/analytical subsets, not an accepted general
+native derivative execution path. The active Angel analytical adapter's supported
+contract scope is unchanged. Full stock universe, provider-native derivative candle
+support and operational authority remain separate implementation/evidence work.
+
+Next: establish the master/date/units trust boundary for one exact supported
+contract and separately authorize its native data acceptance after credentials and
+current cash prerequisites pass. Do not relabel this captured observation as an
+authoritative historical archive or update user lot/provider settings from it.
+
+The native format uses `angel-native-observation-v1`; existing normalized/rejected
+candidates retain their original parser version and immutable identity. A legacy
+rejected native candidate remains readable after this extension; re-import creates
+a separate observation candidate rather than rewriting it. The current derived
+scope/counts/digests are in `evidence/angel_native_inspection_20261019.json`.

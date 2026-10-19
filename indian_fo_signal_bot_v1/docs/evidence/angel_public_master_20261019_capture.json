@@ -1,0 +1,21 @@
+{
+  "artifact_filename": "angel_public_master_20261019.json.gz",
+  "bytes": 36009485,
+  "capture_class": "LOCAL_HTTPS_OBSERVATION_UNATTESTED",
+  "captured_at": "2026-10-19T03:17:46.930603+00:00",
+  "historical_replay_allowed": false,
+  "nfo_counts": {
+    "FUTIDX": 18,
+    "FUTSTK": 653,
+    "OPTIDX": 5791,
+    "OPTSTK": 31908
+  },
+  "original_sha256": "d92f2b42a8a8cbad2928f00345925982ad3d699565778ed898b35feedc02f635",
+  "publisher_authenticity": "NOT_ESTABLISHED",
+  "records": 153621,
+  "source_url": "https://margincalculator.angelbroking.com/OpenAPI_File/files/OpenAPIScripMaster.json",
+  "status": "CAPTURED_UNQUALIFIED",
+  "storage_encoding": "GZIP_LOSSLESS_LOCAL",
+  "stored_bytes": 2332130,
+  "stored_sha256": "a315b1f5258f41a6c393f03cfd196b4a5d29ed777c09a3e2727c845a75cf7e46"
+}

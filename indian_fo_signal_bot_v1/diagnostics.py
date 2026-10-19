@@ -3,6 +3,7 @@ import json
 import os
 import sys
 from datetime import datetime
+from dataclasses import replace
 from typing import Any, Callable, Dict, List, Optional
 
 from config import BotConfig, ConfigValidationError, _is_placeholder_value, _is_valid_base32_secret
@@ -762,7 +763,19 @@ def format_diagnostics_report(report: Dict[str, Any]) -> str:
 
 
 def run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, clock=None,
-                                       config_only=False, sample_size=5):
+                                       config_only=False, sample_size=5, isolated_provider=False):
+    """Bound retries for this diagnostic; restore any caller-owned adapter policy."""
+    previous = getattr(adapter, 'session_recovery_enabled', None)
+    try:
+        return _run_angelone_market_data_diagnostics(config, adapter, symbol=symbol, clock=clock,
+            config_only=config_only, sample_size=sample_size, isolated_provider=isolated_provider)
+    finally:
+        if adapter is not None and previous is not None:
+            adapter.session_recovery_enabled = previous
+
+
+def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, clock=None,
+                                        config_only=False, sample_size=5, isolated_provider=False):
     """One cash instrument, no profile, persistence, scan or acceptance receipt."""
     cfg = config or BotConfig()
     clock_fn = clock or (lambda: datetime.now(IST))
@@ -770,6 +783,9 @@ def run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, c
               for key in ("configuration", "instrument", "authentication", "quote", "candles")}
     selected = str(cfg.active_broker or "").strip().lower()
     report = dict(provider="angelone", symbol="RELIANCE", checks=checks, config_only=bool(config_only),
+                  isolated_provider=isolated_provider is True, application_provider_changed=False,
+                  transport_policy=dict(max_login_attempts=1, max_quote_requests=1, max_candle_requests=1,
+                                        automatic_session_recovery=False),
                   scope="LOCAL_CONFIGURATION_PREFLIGHT" if config_only else "READ_ONLY_NSE_CASH_MARKET_DATA",
                   authentication_scope="AUTHORIZED_MARKET_DATA_READ_ONLY_NO_PROFILE_CHECK",
                   readiness_receipt_issued=False, historical_replay_allowed=False, data_persisted=False,
@@ -792,15 +808,24 @@ def run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, c
         return report
 
     try:
-        cfg.validate(require_live_credentials=True)
-        if (selected != "angelone" or cfg.telegram_dry_run is not True or cfg.enable_background_scheduler is not False
+        if type(isolated_provider) is not bool:
+            raise ValueError()
+        # Validate an explicit diagnostic view, never mutate the supplied config
+        # or environment and never require a different provider's credentials.
+        validation_cfg = replace(cfg, active_broker="angelone") if isolated_provider else cfg
+        validation_cfg.validate(require_live_credentials=True)
+        if ((selected != "angelone" and not isolated_provider) or cfg.telegram_dry_run is not True or cfg.enable_background_scheduler is not False
                 or not cfg.is_broker_credentials_configured("angelone")):
             raise ValueError()
         if type(sample_size) is not int or not 1 <= sample_size <= 10:
             raise ValueError()
         result("configuration", "PASS", "Required local Angel configuration is present; authentication remains untested.")
     except Exception:
-        result("configuration", "BLOCKED", "Select Angel One with valid local configuration, Telegram dry run and scheduler disabled.")
+        missing = [name for name, value in (("ANGEL_API_KEY", cfg.angel_api_key),
+                   ("ANGEL_CLIENT_CODE", cfg.angel_client_code), ("ANGEL_PIN", cfg.angel_pin),
+                   ("ANGEL_TOTP_SECRET", cfg.angel_totp_secret)) if _is_placeholder_value(value)]
+        result("configuration", "BLOCKED", "Valid local Angel credentials, explicit provider scope, Telegram dry run and disabled scheduler are required.",
+               missing_configuration_fields=missing)
         return finish()
     try:
         if symbol != "RELIANCE":
@@ -819,6 +844,7 @@ def run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, c
     if not isinstance(reader, AngelOneSmartAPIAdapter) or reader.config is not cfg:
         result("configuration", "BLOCKED", "Diagnostic requires the existing configured Angel One adapter.")
         return finish()
+    reader.session_recovery_enabled = False
     reads_before = reader._authorized_reads
 
     def authentication():
@@ -834,6 +860,10 @@ def run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, c
         result(key, "FAIL", "Angel One market-data check failed.",
                error_category=category if category in allowed else "INVALID_RESPONSE",
                provider_error_message=reader._sanitize(reader.last_error_message or "Safe provider detail is unavailable."))
+        if reader.last_http_status is not None:
+            checks[key]["http_status"] = reader.last_http_status
+            if reader.last_http_status == 403:
+                checks[key].update(error_category="ACCESS_DENIED", provider_cause="NOT_ESTABLISHED")
 
     try:
         quote = reader.get_quote(meta)
@@ -921,15 +951,19 @@ def main(argv: Optional[List[str]] = None) -> int:
     )
     parser.add_argument("--market-data-only", action="store_true", help="Narrow RELIANCE quote/candle check; no profile, store or receipt.")
     parser.add_argument("--check-config", action="store_true", help="Offline preflight for --market-data-only; no adapter or API calls.")
+    parser.add_argument("--isolated-provider", action="store_true", help="Explicit Angel-only diagnostic view; preserve the application's selected provider.")
     parser.add_argument("--symbol", choices=["RELIANCE"], help="Explicit scope for --market-data-only.")
     args = parser.parse_args(argv)
     if args.check_config and not args.market_data_only:
         parser.error("--check-config requires --market-data-only")
+    if args.isolated_provider and not args.market_data_only:
+        parser.error("--isolated-provider requires --market-data-only")
     if args.market_data_only:
         if not args.symbol or args.offline or args.import_baseline or args.refresh_scrip_master or args.equity != "RELIANCE":
             parser.error("Use --market-data-only --symbol RELIANCE without legacy diagnostic actions.")
         try:
-            report = run_angelone_market_data_diagnostics(symbol=args.symbol, config_only=args.check_config)
+            report = run_angelone_market_data_diagnostics(symbol=args.symbol, config_only=args.check_config,
+                                                         isolated_provider=args.isolated_provider)
         except Exception:
             report = dict(overall_status="FAIL", exit_code=1, reason="Angel market-data diagnostic could not initialize safely.",
                           readiness_receipt_issued=False, historical_replay_allowed=False, data_persisted=False)

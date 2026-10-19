@@ -59,3 +59,56 @@ The completed 15:15-15:20 EOD bar may be observed through the existing inclusive
 Reconciliation and summary construction now stream indexed rows instead of loading the entire event history or rescanning it for every position. All three synthetic ledgers (100/1,000/10,000 events, 25/250/2,500 closed positions and decisions) reconcile exact template fees/net P&L and zero reservations, with complete duplicate-free pagination. At 10,000 events the dedicated run measured startup 117.216 ms, reconciliation 1,386.387 ms, summary 2,075.567 ms and first event page 17.859 ms; the summary was 552,767 bytes. These are host-specific measurements with no invented latency acceptance threshold. Bulk fixture graphs establish storage/arithmetic behavior, not risk-approved strategy performance.
 
 This remains cash-only offline acceptance. Dedicated EOD export, unresolved-EOD repair policy, partial fills/adjustments, derivatives, authoritative calendars, supported release/backup recovery and operational multi-session acceptance remain missing or unverified. M09 stays 50/50 under the existing rubric; historical replay and Strategy 3 remain blocked.
+
+## Continuous acceptance additions - 2026-10-19
+
+The prior Phase 5C section above remains dated evidence. The
+[continuous report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md) records the new
+implementation, actual tests and repeated performance measurements.
+
+`review_unresolved_eod` supplies an auditable **freeze-only** policy after the final
+observation's inclusive publication window has expired. KEEP_FROZEN and denied
+REQUEST_LATE_HISTORICAL_REPAIR records retain account/config/provider/mode identity,
+request/record hashes and an optional observation-hash reference. They cannot
+change prices, marks, fees, reservations, balance or financial history. Reuse with
+different content rejects; corrupt audit records and transactional failures fail
+closed. Audits are visible through bounded `recovery_decisions` ledger pages.
+No HTTP write endpoint or approved financial repair was added. A late historical
+price/hash cannot unlock frozen capital; a financial repair/research-fork policy
+needs a separate explicit decision and qualified evidence.
+
+GET/HEAD `/api/paper-session?account_id=...&session_date=YYYY-MM-DD` (also `/api/v1`)
+now exports a bounded read-only EOD **summary** after the configured session ends.
+It reconstructs session-end state from actual events and excludes later-session
+P&L. It reports realized session/lifetime results/fees, recorded unrealized MTM,
+reserved/available capital, unresolved status and reproducible statement/event
+digests. A missing final observation stays UNRESOLVED; last recorded marks are
+explicitly not fresh valuations. Restart/repeated reports and later sessions do
+not change the old statement. This is not a full point-in-time ledger export.
+
+Account inventory now defaults to 100/max 200 with append-order watermark cursors;
+the legacy list is a 200-row preview. The old alphabetic inventory order is replaced
+by stable append order. Queued work uses indexed chronological batches of 200 with
+PARTIAL/deferred metadata. Once its required observation window has expired, an
+unfilled candidate is rejected without reservation; committed fills are checked
+first. Corrupt off-page decisions block processing. The 450-decision regression
+drains as 200/200/50 with no financial effects. Valid position observations still
+use the unchanged freshness/identity/risk/fee transaction boundary.
+
+Startup no longer rewrites all ordering metadata on every store initialization.
+A migration marker and existing transactional triggers preserve append IDs; the
+pre-change counterexample advanced sequence 3 to 6 with no new entity, while the
+fixed regression preserves it. Encoded financial records are bounded before commit
+so the service cannot write a position/event its bounded reader rejects.
+
+The dedicated five-repeat, 10,000-event software run measured median startup
+6.8669 ms, reconciliation 1,162.6634 ms, summary 1,674.8891 ms and first event page
+14.1778 ms. These are warm-cache host measurements, not a controlled speedup against
+Phase 5C's one-run timings or an SLA. Complete samples/maxima/memory/concurrency
+results are retained in `evidence/continuous_performance_20261019.json`.
+
+The policy still uses configured IST weekdays/holidays; authoritative dated session
+phases and special sessions are not accepted. Derivatives, partial fills/adjustments,
+financial late repair, full event export, release/backup recovery and operational
+soak remain missing or unverified. M09 stays 50/50, with no live readiness or
+historical replay/Strategy 3 release.

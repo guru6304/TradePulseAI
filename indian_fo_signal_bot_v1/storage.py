@@ -725,6 +725,15 @@ class SQLitePersistenceStore:
                     )""")
                     # Durable append order, independent of implicit rowids/VACUUM.
                     # Companion metadata preserves the existing ledger row layouts.
+                    order_existed = conn.execute("SELECT 1 FROM sqlite_master WHERE type='table' "
+                                                 "AND name='paper_ledger_order'").fetchone() is not None
+                    conn.execute("""CREATE TABLE IF NOT EXISTS paper_recovery_decisions (
+                        decision_id TEXT PRIMARY KEY, account_id TEXT NOT NULL REFERENCES paper_accounts(account_id),
+                        event_key TEXT NOT NULL, config_hash TEXT NOT NULL, payload_json TEXT NOT NULL,
+                        UNIQUE(account_id,event_key)
+                    )""")
+                    conn.execute("CREATE TABLE IF NOT EXISTS paper_schema_migrations (migration TEXT PRIMARY KEY)")
+                    migrated = conn.execute("SELECT 1 FROM paper_schema_migrations WHERE migration='bounded-paper-v1'").fetchone()
                     conn.execute("""CREATE TABLE IF NOT EXISTS paper_ledger_order (
                         sequence_id INTEGER PRIMARY KEY AUTOINCREMENT,
                         account_id TEXT NOT NULL, collection TEXT NOT NULL,
@@ -737,12 +746,26 @@ class SQLitePersistenceStore:
                     conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_events_position "
                                  "ON paper_events(account_id, position_id)")
                     conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_events_append ON paper_events(account_id)")
+                    conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_inventory_page ON paper_ledger_order(collection,sequence_id)")
+                    body = "CASE WHEN json_valid(payload_json) THEN payload_json ELSE '{}' END"
+                    conn.execute(f"CREATE INDEX IF NOT EXISTS idx_paper_pending ON paper_candidate_decisions "
+                                 f"(account_id,json_extract({body},'$.candidate.timestamp'),"
+                                 f"json_extract({body},'$.candidate.strategy_id'),candidate_id) "
+                                 f"WHERE json_extract({body},'$.status')='QUEUED'")
                     for collection, table, key in self._paper_collections():
-                        conn.execute(f"INSERT OR IGNORE INTO paper_ledger_order(account_id,collection,entity_id) "
-                                     f"SELECT account_id,?,{key} FROM {table} ORDER BY rowid", (collection,))
+                        if not migrated or not order_existed:
+                            conn.execute(f"INSERT OR IGNORE INTO paper_ledger_order(account_id,collection,entity_id) "
+                                         f"SELECT account_id,?,{key} FROM {table} ORDER BY rowid", (collection,))
                         conn.execute(f"CREATE TRIGGER IF NOT EXISTS {table}_page_order AFTER INSERT ON {table} "
                                      f"BEGIN INSERT INTO paper_ledger_order(account_id,collection,entity_id) "
                                      f"VALUES(NEW.account_id,'{collection}',NEW.{key}); END")
+                    if not migrated or not order_existed:
+                        conn.execute("INSERT OR IGNORE INTO paper_ledger_order(account_id,collection,entity_id) "
+                                     "SELECT account_id,'accounts',account_id FROM paper_accounts ORDER BY rowid")
+                    conn.execute("CREATE TRIGGER IF NOT EXISTS paper_accounts_page_order AFTER INSERT ON paper_accounts "
+                                 "BEGIN INSERT INTO paper_ledger_order(account_id,collection,entity_id) "
+                                 "VALUES(NEW.account_id,'accounts',NEW.account_id); END")
+                    conn.execute("INSERT OR IGNORE INTO paper_schema_migrations VALUES('bounded-paper-v1')")
                     # Local normalized declarations are NOT an accepted current master.
                     conn.execute("""CREATE TABLE IF NOT EXISTS contract_master_candidates (
                         master_id TEXT PRIMARY KEY, provider TEXT NOT NULL,
@@ -787,21 +810,73 @@ class SQLitePersistenceStore:
                     self._close_if_file(conn)
 
     def list_paper_accounts(self):
-        """Existing-account inventory only; does not configure or operate accounts."""
+        """Bounded legacy inventory preview; use query_paper_accounts for continuation."""
+        return self.query_paper_accounts(limit=200)["accounts"]
+
+    def query_paper_accounts(self, limit=100, cursor=None):
+        """Global local-account inventory, with stable bounded append membership."""
+        if type(limit) is not int or not 1 <= limit <= 200:
+            raise PersistenceValidationError("Invalid account page limit.")
         with self.paper_transaction(write=False) as conn:
-            rows = conn.execute("SELECT account_id, config_hash, created_at_ist "
-                                "FROM paper_accounts ORDER BY account_id").fetchall()
-        return [dict(row, execution_mode="SIMULATED") for row in rows]
+            through = conn.execute("SELECT COALESCE(MAX(sequence_id),0) FROM paper_ledger_order WHERE collection='accounts'").fetchone()[0]
+            after = 0
+            if cursor is not None:
+                try:
+                    if not isinstance(cursor, str) or not 1 <= len(cursor) <= 2048:
+                        raise ValueError()
+                    value = json.loads(base64.b64decode(cursor.encode('ascii'), altchars=b'-_', validate=True))
+                    if (not isinstance(value, dict) or set(value) != {'v','collection','after','through'}
+                            or type(value['v']) is not int or value['v'] != 1 or value['collection'] != 'accounts'
+                            or type(value['after']) is not int or type(value['through']) is not int
+                            or not 0 <= value['after'] <= value['through'] <= through):
+                        raise ValueError()
+                    after, through = value['after'], value['through']
+                except (ValueError, TypeError, UnicodeError):
+                    raise PersistenceValidationError("Invalid account cursor.") from None
+            rows = conn.execute("SELECT o.sequence_id,a.account_id,a.config_hash,a.created_at_ist "
+                                "FROM paper_ledger_order o JOIN paper_accounts a ON a.account_id=o.entity_id "
+                                "WHERE o.collection='accounts' AND o.sequence_id>? AND o.sequence_id<=? "
+                                "ORDER BY o.sequence_id LIMIT ?", (after, through, limit + 1)).fetchall()
+            items = [dict(account_id=r['account_id'], config_hash=r['config_hash'], created_at_ist=r['created_at_ist'],
+                          execution_mode='SIMULATED') for r in rows[:limit]]
+            token = None
+            if len(rows) > limit:
+                token = base64.urlsafe_b64encode(json.dumps(dict(v=1,collection='accounts',after=rows[limit-1]['sequence_id'],
+                                                                through=through),sort_keys=True).encode()).decode('ascii')
+            return dict(status='ok', execution_mode='SIMULATED', accounts=items, next_cursor=token,
+                        through_sequence=through, truncated=token is not None)
 
     def get_paper_portfolio_report(self, account_id, as_of=None):
         from paper_portfolio import PaperPortfolio
         return PaperPortfolio.report_existing(self, account_id, as_of=as_of)
 
+    def get_paper_session_report(self, account_id, session_date, as_of=None):
+        from paper_portfolio import PaperPortfolio
+        return PaperPortfolio.report_existing(self, account_id, as_of=as_of, session_date=session_date)
+
+    def pending_paper_decisions(self, conn, account_id, limit=200):
+        """Bounded chronological work batch. Corrupt history cannot hide off-page."""
+        body = "CASE WHEN json_valid(payload_json) THEN payload_json ELSE '{}' END"
+        invalid = conn.execute("SELECT 1 FROM paper_candidate_decisions WHERE account_id=? AND "
+            f"(NOT json_valid(payload_json) OR length(CAST(payload_json AS BLOB))>524288 "
+            f"OR COALESCE(json_type({body}),'null')!='object' "
+            f"OR COALESCE(json_extract({body},'$.status'),'') NOT IN ('QUEUED','FILLED','REJECTED') "
+            f"OR COALESCE(json_extract({body},'$.account_id'),'')!=account_id) LIMIT 1", (account_id,)).fetchone()
+        if invalid:
+            raise PersistenceValidationError("MALFORMED_PAPER_DECISIONS")
+        predicate = f"account_id=? AND json_extract({body},'$.status')='QUEUED'"
+        rows = conn.execute(f"SELECT payload_json FROM paper_candidate_decisions WHERE {predicate} "
+                            f"ORDER BY json_extract({body},'$.candidate.timestamp'),"
+                            f"json_extract({body},'$.candidate.strategy_id'),candidate_id LIMIT ?", (account_id, limit)).fetchall()
+        count = conn.execute(f"SELECT COUNT(*) FROM paper_candidate_decisions WHERE {predicate}", (account_id,)).fetchone()[0]
+        return [json.loads(r[0]) for r in rows], count
+
     @staticmethod
     def _paper_collections():
         return (("events", "paper_events", "event_id"),
                 ("positions", "paper_positions", "position_id"),
-                ("candidate_decisions", "paper_candidate_decisions", "candidate_id"))
+                ("candidate_decisions", "paper_candidate_decisions", "candidate_id"),
+                ("recovery_decisions", "paper_recovery_decisions", "decision_id"))
 
     def query_paper_ledger(self, account_id, collection="events", limit=100, cursor=None):
         """Read-only keyset pages. Cursor pins membership, not mutable row contents.
@@ -896,7 +971,7 @@ class SQLitePersistenceStore:
             meta = stored["metadata"]
             parsed = prepare_contract_master(bytes(row["original_bytes"]), provider=row["provider"],
                 source_reference=meta["source_reference"], source_version=meta["source_version"],
-                captured_at=meta["captured_at"])
+                captured_at=meta["captured_at"],parser_version=meta['parser_version'])
             original = parsed.pop("original_bytes")
             if parsed != stored or parsed["master_id"] != row["master_id"]:
                 raise ValueError()

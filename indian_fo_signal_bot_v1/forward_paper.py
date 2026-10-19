@@ -14,6 +14,8 @@ from strategies import TradeSignal, format_ist_timestamp, parse_ist_timestamp, s
 
 
 class ForwardPaperCoordinator:
+    MAX_PENDING_PER_HANDOFF = 200
+
     def __init__(self, portfolio):
         if not isinstance(portfolio, PaperPortfolio) or portfolio.config.fill_policy != FORWARD_FILL_POLICY:
             raise PaperPortfolioError("EXPLICIT_FORWARD_CLOSE_ACCOUNT_REQUIRED")
@@ -43,6 +45,8 @@ class ForwardPaperCoordinator:
             raise PaperPortfolioError("SUCCESSFUL_PERSISTED_SCAN_REQUIRED")
         if summary.get("data_mode") != self.config.source_data_mode:
             raise PaperPortfolioError("SCAN_SOURCE_SCOPE_MISMATCH")
+        if not isinstance(summary.get("signals"), list) or len(summary["signals"]) > 512:
+            raise PaperPortfolioError("BOUNDED_SCANNER_CANDIDATES_REQUIRED")
         with self.store.paper_transaction() as conn:
             run = conn.execute("SELECT status,data_mode FROM scan_runs WHERE run_id=?", (summary.get("run_id"),)).fetchone()
             if not run or run["status"] != summary["scan_status"] or run["data_mode"] != self.config.source_data_mode:
@@ -128,6 +132,9 @@ class ForwardPaperCoordinator:
 
     def consume_scan(self, summary, observations):
         self._queue(summary)
+        with self.store.paper_transaction(write=False) as conn:
+            pending, pending_count = self.store.pending_paper_decisions(conn, self.config.account_id,
+                                                                      limit=self.MAX_PENDING_PER_HANDOFF)
         actions = []
         batches, failures = {}, {}
         for symbol, rows in observations.items():
@@ -151,15 +158,6 @@ class ForwardPaperCoordinator:
                 actions.append(result)
             except PaperPortfolioError as exc:
                 actions.append(dict(position_id=position["position_id"], status="DEFERRED", reason_code=exc.reason_code))
-        with self.store.paper_transaction(write=False) as conn:
-            rows = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? ORDER BY candidate_id",
-                                (self.config.account_id,))
-            pending = []
-            for row in rows:
-                decision = json.loads(row["payload_json"])
-                if decision["status"] == "QUEUED":
-                    pending.append(decision)
-        pending.sort(key=lambda d: (d["candidate"].get("timestamp", ""), d["candidate"].get("strategy_id", ""), d["candidate_id"]))
         for decision in pending:
             candidate_id, data = decision["candidate_id"], decision["candidate"]
             with self.store.paper_transaction(write=False) as conn:
@@ -171,11 +169,18 @@ class ForwardPaperCoordinator:
             if decision["candidate_hash"] != _hash(data) or decision["config_hash"] != self.config.config_hash:
                 actions.append(self._transition(candidate_id, "REJECTED", "CANDIDATE_DECISION_INTEGRITY_FAILURE"))
                 continue
+            # No observation inbox exists: once the required close + permitted
+            # publication delay is past, an unfilled candidate cannot be repaired
+            # into a historical entry. Existing committed effects were checked first.
+            expected = parse_ist_timestamp(data["timestamp"]) + timedelta(minutes=5)
+            deadline = expected + timedelta(minutes=5, seconds=self.config.max_mark_age_seconds)
+            if self.paper._now() > deadline:
+                actions.append(self._transition(candidate_id, "REJECTED", "REQUIRED_OBSERVATION_WINDOW_EXPIRED"))
+                continue
             bars = batches.get(data["symbol"], [])
             if not bars:
                 actions.append(self._transition(candidate_id, "QUEUED", failures.get(data["symbol"], "OBSERVATIONS_UNAVAILABLE")))
                 continue
-            expected = parse_ist_timestamp(data["timestamp"]) + timedelta(minutes=5)
             bar = next((b for b in bars if parse_ist_timestamp(b["timestamp"]) == expected), None)
             if bar is None:
                 reason = "WAITING_FOR_NEXT_COMPLETED_OBSERVATION" if parse_ist_timestamp(bars[-1]["timestamp"]) < expected else "REQUIRED_OBSERVATION_MISSING"
@@ -186,5 +191,6 @@ class ForwardPaperCoordinator:
                 actions.append(self._transition(candidate_id, "FILLED", "PAPER_RISK_APPROVED", result["position_id"]))
             except PaperPortfolioError as exc:
                 actions.append(self._transition(candidate_id, "REJECTED", exc.reason_code))
-        return dict(status="COMPLETED", execution_mode="SIMULATED", actions=actions,
+        return dict(status="PARTIAL" if pending_count > len(pending) else "COMPLETED", execution_mode="SIMULATED", actions=actions,
+                    pending_batch_limit=self.MAX_PENDING_PER_HANDOFF, pending_deferred_count=max(0,pending_count-len(pending)),
                     account_id=self.config.account_id, report=self.store.get_paper_portfolio_report(self.config.account_id, self.paper._now()))

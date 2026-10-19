@@ -171,7 +171,7 @@ class PaperPortfolio:
         return value.astimezone(IST)
 
     @classmethod
-    def report_existing(cls, store, account_id, as_of=None):
+    def report_existing(cls, store, account_id, as_of=None, session_date=None):
         """Read-only integration: never creates an account, event or position."""
         _name(account_id)
         now = as_of or datetime.now(IST)
@@ -188,7 +188,8 @@ class PaperPortfolio:
                             execution_mode="SIMULATED", entry_blocks=["ACCOUNT_CONFIG_CORRUPT"], positions=[], events=[], candidate_decisions=[])
             instance = cls.__new__(cls)
             instance.store, instance.config, instance.clock = store, config, lambda: now
-            return instance._snapshot(conn, instance._now())
+            return (instance._session_statement(conn, session_date, instance._now()) if session_date is not None
+                    else instance._snapshot(conn, instance._now()))
 
     def _positions(self, conn):
         for row in conn.execute("SELECT position_id,CASE WHEN length(CAST(payload_json AS BLOB))<=524288 "
@@ -387,6 +388,148 @@ class PaperPortfolio:
         with self.store.paper_transaction(write=False) as conn:
             return [p for p in self._positions(conn) if p["status"] == "OPEN"]
 
+    def review_unresolved_eod(self, position_id, event_key, *, requested_action="KEEP_FROZEN", observation_sha256=None):
+        """Audit a freeze/denied repair request. Never change a financial row.
+
+        A hash is a reference to a proposed observation, not qualification or a
+        price. Historical repair requires a separately approved policy; this
+        method cannot approve it or replay a late candle into the live ledger.
+        """
+        _name(event_key)
+        if requested_action not in ("KEEP_FROZEN", "REQUEST_LATE_HISTORICAL_REPAIR"):
+            _reject("UNAPPROVED_FINANCIAL_RECOVERY_ACTION")
+        if observation_sha256 is not None and (not isinstance(observation_sha256, str)
+                or not re.fullmatch(r"[a-f0-9]{64}", observation_sha256)):
+            _reject("INVALID_OBSERVATION_REFERENCE")
+        request = dict(position_id=position_id, requested_action=requested_action, observation_sha256=observation_sha256)
+        request_hash = _hash(request)
+        now = self._now()
+        with self.store.paper_transaction(write=True) as conn:
+            row = conn.execute("SELECT CASE WHEN length(CAST(payload_json AS BLOB))<=524288 THEN payload_json END "
+                               "FROM paper_recovery_decisions WHERE account_id=? AND event_key=?",
+                               (self.config.account_id, event_key)).fetchone()
+            if row:
+                try:
+                    saved = self._decode(row[0])
+                    if (saved['record_sha256']!=_hash({k:v for k,v in saved.items() if k!='record_sha256'})
+                            or saved['request_hash']!=_hash(saved['request'])
+                            or saved['config_hash']!=self.config.config_hash or saved['account_id']!=self.config.account_id
+                            or saved['financial_mutations'] is not False):
+                        raise ValueError()
+                except (KeyError,ValueError,TypeError,RecursionError):
+                    _reject('RECONCILIATION_REQUIRED')
+                if saved["request_hash"] != request_hash:
+                    _reject("EVENT_IDEMPOTENCY_CONFLICT")
+                return dict(saved, idempotent=True)
+            if self._reconciliation(conn)["status"] != "OK":
+                _reject("RECONCILIATION_REQUIRED")
+            row = conn.execute("SELECT payload_json FROM paper_positions WHERE account_id=? AND position_id=?",
+                               (self.config.account_id, position_id)).fetchone()
+            if not row:
+                _reject("POSITION_NOT_IN_ACCOUNT")
+            p = self._decode(row[0])
+            if p["status"] != "OPEN":
+                _reject("POSITION_ALREADY_CLOSED")
+            cutoff = datetime.combine(parse_ist_timestamp(p["entry_timestamp_ist"]).date(),
+                                      time.fromisoformat(self.config.square_off_ist), tzinfo=IST)
+            if now <= cutoff + timedelta(seconds=self.config.max_mark_age_seconds):
+                _reject("EOD_RECOVERY_NOT_DUE")
+            key = _hash([self.config.account_id, "recovery", event_key])
+            decision = dict(decision_id=key, account_id=self.config.account_id, config_hash=self.config.config_hash,
+                provider=self.config.provider, source_data_mode=self.config.source_data_mode, execution_mode="SIMULATED",
+                position_id=position_id, request_hash=request_hash, request=request,
+                status="FROZEN" if requested_action == "KEEP_FROZEN" else "BLOCKED_POLICY_APPROVAL_REQUIRED",
+                reason_code="MISSING_EOD_OBSERVATION_NO_FINANCIAL_REPAIR_AUTHORIZED",
+                observed_at_ist=format_ist_timestamp(now), financial_mutations=False,
+                readiness_receipt_issued=False, historical_replay_allowed=False)
+            decision['record_sha256']=_hash(decision)
+            conn.execute("INSERT INTO paper_recovery_decisions VALUES(?,?,?,?,?)",
+                         (key, self.config.account_id, event_key, self.config.config_hash, _encode(decision)))
+            return decision
+
+    def session_statement(self, session_date, as_of=None):
+        with self.store.paper_transaction(write=False) as conn:
+            return self._session_statement(conn, session_date, self._now(as_of))
+
+    def _session_statement(self, conn, session_date, now):
+        """Read-only event-derived EOD summary; later-session P&L cannot leak in."""
+        try:
+            day = datetime.strptime(session_date, "%Y-%m-%d").date()
+            if day.isoformat() != session_date or day.weekday() >= 5 or session_date in self.config.configured_holidays:
+                raise ValueError()
+            end = datetime.combine(day, time.fromisoformat(self.config.session_end_ist), tzinfo=IST)
+            if now < end:
+                _reject("SESSION_NOT_ENDED")
+        except (TypeError, ValueError) as exc:
+            if isinstance(exc, PaperPortfolioError):
+                raise
+            _reject("INVALID_CONFIGURED_SESSION_DATE")
+        recon = self._reconciliation(conn)
+        if recon["status"] != "OK":
+            return dict(status="RECONCILIATION_REQUIRED", account_id=self.config.account_id,
+                        session_date=session_date, accounting=None, reconciliation=recon)
+        try:
+            totals = dict.fromkeys(("realized", "realized_day", "gross_day", "fees_day", "fees", "slippage",
+                                   "unrealized", "raw_losses", "reserved"), Decimal(0))
+            opened = closed = entries = event_count = 0
+            digest = hashlib.sha256()
+            for p in self._positions(conn):
+                entry = mark = exit_data = None
+                for event in self._events(conn, p["position_id"]):
+                    payload = event["payload"]
+                    field = {"ENTRY": "entry", "MARK": "mark", "EXIT": "exit"}[event["kind"]]
+                    state = payload[field]
+                    timestamp_key = {"ENTRY": "entry_timestamp_ist", "MARK": "mark_timestamp_ist", "EXIT": "exit_timestamp_ist"}[event["kind"]]
+                    if parse_ist_timestamp(state[timestamp_key]).date() > day:
+                        continue
+                    encoded = _encode(event).encode()
+                    digest.update(len(encoded).to_bytes(8, 'big'))
+                    digest.update(encoded)
+                    event_count += 1
+                    if field == "entry":
+                        entry = state
+                    elif field == "mark":
+                        mark = state
+                    else:
+                        exit_data = state
+                if entry is None:
+                    continue
+                entries += entry["entry_timestamp_ist"][:10] == session_date
+                if exit_data is not None:
+                    closed += 1
+                    in_day = exit_data["exit_timestamp_ist"][:10] == session_date
+                    values = dict(realized=exit_data["net_pnl_inr"], realized_day=exit_data["net_pnl_inr"] if in_day else 0,
+                        gross_day=exit_data["gross_pnl_inr"] if in_day else 0,
+                        fees_day=exit_data["costs"]["charges_inr"] if in_day else 0,
+                        fees=exit_data["costs"]["charges_inr"], slippage=exit_data["costs"]["slippage_inr"])
+                else:
+                    if mark is None:
+                        _reject("MISSING_SESSION_MARK")
+                    opened += 1
+                    values = dict(unrealized=mark["unrealized_net_pnl_inr"], raw_losses=min(0, mark["unrealized_gross_pnl_inr"]),
+                                  reserved=entry["initial_reserved_capital_inr"])
+                for key, value in values.items():
+                    totals[key] += Decimal(str(value))
+            amount = {k: _money(v) for k,v in totals.items()}
+            accounting = dict(realized_net_pnl_inr_lifetime=amount["realized"], realized_net_pnl_inr_session=amount["realized_day"],
+                realized_gross_pnl_inr_session=amount["gross_day"], fees_paid_inr_session=amount["fees_day"],
+                fees_paid_inr_lifetime=amount["fees"], slippage_paid_inr_lifetime=amount["slippage"],
+                unrealized_net_pnl_inr=amount["unrealized"], reserved_capital_inr=amount["reserved"],
+                equity_inr=_sum([self.config.starting_capital_inr, amount["realized"], amount["unrealized"]]),
+                available_capital_inr=max(0, _sum([self.config.starting_capital_inr, amount["realized"], amount["raw_losses"], -amount["reserved"]])),
+                open_positions=opened, closed_positions=closed, entries_in_session=entries)
+            statement = dict(status="OK", account_id=self.config.account_id, config_hash=self.config.config_hash,
+                provider=self.config.provider, source_data_mode=self.config.source_data_mode, execution_mode="SIMULATED",
+                session_date=session_date, session_end_ist=format_ist_timestamp(end), accounting=accounting,
+                eod_status="UNRESOLVED" if opened else "RECONCILED", historical_replay_allowed=False,
+                readiness_receipt_issued=False, valuation="LAST_RECORDED_MARK_NOT_FRESH_ACCEPTANCE",
+                calendar_authority="CONFIGURED_WEEKDAYS_AND_HOLIDAYS_ONLY", event_count=event_count,
+                event_digest_sha256=digest.hexdigest(), financial_mutations=False)
+            return dict(statement, statement_sha256=_hash(statement))
+        except (KeyError, ValueError, TypeError, ArithmeticError, RecursionError):
+            return dict(status="RECONCILIATION_REQUIRED", account_id=self.config.account_id,
+                        session_date=session_date, accounting=None)
+
     def _bar(self, bar, identity, now):
         if not isinstance(bar, dict) or bar.get("is_complete") is not True:
             _reject("COMPLETED_SOURCE_BAR_REQUIRED")
@@ -496,11 +639,18 @@ class PaperPortfolio:
 
     def _event(self, conn, key, kind, position, payload):
         conn.execute("INSERT INTO paper_events(event_id,account_id,event_key,kind,position_id,payload_json) VALUES(?,?,?,?,?,?)",
-            (_hash([self.config.account_id, key]), self.config.account_id, key, kind, position["position_id"], _encode(payload)))
+            (_hash([self.config.account_id, key]), self.config.account_id, key, kind, position["position_id"], self._record(payload)))
+
+    @staticmethod
+    def _record(value):
+        encoded = _encode(value)
+        if len(encoded.encode("utf-8")) > 524288:
+            _reject("BOUNDED_PAPER_RECORD_REQUIRED")
+        return encoded
 
     def _save(self, conn, position):
         conn.execute("UPDATE paper_positions SET payload_json=? WHERE account_id=? AND position_id=?",
-                     (_encode(position), self.config.account_id, position["position_id"]))
+                     (self._record(position), self.config.account_id, position["position_id"]))
 
     def _mark_or_exit(self, conn, position, bar, key, command_hash, *, mark_only=False):
         sign = 1 if position["side"] == "LONG" else -1
@@ -629,7 +779,7 @@ class PaperPortfolio:
                 status="OPEN", reserved_capital_inr=sizing["capital_required_inr"], fill_policy=self.config.fill_policy,
                 entry_provenance=bar)
             conn.execute("INSERT INTO paper_positions(position_id,account_id,entry_key,payload_json) VALUES(?,?,?,?)",
-                (position["position_id"], self.config.account_id, entry_key, _encode(position)))
+                (position["position_id"], self.config.account_id, entry_key, self._record(position)))
             immutable = {key: value for key, value in position.items() if key not in ("status", "reserved_capital_inr")}
             # Entry and first-bar result commit together; no capital-only orphan.
             result = self._mark_or_exit(conn, position, bar, event_key + ":fill", command_hash, mark_only=forward_close)

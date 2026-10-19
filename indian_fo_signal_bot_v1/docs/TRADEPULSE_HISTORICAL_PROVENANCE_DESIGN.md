@@ -170,3 +170,45 @@ specification for one historical cash instrument/date range. Until that evidence
 available, continue safe offline work and retain the existing fail-closed policy;
 adding a manual acceptance flag, downloading a current master or switching brokers
 cannot satisfy this dependency.
+
+## Continuous acceptance evidence addendum - 2026-10-19
+
+The [continuous report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md) adds real public
+master capture and tested local verification prerequisites while preserving this
+document's earlier findings. No positive publisher/effective-date verifier or real
+historical evaluation was accepted. The V1 assessor and runtime archive/replay gates
+remain unchanged and fail closed.
+
+Exact public Angel bytes are now retained losslessly, with source URL, local capture
+time, original/stored digests and explicit UNATTESTED classifications. The native
+contract candidate can observe four derivative types in a bounded three-underlying
+scope. Its effective dates remain null. Ordinary HTTPS/local capture is operational
+source-observation evidence; it is not the independent capture/date authority
+required by this policy, and a current expiry cannot supply a listing/lot history.
+
+`verify_source_bundle_bindings` implements a strict local prerequisite contract:
+original master/candle hashes, archive/provider/instrument, five-minute interval and
+requested dates must match; declared date coverage must be unambiguous. Substituted
+bytes/metadata/scopes and extra trust/authorization fields reject. Matching bundles
+still report **BINDINGS_MATCH_AUTHORITY_BLOCKED**, supported authenticators empty,
+and historical eligibility false. The bundle is not stored as a positive receipt
+and cannot select a verifier/key from caller input. Price-content quality remains
+the existing historical validator's separate responsibility.
+
+`research_protocol.StudyProtocol` freezes source/dataset/instrument identity, explicit
+disjoint chronological groups, cost/risk parameters and predeclared sensitivity
+scenarios. The existing engine receives only each phase's past prefix and actual
+evaluation bounds, with no Strategy 3 or provenance bypass. Missing/intermediate
+undeclared sessions, tampered hashes, synthetic/mixed inputs and conflicting ranges
+reject. Actual store qualification blocks the present study before evaluation.
+Positive dispatch/prefix/cost plumbing has **mock-only** unit coverage, with the
+qualifier and engine both mocked; it is not source acceptance or a real backtest.
+Signal-quality statistics, profitability, regime analysis and empirical calibration
+remain NOT_TESTED. A no-trade baseline and frozen sensitivity plumbing are available
+only inside the still-gated future qualified-study path.
+
+Next evidence remains an obtainable independent source/clock/retention protocol and
+authoritative dated master **and price** artifacts, including genuine valid and
+invalid examples. Do not fabricate a signer, trust root, effective interval or
+positive verifier merely because a public file was downloaded. Historical Strategy
+3 also still lacks its independent exact option-contract fill/accounting engine.

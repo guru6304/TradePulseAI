@@ -91,3 +91,23 @@ unselected, not disproven.
 | Historical authenticity/effective dates | BLOCKED; existing source gates plus 12 new adversarial provenance tests | No verifier/trust root or authoritative artifact is supplied. Resolve the actual acquisition/date-authority evidence design; preserve replay and Strategy 3 blocks. |
 | Scanner to forward paper | PASS for offline cash implementation, `test_phase5b_forward` through actual mocked wire/real evaluator and real SQLite | Explicit immutable account plus next completed observation's close; every fill remains SIMULATED. No claim of liquidity, accepted broker observations, futures/options readiness or profitability. Next perform bounded offline multi-session/fault/EOD acceptance. |
 | Account/contract inspection APIs | PASS for GET/HEAD/no mutation/no transport, `test_phase5a_integration` | Reporting does not scan, fill, create an account, download a master or issue a receipt. Large-ledger pagination remains work. |
+
+## Continuous acceptance addendum - 2026-10-19
+
+The [continuous report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md) supersedes the
+earlier next-task descriptions above. It records fresh baseline/final commands,
+warnings, public-source capture and the precise remaining dependencies.
+
+| Evidence layer | Actual result in this mission | Limit / next requirement |
+| --- | --- | --- |
+| Isolated Angel configuration | BLOCKED, exit 1: ANGEL_API_KEY, ANGEL_CLIENT_CODE, ANGEL_PIN and ANGEL_TOTP_SECRET are absent. `--isolated-provider --check-config` works without changing selected Upstox or requiring its credentials. | Configure those existing fields locally and repeat offline preflight; never disclose their values. |
+| Angel authentication/quote/candles/freshness/session | NOT_TESTED against a real account. Narrow command is OFFLINE_TESTED/MOCK_TESTED, with no refresh/re-login retry. | One controlled appropriate-session RELIANCE read only after valid local configuration. A 403 is access denied, with cause unestablished; a quote alone cannot pass candles or issue a receipt. |
+| Upstox current cash data | No new live request. Earlier reported 403 remains unexplained; selected provider unchanged. | The existing V2 intraday route is marked deprecated in [official documentation](https://upstox.com/developer/api-documentation/get-intra-day-candle-data/); document/test a narrow migration separately rather than attributing the 403 to deprecation. |
+| Public Angel master | One credential-free public HTTPS capture; exact bytes retained losslessly with digests/time. Native inspection parses 3,059 observations across four derivative types for RELIANCE/NIFTY/BANKNIFTY. | Public-source capture is not authenticated broker-account acceptance or qualified current/historical contract authority. No active master was changed. |
+| Native derivative data/execution | Four-class observation parser/lookup/store is OFFLINE_TESTED; real contract candle/fill acceptance remains BLOCKED/NOT_TESTED. | Accepted exact contract master, dates/units and provider-native candle path are separately required. Native lookup returns identity null / eligible false. |
+| Historical source/studies | Source-bundle byte/scope checks and frozen study orchestration implemented; real signal quality NOT_TESTED. | No positive publisher/date/price-source authenticator or qualified historical dataset. LIVE replay and Strategy 3 remain blocked. |
+| Paper/reporting | Recovery-audit freeze, bounded queue/inventory, EOD statement and stable ledger pages OFFLINE_TESTED. | No financial late repair, live feed acceptance, full event export or operational soak approval. |
+
+No account-market observations were persisted, no receipt issued, no production
+service started and no live Telegram message sent. Public documentation/master
+requests are recorded separately from mocked and simulated test transport.

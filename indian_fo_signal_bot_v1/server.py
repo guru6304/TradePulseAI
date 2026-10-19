@@ -695,22 +695,30 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 "message": str(exc),
             }
 
-    def _handle_paper_portfolio(self, query_params, *, accounts=False, ledger=False):
+    def _handle_paper_portfolio(self, query_params, *, accounts=False, ledger=False, session=False):
         """Read existing simulated accounts only; never scan, mark, fill or create."""
         assert self.engine is not None
         if self.engine.store is None:
             return 503, {"status": "error", "message": "Database persistence is disabled."}
         try:
-            allowed = set() if accounts else {"account_id", "collection", "limit", "cursor"} if ledger else {"account_id"}
+            allowed = {"limit", "cursor"} if accounts else {"account_id", "session_date"} if session else {"account_id", "collection", "limit", "cursor"} if ledger else {"account_id"}
             if set(query_params) - allowed or any(len(v) != 1 for v in query_params.values()):
                 raise ValueError()
             if accounts:
-                return 200, {"status": "ok", "execution_mode": "SIMULATED",
-                             "accounts": self.engine.store.list_paper_accounts()}
+                raw_limit = _get_str_param(query_params, "limit") or "100"
+                if not raw_limit.isascii() or not raw_limit.isdecimal() or len(raw_limit)>3:
+                    raise ValueError()
+                return 200, self.engine.store.query_paper_accounts(limit=int(raw_limit),
+                    cursor=_get_str_param(query_params, "cursor"))
             account_id = _get_str_param(query_params, "account_id")
             if not account_id or len(account_id) > 128:
                 raise ValueError()
-            if ledger:
+            if session:
+                session_date = _get_str_param(query_params, "session_date")
+                if not session_date:
+                    raise ValueError()
+                report = self.engine.store.get_paper_session_report(account_id,session_date,as_of=self.engine._now_ist())
+            elif ledger:
                 page_limit = _get_str_param(query_params, "limit") or "100"
                 if not page_limit.isascii() or not page_limit.isdecimal() or len(page_limit) > 3:
                     raise ValueError()
@@ -774,9 +782,9 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         query_params = urllib.parse.parse_qs(parsed.query)
 
         if route in ("/api/paper-accounts", "/api/v1/paper-accounts", "/api/paper-portfolio", "/api/v1/paper-portfolio",
-                     "/api/paper-ledger", "/api/v1/paper-ledger"):
+                     "/api/paper-ledger", "/api/v1/paper-ledger", "/api/paper-session", "/api/v1/paper-session"):
             code, payload = self._handle_paper_portfolio(query_params, accounts=route.endswith("paper-accounts"),
-                                                       ledger=route.endswith("paper-ledger"))
+                                                       ledger=route.endswith("paper-ledger"),session=route.endswith("paper-session"))
             self._send_json(code, payload, send_body=send_body)
             return
         if route in ("/api/contract-masters", "/api/v1/contract-masters", "/api/contract-resolution", "/api/v1/contract-resolution"):

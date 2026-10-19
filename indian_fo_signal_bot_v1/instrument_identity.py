@@ -514,7 +514,105 @@ def validate_contract_identity(record, *, provider, as_of=None) -> ContractIdent
     return result
 
 
-def prepare_contract_master(raw_bytes, *, provider, source_reference, source_version, captured_at=None):
+def inspect_angel_native_contracts(rows):
+    """Observe supported NSE/NFO facts; native snapshots have no listing intervals.
+
+    NFO strike/100 is accepted only if it exactly matches the native contract
+    label, as in the retained public snapshot. No current lot/expiry is invented.
+    Unknown underlying scopes remain outside this deliberately bounded parser.
+    """
+    if not isinstance(rows,list) or not rows or len(rows)>250000:
+        reject('INVALID_NATIVE_MASTER','A bounded native row list is required.')
+    spots={}
+    # First observed native scope; this is not the full stock F&O universe.
+    supported={'RELIANCE','NIFTY','BANKNIFTY'}
+    for row in rows:
+        if not isinstance(row,dict):
+            reject('INVALID_NATIVE_MASTER','Native rows must be objects.')
+        name=str(row.get('name','')).upper()
+        if row.get('exch_seg')!='NSE' or name not in supported:
+            continue
+        if name in INDICES and row.get('instrumenttype')!='AMXIDX':
+            continue  # The full file also contains auxiliary same-name NSE rows.
+        token=str(row.get('token',''))
+        # Index rows and ordinary -EQ cash are separate native classifications.
+        if name not in INDICES and row.get('symbol')!=name+'-EQ':
+            continue
+        identity=spot_identity(dict(symbol=name,angel_token=token),'angelone')
+        if name in spots:
+            reject('AMBIGUOUS_NATIVE_UNDERLYING','The native underlying is duplicated or has conflicting identifiers.')
+        spots[name]=identity['identifier']
+    facts=[]
+    tokens,terms=set(),set()
+    pairs={}
+    for row in rows:
+        kind=row.get('instrumenttype')
+        underlying=str(row.get('name','')).upper()
+        if row.get('exch_seg')!='NFO' or kind not in ('FUTIDX','FUTSTK','OPTIDX','OPTSTK') or underlying not in supported:
+            continue
+        if underlying not in spots:
+            reject('MISSING_UNDERLYING_IDENTITY','A supported native derivative requires its exact cash/index record.')
+        if (underlying in INDICES)!=kind.endswith('IDX'):
+            reject('CONTRACT_TYPE_MISMATCH','Native derivative type and underlying disagree.')
+        identifier=_contract_identifier(str(row.get('token','')),'angelone',kind)
+        if identifier in tokens or identifier==spots[underlying]:
+            reject('CONFLICTING_IDENTIFIER','Duplicate or spot-substituted native NFO identifier.')
+        tokens.add(identifier)
+        lot=positive_integer(row.get('lotsize'),'native lot_size')
+        if (('multiplier' in row and (isinstance(row['multiplier'],bool) or row['multiplier']!=1))
+                or row.get('quantity_unit','UNDERLYING_UNITS')!='UNDERLYING_UNITS' or row.get('price_unit','INR')!='INR'):
+            reject('UNSUPPORTED_CONTRACT_UNITS','The native row declares an unsupported unit model.')
+        raw_exp=row.get('expiry')
+        if not isinstance(raw_exp,str) or not re.fullmatch(r'\d{2}[A-Z]{3}\d{4}',raw_exp):
+            reject('INVALID_CONTRACT_DATE','Native expiry format is unsupported.')
+        try:
+            months={'JAN':1,'FEB':2,'MAR':3,'APR':4,'MAY':5,'JUN':6,'JUL':7,'AUG':8,'SEP':9,'OCT':10,'NOV':11,'DEC':12}
+            expiry=date(int(raw_exp[5:]),months[raw_exp[2:5]],int(raw_exp[:2])).isoformat()
+        except (ValueError,KeyError):
+            reject('INVALID_CONTRACT_DATE','Native expiry is invalid.')
+        symbol=_contract_text(row.get('symbol'),'native contract symbol')
+        expiry_labels=(raw_exp,raw_exp[:5]+raw_exp[-2:])
+        fact=dict(provider='angelone',symbol=symbol,identifier=identifier,exchange='NFO',
+            segment='NSE_FO_INDEX' if kind.endswith('IDX') else 'NSE_FO_STOCK',instrument_type=kind,
+            underlying=underlying,underlying_identifier=spots[underlying],expiry=expiry,lot_size=lot,
+            quantity_unit='UNDERLYING_UNITS',price_unit='INR',multiplier=1,
+            valid_from=None,valid_to=None,historical_validity='NOT_ESTABLISHED',source='OBSERVED_NATIVE_SNAPSHOT_UNQUALIFIED')
+        if kind.startswith('OPT'):
+            try:
+                raw_strike=Decimal(str(row.get('strike')))
+                if isinstance(row.get('strike'),bool) or not raw_strike.is_finite() or raw_strike<=0:
+                    raise ValueError()
+                strike=raw_strike/Decimal(100)
+            except (ValueError,ArithmeticError):
+                reject('INVALID_OPTION_CONTRACT','Native NFO strike units are invalid.')
+            side=symbol[-2:]
+            label=format(strike,'f').rstrip('0').rstrip('.') if '.' in format(strike,'f') else format(strike,'f')
+            if side not in ('CE','PE') or symbol not in tuple(underlying+exp+label+side for exp in expiry_labels):
+                reject('NATIVE_STRIKE_UNIT_OR_SYMBOL_MISMATCH','Native strike scaling, expiry, side and label must agree exactly.')
+            fact.update(strike=float(strike),option_type=side)
+            pair=(underlying,expiry,float(strike))
+            if pair in pairs and pairs[pair]!=lot:
+                reject('CONFLICTING_OPTION_PAIR','Native CE/PE quantity models disagree.')
+            pairs[pair]=lot
+        else:
+            try:
+                future_strike=Decimal(str(row.get('strike')))
+            except ArithmeticError:
+                reject('CONTRACT_TYPE_MISMATCH','Native futures require the observed no-strike sentinel.')
+            if (symbol not in tuple(underlying+exp+'FUT' for exp in expiry_labels) or not future_strike.is_finite() or future_strike!=Decimal(-1)
+                    or row.get('option_type') is not None):
+                reject('CONTRACT_TYPE_MISMATCH','Native future label, expiry or no-option terms disagree.')
+        key=(kind,underlying,expiry,fact.get('strike'),fact.get('option_type'))
+        if key in terms:
+            reject('AMBIGUOUS_CONTRACT','Multiple native identifiers claim one contract.')
+        terms.add(key)
+        facts.append(fact)
+    if not facts:
+        reject('EMPTY_SUPPORTED_NATIVE_SCOPE','No supported native derivative facts were found.')
+    return sorted(facts,key=lambda r:(r['instrument_type'],r['underlying'],r['expiry'],r['identifier']))
+
+
+def prepare_contract_master(raw_bytes, *, provider, source_reference, source_version, captured_at=None, parser_version=None):
     """Retain a bounded local normalized declaration; never activate a universe.
 
     Publisher, version, capture time and effective dates remain supplied claims.
@@ -522,6 +620,8 @@ def prepare_contract_master(raw_bytes, *, provider, source_reference, source_ver
     """
     if provider not in PROVIDERS:
         reject("UNSUPPORTED_PROVIDER", "The contract-master provider is unsupported.")
+    if parser_version not in (None,CONTRACT_MASTER_PARSER_VERSION,'angel-native-observation-v1'):
+        reject('UNSUPPORTED_CONTRACT_MASTER_PARSER','The retained parser version is unsupported.')
     if not isinstance(raw_bytes, bytes) or not raw_bytes or len(raw_bytes) > MAX_CONTRACT_MASTER_BYTES:
         reject("INVALID_CONTRACT_MASTER_SIZE", "A bounded nonempty original byte artifact is required.")
     source_reference = _contract_text(source_reference, "source_reference", 512)
@@ -556,6 +656,15 @@ def prepare_contract_master(raw_bytes, *, provider, source_reference, source_ver
             if isinstance(exc, IdentityValidationError):
                 raise
             reject("INVALID_CONTRACT_MASTER_SCHEMA", "A complete normalized UTF-8 JSON artifact is required.")
+        if (provider=='angelone' and isinstance(payload,list)
+                and parser_version in (None,'angel-native-observation-v1')):
+            observed=inspect_angel_native_contracts(payload)
+            metadata.update(source_kind='ANGEL_NATIVE_SNAPSHOT_UNQUALIFIED',effective_date_evidence='UNKNOWN',
+                            parser_version='angel-native-observation-v1')
+            candidate.update(observed_records=observed,observed_record_count=len(observed),observed_sha256=digest(observed),
+                status='BLOCKED_NATIVE_MASTER_AUTHORITY_AND_EFFECTIVE_DATES')
+            candidate['master_id']=digest({k:v for k,v in candidate.items() if k!='original_bytes'})
+            return candidate
         if (not isinstance(payload, dict) or payload.get("schema_version") != CONTRACT_MASTER_SCHEMA
                 or payload.get("provider") != provider):
             reject("INVALID_CONTRACT_MASTER_SCHEMA", "Schema and provider must match the declared local normalized format.")
@@ -625,7 +734,7 @@ def resolve_contract_identity(master, *, provider, instrument_type, as_of, ident
         metadata = master["metadata"]
         rebuilt = prepare_contract_master(master["original_bytes"], provider=metadata["provider"],
             source_reference=metadata["source_reference"], source_version=metadata["source_version"],
-            captured_at=metadata["captured_at"])
+            captured_at=metadata["captured_at"],parser_version=metadata['parser_version'])
         if rebuilt != master:
             return result("INVALID_MASTER_INTEGRITY", "Retained bytes, normalized facts and declaration metadata disagree.")
     except (IdentityValidationError, TypeError, KeyError, RecursionError):
@@ -634,6 +743,25 @@ def resolve_contract_identity(master, *, provider, instrument_type, as_of, ident
         return result("CONTRACT_PROVIDER_MISMATCH", "The retained declaration belongs to a different provider.")
     if rebuilt["status"] == "REJECTED":
         return result(rebuilt["validation"]["reason_code"], "The retained local declaration failed structural validation.")
+    if rebuilt['status']=='BLOCKED_NATIVE_MASTER_AUTHORITY_AND_EFFECTIVE_DATES':
+        try:
+            operation_day=_contract_as_of(as_of)
+            capture=metadata.get('captured_at')
+            if capture is None or _contract_as_of(datetime.fromisoformat(capture))!=operation_day:
+                return result('STALE_OR_UNDATED_NATIVE_CAPTURE','Only same-date observations can be inspected; no effective interval is inferred.')
+            observed=[r for r in rebuilt['observed_records'] if r['instrument_type']==instrument_type and all(
+                value is None or r.get(key)==value for key,value in (('identifier',identifier),('underlying',underlying),
+                ('expiry',expiry),('strike',strike),('option_type',option_type),('symbol',symbol)))]
+            if not observed:
+                return result('CONTRACT_NOT_FOUND','No native observation matches the exact requested terms.')
+            if len(observed)!=1:
+                return result('AMBIGUOUS_CONTRACT','Specify exact expiry/strike/side or native identifier; no rollover is inferred.')
+            if observed[0]['expiry']<operation_day:
+                return result('EXPIRED_CONTRACT','The observed native expiry is before the requested date.')
+            return dict(result(rebuilt['status'],'Native facts do not establish publisher authority or effective dates.'),
+                        observed_contract=observed[0])
+        except (IdentityValidationError,ValueError,TypeError):
+            return result('INVALID_NATIVE_INSPECTION_SCOPE','An explicit canonical capture/operation scope is required.')
     try:
         day = _contract_as_of(as_of)
         if identifier is not None:

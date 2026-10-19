@@ -1,0 +1,33 @@
+{
+  "active_master_changed": false,
+  "authority": "NOT_ESTABLISHED",
+  "eligible": false,
+  "historical_replay_allowed": false,
+  "master_id": "f5034d8f75d283ba701f499370266d7c5fdd5512a597d7a577f4ab966ab9b3eb",
+  "metadata": {
+    "captured_at": "2026-10-19T03:17:46.930603+00:00",
+    "effective_date_evidence": "UNKNOWN",
+    "original_sha256": "d92f2b42a8a8cbad2928f00345925982ad3d699565778ed898b35feedc02f635",
+    "parser_version": "angel-native-observation-v1",
+    "provider": "angelone",
+    "publisher_authenticity": "NOT_ESTABLISHED",
+    "source_kind": "ANGEL_NATIVE_SNAPSHOT_UNQUALIFIED",
+    "source_reference": "PUBLIC_HTTPS_OBSERVATION_UNATTESTED",
+    "source_version": "20261019"
+  },
+  "observed_counts": {
+    "FUTIDX": 6,
+    "FUTSTK": 3,
+    "OPTIDX": 2835,
+    "OPTSTK": 215
+  },
+  "observed_record_count": 3059,
+  "observed_sha256": "aaa826f7d38848ace39c9e4d0b142218ddba40073e0d5939f3712b0849f64b12",
+  "record_count": 0,
+  "status": "BLOCKED_NATIVE_MASTER_AUTHORITY_AND_EFFECTIVE_DATES",
+  "underlying_scope": [
+    "BANKNIFTY",
+    "NIFTY",
+    "RELIANCE"
+  ]
+}

@@ -1,0 +1,248 @@
+{
+  "evidence_class": "SIMULATED_AND_MOCKED_SOFTWARE_ONLY",
+  "host": {
+    "logical_cpus": 8,
+    "machine": "AMD64",
+    "os": "Windows",
+    "python": "3.14.6"
+  },
+  "large_account_events": 10000,
+  "large_account_positions": 2500,
+  "memory_method": "tracemalloc separate summary run; excludes SQLite/native/RSS allocations",
+  "method": "perf_counter_ns; repeated sequential timings; independent-store read concurrency; no latency threshold",
+  "no_live_telegram": true,
+  "no_live_transport": true,
+  "provider_error_status": "FAILED",
+  "python_summary_peak_bytes": 1818916,
+  "read_concurrency": [
+    {
+      "elapsed_seconds": 0.122032,
+      "max_ms": 17.0683,
+      "median_ms": 14.9408,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "requests": 8,
+      "samples": 8,
+      "throughput_requests_per_second": 65.557,
+      "workers": 1
+    },
+    {
+      "elapsed_seconds": 0.244476,
+      "max_ms": 42.8402,
+      "median_ms": 29.28145,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "requests": 16,
+      "samples": 16,
+      "throughput_requests_per_second": 65.446,
+      "workers": 2
+    },
+    {
+      "elapsed_seconds": 0.528225,
+      "max_ms": 74.5586,
+      "median_ms": 65.7622,
+      "p95_method": "EMPIRICAL_NEAREST_RANK",
+      "p95_ms": 72.946,
+      "requests": 32,
+      "samples": 32,
+      "throughput_requests_per_second": 60.58,
+      "workers": 4
+    }
+  ],
+  "scanner": [
+    {
+      "source": "SIMULATED_NSE_ADAPTER",
+      "statuses": [
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY"
+      ],
+      "symbols": 1
+    },
+    {
+      "source": "SIMULATED_NSE_ADAPTER",
+      "statuses": [
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY"
+      ],
+      "symbols": 5
+    },
+    {
+      "source": "SIMULATED_NSE_ADAPTER",
+      "statuses": [
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY",
+        "COMPLETED_EMPTY"
+      ],
+      "symbols": 15
+    }
+  ],
+  "scheduler_started": false,
+  "signal_quality": "NOT_TESTED",
+  "sla_accepted": false,
+  "source_qualification": "BLOCKED",
+  "status": "OFFLINE_MEASURED",
+  "timings": {
+    "candidate_evaluation.evaluate_orb_breakout": {
+      "max_ms": 11.3094,
+      "median_ms": 7.6683,
+      "p95_method": "EMPIRICAL_NEAREST_RANK",
+      "p95_ms": 9.6451,
+      "samples": 105
+    },
+    "candidate_evaluation.evaluate_order_block_fvg": {
+      "max_ms": 8.8316,
+      "median_ms": 5.6816,
+      "p95_method": "EMPIRICAL_NEAREST_RANK",
+      "p95_ms": 7.1532,
+      "samples": 105
+    },
+    "candidate_evaluation.evaluate_supertrend_pullback": {
+      "max_ms": 8.7759,
+      "median_ms": 6.5169,
+      "p95_method": "EMPIRICAL_NEAREST_RANK",
+      "p95_ms": 8.0045,
+      "samples": 105
+    },
+    "candidate_evaluation.evaluate_vwap_pullback": {
+      "max_ms": 9.2249,
+      "median_ms": 6.1356,
+      "p95_method": "EMPIRICAL_NEAREST_RANK",
+      "p95_ms": 8.2587,
+      "samples": 105
+    },
+    "freshness.60_mocked_bars": {
+      "max_ms": 2.1338,
+      "median_ms": 1.9823,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "identity_binding.60_mocked_wire_bars": {
+      "max_ms": 0.2714,
+      "median_ms": 0.2619,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "normalization.60_bars": {
+      "max_ms": 0.9551,
+      "median_ms": 0.9378,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.entry": {
+      "max_ms": 13.2673,
+      "median_ms": 11.8021,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.event_page": {
+      "max_ms": 15.1017,
+      "median_ms": 14.1778,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.exit": {
+      "max_ms": 11.1169,
+      "median_ms": 10.9561,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.large_reconciliation": {
+      "max_ms": 1211.8541,
+      "median_ms": 1162.6634,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.large_summary": {
+      "max_ms": 1694.1973,
+      "median_ms": 1674.8891,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.mark": {
+      "max_ms": 11.0724,
+      "median_ms": 10.4613,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "paper.missing_observation_rejection": {
+      "max_ms": 5.4877,
+      "median_ms": 5.1271,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "persistence.duplicate_signal": {
+      "max_ms": 8.3528,
+      "median_ms": 7.5184,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "persistence.new_signal": {
+      "max_ms": 8.4368,
+      "median_ms": 8.0555,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "scanner.15_symbols": {
+      "max_ms": 618.8974,
+      "median_ms": 579.932,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "scanner.1_symbols": {
+      "max_ms": 76.5609,
+      "median_ms": 67.392,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "scanner.5_symbols": {
+      "max_ms": 241.0489,
+      "median_ms": 206.1674,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "scanner.mocked_provider_error": {
+      "max_ms": 21.6272,
+      "median_ms": 20.503,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "source_qualification.blocked_declaration": {
+      "max_ms": 0.0815,
+      "median_ms": 0.0612,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    },
+    "startup.existing_store": {
+      "max_ms": 9.2739,
+      "median_ms": 6.8669,
+      "p95_method": "OMITTED_FEWER_THAN_20_SAMPLES",
+      "p95_ms": null,
+      "samples": 5
+    }
+  }
+}

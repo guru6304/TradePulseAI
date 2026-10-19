@@ -564,6 +564,8 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         self._authorized_reads = 0
         self._session_redactions = []
         self._last_totp_code = None
+        self.session_recovery_enabled = True  # Narrow acceptance commands explicitly disable retry/login recovery.
+        self.last_http_status = None
 
         # Scrip Master registries, metadata & prior OI baselines for NFO Option Chain assembly
         self._scrip_master_equities: Dict[str, Dict[str, Any]] = {}
@@ -783,6 +785,7 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         Stores `jwt_token`, `refresh_token`, `feed_token`, and `authenticated_at_ist` ONLY after
         a verified successful response containing a non-empty `jwtToken`.
         """
+        self.last_http_status = None
         self._invalidate_session(clear_refresh=True)
         self._validate_credentials()
         now_ist = parse_ist_timestamp(self.clock())
@@ -812,6 +815,7 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
                 raw_bytes = self._read_response_bytes(resp)
         except urllib.error.HTTPError as http_exc:
             code = http_exc.code
+            self.last_http_status = code
             self._close_http_error(http_exc)
             self._invalidate_session(clear_refresh=True)
             message = self._record_adapter_error("RATE_LIMIT" if code == 429 else "AUTH_FAILURE",
@@ -932,6 +936,8 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         - Rate-limit detection (HTTP 429 / 403) and secret redaction
         """
         norm_path = "/" + str(path or "").lstrip("/")
+        allow_reauth_retry = allow_reauth_retry and self.session_recovery_enabled
+        self.last_http_status = None
         parsed = urllib.parse.urlsplit(norm_path)
         profile_query = (parsed.path == "/rest/secure/angelbroking/user/v1/getProfile"
                          and set(urllib.parse.parse_qs(parsed.query)) <= {"refreshToken"})
@@ -957,6 +963,7 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
                 raw_bytes = self._read_response_bytes(resp)
         except urllib.error.HTTPError as http_exc:
             code = http_exc.code
+            self.last_http_status = code
             self._close_http_error(http_exc)
             if code in (401, 403):
                 self._invalidate_session()

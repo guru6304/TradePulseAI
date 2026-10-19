@@ -96,3 +96,50 @@ def assess_source_evidence(archive, original_bytes):
         "historical_eligibility": {"allowed": False, "scope": "LIVE_HISTORICAL_REPLAY",
                                    "reason_code": "HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT", "missing_evidence": missing},
     }
+
+
+def verify_source_bundle_bindings(archive, original_master_bytes, original_candle_bytes, bundle, *,
+                                  provider, symbol, identifier, first_date, last_date):
+    """Verify local exact-byte/scope prerequisites, never grant source authority.
+
+    This supported, reject-only bundle contract cannot select a trust key,
+    authenticator or positive verdict from submitted fields. No publisher
+    protocol or independent effective-date authority has been established.
+    Existing archive validation must precede this audit, as for the V1 assessor.
+    """
+    from datetime import date
+    required={'schema_version','archive_id','provider','symbol','identifier','first_date','last_date',
+              'interval_min','master_original_sha256','candles_original_sha256'}
+    errors=[]
+    try:
+        if (not isinstance(bundle,dict) or set(bundle)!=required or bundle['schema_version']!='tradepulse.source-bundle.v1'
+                or type(bundle['interval_min']) is not int or bundle['interval_min']!=5):
+            raise ValueError()
+        if (not isinstance(original_master_bytes,bytes) or not isinstance(original_candle_bytes,bytes)
+                or not original_candle_bytes or len(original_candle_bytes)>64*1024*1024):
+            raise ValueError()
+        if date.fromisoformat(first_date).isoformat()!=first_date or date.fromisoformat(last_date).isoformat()!=last_date or first_date>last_date:
+            raise ValueError()
+        expected=dict(archive_id=archive['archive_id'],provider=provider,symbol=symbol,identifier=identifier,
+                      first_date=first_date,last_date=last_date,
+                      master_original_sha256=hashlib.sha256(original_master_bytes).hexdigest(),
+                      candles_original_sha256=hashlib.sha256(original_candle_bytes).hexdigest())
+        if any(bundle.get(key)!=value for key,value in expected.items()):
+            errors.append('SOURCE_BUNDLE_CONTENT_OR_SCOPE_SUBSTITUTION')
+        if (archive['metadata']['provider']!=provider
+                or archive['metadata']['original_sha256']!=expected['master_original_sha256']
+                or digest(archive['records'])!=archive['normalized_sha256']):
+            errors.append('ARCHIVE_INTEGRITY_OR_PROVIDER_MISMATCH')
+        matching=[r for r in archive['records'] if r['symbol']==symbol and r['identifier']==identifier
+                  and r.get('valid_from') and r['valid_from']<=first_date and r.get('valid_to') and r['valid_to']>=last_date]
+        if len(matching)!=1:
+            errors.append('DECLARED_INSTRUMENT_DATE_COVERAGE_MISSING_OR_AMBIGUOUS')
+    except (ValueError,TypeError,KeyError,ArithmeticError):
+        errors.append('INVALID_OR_UNSUPPORTED_SOURCE_BUNDLE')
+    missing=['PUBLISHER_AUTHENTICITY_NOT_ESTABLISHED','EFFECTIVE_DATE_AUTHORITY_NOT_ESTABLISHED',
+             'HISTORICAL_CANDLE_SOURCE_AUTHENTICITY_NOT_ESTABLISHED']
+    return dict(status='REJECTED' if errors else 'BINDINGS_MATCH_AUTHORITY_BLOCKED',
+                content_binding_scope='LOCAL_BYTES_AND_DECLARATIONS_ONLY',errors=sorted(set(errors)),
+                supported_authenticators=[],publisher_authenticity='NOT_ESTABLISHED',
+                historical_eligibility=dict(allowed=False,reason_code='HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT',
+                                            missing_evidence=missing))
