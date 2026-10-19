@@ -58,6 +58,7 @@ def _validate_receipt(envelope, config, provider, symbol, now):
         if (provider != "angelone" or payload["provider"] != provider
                 or payload["producer"] != "phase2c_diagnostics"
                 or payload["policy_version"] != POLICY_VERSION
+                or payload.get("evidence_mode") != "LIVE_REQUEST"
                 or payload["provenance"] != "LIVE_DIAGNOSTIC_OBSERVATIONS"
                 or payload["scope"] != _scope(config, symbol)):
             raise ValueError("Provider, producer, provenance or scope mismatch.")
@@ -125,15 +126,18 @@ def live_acceptance(config, store, provider, symbol, now=None):
         return _failure("ACCEPTANCE_EVIDENCE_UNREADABLE", "Diagnostic evidence could not be read or verified.")
 
 
-def _record_completed_diagnostic(config, store, adapter, checks, quotes, candles, symbol, observed):
+def _record_completed_diagnostic(config, store, adapter, checks, quotes, candles, symbol, observed, *,
+                                 evidence_mode="UNVERIFIED"):
     """Diagnostic-only writer; never exposed as a request or acceptance-import endpoint."""
+    if evidence_mode != "LIVE_REQUEST":
+        return _failure("DIAGNOSTIC_EVIDENCE_MODE_NOT_LIVE", "Mocked, offline or unverified diagnostics cannot issue live receipts.")
     scope = _scope(config, symbol)
     completed = filter_completed_candles(candles, interval_min=5, now=observed)
     # Whitelist public market observations, never credentials/profile identity or tokens.
     clean_bars = [{k: b[k] for k in ("timestamp", "open", "high", "low", "close", "volume",
                                     "data_mode", "is_simulated", "is_complete") if k in b}
                   for b in completed]
-    payload = {"policy_version": POLICY_VERSION, "producer": "phase2c_diagnostics",
+    payload = {"policy_version": POLICY_VERSION, "producer": "phase2c_diagnostics", "evidence_mode": evidence_mode,
                "provider": "angelone", "provenance": "LIVE_DIAGNOSTIC_OBSERVATIONS", "scope": scope,
                "observed_at_ist": format_ist_timestamp(observed),
                "expires_at_ist": format_ist_timestamp(observed + ACCEPTANCE_TTL),

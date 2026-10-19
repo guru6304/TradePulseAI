@@ -6,13 +6,23 @@ import argparse
 import json
 from datetime import datetime
 
+try:
+    from config import BotConfig
+except ValueError as exc:
+    if __name__ != "__main__" or type(exc).__name__ != "ConfigValidationError":
+        raise
+    print(json.dumps(dict(provider="upstox", overall_status="FAIL", exit_code=1,
+        checks=dict(configuration=dict(status="BLOCKED", reason=str(exc))),
+        readiness_receipt_issued=False, readiness_receipt_eligible=False,
+        data_persisted=False, historical_replay_allowed=False)))
+    raise SystemExit(1) from None
 from brokers import (UpstoxV2Adapter, BrokerDataError, sanitize_broker_message,
                      sanitize_upstox_error_detail, validate_symbol_meta, evaluate_candle_freshness)
-from config import BotConfig
 from strategies import IST, filter_completed_candles, format_ist_timestamp, parse_ist_timestamp
 
 
-def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sample_size=5, config_only=False):
+def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sample_size=5, config_only=False,
+                          evidence_mode="UNVERIFIED"):
     """Observe quote/candles only; success is not a Phase 2C readiness receipt."""
     cfg = config or BotConfig()
     clock_fn = clock or (lambda: datetime.now(IST))
@@ -23,6 +33,11 @@ def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sam
                   checks=checks, readiness_receipt_issued=False, historical_replay_allowed=False,
                   authentication_scope="AUTHORIZED_MARKET_DATA_READ_ONLY_NO_PROFILE_CHECK",
                   data_persisted=False, config_only=bool(config_only),
+                  evidence_mode="OFFLINE_PREFLIGHT" if config_only else "UNVERIFIED",
+                  executed_at_ist=format_ist_timestamp(clock_fn()), readiness_receipt_eligible=False,
+                  initial_authentication=dict(status="NOT_TESTED", attempted=False,
+                      reason="Pre-issued bearer token; no login endpoint is called."),
+                  session=dict(currently_authenticated=False, invalidation_occurred=False),
                   effective_configuration={"active_broker": selected if selected in
                       ("upstox", "angelone", "dhan", "paper_sim", "sim", "simulated") else "INVALID",
                       "telegram_dry_run": cfg.telegram_dry_run is True,
@@ -35,12 +50,19 @@ def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sam
         if config_only:
             ready = all(checks[key]["status"] == "PASS" for key in ("configuration", "instrument"))
             report.update(configuration_ready=ready, overall_status="NOT_TESTED" if ready else "FAIL", exit_code=0 if ready else 1)
-            return report
-        report["overall_status"] = "PASS" if all(c["status"] == "PASS" for c in checks.values()) else "FAIL"
-        report["exit_code"] = 0 if report["overall_status"] == "PASS" else 1
+        else:
+            passed = all(c["status"] == "PASS" for c in checks.values()) and report["session"]["currently_authenticated"]
+            report.update(overall_status="PASS" if passed else "FAIL", exit_code=0 if passed else 1)
+        report["market_data_acceptance"] = dict(status=report["overall_status"],
+            scope="OFFLINE_CONTRACT_ONLY" if report["evidence_mode"] in ("MOCKED", "OFFLINE", "OFFLINE_PREFLIGHT") else "SCOPED_READ_ONLY_CHECKS",
+            live_accepted=False, reason="Narrow diagnostics never issue operational readiness evidence.")
         return report
 
     try:
+        if evidence_mode not in ("UNVERIFIED", "MOCKED", "OFFLINE", "LIVE_REQUEST"):
+            raise ValueError()
+        if not config_only:
+            report["evidence_mode"] = evidence_mode
         cfg.validate(require_live_credentials=True)
         if cfg.active_broker.strip().lower() != "upstox" or not cfg.telegram_dry_run or cfg.enable_background_scheduler:
             result("configuration", "BLOCKED", "Select Upstox, enable Telegram dry run and disable the background scheduler.")
@@ -79,6 +101,22 @@ def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sam
         result("configuration", "BLOCKED", "Diagnostic requires the existing configured Upstox adapter.")
         return finish()
     reads_before = reader._authorized_reads
+
+    def session(stage):
+        authenticated = bool(reader.is_authentication_verified())
+        previous = report["session"]["currently_authenticated"]
+        report["session"][stage] = "AUTHENTICATED" if authenticated else "UNAUTHENTICATED"
+        report["session"]["currently_authenticated"] = authenticated
+        if previous and not authenticated:
+            report["session"]["invalidation_occurred"] = True
+
+    def authentication():
+        accepted = reader._authorized_reads > reads_before
+        result("authentication", "PASS" if accepted else "FAIL",
+               "An authorized market-data response was observed in this diagnostic." if accepted else
+               "No successful authorized response was observed in this diagnostic.")
+
+    session("before_quote")
     try:
         quote = reader.get_quote(meta)
         timestamp = quote["quote_timestamp_ist"]
@@ -98,15 +136,14 @@ def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sam
     except Exception as exc:
         result("quote", "FAIL", "Standalone quote check failed.",
                error_category=_safe_category(exc), **_safe_http_error_details(cfg, exc))
+    session("after_quote")
+    authentication()
 
     # Candle acceptance requires a valid, current quote observation first.
     if checks["quote"]["status"] != "PASS":
-        if reader._authorized_reads > reads_before and reader.is_authentication_verified():
-            result("authentication", "PASS", "Provider accepted an authorized read; quote validation still failed.")
-        else:
-            result("authentication", "FAIL", "No successful authorized response was observed in this diagnostic.")
         return finish()
 
+    session("before_candles")
     try:
         candles = reader.get_intraday_candles(meta, interval_min=5)
         # Recheck the retained batch at observation completion using the unchanged
@@ -135,6 +172,7 @@ def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sam
     except Exception as exc:
         result("candles", "FAIL", "Intraday candle validation or freshness check failed.",
                error_category=_safe_category(exc), **_safe_http_error_details(cfg, exc))
+    session("after_candles")
 
     # Diagnostic quote observation must also be current after both reads. Reuse
     # the configured delay allowance without altering the candle freshness policy.
@@ -147,10 +185,7 @@ def run_upstox_diagnostics(config=None, adapter=None, *, symbol, clock=None, sam
         else:
             checks["quote"]["observation_age_seconds"] = round(age, 3)
             checks["quote"]["max_quote_delay_seconds"] = cfg.live_candle_max_delay_seconds
-    if reader._authorized_reads > reads_before and reader.is_authentication_verified():
-        result("authentication", "PASS", "A successful authorized Upstox market-data response was observed.")
-    else:
-        result("authentication", "FAIL", "No successful authorized response was observed in this diagnostic.")
+    authentication()
     return finish()
 
 
@@ -164,7 +199,7 @@ def _safe_http_error_details(config, exc):
             "error_code": getattr(exc, "provider_error_code", None),
             "message": getattr(exc, "provider_error_message", None),
         })
-        return dict(http_status=status, **details)
+        return dict(http_status=status, **details, **({"provider_cause": "NOT_ESTABLISHED"} if status == 403 else {}))
     except Exception:
         return {}
 
@@ -185,7 +220,7 @@ def main(argv=None):
     parser.add_argument("--check-config", action="store_true", help="Offline configuration/mapping preflight; no adapter or network calls.")
     args = parser.parse_args(argv)
     try:
-        options = dict(symbol=args.symbol, sample_size=args.sample_size)
+        options = dict(symbol=args.symbol, sample_size=args.sample_size, evidence_mode="LIVE_REQUEST")
         if args.check_config:
             options["config_only"] = True
         report = run_upstox_diagnostics(**options)

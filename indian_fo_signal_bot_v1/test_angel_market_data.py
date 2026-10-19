@@ -193,7 +193,7 @@ class TestAngelMarketDataSafety(unittest.TestCase):
                 self.assertNotIn("PRIVATE_HTTP_REASON", rendered)
                 self.assertNotIn("PRIVATE_URL", rendered)
                 self.assertEqual(self.adapter.last_error_category,
-                    "SESSION_EXPIRED" if code == 401 else "RATE_LIMIT" if code in (403, 429) else "NETWORK_API_FAILURE")
+                "SESSION_EXPIRED" if code == 401 else "ACCESS_DENIED" if code == 403 else "RATE_LIMIT" if code == 429 else "NETWORK_API_FAILURE")
 
     def test_http_session_recovery_closes_error_before_single_retry(self):
         error, stream = self._http_error(401)
@@ -357,7 +357,7 @@ class TestAngelMarketDataDiagnostics(unittest.TestCase):
         report = self._run()
         self.assertTrue(stream.closed)
         self.assertEqual(report["checks"]["authentication"]["status"], "FAIL")
-        self.assertEqual(report["checks"]["quote"]["status"], "FAIL")
+        self.assertEqual(report["checks"]["quote"]["status"], "NOT_TESTED")
         self.assertEqual(report["checks"]["candles"]["status"], "NOT_TESTED")
         self.assertEqual(len(self.requests), 1)
         rendered = json.dumps(report)

@@ -484,7 +484,12 @@ def _safe_angel_market_read(function):
             exc.args = (clean,)
             if hasattr(exc, "rejection"):
                 exc.rejection = dict(exc.rejection, reason=self._sanitize(exc.rejection["reason"]))
-            if self.last_error_category == "NONE":
+            if isinstance(exc, BrokerIdentityError):
+                self.last_error_category = exc.error_category
+                # This local identity rejection made no HTTP request. Earlier
+                # provider failures must not be attached to the new operation.
+                self.last_http_status = None
+            elif self.last_error_category == "NONE":
                 self.last_error_category = "INVALID_RESPONSE"
             self.last_error_message = clean
             exc.error_category = self.last_error_category
@@ -818,24 +823,24 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
             self.last_http_status = code
             self._close_http_error(http_exc)
             self._invalidate_session(clear_refresh=True)
-            message = self._record_adapter_error("RATE_LIMIT" if code == 429 else "AUTH_FAILURE",
+            category = {401: "AUTH_FAILURE", 403: "ACCESS_DENIED", 429: "RATE_LIMIT"}.get(code, "NETWORK_API_FAILURE")
+            message = self._record_adapter_error(category,
                 f"Angel One SmartAPI authentication failed with HTTP {code}.")
             raise BrokerDataError(message) from None
         except Exception as exc:
             self._invalidate_session(clear_refresh=True)
-            raise BrokerDataError(
-                self._sanitize(f"Angel One SmartAPI authentication failed ({type(exc).__name__}).")
-            ) from None
+            raise BrokerDataError(self._record_adapter_error(
+                "NETWORK_API_FAILURE", "Angel One SmartAPI authentication transport failed.")) from None
 
         try:
             data = self._decode_response(raw_bytes)
         except Exception as exc:
             self._invalidate_session(clear_refresh=True)
-            raise BrokerDataError(self._record_adapter_error("AUTH_FAILURE", "Angel One SmartAPI login returned malformed non-JSON response.")) from None
+            raise BrokerDataError(self._record_adapter_error("INVALID_RESPONSE", "Angel One SmartAPI login returned malformed non-JSON response.")) from None
 
         if not isinstance(data, dict):
             self._invalidate_session(clear_refresh=True)
-            raise BrokerDataError("Angel One SmartAPI login response is not a JSON object.")
+            raise BrokerDataError(self._record_adapter_error("INVALID_RESPONSE", "Angel One SmartAPI login response is not a JSON object."))
 
         token_data = data.get("data") if isinstance(data.get("data"), dict) else {}
         jwt_tok = self._normalize_bearer_token(token_data.get("jwtToken"))
@@ -844,9 +849,8 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
             self.refresh_token = self._normalize_bearer_token(token_data.get("refreshToken")) or None
             self.feed_token = str(token_data.get("feedToken") or "").strip() or None
             self.authenticated_at_ist = now_ist.strftime("%Y-%m-%d %H:%M:%S")
-            if self.last_error_category in ("AUTH_FAILURE", "MISSING_CREDENTIALS", "SESSION_EXPIRED"):
-                self.last_error_category = "NONE"
-                self.last_error_message = None
+            self.last_error_category = "NONE"
+            self.last_error_message = None
             return True
 
         self._invalidate_session(clear_refresh=True)
@@ -933,7 +937,7 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         - Strict order-placement path blocking
         - Automatic initial login if `self.jwt_token` is not yet acquired
         - Single automatic token-refresh / re-login retry on `AG8001` / `AG8002` / `AB1010` / HTTP 401
-        - Rate-limit detection (HTTP 429 / 403) and secret redaction
+        - Distinct rate-limit (429) and access-denied (403) errors and secret redaction
         """
         norm_path = "/" + str(path or "").lstrip("/")
         allow_reauth_retry = allow_reauth_retry and self.session_recovery_enabled
@@ -985,8 +989,8 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
                 raise BrokerDataError(err_str) from None
             if code in (403, 429):
                 err_str = self._record_adapter_error(
-                    "RATE_LIMIT",
-                    f"Angel One SmartAPI {context} failed: rate limit or access denied (HTTP {code}).",
+                    "ACCESS_DENIED" if code == 403 else "RATE_LIMIT",
+                    f"Angel One SmartAPI {context} failed: {'access denied' if code == 403 else 'rate limit'} (HTTP {code}).",
                 )
                 raise BrokerDataError(err_str) from None
             err_str = self._record_adapter_error(
@@ -1005,14 +1009,14 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
             raw = self._decode_response(raw_bytes)
         except Exception as exc:
             err_str = self._record_adapter_error(
-                "NETWORK_API_FAILURE",
+                "INVALID_RESPONSE",
                 f"Angel One SmartAPI {context} returned malformed non-JSON response.",
             )
             raise BrokerDataError(err_str) from None
 
         if not isinstance(raw, dict):
             err_str = self._record_adapter_error(
-                "NETWORK_API_FAILURE",
+                "INVALID_RESPONSE",
                 f"Angel One SmartAPI {context} response is not a JSON object.",
             )
             raise BrokerDataError(err_str)
@@ -1566,7 +1570,8 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
                 elif sym in self._scrip_master_equities:
                     meta = dict(self._scrip_master_equities[sym])
                 else:
-                    raise BrokerDataError(f"Unknown or unconfigured Angel One instrument symbol '{sym}'.")
+                    raise BrokerIdentityError(dict(reason_code="UNKNOWN_INSTRUMENT",
+                        reason="Unknown or unconfigured Angel One instrument symbol."))
         elif isinstance(symbol_or_meta, dict):
             meta = dict(symbol_or_meta)
             sym = identity_checked(canonical_symbol, meta.get("symbol"))

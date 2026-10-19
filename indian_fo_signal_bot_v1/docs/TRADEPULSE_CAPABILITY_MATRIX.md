@@ -249,3 +249,30 @@ account or accepted contract/data source. The unchanged rubric keeps M05 at 25/0
 M08 at 50/25, M09 at 50/50 and M12 at 25/0; all other rows retain their values.
 Scores remain **63.5% implementation / 35.5% verified readiness; 0/12 accepted**.
 No scoped offline package acceptance counts as a completed product milestone.
+
+
+## Offline blocker-removal review - 2026-10-19
+
+The appended [continuous report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md#iterative-offline-blocker-removal---2026-10-19)
+and [sanitized execution ledger](evidence/blocker_removal_20261019.json) record
+619 strict Python tests, 23 new regressions and 6 JavaScript checks, with overlapping
+selections counted separately. Default dotenv discovery now follows config.py,
+not CWD; initial authentication, authorized-read history and current session state
+are distinct. Angel 403 is ACCESS_DENIED and 429 RATE_LIMIT. Mocked/offline/unverified
+legacy diagnostics cannot issue live receipts; no narrow diagnostic issues them.
+The mode marker remains a local producer declaration, not transport authentication.
+
+The actual root/parent preflights consistently BLOCK on malformed project dotenv
+assignment line 8. No dotenv/provider/flag change was made; current effective
+values cannot be freshly attested until the syntax is corrected locally. Earlier
+reported Upstox selection/dry run/disabled scheduler and Angel quote success are
+retained historical evidence. The alleged permission/IP cause of the Angel candle
+403 is NOT_ESTABLISHED. Upstox V2 deprecation is verified in official documentation,
+while runtime availability and the earlier quote 403 cause remain unverified.
+
+No milestone crosses the unchanged rubric's next threshold. The same weighted
+rows still yield **63.50% implementation / 35.50% readiness, 0/12 accepted**. Current
+cash candles/scanner operations, authoritative master/calendar/history and the
+remaining paper/release gates are unaccepted. Fix local syntax, run only offline
+preflight, then obtain missing sanitized provider evidence before separately
+authorizing any bounded live acceptance.

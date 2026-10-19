@@ -686,3 +686,336 @@ today. That bounded handoff must preserve full warmup, identity, provenance and
 clock revalidation without additional live reads; it cannot be inferred from a
 diagnostic PASS or replaced with an ordinary full-universe scan. Until the required
 real observation and end-to-end evidence exist, today's objective stays BLOCKED.
+
+## Dual-Broker Audit, Live Observation Analysis and Readiness Reassessment — 2026-10-19
+
+### 1. Workspace, Configuration Discovery and Execution Environment
+
+- **Project Root**: `C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1`
+- **Environment**: Python `3.14.6` on Windows. Git branch `main`.
+- **Configuration Loading**: `config.py` uses `_load_dotenv(filepath=".env")` which is CWD-sensitive (`os.path.exists(".env")`).
+  Commands run from the workspace parent failed with `[Errno 2] No such file or directory` because `diagnostics.py` and project `.env` are located strictly inside `indian_fo_signal_bot_v1`.
+- **Preflight Verification**: After configuring valid non-placeholder values for `ANGEL_API_KEY`, `ANGEL_CLIENT_CODE`, `ANGEL_PIN`, and a valid Base32 `ANGEL_TOTP_SECRET` in `indian_fo_signal_bot_v1\.env`, running:
+  ```powershell
+  python -B .\diagnostics.py --market-data-only --symbol RELIANCE --isolated-provider --check-config --json
+  ```
+  exited `0` with `configuration: PASS` and `instrument: PASS` (RELIANCE NSE token 2885).
+- **Provider Isolation**: `active_broker` remains `upstox`. `--isolated-provider` cleanly scoped Angel One diagnostics without mutating application state or leaking Upstox credentials. Safety posture retained `telegram_dry_run=true` and `enable_background_scheduler=false`.
+
+### 2. Angel One Genuine Live Market-Data Observation
+
+During the active NSE trading session (2026-10-19 ~10:51:51 IST), the single authorized bounded market-data diagnostic was executed:
+```powershell
+python -B .\diagnostics.py --market-data-only --symbol RELIANCE --isolated-provider --json
+```
+
+**Diagnostic Evidence & Outcome (Exit Code 1, Overall FAIL)**:
+1. **Instrument Identity**: `PASS`. Pinned RELIANCE cash token `2885` on exchange `NSE`.
+2. **Live Quote Read**: `PASS`. Genuine live observation obtained from `POST /rest/secure/angelbroking/market/v1/quote/`:
+   - `LTP`: `1220.3`
+   - `feed_timestamp_ist`: `2026-10-19 10:51:51`
+   - `observation_age_seconds`: `0.622s` (satisfies delay/skew bounds)
+   - Identity echo and positive finite price verified.
+3. **Candle Retrieval**: `FAIL`. Request to `POST /rest/secure/angelbroking/historical/v1/getCandleData` returned `HTTP 403 (ACCESS_DENIED)`:
+   - `provider_error_message`: `Angel One SmartAPI candle data (RELIANCE) failed: rate limit or access denied (HTTP 403).`
+   - `http_status`: `403`
+   - `provider_cause`: `NOT_ESTABLISHED`
+4. **Session Invalidation Mechanics**: In `AngelOneSmartAPIAdapter._request_json`, receiving HTTP 403 on candles triggered `self._invalidate_session()`, clearing `jwt_token` to `None`. Consequently, the final diagnostic check `authentication` reported `FAIL` ("No successful authorized market-data response was observed in this diagnostic") because `bool(reader.jwt_token)` evaluated to `False` despite the preceding valid quote read.
+5. **Cause Analysis**: While login and Market Quote endpoints succeed, the Historical Data endpoint (`getCandleData`) on Angel One SmartAPI enforces separate app permissions (e.g. Connect app vs Personal app, or specific Historical API entitlement) or Static IP registration on the SmartAPI developer dashboard. Without this developer-portal entitlement or correct IP binding, the gateway rejects candle requests with HTTP 403.
+6. **Data Containment**: `data_persisted=false`, `readiness_receipt_issued=false`, `historical_replay_allowed=false`. No orders placed, no account profile queried, and no state persisted.
+
+### 3. Upstox Status and Comparison
+
+- **Active Broker**: `upstox` remains the configured application provider.
+- **Prior Live Status**: The previously documented HTTP 403 / FORBIDDEN failure on live quote remains unexplained and has not been superseded by any new live attempt.
+- **Safety**: No live Upstox requests were initiated during this audit, adhering to the single bounded test constraint.
+- **Deprecation Risk**: Upstox V2 intraday candle endpoint (`/v2/historical-candle/intraday/.../1minute`) is marked deprecated by Upstox developer documentation, representing a forward maintenance dependency.
+
+### 4. Dual-Broker Acceptance Matrix
+
+| Capability / Stage | Angel One Status | Upstox Status | Evidence & Practical Boundary |
+|---|---|---|---|
+| Configuration Preflight | **PASS** (Exit 0) | **PASS** (Exit 0) | Isolated offline check verifies presence & format; secrets redacted. |
+| Authentication Lifecycle | **PARTIAL** | **BLOCKED** | Angel login succeeds for quote; candle 403 invalidates session. Upstox 403 unresolved. |
+| Live Cash Quote | **PASS** (LTP 1220.3, age 0.62s) | **FAIL / BLOCKED** (Historical 403) | Angel live quote verified genuine. Upstox quote blocked by prior 403. |
+| Live Completed Candles | **FAIL (HTTP 403)** | **NOT_TESTED** | Angel historical endpoint rejected with 403 Access Denied. Upstox unverified. |
+| Instrument Echo / Identity | **PASS** (Token 2885, NSE) | **PASS** (NSE_EQ\|INE002A01018) | Both check pinned metadata against reference dictionaries. |
+| Timestamp Freshness | **PASS** (Quote 0.62s age) | **NOT_TESTED** | Quote freshness verified; candle freshness untested due to 403. |
+| Persistence & Receipts | **PASS (Safely suppressed)** | **PASS (Safely suppressed)** | No diagnostic data leaked into SQLite; readiness receipt withheld. |
+| Scanner Live Handoff | **BLOCKED** | **BLOCKED** | Scanner requires validated completed candle batch; quote-only cannot proceed. |
+| Dashboard Live Handoff | **BLOCKED** | **BLOCKED** | Displays truthful offline/unavailable labels; no synthetic live promotion. |
+| F&O & Derivatives | **BLOCKED** | **BLOCKED** | Stock F&O unmapped; master unqualified; derivative candles missing. |
+| Historical Replay | **BLOCKED** | **BLOCKED** | `historical_eligibility.allowed=False`; Strategy 3 replay unimplemented. |
+
+### 5. Offline Test & Regression Execution Results
+
+All offline suites were executed against Python 3.14.6 in `indian_fo_signal_bot_v1`:
+1. **Module Compilation**: All 32 top-level Python modules compiled with `py_compile` (Exit 0, 0 errors).
+2. **Focused Market Data Suite** (`test_phase4_market_data`, `test_market_data_contract`, `test_angel_market_data`, `test_continuous_acceptance`):
+   - **103 passed**, 0 failed, 0 skipped in 11.850s (Exit 0).
+3. **Phase 4 & 5 Integration / Paper / Recovery Suite** (`test_phase4_e2e`, `test_phase4_strategy`, `test_phase5a_contracts`, `test_phase5a_integration`, `test_phase5a_paper`, `test_phase5a_provenance`, `test_phase5b_forward`, `test_phase5c_recovery`):
+   - **111 passed**, 0 failed, 0 skipped in 19.567s (Exit 0).
+4. **Full Strict Regression Suite** (`test_bot.py`):
+   - **596 passed**, 0 failed, 0 skipped in 117.638s (Exit 0).
+5. **Dashboard JS Renderer Test** (`node test_cash_dashboard.js`):
+   - **6 passed**, 0 failed in 88.7ms (Exit 0).
+
+Zero regressions, zero Python ResourceWarnings, zero assertion weakenings.
+
+### 6. Official Product Milestone (M01–M12) Reassessment
+
+Using the official weighted rubric from `TRADEPULSE_CAPABILITY_MATRIX.md`:
+- **Implementation Progress**: **63.50%**
+- **Verified Readiness**: **35.50%**
+- **Milestone Acceptance Status**: **0 of 12 complete; 12 unaccepted**. Full milestone acceptance requires $I=100$ and $R=100$.
+
+| Milestone | Weight | I Score | R Score | Status | Primary Blocker to Acceptance |
+|---|---:|---:|---:|---|---|
+| M01 Architecture & Config | 8% | 75 | 50 | PARTIAL | CWD-dependent `.env` discovery; release configuration profile unfreezed. |
+| M02 Broker Auth & Quotes | 12% | 75 | 25 | BLOCKED_EXT | Angel candle HTTP 403; Upstox quote HTTP 403; no dual-broker live acceptance. |
+| M03 Candle Ingestion & Freshness | 12% | 75 | 50 | PARTIAL | Live candle batch rejected by provider 403; calendar special sessions unmapped. |
+| M04 Instrument Identity & Provenance | 10% | 75 | 25 | PARTIAL | Pinned dictionary mappings only; no signed/echoed live master; source verifier missing. |
+| M05 Options & F&O Coverage | 10% | 25 | 0 | BLOCKED_EXT | Stock F&O unmapped; index option candles absent; master unverified. |
+| M06 Scanner & Signal Generation | 12% | 75 | 50 | PARTIAL | Whole-watchlist coverage unverified on live feeds; candidate ranking incomplete. |
+| M07 Risk Controls & Accounting | 10% | 75 | 50 | PARTIAL | Cash paper risk implemented; derivative margin/portfolio controls absent. |
+| M08 Historical Backtesting & Research | 10% | 50 | 25 | BLOCKED_EXT | Replay blocked by source qualification; Strategy 3 execution engine absent. |
+| M09 Paper Trading & Persistence | 6% | 50 | 50 | PARTIAL | Multi-session cash paper verified offline; live operational soak missing. |
+| M10 Telegram & Dashboard/API | 4% | 50 | 50 | PARTIAL | Dry-run & simulated API verified; real browser E2E test unexecuted. |
+| M11 Scheduling & Resilience | 3% | 75 | 50 | PARTIAL | Lifecycle tested in fixtures; live provider outage soak untested. |
+| M12 Release & Recovery | 3% | 25 | 0 | UNVERIFIED | Deployment packaging, automated backup runner, rollback drills absent. |
+
+### 7. Go / No-Go Decision and Operational Recommendations
+
+- **Next Live Cash-Equity Observation**: **NO-GO** until SmartAPI Historical Data endpoint access is resolved on the Angel One developer portal.
+- **Angel One Action**: Confirm whether the SmartAPI app is configured as a "Connect" app with Historical API enabled, and whether the client public IP is registered as a Static IP.
+- **Upstox Action**: Re-verify access token validity and endpoint permissions before scheduling any new live Upstox attempt.
+- **Derivatives & Live Trading**: **STRICTLY BLOCKED**. Full cash-equity market-data acceptance, signed contract masters, derivative candle feeds, financial reconciliation policies, and operational soak must precede any derivative or live trading consideration.
+
+
+## Iterative offline blocker removal - 2026-10-19
+
+**Verdict: PARTIAL overall; verified offline corrections PASS.** The final strict
+suite passed **619 tests, 0 failures/errors/skips, exit 0, 80.172 s**. The next
+required action is a local configuration correction, followed by offline preflight.
+Genuine current cash-equity acceptance remains BLOCKED. This closes this bounded
+offline investigation, not the TradePulse product or its remaining roadmap.
+
+Execution used the existing project on Windows AMD64 / PowerShell, Python 3.14.6,
+SQLite 3.50.4. Date follows the client IST context. No new dependency was installed.
+**Live broker requests: NO. Orders: NO. Live Telegram: NO. Production scheduler or
+server activation: NO. Production readiness receipt issuance: NO.** Public Upstox
+documentation was read; this was documentation traffic, not broker API traffic.
+
+### Baseline, ownership and evidence corrections
+
+Git branch is `main`. At task start Git already reported changes in `Audit.md` and this report. Their
+starting bytes are in `../blocker_removal_start.tmp`, a 71-file snapshot excluding
+private configuration and database contents. `Audit.md` is unchanged byte for byte;
+all prior report bytes are preserved as a prefix. No reset, staging, commit,
+credential edit or provider switch was performed. All seven required context
+documents exist. Phase 5B evidence is in the combined
+`TRADEPULSE_PHASE5A_ENGINEERING_REPORT.md`; no separate Phase 5B report was found.
+The latest dual-broker evidence is the supplied `Audit.md` context and the preceding
+dated section of this report, not a newly authenticated broker capture.
+
+The historical 596-test passing claim above remains historical. This execution's
+initial sandbox run attempted 596 tests and exited 1 (one failure, 181 error entries,
+including temporary SQLite/cleanup permission failures). Its authorized repeat ran
+596 tests and exited 1 with one discovery failure while a new imported fixture
+alias was being introduced. Removing that alias from discoverable globals repaired
+the test harness; final duplicate-discovery and environment-isolation tests pass.
+There is no claimed clean passing pre-edit baseline for this execution.
+
+The prior Angel cause assertion about specific app types, historical entitlements
+or static-IP registration is **not established by the retained 403**. It is
+superseded by this correction. Those are investigation possibilities only, not
+confirmed requirements for this account or proven reasons for the rejection.
+The earlier quoted identity is pinned-reference consistency evidence, not current
+authoritative master qualification. A passing quote cannot accept candles.
+
+### Confirmed defects, corrections and loop boundaries
+
+| Loop / defect | Root cause and correction | Evidence / safety effect |
+| --- | --- | --- |
+| 1 - configuration discovery and malformed values | `_load_dotenv` used CWD. Default discovery now uses `config.py`'s absolute parent. The existing explicit filepath argument remains caller-relative when relative. Process values and first duplicate retain precedence; an absent file remains optional. Assignment parsing validates the whole file before applying values; invalid numbers/booleans and nonfinite transport policy fail with value-free errors. | Temporary module/file fixtures cover root and parent invocation, missing config, precedence, explicit paths, malformed syntax, provider preservation and error redaction. Existing dotenv isolation was updated for absolute discovery. No user dotenv was written. |
+| 1 - authentication history erased by session rejection | Narrow Angel diagnostics recomputed authentication from authorized reads AND the mutable JWT after candles. They now record initial login independently, reuse an existing session without claiming a new login, retain this invocation's authorized-read history, and snapshot session state around quote/candles. Upstox authorized-read history is likewise independent of current token verification. | Login + quote + candle 403 retains initial/quote PASS, records invalidation/current authentication false, and fails overall acceptance. Failed login leaves quote/candles NOT_TESTED. No automatic recovery is added. |
+| 1 - Angel access denial reported as throttling | Both HTTP 403 and 429 became RATE_LIMIT. They now produce ACCESS_DENIED and RATE_LIMIT respectively; denial cause stays NOT_ESTABLISHED. | Closed error resources, preserved session invalidation and failed acceptance; provider selection and endpoint allowlists unchanged. |
+| 2 - transport/schema error confusion and fixture receipt state | Login timeouts could retain NONE and become INVALID_RESPONSE; malformed market JSON became NETWORK_API_FAILURE. They now retain transport versus response categories. Explicit evidence modes label fixture reports; narrow commands remain receipt-ineligible. Legacy producer/writer rejects MOCKED/OFFLINE/UNVERIFIED issuance; receipt validation requires the retained LIVE_REQUEST marker. | Focused selection 174 passed after correction. All original nine-check, profile, candle, scope, age, digest and historical-source gates still apply. Old unlabelled receipt rows are rejected, not deleted. |
+| 3 - legacy diagnostic secret output | A configured secret echoed in profile metadata could be detected by check 9 but still serialized. Profile fields are redacted before reporting; final report traversal also redacts configured/session/retired-token and encoded variants. | One new regression first failed, then the 124-test affected broker/receipt selection passed. No raw provider body/header is added. |
+| 3 - CLI startup and subprocess isolation | Import-time dotenv parse errors preceded CLI exception handling. Both CLIs now produce safe structured BLOCKED JSON. The old hash-seed subprocess imported `brokers` without the offline bootstrap, allowing real dotenv discovery. It now imports the established isolated test bootstrap first. | Temporary malformed-config CLI regression first errored in both subcases. Corrected 186-test selection passed; the standalone hash-seed test passed across its eight seeds. Final tests use isolated configuration. |
+| 4 - final review after the first green full suite | Login HTTP 503 was classified AUTH_FAILURE; malformed login JSON/list categories were inconsistent. A local unknown-instrument rejection could inherit the prior 429 category/status. HTTP login categories now separate 401/403/429/other transport failure; malformed login is INVALID_RESPONSE. Unknown identity uses the existing structured identity exception, which takes precedence over previous errors and clears unrelated HTTP status. | Two regression methods first failed in five subcases. Final 195-test focused selection and 619-test full suite pass. Authentication failure still clears session proof; no new data or acceptance path is introduced. |
+
+The new module `test_blocker_removal.py` contains **23 methods**. The existing
+tests retain their safety assertions; exact expectations changed for the corrected
+403 category, unattempted quote after failed login, malformed dotenv rejection,
+and added NOT_ESTABLISHED provider-cause field. Receipt fixtures explicitly simulate
+the trusted LIVE_REQUEST producer contract only in temporary stores; they are not
+genuine live evidence. Declared evidence modes do not detect arbitrary monkey
+patching or authenticate transport. Local privileged producers/writers remain the
+existing trust boundary. No positive historical-source verifier was invented.
+
+### Actual verification and limitations
+
+All test commands, process exits, raw summaries, warnings and log paths are retained
+in [the sanitized execution ledger](evidence/blocker_removal_20261019.json).
+Raw logs are `../blocker_*.tmp`; exit files use the corresponding `_exit.tmp`.
+Failed-run failure/error counts can include subtests and cleanup entries; they
+must not be subtracted from method totals to invent passed-method counts.
+
+| Executed selection / log stem | Passed | Failed / skipped | Seconds | Exit | Python warning diagnostics / application WARNING records |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Final full strict, `blocker_verified_full` | 619 | 0 / 0 | 80.172 | 0 | 0 / 3 |
+| Final broker/config/legacy/receipt, `blocker_verified_focused_2` | 195 | 0 / 0 | 8.324 | 0 | 0 / 0 |
+| Final standalone new regressions, `blocker_verified_new` | 23 | 0 / 0 | 1.354 | 0 | 0 / 0 |
+| Earlier cash/scanner/risk/provenance/paper safety, `blocker_safety_1` | 285 | 0 / 0 | 24.056 | 0 | 0 / 0 |
+| Dashboard renderer, `blocker_dashboard_authorized` | 6 | 0 / 0 | 0.205 | 0 | No warnings reported |
+| In-memory compilation | 33 top-level modules | 0 errors | Not timed | 0 | None |
+| Normal Git diff check; CRLF-aware check | No whitespace errors | 0 | Not timed | 0 / 0 | Normal check has newline-conversion advisories |
+
+**Selections overlap; do not add them as unique tests.** The final full suite
+repeats all Python safety selections after the last correction. Its three application
+warnings are deliberate overlapping-scan rejections, not skipped tests. Its 22
+application ERROR records exercise negative-path fixtures; the final focused run
+has two such ERROR records. None is a real broker failure. PowerShell's redirected
+stderr NativeCommandError wrapper is not the Python exit result.
+
+Intermediate failures were investigated, not rerun unchanged and relabelled green.
+The first 22-test configuration run exposed one test fixture using a valid bare
+SQLite filename as invalid input; it now uses an unsupported scheme. The first
+124-test integration had two stale exact-output/category expectations, corrected
+without weakening the failure gates. A 614-test full run failed the old unisolated
+hash-seed subprocess, then the corrected 617-test full run passed before the final
+two classification regressions were added. Initial Node execution failed EPERM
+spawning its worker; the same tests passed with approved fixture permissions.
+Initial sandbox Python failures include cleanup warning diagnostics; zero-warning
+claims apply to the final passing runs, not those failed attempts.
+
+Principal exact commands, executed from `indian_fo_signal_bot_v1`:
+
+```powershell
+python -B -W error::ResourceWarning test_bot.py -v
+python -B -W error::ResourceWarning -m unittest test_blocker_removal -v
+python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_market_data_contract test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails test_bot.TestIndianFOSignalBotPhase2A test_bot.TestIndianFOSignalBotPhase2C test_bot.TestIndianFOSignalBotPhase3B1B -v
+node --test test_cash_dashboard.js
+git diff --check
+git -c core.autocrlf=false -c core.whitespace=cr-at-eol diff --check
+```
+
+Compilation used `compile(path.read_bytes(), str(path), 'exec')` for every top-level
+`*.py` file, without importing configuration or creating bytecode. Plain
+`git -c core.autocrlf=false diff --check` initially flagged CR bytes as whitespace
+in existing Windows files, including the untouched user `Audit.md`. The normal and
+explicit CRLF-aware checks pass; no user newline normalization or Git configuration
+change was made. A snapshot-review helper initially used POSIX keys for a Windows
+snapshot and raised KeyError; normalized lookup now verifies preservation.
+
+### Current real configuration preflight
+
+Both commands below were actually run from the project root and again through the
+`indian_fo_signal_bot_v1/` script prefix from the parent directory:
+
+```powershell
+python -B upstox_diagnostics.py --symbol RELIANCE --check-config --json
+python -B diagnostics.py --market-data-only --isolated-provider --symbol RELIANCE --check-config --json
+```
+
+All four final processes exit **1** with identical configuration cause:
+**`Malformed configuration assignment at line 8.`** Configuration is BLOCKED before
+any adapter, store, authentication, quote or candle operation. No secret text or
+file content is included in the result. The first preflight attempt preceded the
+CLI correction and emitted no JSON; it was not counted as a successful check.
+
+Default discovery is now identical across those working directories. Live
+credential presence, selected provider and effective safety flags cannot be
+freshly attested while the file fails parsing. The last supplied observation says
+Upstox selected, Telegram dry run true and scheduler false. Their configured values
+were not changed. Tests enforce these safety settings; no service was started.
+Optional absent dotenv retains defaults; requiring selected-provider live
+credentials still fails safely when absent. Explicit relative resource paths keep
+their existing semantics; this change does not redefine database/master paths.
+
+### Sanitized broker forensic findings
+
+| Evidence | Established fact | Unproven / blocked |
+| --- | --- | --- |
+| Angel supplied observation | The preceding supplied audit reports RELIANCE NSE token 2885 quote PASS at 2026-10-19 10:51:51 IST, LTP 1220.3, age 0.622 s; `POST /rest/secure/angelbroking/historical/v1/getCandleData` returned 403 and overall exit 1. The existing CLI's new-session path plus quote supports the reported earlier authentication sequence. | This task did not reproduce the live login/quote. Candle response availability, authorization cause, authoritative mapping and current session remain unverified. No retained account-specific code establishes an app-type/IP/entitlement cause. |
+| Angel offline regression | Initial login PASS and authorized quote PASS survive candle 403; current session becomes unauthenticated with invalidation true, candle FAIL, overall FAIL, receipts ineligible. | A fixture PASS establishes only implementation behavior. |
+| Upstox historical report | Prior quote FAIL / FORBIDDEN, HTTP 403, exit 1; candles NOT_TESTED. Source and the reported diagnostic context identify the quote route as GET `https://api.upstox.com/v2/market-quote/quotes` with RELIANCE `instrument_key=NSE_EQ\|INE002A01018`. | The original complete sanitized transport record, exact request time and provider code/message are unavailable. Route attribution is reconstructed from code/context, not an independently retained request capture. Token, entitlement, IP/network or endpoint cause remains NOT_ESTABLISHED. |
+| Upstox documentation | The [official V2 intraday page](https://upstox.com/developer/api-documentation/get-intra-day-candle-data/) was freshly read and marks the existing route deprecated. [Full quote documentation](https://upstox.com/developer/api-documentation/get-full-market-quote/) documents the separate quote route and bearer-token contract. | Deprecation is verified documentation status; present account/runtime availability is UNVERIFIED. It does not explain the different quote endpoint's 403. No endpoint migration was implemented. |
+
+A future migration requires a scoped official version/contract, authentication and
+parameters/schema, timestamp/timezone and completion conventions, instrument mapping,
+rate/retry/error/session semantics, preserved freshness/provenance gates, sanitized
+contract-verified offline fixtures, and separately authorized bounded live acceptance.
+No guessed replacement URL or automatic provider fallback is supplied here.
+
+### Cash-equity acceptance trace
+
+| Boundary | Evidence in the current checkout | Actual acceptance limit |
+| --- | --- | --- |
+| Configuration / explicit provider | Deterministic root/parent and precedence regressions PASS | Actual config BLOCKED at local line 8; prior selected Upstox preserved. |
+| Authentication / quote / candles | Real adapters with mocked transport; distinct initial/history/current session facts and invalidity rejection PASS | Angel supplied quote success and failed candle remain historical evidence. No new live acceptance for either provider. |
+| Normalization / identity / time / completed-candle / freshness | Shared provider-contract, invalid/missing/stale/malformed/naive/future/gapped/provenance tests PASS | Pinned references and configured weekdays/holidays are not independently authoritative current master/calendar evidence. |
+| Scanner / signals / dedup / risk | Existing real evaluators consume fixture candles through unchanged scanner gates; failed/stale/invalid data produces no new eligible candidate | Quote-only cannot replace candle ingestion. Fixture fields carrying LIVE parser mode do not establish accepted live data. |
+| Persistence / API / dashboard / paper | Existing E2E, temporary SQLite, read-only API, forward-paper and renderer tests PASS | No genuine accepted observation was persisted/displayed here. Paper fills remain simulated. Browser/live breadth/operational soak NOT_TESTED. |
+| Historical / F&O | Existing provenance, contract and replay rejection tests PASS | Qualified current derivatives, independent historical master/price authority and Strategy 3 execution remain BLOCKED. |
+
+No additional confirmed offline defect remains from this bounded review. Further
+genuine cash-data acceptance requires user configuration/evidence and separately
+authorized live testing; unrelated future features were not added to inflate scores.
+
+### Changed files, safety review, rubric and next action
+
+Production changes: `config.py`, `brokers.py`, `diagnostics.py`,
+`upstox_diagnostics.py`, `readiness_policy.py`. Tests: new
+`test_blocker_removal.py`; existing `test_bot.py`, `test_angel_market_data.py`,
+`test_phase4_market_data.py`. Documentation: appended current report, capability
+matrix and roadmap; new sanitized `docs/evidence/blocker_removal_20261019.json`.
+
+Re-read source/diff and passing results after each meaningful correction. Snapshot
+comparison confirms unchanged `Audit.md`, `.env.example`, scanner/strategies/risk,
+Telegram, storage, historical/backtest, identity and source-qualification modules.
+Read-only endpoint constants/allowlists were retained. No task-owned secret literal
+or user dotenv content was added to code/reports; redaction regressions pass.
+All earlier evidence remains. Narrow commands cannot issue receipts. Only temporary
+fixture stores exercise the explicitly simulated legacy receipt contract; no
+operational receipt was produced. No acceptance assertion or test was skipped.
+
+Under the existing M01-M12 rubric, no row crosses its next threshold. Re-evaluating
+the unchanged weights/scores yields **implementation 63.50% -> 63.50%, readiness
+35.50% -> 35.50%; 0/12 accepted**. Better configuration/diagnostic controls do not
+deliver the missing operational, historical, contract, breadth or release evidence.
+The 80%/50% targets have not been reached.
+
+Remaining blockers are separate:
+
+- **Local user configuration:** correct or comment the malformed assignment at
+  project `.env` line 8 locally. Never share the line, credentials or file in chat.
+  Use `KEY=value` for settings and `#` for comments; preserve intended values,
+  provider selection, dry run and disabled scheduler. The code cannot safely infer
+  the intended setting from invalid syntax and is forbidden to edit the user file.
+- **External broker evidence/authorization:** obtain an existing sanitized rejection
+  code/context or provider-support/portal status for the selected provider. Do not
+  assume a particular permission or automatically change credentials/IP/app type.
+- **Authoritative data:** current qualified mapping/session/contract evidence and
+  independent historical master AND price provenance remain missing.
+- **Untested acceptance:** genuine completed cash candles, bounded scanner/browser
+  handoff, whole-watchlist coverage, paper operations/soak, financial recovery,
+  release/backup/rollback; derivatives and Version 2 remain downstream.
+
+**Minimum next user action:** fix only the local syntax issue, then rerun the
+selected-Upstox command with `--check-config --json`. From the parent directory use
+`python -B indian_fo_signal_bot_v1/upstox_diagnostics.py --symbol RELIANCE --check-config --json`.
+Share only the sanitized status and exit if further help is needed. This is offline.
+After preflight and documented provider/mapping/session prerequisites pass, a
+separate task may authorize one RELIANCE quote followed, only on valid current quote,
+by completed candles. Stop after a rejection; no loop, provider switch, order,
+profile, receipt, scheduler, delivery or broad scan is authorized by this report.
+
+**Next engineering loop:** revalidate corrected local configuration first, then
+classify existing sanitized provider evidence and scope a documented endpoint
+migration only if needed. Continue cash scanner acceptance before historical/F&O/
+volume intelligence/operational release under the dependency order in the roadmap.
+The workspace is safe to resume: user changes and source evidence are retained,
+no production service was activated by this execution, and the current parse
+failure blocks live startup.

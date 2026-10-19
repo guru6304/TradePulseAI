@@ -247,3 +247,44 @@ databases and forbids live transport/delivery. Its output is software latency an
 Python allocation evidence, not trading performance or an SLA. No command above
 performs a live account diagnostic. Product scores remain **63.5% / 35.5%, 0/12
 accepted**, with production scheduler disabled and Telegram dry run enabled.
+
+
+## Next dependency order after offline blocker removal - 2026-10-19
+
+The [new continuous report](TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md#iterative-offline-blocker-removal---2026-10-19)
+records final 619-test strict evidence and preserved safety gates. This addendum
+supersedes earlier next-action instructions that assumed local configuration was
+usable or that a particular Angel portal permission/IP issue was proven. Neither
+assumption is supported by this execution. Scores remain 63.5% / 35.5%, 0/12 accepted.
+
+1. **Configuration and broker correctness:** the bounded offline corrections are
+   tested. The next user action is to correct/comment the malformed project .env
+   assignment at line 8 locally, preserving intended values/provider/flags, then
+   run selected-Upstox `--check-config --json`. Never share the line or secrets.
+2. **Authorized cash data:** after preflight, obtain existing sanitized provider
+   error/context or official support evidence. Establish documented endpoint,
+   mapping and session prerequisites. Only a separate authorization may permit one
+   RELIANCE quote followed by completed candles if the quote passes. No retry loop
+   or automatic switch to Angel; a deprecation label does not explain a quote 403.
+3. **Cash scanner acceptance:** use qualified observations to validate declared
+   watchlist coverage, candidate explanations/ranking, freshness/dedup, persisted
+   API/dashboard state and paper risk/outage behavior. Existing mocked-wire tests
+   establish software behavior only; they do not satisfy this operational gate.
+4. **Historical research:** obtain independently qualified master AND price evidence,
+   complete chronological datasets and cost/fill assumptions before real baseline,
+   out-of-sample/walk-forward/model comparisons. Current source gates stay closed.
+5. **F&O acceptance:** obtain authoritative provider-qualified dated contracts, exact
+   contract candles and required options/OI, expiry/lot/unit and derivative risk/
+   reconciliation support. Cash acceptance does not satisfy derivative gates.
+6. **Version 2 quantity intelligence:** only after the data prerequisites, scope
+   intraday volume/quantity surges and rolling seven-day comparisons, completed-bar,
+   liquidity/source controls, historical validation and explainable ranking.
+7. **Operational release:** complete approved financial recovery/EOD reconciliation,
+   authoritative sessions, fixture backup/restore and rollback, bounded soak/outage
+   evidence and reproducible packaging/deployment. Scheduler and live Telegram
+   activation remain separately controlled; no order execution is introduced.
+
+Independent offline evidence review may continue without granting a downstream
+capability operational status. The wider roadmap remains open. Preserve the local
+configuration block and failed candle/403/provenance gates until the actual missing
+user action, authoritative evidence or separately authorized test satisfies them.

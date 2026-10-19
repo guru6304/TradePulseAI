@@ -1,97 +1,266 @@
-# TradePulse AI — Phase 3B Independent Findings Verification
+# TRADEPULSE AI — DUAL-BROKER AUDIT, BLOCKER ANALYSIS & READINESS REASSESSMENT
 
-**Recommended model:** GPT-6.1 Sol — Extra High  
-**Mode:** Strict read-only source audit  
-**Current phase:** Phase 3B implementation review  
-**Next phase:** Phase 3B.1 remediation planning, not Phase 3C
+## Mission
 
-## Project objective
+Continue the existing TradePulse AI / Indian F&O Signal Bot project in the current workspace.
 
-TradePulse AI is a deterministic Python research and intraday signal platform for Indian markets. It contains five strategy evaluators, broker-data adapters, Telegram alerts, a dashboard, SQLite persistence, historical-data validation, and a backtest engine.
+Perform a complete evidence-based audit of:
+1. Angel One SmartAPI integration.
+2. Upstox integration.
+3. Shared provider selection and configuration.
+4. Cash-equity market-data acceptance.
+5. Scanner, persistence, API, and dashboard integration.
+6. Historical data, F&O, paper-trading, and release blockers.
+7. Overall implementation completeness, readiness, and the formal M01–M12 milestone acceptance status.
 
-Our goal is to establish whether the strategies perform credibly on trustworthy historical data after realistic execution costs and risk controls. We must not manufacture confidence, bypass acceptance gates, or claim profitability without evidence.
+The local `.env` placement mistake has been corrected. The latest diagnostic shows that configuration preflight passes, an Angel One RELIANCE quote was returned, but the candle request failed with HTTP 403 and the overall diagnostic exited 1. Upstox remains the active application provider.
 
-## Your assignment
+Do not assume that any previous report or test result is still current. Inspect the actual workspace and verify the evidence.
 
-Read the existing repository and verify the findings in the supplied GPT-6.1 Sol High orientation report against actual source code and tests.
+## 1. Mandatory safety rules
 
-**Do not edit, create, delete, rename, or reformat any project files. Do not begin Phase 3C.**
+- Do not place, modify, or cancel orders.
+- Do not call broker order, position, holdings, balance, or other unnecessary account endpoints.
+- Do not enable production services, scheduled jobs, real trading, or live Telegram delivery.
+- Preserve `telegram_dry_run=true` and `enable_background_scheduler=false`.
+- Do not make any new live broker requests during this audit. The recent diagnostic already provides a bounded observation. Diagnose the evidence and code first.
+- Do not switch the configured provider to force a pass.
+- Do not change credentials or configuration values automatically.
+- Never print or request `.env` contents, API keys, PINs, TOTP secrets, tokens, authentication headers, or other secrets.
+- Never fabricate market data, provider responses, timestamps, test results, or successful acceptance.
+- Never weaken identity, provenance, source qualification, freshness, completed-candle, session, duplicate, risk, replay, or safety checks.
+- Preserve existing user modifications, architecture, and unrelated work.
+- Do not delete files, perform broad refactors, add unnecessary dependencies, skip tests, or weaken assertions.
+- Treat the latest diagnostic output as evidence, not as proof that every integration stage works.
+- Clearly distinguish source-code inspection, mocked tests, historical reports, and genuine provider observations.
+- Do not mark an official milestone accepted without satisfying its full existing acceptance rubric.
 
-Inspect the relevant functions, their callers, storage queries, configuration defaults, and tests. Do not accept the earlier report blindly; confirm or refute each finding with evidence.
+## 2. Establish the workspace and preserve changes
 
-## Required verification order
+Confirm that the project root is:
 
-1. **Historical readiness and execution gates**
-   - Trace how LIVE backtests establish acceptance.
-   - Determine whether incomplete datasets, missing sessions, or gaps can reach replay.
-   - Check whether the acceptance gate can be disabled and how defaults are chosen.
-   - Distinguish per-symbol eligibility from aggregate dataset readiness.
+`C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1`
 
-2. **Position sizing and accounting**
-   - Trace quantity/lot sizing, capital constraints, risk percentage, stop distance, slippage, commissions, taxes, and other charges.
-   - Check whether minimum quantity rules can exceed the risk budget.
-   - Verify realized P&L, net P&L, drawdown, daily limits, and trade-ledger consistency.
-   - Check gap fills, stop/target collisions, and end-of-day exits.
+Verify the working directory before running any command.
 
-3. **LIVE/SIMULATED state isolation**
-   - Trace signal deduplication keys, mitigated-zone persistence, startup loading, and every related query.
-   - Determine whether provider or data mode is consistently scoped.
-   - Identify reproducible cases where one mode can suppress or contaminate another.
+Inspect the current working-tree changes using Git if repository metadata is available. If Git metadata is unavailable, do not initialize a repository or alter the workspace just to obtain a diff.
 
-4. **Freshness and Phase 2C acceptance**
-   - Trace broker candle freshness checks through normal scanner paths.
-   - Check stale-data handling and instrument identity validation.
-   - Establish whether acceptance from a separate diagnostic process can be verified by a later process without trusting a manually supplied status.
-   - Never make real broker or network calls.
+Read these existing documents if present:
 
-5. **Strategy 3 contract-level execution**
-   - Trace historical option inputs from import through eligibility, signal evaluation, entry/exit prices, lot sizing, and accounting.
-   - Determine whether option-contract candles actually drive fills.
-   - If they do not, specify what must be implemented before Strategy 3 can be evaluated.
+- `docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md`
+- `docs/TRADEPULSE_PHASE5C_ENGINEERING_REPORT.md`
+- `docs/TRADEPULSE_MARKET_DATA_ACCEPTANCE_MATRIX.md`
+- `docs/TRADEPULSE_FO_CONTRACT_COVERAGE.md`
+- `docs/TRADEPULSE_HISTORICAL_PROVENANCE_DESIGN.md`
+- `docs/TRADEPULSE_PAPER_PORTFOLIO_REPORT.md`
+- `docs/TRADEPULSE_CAPABILITY_MATRIX.md`
+- `docs/TRADEPULSE_COMPLETION_ROADMAP.md`
 
-6. **Research reproducibility and API/documentation mismatches**
-   - Verify chronological train/validation/out-of-sample separation and whether date ranges are enforced.
-   - Check candle pagination and dataset limits.
-   - Verify CLI flags against the actual parser.
-   - Determine whether the dashboard's backtest view runs the engine or displays hypothetical profiles.
-   - Record other material safety, delivery, or documentation discrepancies.
+Use the actual files and current contents. If a document is missing, report it instead of inventing its contents.
 
-## Evidence rules
+Record:
+- The current branch and existing changes, if available.
+- The exact Python version and environment used.
+- The active application provider.
+- Configuration-loading behavior and source precedence, without revealing values.
+- Current scheduler and Telegram safety settings.
+- The baseline tests and reports used for this reassessment.
 
-For every finding, provide:
-- Status: CONFIRMED, PARTIALLY CONFIRMED, NOT REPRODUCED, or UNVERIFIED.
-- Exact file, function, and line range from the current checkout.
-- The execution path that produces the behavior.
-- A concrete failure scenario or a minimal proposed regression test.
-- Severity and why it matters.
-- The smallest safe correction and its dependencies.
+## 3. Audit `.env` discovery and configuration loading
 
-Do not invent line numbers, claim tests were run when they were not, or infer live acceptance from mocked tests. Clearly separate source inspection, test evidence, and operational evidence.
+Inspect how the application loads environment variables. Trace the configuration path from process startup to broker initialization.
 
-## Deliverables
+Determine:
+- Which directory is used to locate `.env`, if any.
+- Whether loading depends on the current working directory.
+- Whether the project uses an explicit path, a dotenv library, or process-level environment variables.
+- Whether the four existing Angel One fields are recognized.
+- Whether configuration preflight checks field presence and basic validity without exposing values.
+- Whether provider selection remains explicitly controlled by the existing configuration.
+- Whether tests accurately cover the original wrong-directory failure and the corrected project-root behavior.
 
-Return a concise report with:
+Do not print secret values or dump the environment. Do not modify provider selection or silently add fallback credentials.
 
-1. Executive decision: whether Phase 3B can be accepted as research-ready.
-2. A prioritized findings table.
-3. Evidence for each of the six verification areas.
-4. A proposed Phase 3B.1 remediation plan, split into small, independently testable work packages.
-5. Regression tests required for each package.
-6. Commands to run on Windows PowerShell, clearly distinguishing offline tests from commands that can contact a broker.
-7. Explicit exit criteria for Phase 3B.1 and the remaining Phase 2C/live-data gates.
-8. A list of unresolved questions that require evidence rather than assumptions.
+If a reproducible configuration bug exists, make the smallest safe correction and add a regression test. Preserve the existing configuration architecture.
 
-Do not implement the plan. Stop after the report and wait for approval.
+## 4. Audit Angel One end to end
 
-## Non-negotiable safeguards
+Inspect the actual Angel One implementation, including authentication, quote retrieval, candle retrieval, instrument mapping, rate-limit handling, timestamp parsing, source qualification, and error sanitization.
 
-- No order placement or trading execution.
-- No broker/network calls during this audit.
-- No secrets printed or requested.
-- No mixing LIVE and SIMULATED data or state.
-- No look-ahead bias or use of unfinished candles.
-- No claims of profitability from synthetic fixtures.
-- Do not silently relax readiness, freshness, or risk controls to make tests pass.
-- Preserve the existing architecture unless a specific defect requires a justified, narrowly scoped change.
+Use the latest supplied diagnostic as the initial evidence:
 
-The desired outcome is a reliable, reproducible research system—not merely a passing test count.
+- Provider: `angelone`.
+- Symbol: `RELIANCE`.
+- Exchange: `NSE`.
+- Instrument token reported: `2885`.
+- Configuration check: PASS.
+- Instrument reference check: PASS, with historical validity not established.
+- Quote check: PASS, LTP `1220.3`, observation age `0.622` seconds, timestamp `2026-10-19 10:51:51`.
+- Candle check: FAIL, HTTP `403`, error category `ACCESS_DENIED`.
+- Authentication acceptance: FAIL because no successful authorized market-data response was observed.
+- Overall status: FAIL.
+- Exit code: `1`.
+- Data persisted: `false`.
+- Readiness receipt issued: `false`.
+- Active application provider: `upstox`.
+- Scheduler disabled; Telegram dry run enabled.
+
+Investigate, using source code and existing sanitized logs, whether the HTTP 403 originates from:
+- The specific candle endpoint or request format.
+- Provider permissions or subscription/authorization restrictions.
+- Session/token handling.
+- Rate limiting or provider throttling.
+- Incorrect segment, exchange, instrument identity, or historical request parameters.
+- Another documented or evidenced cause.
+
+Do not select a cause merely because it is plausible. Label the cause UNKNOWN when evidence is insufficient.
+
+Check whether the implementation correctly:
+- Uses the documented supported authentication and market-data flow.
+- Separates a successful quote from successful candle acceptance.
+- Limits retries and does not automatically recover a session.
+- Sanitizes errors and avoids credential leakage.
+- Validates response schema, instrument identity, timestamps, candle completion, session, and freshness.
+- Rejects unqualified observations and avoids issuing a readiness receipt.
+- Prevents isolated provider diagnostics from changing the configured application provider.
+
+Do not issue another live request to confirm the 403. If external authorization is the remaining blocker, state the exact evidence needed for the next authorized test.
+
+## 5. Audit Upstox end to end
+
+Inspect the actual Upstox implementation and the earlier reported HTTP 403/FORBIDDEN result.
+
+Trace:
+- Configuration and credential discovery.
+- Authentication and token lifecycle.
+- Read-only quote and candle request construction.
+- Instrument mapping and segment requirements.
+- Response parsing and error handling.
+- Timestamp, freshness, candle completion, and source qualification.
+- Persistence and downstream scanner integration.
+- Existing offline tests and their limitations.
+
+Determine whether the earlier 403 cause is established, still unknown, or superseded by later evidence.
+
+Do not assume that Upstox works simply because it is selected. Do not assume it fails solely because of an older report. Report the newest actual evidence and its date.
+
+Do not switch to Angel One or change the active provider. Treat provider selection and isolated diagnostics as separate concerns.
+
+For each provider, create an evidence matrix with:
+- Configuration readiness.
+- Authentication acceptance.
+- Quote acceptance.
+- Candle acceptance.
+- Instrument identity qualification.
+- Timestamp/freshness qualification.
+- Persistence.
+- Scanner integration.
+- Dashboard integration.
+- Current blockers.
+- Last verified evidence and verification method.
+
+Use PASS, FAIL, BLOCKED, PARTIAL, or NOT TESTED precisely.
+
+## 6. Audit the cash-equity scanner and dashboard
+
+Inspect the actual scanner, backend routes, persistence layer, and dashboard implementation.
+
+Verify offline that:
+- Invalid credentials are rejected safely.
+- Stale candles are rejected.
+- Incomplete candles are not accepted as completed observations.
+- Invalid or unqualified source provenance is rejected.
+- Duplicate and replay protections remain effective.
+- A genuine no-signal evaluation is distinguishable from missing data or a failed provider request.
+- Scanner output is exposed through the correct existing backend routes.
+- The dashboard does not represent unknown provenance or old stored data as current live data.
+- `LIVE SOURCE (STORED)` is distinguishable from a current accepted live observation.
+- Error and unavailable states are truthful.
+- Scheduler and Telegram dry-run protections remain intact.
+
+Determine whether the current dashboard is merely implemented, has passed static/renderer tests, has passed API tests, or has passed a real browser end-to-end test.
+
+Do not call browser acceptance complete without actual browser evidence. Do not create synthetic data that masquerades as live data.
+
+## 7. Re-run offline tests and inspect regressions
+
+Use the existing test suite and test conventions. Run the focused provider/configuration tests, relevant safety tests, JavaScript renderer tests if available, and the full strict suite if the environment permits.
+
+Compile the affected Python modules.
+
+Record the exact commands, actual exit codes, pass/fail/skip counts, warnings, and environment.
+
+Check the final diff for:
+- Weakened validation.
+- Removed assertions.
+- Unnecessary provider-selection changes.
+- Secret leakage.
+- Changed retry behavior or transport limits.
+- Scheduler or Telegram safety regressions.
+- Misleading live labels.
+- Unrelated changes.
+
+Do not claim that tests passed unless they were actually run during this audit. If a test cannot run, explain why.
+
+## 8. Audit the remaining project-wide blockers
+
+Assess the actual evidence for these areas:
+
+1. Authoritative cash-equity and F&O instrument identity.
+2. Genuine live cash quote and completed-candle acceptance.
+3. Authoritative F&O contract masters, expiries, identifiers, and executable contract mapping.
+4. Historical price authenticity, provenance, chronological replay, and data-repair policy.
+5. Strategy validation, realistic transaction costs, risk-adjusted metrics, and out-of-sample testing.
+6. Paper portfolio recovery, market-calendar handling, missing EOD candles, financial reconciliation, and operational soak.
+7. Strategy 3 acceptance and other explicitly blocked strategies.
+8. Dashboard browser end-to-end acceptance.
+9. Release, backup/restore, rollback, monitoring, and operational recovery.
+10. Credential security and documented local setup.
+
+Distinguish implementation existing in code from operational acceptance. Do not call a strategy profitable without reliable test evidence. Do not treat a local schema or matching hash as proof of authoritative source authenticity.
+
+## 9. Recalculate readiness from the official rubric
+
+Read the existing capability matrix and roadmap. Recalculate:
+- Implementation completeness.
+- Operational readiness.
+- M01–M12 milestone acceptance status.
+- Number of milestones fully accepted.
+- Remaining acceptance blockers.
+- The smallest next work package that can move the project forward.
+
+Use the existing scoring definitions and weights. If the rubric is ambiguous or the available evidence is insufficient, state that and provide a range or an explicitly provisional score instead of inventing precision.
+
+For every score, explain the evidence and the remaining criteria. Keep implementation completeness separate from readiness.
+
+Do not mark any milestone accepted unless every mandatory criterion is supported by evidence.
+
+## 10. Produce the deliverables
+
+Update `docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md` additively with a dated audit section. Preserve the previous report and historical evidence.
+
+Create or update a concise dual-broker matrix, using an existing project document where appropriate instead of creating unnecessary new files.
+
+The final report must contain:
+
+1. Executive verdict.
+2. Workspace and configuration-loading findings.
+3. Angel One findings, including the quote/candle discrepancy and HTTP 403 evidence.
+4. Upstox findings and the current status of its prior 403.
+5. Exact commands and offline test results.
+6. Cash scanner, persistence, API, and dashboard status.
+7. Project readiness scores with their evidence and methodology.
+8. M01–M12 accepted versus unaccepted status.
+9. All unresolved blockers, with clear owners/actions where determinable.
+10. A prioritized next-step plan.
+11. A precise go/no-go decision for the next live cash-equity observation.
+12. The exact conditions required before considering derivatives or live trading.
+
+Do not include credentials, tokens, headers, or raw environment contents in the report.
+
+## Required final response format
+
+Return:
+- **Current verdict:** READY, NOT READY, or BLOCKED, with the scope stated.
+- **Angel One status:** concise evidence-backed conclusion.
+- **Upstox status:** concise evidence-backed conclusion

@@ -2,6 +2,7 @@ import base64
 import binascii
 import math
 import os
+import re
 from dataclasses import dataclass, field
 from datetime import datetime, time as dt_time
 from typing import List, Dict, Optional, Any
@@ -39,27 +40,63 @@ def _is_valid_base32_secret(val: Optional[str]) -> bool:
 
 def _parse_hhmm(val: str, field_name: str) -> dt_time:
     if not isinstance(val, str) or ":" not in val.strip():
-        raise ConfigValidationError(f"Invalid {field_name} '{val}'. Expected 'HH:MM' in 24-hour IST format.")
+        raise ConfigValidationError(f"Invalid {field_name}. Expected 'HH:MM' in 24-hour IST format.")
     try:
         dt = datetime.strptime(val.strip(), "%H:%M")
         return dt_time(dt.hour, dt.minute)
-    except ValueError as exc:
-        raise ConfigValidationError(f"Invalid {field_name} '{val}'. Expected 'HH:MM' in 24-hour IST format.") from exc
+    except ValueError:
+        raise ConfigValidationError(f"Invalid {field_name}. Expected 'HH:MM' in 24-hour IST format.") from None
 
 
-def _load_dotenv(filepath: str = ".env") -> None:
-    if not os.path.exists(filepath):
-        return
-    with open(filepath, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#") or "=" not in line:
-                continue
-            k, v = line.split("=", 1)
-            v = v.strip()
-            if len(v) >= 2 and v[0] == v[-1] and v[0] in ("'", '"'):
-                v = v[1:-1]
-            os.environ.setdefault(k.strip(), v)
+def _load_dotenv(filepath: Optional[str] = None) -> None:
+    """Load the module's project .env, or the caller's explicit path, atomically.
+
+    Missing files remain optional; selected live credentials are required by validate.
+    Explicit relative paths retain their caller-relative meaning. Process values and
+    the first occurrence of a duplicate key keep their established precedence.
+    """
+    path = filepath if filepath is not None else os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+    pending = {}
+    try:
+        if not os.path.exists(path):
+            return
+        with open(path, "r", encoding="utf-8-sig") as stream:
+            for number, line in enumerate(stream, 1):
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                key, separator, value = line.partition("=")
+                key, value = key.strip(), value.strip()
+                if (not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key)
+                        or "\x00" in value):
+                    raise ConfigValidationError(f"Malformed configuration assignment at line {number}.")
+                if value.startswith(("'", '"')):
+                    if len(value) < 2 or value[-1] != value[0]:
+                        raise ConfigValidationError(f"Unterminated configuration quote at line {number}.")
+                    value = value[1:-1]
+                pending.setdefault(key, value)
+    except (OSError, UnicodeError, ValueError) as exc:
+        if isinstance(exc, ConfigValidationError):
+            raise
+        raise ConfigValidationError("Project configuration file could not be read safely.") from None
+    for key, value in pending.items():
+        os.environ.setdefault(key, value)
+
+
+def _config_number(value: str, name: str, kind):
+    try:
+        return kind(value)
+    except (ValueError, TypeError, OverflowError):
+        raise ConfigValidationError(f"{name} must be a valid {kind.__name__} setting.") from None
+
+
+def _config_bool(value: str, name: str) -> bool:
+    text = value.strip().lower()
+    if text in ("true", "1", "yes"):
+        return True
+    if text in ("false", "0", "no"):
+        return False
+    raise ConfigValidationError(f"{name} must be a boolean setting.")
 
 
 _load_dotenv()
@@ -169,13 +206,13 @@ class BotConfig:
         if self.angel_scrip_master_path is None:
             self.angel_scrip_master_path = os.getenv("ANGEL_SCRIP_MASTER_PATH", "")
         if self.angel_scrip_master_max_age_hours is None:
-            self.angel_scrip_master_max_age_hours = float(os.getenv("ANGEL_SCRIP_MASTER_MAX_AGE_HOURS", "24.0"))
+            self.angel_scrip_master_max_age_hours = _config_number(os.getenv("ANGEL_SCRIP_MASTER_MAX_AGE_HOURS", "24.0"), "ANGEL_SCRIP_MASTER_MAX_AGE_HOURS", float)
         if self.angel_baseline_max_sessions_age is None:
-            self.angel_baseline_max_sessions_age = int(os.getenv("ANGEL_BASELINE_MAX_SESSIONS_AGE", "1"))
+            self.angel_baseline_max_sessions_age = _config_number(os.getenv("ANGEL_BASELINE_MAX_SESSIONS_AGE", "1"), "ANGEL_BASELINE_MAX_SESSIONS_AGE", int)
         if self.angel_request_timeout_seconds is None:
-            self.angel_request_timeout_seconds = float(os.getenv("ANGEL_REQUEST_TIMEOUT_SECONDS", "8.0"))
+            self.angel_request_timeout_seconds = _config_number(os.getenv("ANGEL_REQUEST_TIMEOUT_SECONDS", "8.0"), "ANGEL_REQUEST_TIMEOUT_SECONDS", float)
         if self.angel_min_request_interval_seconds is None:
-            self.angel_min_request_interval_seconds = float(os.getenv("ANGEL_MIN_REQUEST_INTERVAL_SECONDS", "0.0"))
+            self.angel_min_request_interval_seconds = _config_number(os.getenv("ANGEL_MIN_REQUEST_INTERVAL_SECONDS", "0.0"), "ANGEL_MIN_REQUEST_INTERVAL_SECONDS", float)
         if self.dhan_client_id is None:
             self.dhan_client_id = os.getenv("DHAN_CLIENT_ID", "")
         if self.dhan_access_token is None:
@@ -189,25 +226,25 @@ class BotConfig:
         if self.telegram_chat_id is None:
             self.telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
         if self.telegram_dry_run is None:
-            self.telegram_dry_run = os.getenv("TELEGRAM_DRY_RUN", "true").lower() in ("true", "1", "yes")
+            self.telegram_dry_run = _config_bool(os.getenv("TELEGRAM_DRY_RUN", "true"), "TELEGRAM_DRY_RUN")
         if self.gemini_api_key is None:
             self.gemini_api_key = os.getenv("GEMINI_API_KEY", "")
         if self.account_capital_inr is None:
-            self.account_capital_inr = float(os.getenv("ACCOUNT_CAPITAL_INR", "150000"))
+            self.account_capital_inr = _config_number(os.getenv("ACCOUNT_CAPITAL_INR", "150000"), "ACCOUNT_CAPITAL_INR", float)
         if self.max_risk_per_trade_pct is None:
-            self.max_risk_per_trade_pct = float(os.getenv("MAX_RISK_PER_TRADE_PCT", "1.0"))
+            self.max_risk_per_trade_pct = _config_number(os.getenv("MAX_RISK_PER_TRADE_PCT", "1.0"), "MAX_RISK_PER_TRADE_PCT", float)
         if self.max_daily_loss_inr is None:
-            self.max_daily_loss_inr = float(os.getenv("MAX_DAILY_LOSS_INR", "2000"))
+            self.max_daily_loss_inr = _config_number(os.getenv("MAX_DAILY_LOSS_INR", "2000"), "MAX_DAILY_LOSS_INR", float)
         if self.daily_profit_target_inr is None:
-            self.daily_profit_target_inr = float(os.getenv("DAILY_PROFIT_TARGET_INR", "4000"))
+            self.daily_profit_target_inr = _config_number(os.getenv("DAILY_PROFIT_TARGET_INR", "4000"), "DAILY_PROFIT_TARGET_INR", float)
         if self.max_concurrent_positions is None:
-            self.max_concurrent_positions = int(os.getenv("MAX_CONCURRENT_POSITIONS", "1"))
+            self.max_concurrent_positions = _config_number(os.getenv("MAX_CONCURRENT_POSITIONS", "1"), "MAX_CONCURRENT_POSITIONS", int)
         if self.scan_interval_seconds is None:
-            self.scan_interval_seconds = int(os.getenv("SCAN_INTERVAL_SECONDS", "60"))
+            self.scan_interval_seconds = _config_number(os.getenv("SCAN_INTERVAL_SECONDS", "60"), "SCAN_INTERVAL_SECONDS", int)
         if self.live_candle_max_delay_seconds is None:
-            self.live_candle_max_delay_seconds = float(os.getenv("LIVE_CANDLE_MAX_DELAY_SECONDS", "60"))
+            self.live_candle_max_delay_seconds = _config_number(os.getenv("LIVE_CANDLE_MAX_DELAY_SECONDS", "60"), "LIVE_CANDLE_MAX_DELAY_SECONDS", float)
         if self.live_candle_future_skew_seconds is None:
-            self.live_candle_future_skew_seconds = float(os.getenv("LIVE_CANDLE_FUTURE_SKEW_SECONDS", "5"))
+            self.live_candle_future_skew_seconds = _config_number(os.getenv("LIVE_CANDLE_FUTURE_SKEW_SECONDS", "5"), "LIVE_CANDLE_FUTURE_SKEW_SECONDS", float)
         if self.session_start_ist is None:
             self.session_start_ist = os.getenv("SESSION_START_IST", "09:15")
         if self.session_end_ist is None:
@@ -218,10 +255,10 @@ class BotConfig:
         if self.database_url is None:
             self.database_url = os.getenv("DATABASE_URL", ":memory:")
         if self.enable_persistence is None:
-            self.enable_persistence = os.getenv("ENABLE_PERSISTENCE", "true").lower() in ("true", "1", "yes")
+            self.enable_persistence = _config_bool(os.getenv("ENABLE_PERSISTENCE", "true"), "ENABLE_PERSISTENCE")
         if self.enable_background_scheduler is None:
             self.enable_background_scheduler = (
-                os.getenv("ENABLE_BACKGROUND_SCHEDULER", "false").strip().lower() in ("true", "1", "yes")
+                _config_bool(os.getenv("ENABLE_BACKGROUND_SCHEDULER", "false"), "ENABLE_BACKGROUND_SCHEDULER")
             )
 
     def is_broker_credentials_configured(self, broker_key: Optional[str] = None) -> bool:
@@ -248,62 +285,61 @@ class BotConfig:
         Never invents credentials or silently switches a failed live configuration to simulation.
         """
         valid_brokers = ("angelone", "dhan", "upstox", "paper_sim", "simulated", "sim")
-        bkey = (self.active_broker or "").strip().lower()
+        bkey = str(self.active_broker or "").strip().lower()
         if bkey not in valid_brokers:
             raise ConfigValidationError(
-                f"Invalid active_broker '{self.active_broker}'. Expected one of: {', '.join(valid_brokers)}."
+                f"Invalid active_broker. Expected one of: {', '.join(valid_brokers)}."
             )
 
         if isinstance(self.account_capital_inr, bool) or not isinstance(self.account_capital_inr, (int, float)):
             raise ConfigValidationError("account_capital_inr must be a positive number.")
         if not math.isfinite(float(self.account_capital_inr)) or float(self.account_capital_inr) <= 0:
-            raise ConfigValidationError(f"account_capital_inr must be > 0, got {self.account_capital_inr}.")
+            raise ConfigValidationError("account_capital_inr must be finite and > 0.")
 
         if isinstance(self.max_risk_per_trade_pct, bool) or not isinstance(self.max_risk_per_trade_pct, (int, float)):
             raise ConfigValidationError("max_risk_per_trade_pct must be a number in (0, 100].")
         if not math.isfinite(float(self.max_risk_per_trade_pct)) or not (0.0 < float(self.max_risk_per_trade_pct) <= 100.0):
             raise ConfigValidationError(
-                f"max_risk_per_trade_pct must be between 0 and 100, got {self.max_risk_per_trade_pct}."
+                "max_risk_per_trade_pct must be finite and between 0 and 100."
             )
 
         if self.max_daily_loss_inr is not None:
             if isinstance(self.max_daily_loss_inr, bool) or not isinstance(self.max_daily_loss_inr, (int, float)) or not math.isfinite(float(self.max_daily_loss_inr)) or float(self.max_daily_loss_inr) <= 0:
                 raise ConfigValidationError(
-                    f"max_daily_loss_inr must be a positive finite number, got {self.max_daily_loss_inr!r}."
+                    "max_daily_loss_inr must be a positive finite number."
                 )
 
         if self.daily_profit_target_inr is not None:
             if isinstance(self.daily_profit_target_inr, bool) or not isinstance(self.daily_profit_target_inr, (int, float)) or not math.isfinite(float(self.daily_profit_target_inr)) or float(self.daily_profit_target_inr) <= 0:
                 raise ConfigValidationError(
-                    f"daily_profit_target_inr must be a positive finite number, got {self.daily_profit_target_inr!r}."
+                    "daily_profit_target_inr must be a positive finite number."
                 )
 
         if self.max_concurrent_positions is not None:
             if isinstance(self.max_concurrent_positions, bool) or not isinstance(self.max_concurrent_positions, int) or int(self.max_concurrent_positions) < 1:
                 raise ConfigValidationError(
-                    f"max_concurrent_positions must be an integer >= 1, got {self.max_concurrent_positions!r}."
+                    "max_concurrent_positions must be an integer >= 1."
                 )
 
         if isinstance(self.scan_interval_seconds, bool) or not isinstance(self.scan_interval_seconds, int) or self.scan_interval_seconds < 5:
             raise ConfigValidationError(
-                f"scan_interval_seconds must be an integer >= 5, got {self.scan_interval_seconds!r}."
+                "scan_interval_seconds must be an integer >= 5."
             )
 
-        if not isinstance(self.enable_background_scheduler, bool):
-            raise ConfigValidationError(
-                f"enable_background_scheduler must be a boolean, got {self.enable_background_scheduler!r}."
-            )
+        for name in ("enable_background_scheduler", "telegram_dry_run", "enable_persistence"):
+            if not isinstance(getattr(self, name), bool):
+                raise ConfigValidationError(f"{name} must be a boolean.")
 
         if self.angel_request_timeout_seconds is not None:
-            if isinstance(self.angel_request_timeout_seconds, bool) or not isinstance(self.angel_request_timeout_seconds, (int, float)) or float(self.angel_request_timeout_seconds) <= 0:
+            if isinstance(self.angel_request_timeout_seconds, bool) or not isinstance(self.angel_request_timeout_seconds, (int, float)) or not math.isfinite(self.angel_request_timeout_seconds) or float(self.angel_request_timeout_seconds) <= 0:
                 raise ConfigValidationError("angel_request_timeout_seconds must be a positive number.")
 
         if self.angel_min_request_interval_seconds is not None:
-            if isinstance(self.angel_min_request_interval_seconds, bool) or not isinstance(self.angel_min_request_interval_seconds, (int, float)) or float(self.angel_min_request_interval_seconds) < 0:
+            if isinstance(self.angel_min_request_interval_seconds, bool) or not isinstance(self.angel_min_request_interval_seconds, (int, float)) or not math.isfinite(self.angel_min_request_interval_seconds) or float(self.angel_min_request_interval_seconds) < 0:
                 raise ConfigValidationError("angel_min_request_interval_seconds must be a non-negative number.")
 
         if self.angel_scrip_master_max_age_hours is not None:
-            if isinstance(self.angel_scrip_master_max_age_hours, bool) or not isinstance(self.angel_scrip_master_max_age_hours, (int, float)) or float(self.angel_scrip_master_max_age_hours) <= 0:
+            if isinstance(self.angel_scrip_master_max_age_hours, bool) or not isinstance(self.angel_scrip_master_max_age_hours, (int, float)) or not math.isfinite(self.angel_scrip_master_max_age_hours) or float(self.angel_scrip_master_max_age_hours) <= 0:
                 raise ConfigValidationError("angel_scrip_master_max_age_hours must be a positive number.")
 
         if self.angel_baseline_max_sessions_age is not None:
@@ -318,21 +354,21 @@ class BotConfig:
         t_end = _parse_hhmm(str(self.session_end_ist or ""), "session_end_ist")
         if t_start >= t_end:
             raise ConfigValidationError(
-                f"session_start_ist ({self.session_start_ist}) must be strictly earlier than session_end_ist ({self.session_end_ist})."
+                "session_start_ist must be strictly earlier than session_end_ist."
             )
 
         for h_str in (self.configured_holidays or []):
             try:
                 datetime.strptime(str(h_str).strip(), "%Y-%m-%d")
-            except ValueError as exc:
-                raise ConfigValidationError(f"Invalid holiday date '{h_str}' in configured_holidays. Expected YYYY-MM-DD.") from exc
+            except ValueError:
+                raise ConfigValidationError("Invalid holiday date in configured_holidays. Expected YYYY-MM-DD.") from None
 
         if self.enable_persistence:
             from storage import resolve_sqlite_path
             try:
                 resolve_sqlite_path(str(self.database_url or ""))
-            except ValueError as exc:
-                raise ConfigValidationError(str(exc)) from exc
+            except ValueError:
+                raise ConfigValidationError("Invalid DATABASE_URL; a supported SQLite path is required.") from None
 
         if require_live_credentials and bkey in ("angelone", "dhan", "upstox"):
             if bkey == "angelone":

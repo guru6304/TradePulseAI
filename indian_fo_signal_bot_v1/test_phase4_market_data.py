@@ -299,7 +299,7 @@ class TestPhase4BrokerAcceptance(unittest.TestCase):
                 self.assertFalse(hasattr(adapter, "historical_replay_allowed"))
 
     def test_http_failures_close_resources_and_never_increment_authorized_read_count(self):
-        expected = {"angelone": {401: "SESSION_EXPIRED", 403: "RATE_LIMIT", 429: "RATE_LIMIT"},
+        expected = {"angelone": {401: "SESSION_EXPIRED", 403: "ACCESS_DENIED", 429: "RATE_LIMIT"},
                     "upstox": {401: "AUTH_FAILURE", 403: "FORBIDDEN", 429: "RATE_LIMIT"}}
         for provider in self.PROVIDERS:
             for status in (400, 401, 403, 404, 429, 500, 599):

@@ -2,11 +2,22 @@ import argparse
 import json
 import os
 import sys
+import urllib.parse
 from datetime import datetime
 from dataclasses import replace
 from typing import Any, Callable, Dict, List, Optional
 
-from config import BotConfig, ConfigValidationError, _is_placeholder_value, _is_valid_base32_secret
+try:
+    from config import BotConfig, ConfigValidationError, _is_placeholder_value, _is_valid_base32_secret
+except ValueError as exc:
+    if __name__ != "__main__" or type(exc).__name__ != "ConfigValidationError":
+        raise
+    # Dotenv parsing runs during import, before main's initialization handler.
+    print(json.dumps(dict(provider="angelone", overall_status="FAIL", exit_code=1,
+        checks=dict(configuration=dict(status="BLOCKED", reason=str(exc))),
+        readiness_receipt_issued=False, readiness_receipt_eligible=False,
+        data_persisted=False, historical_replay_allowed=False)))
+    raise SystemExit(1) from None
 from brokers import (
     AngelOneSmartAPIAdapter,
     BrokerDataError,
@@ -50,15 +61,15 @@ def _collect_all_secrets(config: BotConfig, adapter: Optional[AngelOneSmartAPIAd
         config.angel_totp_secret,
         config.dhan_access_token,
         config.upstox_access_token,
+        config.upstox_api_key,
         config.telegram_bot_token,
         config.gemini_api_key,
+        config.angel_client_code,
+        config.dhan_client_id,
+        config.telegram_chat_id,
     ]
     if adapter is not None:
-        secrets.extend([
-            adapter.jwt_token,
-            adapter.refresh_token,
-            adapter.feed_token,
-        ])
+        secrets.extend(adapter._secret_values())
     return secrets
 
 
@@ -70,6 +81,7 @@ def run_angelone_diagnostics(
     equity_symbol: str = "RELIANCE",
     skip_network: bool = False,
     run_live_requests: Optional[bool] = None,
+    evidence_mode: str = "UNVERIFIED",
 ) -> Dict[str, Any]:
     """
     Phase 2C Read-Only Live-Data Acceptance & Operational Diagnostic Workflow.
@@ -90,6 +102,10 @@ def run_angelone_diagnostics(
     )
     if run_live_requests is not None:
         skip_network = not bool(run_live_requests)
+    if evidence_mode not in ("UNVERIFIED", "MOCKED", "OFFLINE", "LIVE_REQUEST"):
+        raise ValueError("Unsupported diagnostic evidence mode.")
+    if skip_network:
+        evidence_mode = "OFFLINE"
     clock_fn = clock or (lambda: datetime.now(IST))
     now_ist = parse_ist_timestamp(clock_fn())
     now_ist_str = format_ist_timestamp(now_ist)
@@ -110,7 +126,18 @@ def run_angelone_diagnostics(
     all_secrets = _collect_all_secrets(cfg, adapter)
 
     def sanitize_str(text: Any) -> str:
-        return _redact_secrets(str(text or ""), _collect_all_secrets(cfg, adapter))
+        variants = [variant for value in _collect_all_secrets(cfg, adapter) if value for variant in
+                    (str(value), urllib.parse.quote(str(value), safe=""), urllib.parse.quote_plus(str(value)))]
+        return _redact_secrets(str(text or ""), sorted(set(variants), key=len, reverse=True))
+
+    def sanitize_report(value):
+        if isinstance(value, str):
+            return sanitize_str(value)
+        if isinstance(value, list):
+            return [sanitize_report(item) for item in value]
+        if isinstance(value, dict):
+            return {key: sanitize_report(item) for key, item in value.items()}
+        return value
 
     checks: Dict[str, Dict[str, Any]] = {}
 
@@ -202,7 +229,7 @@ def run_angelone_diagnostics(
             adapter.authenticate()
             profile_info = adapter.get_profile()
             auth_ok = True
-            exchanges = [str(x).upper() for x in (profile_info.get("exchanges") or [])]
+            exchanges = [sanitize_str(str(x)).upper() for x in (profile_info.get("exchanges") or [])]
             has_nse = "NSE" in exchanges or "nse_cm" in [x.lower() for x in exchanges]
             has_nfo = "NFO" in exchanges or "nse_fo" in [x.lower() for x in exchanges]
             if exchanges and not (has_nse and has_nfo):
@@ -223,7 +250,7 @@ def run_angelone_diagnostics(
                 "profile_verified_at_ist": adapter.profile_verified_at_ist,
                 "client_code_masked": _mask_identifier(profile_info.get("clientcode")),
                 "exchanges": exchanges,
-                "products": list(profile_info.get("products") or []),
+                "products": [sanitize_str(value) for value in (profile_info.get("products") or [])],
                 "refresh_token_present": bool(adapter.refresh_token),
                 "feed_token_present": bool(adapter.feed_token),
             }
@@ -685,28 +712,31 @@ def run_angelone_diagnostics(
     # write an acceptance receipt, and later consumers revalidate its observations.
     from readiness_policy import _record_completed_diagnostic, live_acceptance
     acceptance = {"accepted": False, "reason_code": "ACCEPTANCE_EVIDENCE_NOT_PRODUCED"}
-    if store is not None and not skip_network:
+    if store is not None and not skip_network and evidence_mode == "LIVE_REQUEST":
         try:
             store._revoke_live_acceptance_evidence("angelone", eq_sym_clean)
             if live_verified and pass_count == 9 and cfg.active_broker == "angelone":
                 acceptance = _record_completed_diagnostic(
                     cfg, store, adapter, checks, c3_details, retrieved_candles,
-                    eq_sym_clean, parse_ist_timestamp(clock_fn()))
+                    eq_sym_clean, parse_ist_timestamp(clock_fn()), evidence_mode=evidence_mode)
         except Exception:
             acceptance = {"accepted": False, "reason_code": "ACCEPTANCE_EVIDENCE_PERSISTENCE_FAILED"}
-    elif store is not None:
+    elif store is not None and skip_network:
         acceptance = live_acceptance(cfg, store, "angelone", eq_sym_clean, now_ist)
 
     if owns_store and store is not None:
         store.close()
 
-    return {
+    return sanitize_report({
         "diagnostic_version": "phase_2c_v1",
+        "evidence_mode": evidence_mode,
+        "readiness_receipt_eligible": bool(evidence_mode == "LIVE_REQUEST" and not skip_network
+            and live_verified and pass_count == 9 and cfg.active_broker == "angelone" and store is not None),
         "live_acceptance": acceptance,
         "executed_at_ist": now_ist_str,
         "overall_result": overall_result,
         "overall_status": overall_result,
-        "live_connectivity_verified": live_verified,
+        "live_connectivity_verified": live_verified and evidence_mode == "LIVE_REQUEST",
         "connectivity_verified": live_verified,
         "checks_list": list(checks.values()),
         "connection_state": (
@@ -727,7 +757,7 @@ def run_angelone_diagnostics(
             "NOT CHECKED": not_checked_count,
         },
         "checks": checks,
-    }
+    })
 
 
 def format_diagnostics_report(report: Dict[str, Any]) -> str:
@@ -763,19 +793,22 @@ def format_diagnostics_report(report: Dict[str, Any]) -> str:
 
 
 def run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, clock=None,
-                                       config_only=False, sample_size=5, isolated_provider=False):
+                                       config_only=False, sample_size=5, isolated_provider=False,
+                                       evidence_mode="UNVERIFIED"):
     """Bound retries for this diagnostic; restore any caller-owned adapter policy."""
     previous = getattr(adapter, 'session_recovery_enabled', None)
     try:
         return _run_angelone_market_data_diagnostics(config, adapter, symbol=symbol, clock=clock,
-            config_only=config_only, sample_size=sample_size, isolated_provider=isolated_provider)
+            config_only=config_only, sample_size=sample_size, isolated_provider=isolated_provider,
+            evidence_mode=evidence_mode)
     finally:
         if adapter is not None and previous is not None:
             adapter.session_recovery_enabled = previous
 
 
 def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, clock=None,
-                                        config_only=False, sample_size=5, isolated_provider=False):
+                                        config_only=False, sample_size=5, isolated_provider=False,
+                                        evidence_mode="UNVERIFIED"):
     """One cash instrument, no profile, persistence, scan or acceptance receipt."""
     cfg = config or BotConfig()
     clock_fn = clock or (lambda: datetime.now(IST))
@@ -788,6 +821,11 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
                                         automatic_session_recovery=False),
                   scope="LOCAL_CONFIGURATION_PREFLIGHT" if config_only else "READ_ONLY_NSE_CASH_MARKET_DATA",
                   authentication_scope="AUTHORIZED_MARKET_DATA_READ_ONLY_NO_PROFILE_CHECK",
+                  evidence_mode="OFFLINE_PREFLIGHT" if config_only else "UNVERIFIED",
+                  executed_at_ist=format_ist_timestamp(clock_fn()),
+                  initial_authentication=dict(status="NOT_TESTED", attempted=False),
+                  session=dict(currently_authenticated=False, invalidation_occurred=False),
+                  readiness_receipt_eligible=False,
                   readiness_receipt_issued=False, historical_replay_allowed=False, data_persisted=False,
                   effective_configuration=dict(active_broker=selected if selected in
                       ("angelone", "upstox", "dhan", "paper_sim", "sim", "simulated") else "INVALID",
@@ -804,12 +842,21 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
                           exit_code=0 if ready else 1)
         else:
             passed = all(check["status"] == "PASS" for check in checks.values())
+            if report["session"].get("after_candles") == "UNAUTHENTICATED":
+                passed = False
             report.update(overall_status="PASS" if passed else "FAIL", exit_code=0 if passed else 1)
+        report["market_data_acceptance"] = dict(status=report["overall_status"],
+            scope="OFFLINE_CONTRACT_ONLY" if report["evidence_mode"] in ("MOCKED", "OFFLINE", "OFFLINE_PREFLIGHT") else "SCOPED_READ_ONLY_CHECKS",
+            live_accepted=False, reason="Narrow diagnostics never issue operational readiness evidence.")
         return report
 
     try:
         if type(isolated_provider) is not bool:
             raise ValueError()
+        if evidence_mode not in ("UNVERIFIED", "MOCKED", "OFFLINE", "LIVE_REQUEST"):
+            raise ValueError()
+        if not config_only:
+            report["evidence_mode"] = evidence_mode
         # Validate an explicit diagnostic view, never mutate the supplied config
         # or environment and never require a different provider's credentials.
         validation_cfg = replace(cfg, active_broker="angelone") if isolated_provider else cfg
@@ -847,8 +894,18 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
     reader.session_recovery_enabled = False
     reads_before = reader._authorized_reads
 
+    def session(stage):
+        authenticated = bool(reader.jwt_token and reader.authenticated_at_ist)
+        previous = report["session"]["currently_authenticated"]
+        report["session"][stage] = "AUTHENTICATED" if authenticated else "UNAUTHENTICATED"
+        report["session"]["currently_authenticated"] = authenticated
+        if previous and not authenticated:
+            report["session"]["invalidation_occurred"] = True
+
     def authentication():
-        accepted = reader._authorized_reads > reads_before and bool(reader.jwt_token)
+        # This is historical evidence from this invocation. Current session state
+        # is reported independently and cannot erase an earlier authorized read.
+        accepted = reader._authorized_reads > reads_before
         result("authentication", "PASS" if accepted else "FAIL",
                "An authorized market-data response was observed." if accepted else
                "No successful authorized market-data response was observed in this diagnostic.")
@@ -856,7 +913,8 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
     def failure(key):
         category = reader.last_error_category
         allowed = {"AUTH_FAILURE", "SESSION_EXPIRED", "RATE_LIMIT", "NETWORK_API_FAILURE",
-                   "INVALID_RESPONSE", "INVALID_INSTRUMENT", "STALE_MARKET_DATA", "MISSING_CREDENTIALS"}
+                   "INVALID_RESPONSE", "INVALID_INSTRUMENT", "INVALID_INSTRUMENT_IDENTITY",
+                   "STALE_MARKET_DATA", "MISSING_CREDENTIALS", "ACCESS_DENIED"}
         result(key, "FAIL", "Angel One market-data check failed.",
                error_category=category if category in allowed else "INVALID_RESPONSE",
                provider_error_message=reader._sanitize(reader.last_error_message or "Safe provider detail is unavailable."))
@@ -865,6 +923,22 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
             if reader.last_http_status == 403:
                 checks[key].update(error_category="ACCESS_DENIED", provider_cause="NOT_ESTABLISHED")
 
+    session("before_authentication")
+    if not reader.jwt_token:
+        report["initial_authentication"]["attempted"] = True
+        try:
+            if reader.authenticate() is not True or not reader.jwt_token:
+                raise BrokerDataError("Authentication did not establish a session.")
+            report["initial_authentication"].update(status="PASS", reason="Initial login established a session.")
+        except Exception:
+            failure("authentication")
+            report["initial_authentication"].update(checks["authentication"])
+            session("after_authentication")
+            return finish()
+    else:
+        report["initial_authentication"]["reason"] = "Existing session reused; no login attempt was made in this invocation."
+    session("after_authentication")
+    session("before_quote")
     try:
         quote = reader.get_quote(meta)
         timestamp = quote.get("feed_timestamp_ist")
@@ -882,9 +956,11 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
                        identity_limitation="Checked against the pinned reference; no authoritative historical validity established.")
     except Exception:
         failure("quote")
+    session("after_quote")
     authentication()
     if checks["quote"]["status"] != "PASS":
         return finish()
+    session("before_candles")
     try:
         candles = reader.get_intraday_candles(meta, interval_min=5)
         freshness = evaluate_candle_freshness(candles, interval_min=5, now_ist=clock_fn(),
@@ -909,6 +985,7 @@ def _run_angelone_market_data_diagnostics(config=None, adapter=None, *, symbol, 
                    response_binding=candles[-1]["instrument_identity"]["response_binding"])
     except Exception:
         failure("candles")
+    session("after_candles")
     # A slow candle read must not leave an expired quote marked PASS.
     now = parse_ist_timestamp(clock_fn())
     observed = parse_ist_timestamp(checks["quote"]["quote_timestamp_ist"])
@@ -963,7 +1040,8 @@ def main(argv: Optional[List[str]] = None) -> int:
             parser.error("Use --market-data-only --symbol RELIANCE without legacy diagnostic actions.")
         try:
             report = run_angelone_market_data_diagnostics(symbol=args.symbol, config_only=args.check_config,
-                                                         isolated_provider=args.isolated_provider)
+                                                         isolated_provider=args.isolated_provider,
+                                                         evidence_mode="LIVE_REQUEST")
         except Exception:
             report = dict(overall_status="FAIL", exit_code=1, reason="Angel market-data diagnostic could not initialize safely.",
                           readiness_receipt_issued=False, historical_replay_allowed=False, data_persisted=False)
@@ -1003,6 +1081,7 @@ def main(argv: Optional[List[str]] = None) -> int:
         store=store,
         equity_symbol=args.equity,
         skip_network=args.offline,
+        evidence_mode="LIVE_REQUEST",
     )
 
     if store is not None:

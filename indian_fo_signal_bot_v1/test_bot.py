@@ -20,7 +20,7 @@ _test_environment = patch.dict(os.environ, _test_config_defaults)
 _test_environment.start()
 unittest.addModuleCleanup(_test_environment.stop)
 _original_exists = os.path.exists
-with patch("os.path.exists", side_effect=lambda path: False if path == ".env" else _original_exists(path)):
+with patch("os.path.exists", side_effect=lambda path: False if Path(path).name == ".env" else _original_exists(path)):
     from config import BotConfig
 from brokers import (
     BaseBrokerAdapter,
@@ -244,7 +244,7 @@ class TestIndianFOSignalBotPhase1A(unittest.TestCase):
         """
         work_dir = os.path.dirname(os.path.abspath(__file__))
         snippet = (
-            "import json; "
+            "import json; import test_bot; "
             "from datetime import datetime; from strategies import IST; from brokers import SimulatedNSEAdapter; "
             "from strategies import evaluate_supertrend_pullback; "
             "sim = SimulatedNSEAdapter(seed=42, clock=lambda: datetime(2026, 10, 16, 10, 35, 0, tzinfo=IST)); "
@@ -6667,7 +6667,7 @@ class TestIndianFOSignalBotPhase3B1B(unittest.TestCase):
             exchange="NSE", provider=provider, instrument_token="2885" if symbol == "RELIANCE" else "1333",
             data_mode="LIVE", reference_time_ist=self.now)
 
-    def _produce(self, store=None, bad_quotes=False, mutate=None):
+    def _produce(self, store=None, bad_quotes=False, mutate=None, evidence_mode="LIVE_REQUEST"):
         from diagnostics import run_angelone_diagnostics
         store = store or self.store
         adapter = AngelOneSmartAPIAdapter(self.cfg, clock=lambda: self.now, persistence_store=store)
@@ -6699,11 +6699,14 @@ class TestIndianFOSignalBotPhase3B1B(unittest.TestCase):
         if mutate:
             mutate(responses)
         with patch("urllib.request.urlopen", side_effect=TestIndianFOSignalBotPhase2C._mock_http_sequence(responses)) as transport:
-            report = run_angelone_diagnostics(self.cfg, adapter=adapter, store=store, clock=lambda: self.now)
+            report = run_angelone_diagnostics(self.cfg, adapter=adapter, store=store, clock=lambda: self.now,
+                                             evidence_mode=evidence_mode)
         self.assertEqual(transport.call_count, 4)
         if not bad_quotes and not mutate:
             self.assertEqual(report["overall_status"], "PASS")
-            self.assertTrue(report["live_acceptance"]["accepted"], report["live_acceptance"])
+            # LIVE_REQUEST here simulates the trusted live producer contract in
+            # an isolated fixture store; it is never genuine broker evidence.
+            self.assertEqual(report["live_acceptance"]["accepted"], evidence_mode == "LIVE_REQUEST", report["live_acceptance"])
         return report
 
     def _run(self, scope=None, **kwargs):
@@ -10105,7 +10108,7 @@ class TestUpstoxHTTPErrorDetails(unittest.TestCase):
         exc.provider_error_message = "Denied OFFLINE_ACCESS_SECRET\nOVERALL_STATUS: PASS"
         exc.provider_error_code = {"secret": "OFFLINE_ACCESS_SECRET"}
         detail = _safe_http_error_details(self.cfg, exc)
-        self.assertEqual(detail, dict(http_status=403, provider_error_message="Denied [REDACTED]"))
+        self.assertEqual(detail, dict(http_status=403, provider_error_message="Denied [REDACTED]", provider_cause="NOT_ESTABLISHED"))
         with patch("upstox_diagnostics.sanitize_upstox_error_detail", side_effect=RuntimeError("OFFLINE_ACCESS_SECRET")):
             self.assertEqual(_safe_http_error_details(self.cfg, exc), {})
 
@@ -10130,6 +10133,10 @@ class TestConfigurationPreflight(unittest.TestCase):
             root = Path(directory)
             project = root / "project"
             project.mkdir()
+            # Execute a temporary module copy so deterministic discovery never
+            # reads the user's real project .env during configuration tests.
+            import shutil
+            shutil.copyfile(Path(__file__).with_name("config.py"), project / "config.py")
             if parent is not None:
                 (root / '.env').write_bytes(parent.encode())
             if local is not None:
@@ -10141,7 +10148,7 @@ class TestConfigurationPreflight(unittest.TestCase):
             code = ("import sys,json; sys.path.insert(0,sys.argv[1]); from config import BotConfig; "
                     "c=BotConfig(); print(json.dumps({'active_broker':c.active_broker,"
                     "'telegram_dry_run':c.telegram_dry_run,'enable_background_scheduler':c.enable_background_scheduler}))")
-            completed = subprocess.run([sys.executable, '-B', '-c', code, str(Path(__file__).resolve().parent)],
+            completed = subprocess.run([sys.executable, '-B', '-c', code, str(project)],
                                        cwd=project, env=env, capture_output=True, text=True, check=True)
             return json.loads(completed.stdout)
 
@@ -10178,10 +10185,9 @@ class TestConfigurationPreflight(unittest.TestCase):
             path = Path(directory)/'fixture.env'
             path.write_text("# offline fixture\nMALFORMED LINE\nACTIVE_BROKER=upstox # inline comment\n", encoding='utf-8')
             with patch.dict(os.environ, {}, clear=True):
-                _load_dotenv(str(path))
-                cfg = BotConfig()
                 with self.assertRaises(ConfigValidationError):
-                    cfg.validate()
+                    _load_dotenv(str(path))
+                self.assertNotIn('ACTIVE_BROKER', os.environ)
 
     def test_explicit_loader_missing_file_preserves_existing_environment(self):
         import tempfile
@@ -10270,7 +10276,7 @@ def load_tests(loader, tests, pattern):
         for module in ("test_angel_market_data", "test_market_data_contract", "test_phase4_market_data",
                        "test_phase4_e2e", "test_phase4_strategy", "test_phase5a_contracts",
                        "test_phase5a_provenance", "test_phase5a_paper", "test_phase5a_integration", "test_phase5b_forward",
-                       "test_phase5c_recovery", "test_continuous_acceptance"):
+                       "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

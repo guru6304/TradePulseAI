@@ -1,0 +1,507 @@
+{
+  "date": "2026-10-19",
+  "environment": {
+    "os": "Windows AMD64 / PowerShell",
+    "python": "3.14.6",
+    "sqlite": "3.50.4"
+  },
+  "live_broker_requests": false,
+  "orders": false,
+  "live_telegram_delivery": false,
+  "production_scheduler_started": false,
+  "production_live_receipt_issued": false,
+  "fixture_receipt_contract_exercised": true,
+  "configuration_blocker": "Project dotenv assignment at line 8 is malformed; no user dotenv modified.",
+  "preflights": [
+    {
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "command": [
+        "python",
+        "-B",
+        "upstox_diagnostics.py",
+        "--symbol",
+        "RELIANCE",
+        "--check-config",
+        "--json"
+      ],
+      "process_exit": 1,
+      "report": {
+        "provider": "upstox",
+        "overall_status": "FAIL",
+        "exit_code": 1,
+        "checks": {
+          "configuration": {
+            "status": "BLOCKED",
+            "reason": "Malformed configuration assignment at line 8."
+          }
+        },
+        "readiness_receipt_issued": false,
+        "readiness_receipt_eligible": false,
+        "data_persisted": false,
+        "historical_replay_allowed": false
+      }
+    },
+    {
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "command": [
+        "python",
+        "-B",
+        "diagnostics.py",
+        "--market-data-only",
+        "--isolated-provider",
+        "--symbol",
+        "RELIANCE",
+        "--check-config",
+        "--json"
+      ],
+      "process_exit": 1,
+      "report": {
+        "provider": "angelone",
+        "overall_status": "FAIL",
+        "exit_code": 1,
+        "checks": {
+          "configuration": {
+            "status": "BLOCKED",
+            "reason": "Malformed configuration assignment at line 8."
+          }
+        },
+        "readiness_receipt_issued": false,
+        "readiness_receipt_eligible": false,
+        "data_persisted": false,
+        "historical_replay_allowed": false
+      }
+    },
+    {
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b",
+      "command": [
+        "python",
+        "-B",
+        "indian_fo_signal_bot_v1/upstox_diagnostics.py",
+        "--symbol",
+        "RELIANCE",
+        "--check-config",
+        "--json"
+      ],
+      "process_exit": 1,
+      "report": {
+        "provider": "upstox",
+        "overall_status": "FAIL",
+        "exit_code": 1,
+        "checks": {
+          "configuration": {
+            "status": "BLOCKED",
+            "reason": "Malformed configuration assignment at line 8."
+          }
+        },
+        "readiness_receipt_issued": false,
+        "readiness_receipt_eligible": false,
+        "data_persisted": false,
+        "historical_replay_allowed": false
+      }
+    },
+    {
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b",
+      "command": [
+        "python",
+        "-B",
+        "indian_fo_signal_bot_v1/diagnostics.py",
+        "--market-data-only",
+        "--isolated-provider",
+        "--symbol",
+        "RELIANCE",
+        "--check-config",
+        "--json"
+      ],
+      "process_exit": 1,
+      "report": {
+        "provider": "angelone",
+        "overall_status": "FAIL",
+        "exit_code": 1,
+        "checks": {
+          "configuration": {
+            "status": "BLOCKED",
+            "reason": "Malformed configuration assignment at line 8."
+          }
+        },
+        "readiness_receipt_issued": false,
+        "readiness_receipt_eligible": false,
+        "data_persisted": false,
+        "historical_replay_allowed": false
+      }
+    }
+  ],
+  "runs": [
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal -v",
+      "log": "../blocker_counterexamples.tmp",
+      "exit_code": 1,
+      "tests_run": 15,
+      "seconds": 0.158,
+      "reported_failure_summary": "failures=12, errors=16",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 12,
+      "error_entry_count": 16
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_market_data_contract.TestSharedMarketDataContract.test_independent_modules_ignore_process_configuration_and_discovery_has_no_duplicates -v",
+      "log": "../blocker_counterexamples_authorized.tmp",
+      "exit_code": 1,
+      "tests_run": 16,
+      "seconds": 1.907,
+      "reported_failure_summary": "failures=17, errors=9",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 17,
+      "error_entry_count": 9
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal.TestDeterministicConfiguration test_bot.TestConfigurationPreflight -v",
+      "log": "../blocker_config.tmp",
+      "exit_code": 1,
+      "tests_run": 22,
+      "seconds": 3.934,
+      "reported_failure_summary": "failures=1, errors=1",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 1,
+      "error_entry_count": 1
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails -v",
+      "log": "../blocker_focused_1.tmp",
+      "exit_code": 1,
+      "tests_run": 124,
+      "seconds": 2.826,
+      "reported_failure_summary": "failures=2",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 2,
+      "error_entry_count": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails test_market_data_contract -v",
+      "log": "../blocker_focused_2.tmp",
+      "exit_code": 0,
+      "tests_run": 146,
+      "seconds": 3.882,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 1,
+      "passed": 146,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot.TestIndianFOSignalBotPhase2C test_bot.TestIndianFOSignalBotPhase3B1A test_bot.TestIndianFOSignalBotPhase3B1B test_bot.TestPositionSizingRiskAccounting test_bot.TestStateIsolation test_bot.TestMarketDataFreshness test_bot.TestInstrumentIdentity test_bot.TestInstrumentArchives test_bot.TestSourceEvidenceQualification test_bot.TestOfficialSourceFeasibility test_phase4_e2e test_phase4_strategy test_phase5a_paper test_phase5a_integration test_phase5b_forward -v",
+      "log": "../blocker_safety_1.tmp",
+      "exit_code": 0,
+      "tests_run": 285,
+      "seconds": 24.056,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 3,
+      "passed": 285,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal.TestDiagnosticLifecycle.test_login_transport_failure_is_not_an_invalid_response_or_bad_credential_claim test_blocker_removal.TestDiagnosticLifecycle.test_malformed_angel_json_is_classified_as_response_failure test_blocker_removal.TestDiagnosticLifecycle.test_mocked_legacy_diagnostic_cannot_create_live_receipt -v",
+      "log": "../blocker_loop2_counterexamples.tmp",
+      "exit_code": 1,
+      "tests_run": 3,
+      "seconds": 0.044,
+      "reported_failure_summary": "failures=2, errors=1",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 2,
+      "error_entry_count": 1
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails test_market_data_contract test_bot.TestIndianFOSignalBotPhase3B1B -v",
+      "log": "../blocker_loop2_focused.tmp",
+      "exit_code": 0,
+      "tests_run": 174,
+      "seconds": 6.353,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 1,
+      "passed": 174,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal.TestDiagnosticLifecycle.test_legacy_profile_fields_cannot_leak_configured_secrets -v",
+      "log": "../blocker_loop3_counterexample.tmp",
+      "exit_code": 1,
+      "tests_run": 1,
+      "seconds": 0.087,
+      "reported_failure_summary": "failures=1",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 1,
+      "error_entry_count": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_angel_market_data test_market_data_contract test_bot.TestIndianFOSignalBotPhase2C test_bot.TestIndianFOSignalBotPhase3B1B test_bot.TestUpstoxHTTPErrorDetails -v",
+      "log": "../blocker_loop3_focused.tmp",
+      "exit_code": 0,
+      "tests_run": 124,
+      "seconds": 5.42,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 1,
+      "passed": 124,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot.TestIndianFOSignalBotPhase1A.test_cross_process_pythonhashseed_determinism -v",
+      "log": "../blocker_hashseed.tmp",
+      "exit_code": 0,
+      "tests_run": 1,
+      "seconds": 4.241,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal.TestDeterministicConfiguration.test_cli_malformed_configuration_is_structured_and_never_uses_transport -v",
+      "log": "../blocker_cli_counterexample.tmp",
+      "exit_code": 1,
+      "tests_run": 1,
+      "seconds": 0.552,
+      "reported_failure_summary": "errors=2",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 0,
+      "error_entry_count": 2
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_market_data_contract test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails test_bot.TestIndianFOSignalBotPhase2C test_bot.TestIndianFOSignalBotPhase3B1B test_bot.TestIndianFOSignalBotPhase1A.test_cross_process_pythonhashseed_determinism -v",
+      "log": "../blocker_final_focused.tmp",
+      "exit_code": 0,
+      "tests_run": 186,
+      "seconds": 11.424,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 1,
+      "passed": 186,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal.TestDiagnosticLifecycle.test_login_http_statuses_and_malformed_login_are_classified_independently test_blocker_removal.TestDiagnosticLifecycle.test_identity_rejection_does_not_inherit_previous_http_error -v",
+      "log": "../blocker_loop4_counterexamples.tmp",
+      "exit_code": 1,
+      "tests_run": 2,
+      "seconds": 0.01,
+      "reported_failure_summary": "failures=5",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "failure_entry_count": 5,
+      "error_entry_count": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_market_data_contract test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails test_bot.TestIndianFOSignalBotPhase2A test_bot.TestIndianFOSignalBotPhase2C test_bot.TestIndianFOSignalBotPhase3B1B -v",
+      "log": "../blocker_verified_focused.tmp",
+      "exit_code": 1,
+      "tests_run": 195,
+      "seconds": 7.902,
+      "reported_failure_summary": "failures=1",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 2,
+      "failure_entry_count": 1,
+      "error_entry_count": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal test_bot.TestConfigurationPreflight test_angel_market_data test_market_data_contract test_phase4_market_data test_bot.TestUpstoxReadOnlyReadiness test_bot.TestUpstoxHTTPErrorDetails test_bot.TestIndianFOSignalBotPhase2A test_bot.TestIndianFOSignalBotPhase2C test_bot.TestIndianFOSignalBotPhase3B1B -v",
+      "log": "../blocker_verified_focused_2.tmp",
+      "exit_code": 0,
+      "tests_run": 195,
+      "seconds": 8.324,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 2,
+      "passed": 195,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_blocker_removal -v",
+      "log": "../blocker_verified_new.tmp",
+      "exit_code": 0,
+      "tests_run": 23,
+      "seconds": 1.354,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning test_bot.py -v",
+      "log": "../blocker_baseline.tmp",
+      "exit_code": 1,
+      "tests_run": 596,
+      "seconds": 105.083,
+      "reported_failure_summary": "failures=1, errors=181",
+      "python_warning_diagnostics": 97,
+      "application_warning_records": 3,
+      "application_error_records": 24,
+      "failure_entry_count": 1,
+      "error_entry_count": 181
+    },
+    {
+      "command": "python -B -W error::ResourceWarning test_bot.py -v",
+      "log": "../blocker_baseline_authorized.tmp",
+      "exit_code": 1,
+      "tests_run": 596,
+      "seconds": 146.242,
+      "reported_failure_summary": "failures=1",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 3,
+      "application_error_records": 22,
+      "failure_entry_count": 1,
+      "error_entry_count": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning test_bot.py -v",
+      "log": "../blocker_full_1.tmp",
+      "exit_code": 1,
+      "tests_run": 614,
+      "seconds": 76.836,
+      "reported_failure_summary": "errors=1",
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 3,
+      "application_error_records": 22,
+      "failure_entry_count": 0,
+      "error_entry_count": 1
+    },
+    {
+      "command": "python -B -W error::ResourceWarning test_bot.py -v",
+      "log": "../blocker_final_full.tmp",
+      "exit_code": 0,
+      "tests_run": 617,
+      "seconds": 79.482,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 3,
+      "application_error_records": 22,
+      "passed": 617,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "python -B -W error::ResourceWarning test_bot.py -v",
+      "log": "../blocker_verified_full.tmp",
+      "exit_code": 0,
+      "tests_run": 619,
+      "seconds": 80.172,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 3,
+      "application_error_records": 22,
+      "passed": 619,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "command": "node --test test_cash_dashboard.js",
+      "log": "../blocker_dashboard.tmp",
+      "exit_code": 1,
+      "tests_run": null,
+      "seconds": null,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "limitation": "EPERM spawning Node worker; dashboard cases not executed."
+    },
+    {
+      "command": "node --test test_cash_dashboard.js",
+      "log": "../blocker_dashboard_authorized.tmp",
+      "exit_code": 0,
+      "tests_run": null,
+      "seconds": null,
+      "reported_failure_summary": null,
+      "python_warning_diagnostics": 0,
+      "application_warning_records": 0,
+      "application_error_records": 0,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  ],
+  "counting_note": "Selections overlap. Failed-run counts are unittest entries and may include subtests/cleanup errors; do not derive unique passed methods by subtracting those entries.",
+  "scores": {
+    "implementation_before": 63.5,
+    "implementation_after": 63.5,
+    "readiness_before": 35.5,
+    "readiness_after": 35.5,
+    "accepted_milestones": 0,
+    "milestones": 12
+  },
+  "scope_limit": "No genuine live cash-equity acceptance; declared modes do not authenticate transport. Local privileged producers/writers remain trusted.",
+  "final_review": {
+    "task_changed_existing": [
+      "brokers.py",
+      "config.py",
+      "diagnostics.py",
+      "readiness_policy.py",
+      "test_angel_market_data.py",
+      "test_bot.py",
+      "test_phase4_market_data.py",
+      "upstox_diagnostics.py",
+      "docs/TRADEPULSE_CAPABILITY_MATRIX.md",
+      "docs/TRADEPULSE_COMPLETION_ROADMAP.md",
+      "docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md"
+    ],
+    "task_new": [
+      "test_blocker_removal.py",
+      "docs/evidence/blocker_removal_20261019.json"
+    ],
+    "protected_files_unchanged": true,
+    "prior_report_bytes_preserved": true,
+    "broker_endpoint_contract_unchanged": true,
+    "python_modules_compiled": 33,
+    "implementation": 63.5,
+    "readiness": 35.5,
+    "whitespace": "PASS",
+    "production_secret_literal_review": "No credential literal introduced; added production lines reviewed; fixture canaries remain tests only.",
+    "source_hashes": {
+      "brokers.py": "6e792775df861b81566c595deec9b3699afc75489f3553978a2de73a0d769143",
+      "config.py": "046785794b43b250cea052039e376f2970c6b23733a65a69b9402086519a6150",
+      "diagnostics.py": "bc1462ffc0e69537f8a993c278d681ae4d1629ecb2843a95d5bdf1f12c4cbc4a",
+      "readiness_policy.py": "d4e78ea3230ff128fad7ccfe1958c1c77a0df0f56af45ff1f01a489b6914d286",
+      "test_angel_market_data.py": "683bb6b181e443a35485bd37b4d8435290dbebcc16c29a0bb73243e371f1d450",
+      "test_bot.py": "04ed090e1cfeed62f95a45b41e0def93f49467dce23b53588daf78d710258378",
+      "test_phase4_market_data.py": "58a6ed3d3971bf9ff5c848ac021c509e65e59cc61abc423c5cefccfa8e3ac1ce",
+      "upstox_diagnostics.py": "d45582fa5a61eddc30189361f9535cce88adff62ad5550c07ed830061d41ddf6",
+      "test_blocker_removal.py": "d56e0e6ab4bdcf58458e897270012661a671473e580d609bf86380dc98c2cd58"
+    },
+    "git_diff_check_exit": 0,
+    "git_crlf_aware_diff_check_exit": 0
+  }
+}
