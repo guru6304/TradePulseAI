@@ -1225,6 +1225,21 @@
         }
       }
 
+      function describeStoredSignalSource(signal) {
+        let label = 'UNKNOWN SOURCE';
+        let palette = 'bg-slate-800 text-slate-300 border-slate-600';
+        if (signal.data_mode === 'SIMULATED' && signal.is_simulated === true) {
+          label = 'SIMULATED';
+          palette = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+        } else if (signal.data_mode === 'LIVE' && signal.is_simulated === false &&
+                   ['angelone', 'upstox', 'dhan'].includes(signal.provider)) {
+          // Persisted source provenance never establishes present-day freshness.
+          label = 'LIVE SOURCE (STORED)';
+          palette = 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40';
+        }
+        return { label: label, className: 'px-1.5 py-0.5 rounded text-[10px] font-bold border mono ' + palette };
+      }
+
       function renderSignalCards() {
         const container = document.getElementById('signalCardsContainer');
         const badge = document.getElementById('signalCountBadge');
@@ -1274,7 +1289,7 @@
           const isSelected = sigKey === state.selectedSignalKey;
           const dirStr = String(s.direction || '').toUpperCase();
           const isBull = dirStr.indexOf('BULLISH') !== -1;
-          const isSim = Boolean(s.is_simulated || s.data_mode === 'SIMULATED');
+          const sourceInfo = describeStoredSignalSource(s);
           const qualityScore = Number.isFinite(Number(s.quality_score)) ? Number(s.quality_score) : Number(s.confidence_pct || 0);
 
           const entryPrice = Number(s.entry_price || 0);
@@ -1307,10 +1322,7 @@
             : 'px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-500/15 text-sky-300';
           leftBadges.appendChild(el('span', segCls, s.segment === 'NSE_FO_INDEX' ? 'NIFTY/BNF F&O' : 'NSE EQUITY'));
 
-          const modeCls = isSim
-            ? 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 mono'
-            : 'px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono';
-          leftBadges.appendChild(el('span', modeCls, isSim ? 'SIMULATED' : 'LIVE'));
+          leftBadges.appendChild(el('span', sourceInfo.className, sourceInfo.label));
           topRow.appendChild(leftBadges);
 
           const rightMeta = el('div', 'flex items-center gap-2 text-xs');
@@ -1391,7 +1403,7 @@
       function renderSelectedSignalInspector(sig) {
         const dirStr = String(sig.direction || '').toUpperCase();
         const isBull = dirStr.indexOf('BULLISH') !== -1;
-        const isSim = Boolean(sig.is_simulated || sig.data_mode === 'SIMULATED');
+        const sourceInfo = describeStoredSignalSource(sig);
         const qScore = Number.isFinite(Number(sig.quality_score)) ? Number(sig.quality_score) : Number(sig.confidence_pct || 0);
 
         document.getElementById('detailSymbolTitle').textContent = sig.instrument_label || sig.symbol || 'UNKNOWN';
@@ -1402,10 +1414,8 @@
           : 'px-2 py-0.5 text-[11px] font-bold rounded bg-rose-500/20 text-rose-300 border border-rose-500/30 mono';
 
         const modeEl = document.getElementById('detailDataModeBadge');
-        modeEl.textContent = isSim ? 'SIMULATED DATA' : 'LIVE DATA';
-        modeEl.className = isSim
-          ? 'px-2 py-0.5 text-[10px] font-bold rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 mono'
-          : 'px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 mono';
+        modeEl.textContent = sourceInfo.label;
+        modeEl.className = sourceInfo.className;
 
         document.getElementById('detailStrategySubtitle').textContent =
           (sig.strategy_name || sig.strategy_id || '--') + ' • ' + (sig.segment || '--') + ' • ' + (sig.position_type || '--');

@@ -1,0 +1,428 @@
+{
+  "browser_e2e": "NOT_TESTED",
+  "live_observation": {
+    "attempted": false,
+    "authentication": "NOT_TESTED",
+    "completed_candles": "NOT_TESTED",
+    "dashboard": "NOT_TESTED",
+    "freshness": "NOT_TESTED",
+    "historical_replay_allowed": false,
+    "identity": "NOT_TESTED",
+    "persisted": false,
+    "process_exit_code": null,
+    "quote": "NOT_TESTED",
+    "readiness_receipt_issued": false,
+    "scanner": "NOT_TESTED",
+    "session": "NOT_TESTED",
+    "source_qualification": "NOT_TESTED"
+  },
+  "objective_status": "BLOCKED_CONFIGURATION",
+  "offline_backend": {
+    "browser_e2e": "NOT_TESTED",
+    "cases": {
+      "test_cash_dashboard_fresh_mock_wire_no_signal_uses_actual_evaluators_and_store": {
+        "broker": {
+          "active_broker": "angelone",
+          "auth_verified": false,
+          "candle_freshness": {
+            "context": "SCANNER",
+            "evaluated_at_ist": "2026-10-16 10:36:05",
+            "instruments": {
+              "RELIANCE": {
+                "batch_valid": true,
+                "calendar_policy": "WEEKDAYS_AND_CONFIGURED_HOLIDAYS_ONLY",
+                "completed_candles": 1,
+                "context": "SCANNER",
+                "evaluated_at_ist": "2026-10-16 10:36:05",
+                "expected_session_date": "2026-10-16",
+                "future_skew_seconds": 5.0,
+                "incomplete_candles": 1,
+                "interval_min": 5,
+                "is_fresh": true,
+                "latest_candle_timestamp_ist": "2026-10-16 10:35:00",
+                "latest_completed_timestamp_ist": "2026-10-16 10:30:00",
+                "live_signal_allowed": true,
+                "max_close_lag_seconds": 360.0,
+                "max_delay_seconds": 60.0,
+                "max_staleness_minutes": 11.0,
+                "provider": "angelone",
+                "reason": "Completed candle satisfies the configured freshness policy.",
+                "reason_code": "FRESH_IN_SESSION",
+                "reference_timestamp_ist": "2026-10-16 10:36:05",
+                "reference_usable": false,
+                "session_adjusted_lag_minutes": 1.0833,
+                "session_state": "within_session",
+                "status": "FRESH_IN_SESSION",
+                "symbol": "RELIANCE",
+                "wall_clock_age_minutes": 6.0833
+              }
+            },
+            "interval_min": 5,
+            "is_fresh": true,
+            "live_signal_allowed": true,
+            "provider": "angelone",
+            "status": "FRESH_IN_SESSION"
+          },
+          "connection_state": "CONNECTED_VERIFIED",
+          "data_mode": "LIVE",
+          "is_simulated": false,
+          "live_signals_allowed": true
+        },
+        "health_http_status": 200,
+        "persisted_scan_count": 1,
+        "persisted_signal_count": 0,
+        "readiness_accepted": false,
+        "scan": {
+          "candle_freshness": {
+            "context": "SCANNER",
+            "evaluated_at_ist": "2026-10-16 10:36:05",
+            "instruments": {
+              "RELIANCE": {
+                "batch_valid": true,
+                "calendar_policy": "WEEKDAYS_AND_CONFIGURED_HOLIDAYS_ONLY",
+                "completed_candles": 1,
+                "context": "SCANNER",
+                "evaluated_at_ist": "2026-10-16 10:36:05",
+                "expected_session_date": "2026-10-16",
+                "future_skew_seconds": 5.0,
+                "incomplete_candles": 1,
+                "interval_min": 5,
+                "is_fresh": true,
+                "latest_candle_timestamp_ist": "2026-10-16 10:35:00",
+                "latest_completed_timestamp_ist": "2026-10-16 10:30:00",
+                "live_signal_allowed": true,
+                "max_close_lag_seconds": 360.0,
+                "max_delay_seconds": 60.0,
+                "max_staleness_minutes": 11.0,
+                "provider": "angelone",
+                "reason": "Completed candle satisfies the configured freshness policy.",
+                "reason_code": "FRESH_IN_SESSION",
+                "reference_timestamp_ist": "2026-10-16 10:36:05",
+                "reference_usable": false,
+                "session_adjusted_lag_minutes": 1.0833,
+                "session_state": "within_session",
+                "status": "FRESH_IN_SESSION",
+                "symbol": "RELIANCE",
+                "wall_clock_age_minutes": 6.0833
+              }
+            },
+            "interval_min": 5,
+            "is_fresh": true,
+            "live_signal_allowed": true,
+            "provider": "angelone",
+            "status": "FRESH_IN_SESSION"
+          },
+          "data_mode": "LIVE",
+          "freshness": null,
+          "is_simulated": false,
+          "reason_code": null,
+          "scan_status": "COMPLETED_EMPTY",
+          "total_signals": 0
+        },
+        "scan_http_status": 200,
+        "scheduler_running": false,
+        "strategy_returns": [
+          {
+            "completed_bars": 241,
+            "function": "evaluate_order_block_fvg",
+            "generated_signal": false,
+            "return_line": 1051,
+            "source_file": "strategies.py"
+          },
+          {
+            "completed_bars": 241,
+            "function": "evaluate_vwap_pullback",
+            "generated_signal": false,
+            "return_line": 1214,
+            "source_file": "strategies.py"
+          },
+          {
+            "completed_bars": 241,
+            "function": "evaluate_orb_breakout",
+            "generated_signal": false,
+            "return_line": 1538,
+            "source_file": "strategies.py"
+          },
+          {
+            "completed_bars": 241,
+            "function": "evaluate_supertrend_pullback",
+            "generated_signal": false,
+            "return_line": 1712,
+            "source_file": "strategies.py"
+          }
+        ]
+      },
+      "test_cash_dashboard_missing_angel_credentials_is_unavailable_without_transport": {
+        "broker": {
+          "active_broker": "angelone",
+          "auth_verified": false,
+          "candle_freshness": {
+            "context": "SCANNER",
+            "evaluated_at_ist": "2026-10-16 10:36:05",
+            "instruments": {
+              "RELIANCE": {
+                "interval_min": 5,
+                "is_fresh": false,
+                "live_signal_allowed": false,
+                "provider": "angelone",
+                "reason": "Angel One SmartAPI credentials are missing or set to placeholder values (ANGEL_API_KEY, ANGEL_CLIENT_CODE, ANGEL_PIN, ANGEL_TOTP_SECRET).",
+                "reason_code": "PROVIDER_ERROR",
+                "status": "MISSING_CREDENTIALS",
+                "symbol": "RELIANCE"
+              }
+            },
+            "interval_min": 5,
+            "is_fresh": false,
+            "live_signal_allowed": false,
+            "provider": "angelone",
+            "status": "BLOCKED"
+          },
+          "connection_state": "UNAVAILABLE_MISSING_CREDENTIALS",
+          "data_mode": "LIVE",
+          "is_simulated": false,
+          "live_signals_allowed": false
+        },
+        "health_http_status": 200,
+        "persisted_scan_count": 1,
+        "persisted_signal_count": 0,
+        "readiness_accepted": false,
+        "scan": {
+          "candle_freshness": null,
+          "data_mode": "LIVE",
+          "freshness": null,
+          "is_simulated": false,
+          "reason_code": "PROVIDER_ERROR",
+          "scan_status": "FAILED",
+          "total_signals": null
+        },
+        "scan_http_status": 502,
+        "scheduler_running": false
+      },
+      "test_cash_dashboard_stale_mock_wire_rejects_before_evaluation_and_persists_failure": {
+        "broker": {
+          "active_broker": "angelone",
+          "auth_verified": false,
+          "candle_freshness": {
+            "context": "SCANNER",
+            "evaluated_at_ist": "2026-10-16 10:36:05",
+            "instruments": {
+              "RELIANCE": {
+                "batch_valid": true,
+                "calendar_policy": "WEEKDAYS_AND_CONFIGURED_HOLIDAYS_ONLY",
+                "completed_candles": 3,
+                "context": "REFERENCE",
+                "evaluated_at_ist": "2026-10-16 10:36:05",
+                "expected_session_date": "2026-10-16",
+                "future_skew_seconds": 5.0,
+                "incomplete_candles": 0,
+                "interval_min": 5,
+                "is_fresh": false,
+                "latest_candle_timestamp_ist": "2026-10-16 09:25:00",
+                "latest_completed_timestamp_ist": "2026-10-16 09:25:00",
+                "live_signal_allowed": false,
+                "max_close_lag_seconds": 360.0,
+                "max_delay_seconds": 60.0,
+                "max_staleness_minutes": 11.0,
+                "provider": "angelone",
+                "reason": "Latest completed live candle is stale for the current session.",
+                "reason_code": "STALE",
+                "reference_timestamp_ist": "2026-10-16 10:36:05",
+                "reference_usable": false,
+                "session_adjusted_lag_minutes": 66.0833,
+                "session_state": "within_session",
+                "status": "STALE",
+                "symbol": "RELIANCE",
+                "wall_clock_age_minutes": 71.0833
+              }
+            },
+            "interval_min": 5,
+            "is_fresh": false,
+            "live_signal_allowed": false,
+            "provider": "angelone",
+            "status": "BLOCKED"
+          },
+          "connection_state": "ERROR",
+          "data_mode": "LIVE",
+          "is_simulated": false,
+          "live_signals_allowed": false
+        },
+        "health_http_status": 200,
+        "persisted_scan_count": 1,
+        "persisted_signal_count": 0,
+        "readiness_accepted": false,
+        "scan": {
+          "candle_freshness": null,
+          "data_mode": "LIVE",
+          "freshness": {
+            "batch_valid": true,
+            "calendar_policy": "WEEKDAYS_AND_CONFIGURED_HOLIDAYS_ONLY",
+            "completed_candles": 3,
+            "context": "REFERENCE",
+            "evaluated_at_ist": "2026-10-16 10:36:05",
+            "expected_session_date": "2026-10-16",
+            "future_skew_seconds": 5.0,
+            "incomplete_candles": 0,
+            "interval_min": 5,
+            "is_fresh": false,
+            "latest_candle_timestamp_ist": "2026-10-16 09:25:00",
+            "latest_completed_timestamp_ist": "2026-10-16 09:25:00",
+            "live_signal_allowed": false,
+            "max_close_lag_seconds": 360.0,
+            "max_delay_seconds": 60.0,
+            "max_staleness_minutes": 11.0,
+            "provider": "angelone",
+            "reason": "Latest completed live candle is stale for the current session.",
+            "reason_code": "STALE",
+            "reference_timestamp_ist": "2026-10-16 10:36:05",
+            "reference_usable": false,
+            "session_adjusted_lag_minutes": 66.0833,
+            "session_state": "within_session",
+            "status": "STALE",
+            "symbol": "RELIANCE",
+            "wall_clock_age_minutes": 71.0833
+          },
+          "is_simulated": false,
+          "reason_code": "STALE",
+          "scan_status": "FAILED",
+          "total_signals": null
+        },
+        "scan_http_status": 502,
+        "scheduler_running": false
+      }
+    },
+    "evidence_class": "OFFLINE_MOCKED_REQUEST_JSON_AND_MISSING_CREDENTIAL_REJECTION",
+    "fixture_now_ist": "2026-10-16T10:36:05+05:30",
+    "real_provider_observation": false
+  },
+  "preflight": {
+    "actual_exit_code": 1,
+    "command": "python -B .\\diagnostics.py --market-data-only --symbol RELIANCE --isolated-provider --check-config --json",
+    "completed_at_utc": "2026-10-19T04:46:37.091305+00:00",
+    "sanitized_output": {
+      "application_provider_changed": false,
+      "authentication_scope": "AUTHORIZED_MARKET_DATA_READ_ONLY_NO_PROFILE_CHECK",
+      "checks": {
+        "authentication": {
+          "reason": "Required preceding checks have not completed.",
+          "status": "NOT_TESTED"
+        },
+        "candles": {
+          "reason": "Required preceding checks have not completed.",
+          "status": "NOT_TESTED"
+        },
+        "configuration": {
+          "missing_configuration_fields": [
+            "ANGEL_API_KEY",
+            "ANGEL_CLIENT_CODE",
+            "ANGEL_PIN",
+            "ANGEL_TOTP_SECRET"
+          ],
+          "reason": "Valid local Angel credentials, explicit provider scope, Telegram dry run and disabled scheduler are required.",
+          "status": "BLOCKED"
+        },
+        "instrument": {
+          "reason": "Required preceding checks have not completed.",
+          "status": "NOT_TESTED"
+        },
+        "quote": {
+          "reason": "Required preceding checks have not completed.",
+          "status": "NOT_TESTED"
+        }
+      },
+      "config_only": true,
+      "configuration_ready": false,
+      "data_persisted": false,
+      "effective_configuration": {
+        "active_broker": "upstox",
+        "enable_background_scheduler": false,
+        "telegram_dry_run": true
+      },
+      "exit_code": 1,
+      "historical_replay_allowed": false,
+      "isolated_provider": true,
+      "overall_status": "FAIL",
+      "provider": "angelone",
+      "readiness_receipt_issued": false,
+      "scope": "LOCAL_CONFIGURATION_PREFLIGHT",
+      "symbol": "RELIANCE",
+      "transport_policy": {
+        "automatic_session_recovery": false,
+        "max_candle_requests": 1,
+        "max_login_attempts": 1,
+        "max_quote_requests": 1
+      }
+    }
+  },
+  "recorded_at_utc": "2026-10-19T05:09:59.593777+00:00",
+  "schema_version": "tradepulse.cash-equity-acceptance-sprint.v1",
+  "scope": {
+    "exchange": "NSE",
+    "interval_min": 5,
+    "provider": "angelone",
+    "segment": "NSE_EQUITY_INTRADAY",
+    "symbol": "RELIANCE"
+  },
+  "sprint_project_files": [
+    "public/index.html",
+    "test_market_data_contract.py",
+    "test_cash_dashboard.js",
+    "docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md",
+    "docs/evidence/cash_equity_sprint_20261019.json"
+  ],
+  "starting_snapshot_at_utc": "2026-10-19T04:46:21.124168+00:00",
+  "verification": {
+    "compiled_top_level_python_modules": 32,
+    "focused": {
+      "command": "python -B -W error::ResourceWarning -m unittest test_angel_market_data test_market_data_contract test_phase5a_integration test_continuous_acceptance.TestIsolatedAngelAcceptance test_bot.TestIndianFOSignalBotPhase1E test_bot.TestIndianFOSignalBotPhase1F -v",
+      "exit_code": 0,
+      "exit_record": "../cash_sprint_verified_focused_exit.tmp",
+      "failed": 0,
+      "log": "../cash_sprint_verified_focused.tmp",
+      "passed": 69,
+      "python_warning_diagnostics": 0,
+      "seconds": 8.708,
+      "skipped": 0,
+      "structured_application_error_records": 1,
+      "structured_application_warning_records": 2,
+      "tests_run": 69
+    },
+    "full": {
+      "command": "python -B -W error::ResourceWarning test_bot.py -v",
+      "exit_code": 0,
+      "exit_record": "../cash_sprint_verified_full_exit.tmp",
+      "failed": 0,
+      "log": "../cash_sprint_verified_full.tmp",
+      "passed": 596,
+      "python_warning_diagnostics": 0,
+      "seconds": 139.7,
+      "skipped": 0,
+      "structured_application_error_records": 22,
+      "structured_application_warning_records": 3,
+      "tests_run": 596
+    },
+    "renderer": {
+      "command": "node --test --test-isolation=none test_cash_dashboard.js",
+      "exit_code": 0,
+      "failed": 0,
+      "log": "../cash_sprint_verified_renderer.tmp",
+      "milliseconds": 241.43,
+      "passed": 6,
+      "skipped": 0,
+      "tests_run": 6
+    },
+    "safety": {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot.TestIndianFOSignalBotPhase3B1A test_bot.TestIndianFOSignalBotPhase3B1B test_bot.TestPositionSizingRiskAccounting test_bot.TestStateIsolation test_bot.TestMarketDataFreshness test_bot.TestInstrumentIdentity test_bot.TestInstrumentArchives test_bot.TestSourceEvidenceQualification test_bot.TestOfficialSourceFeasibility test_bot.TestConfigurationPreflight test_bot.TestHTTPErrorFixtureCleanup -v",
+      "exit_code": 0,
+      "exit_record": "../cash_sprint_final_safety_exit.tmp",
+      "failed": 0,
+      "log": "../cash_sprint_final_safety.tmp",
+      "passed": 232,
+      "python_warning_diagnostics": 0,
+      "seconds": 53.53,
+      "skipped": 0,
+      "structured_application_error_records": 1,
+      "structured_application_warning_records": 0,
+      "tests_run": 232
+    }
+  }
+}

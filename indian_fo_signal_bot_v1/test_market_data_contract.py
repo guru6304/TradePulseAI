@@ -325,6 +325,105 @@ class TestSharedMarketDataContract(unittest.TestCase):
                     engine._require_current_scan_data(provider)
                 self.now -= timedelta(minutes=7)
 
+    def _cash_dashboard_handler(self, engine):
+        """Use real handlers/store without binding a socket or starting a service."""
+        from scanner_engine import MarketScanScheduler
+        from server import DashboardRequestHandler
+        from storage import SQLitePersistenceStore
+        engine.store = SQLitePersistenceStore(":memory:")
+        self.addCleanup(engine.store.close)
+        handler = object.__new__(DashboardRequestHandler)
+        handler.engine = engine
+        handler.scheduler = MarketScanScheduler(engine, clock=lambda: self.now)
+        return handler
+
+    def test_cash_dashboard_missing_angel_credentials_is_unavailable_without_transport(self):
+        adapter, _ = self._adapter("angelone")
+        adapter.config.angel_api_key = ""
+        adapter.config.angel_client_code = ""
+        adapter.config.angel_pin = ""
+        adapter.config.angel_totp_secret = ""
+        manager = MultiBrokerScanner(adapter.config, clock=lambda: self.now)
+        manager.adapters["angelone"] = adapter
+        engine = IntradayBotEngine(adapter.config, clock=lambda: self.now, broker_scanner=manager)
+        self.addCleanup(engine.close)
+        handler = self._cash_dashboard_handler(engine)
+        with patch("scanner_engine.evaluate_order_block_fvg") as evaluator, \
+             patch.object(engine.telegram, "send_signal") as delivery, \
+             patch("urllib.request.urlopen", side_effect=AssertionError("No transport allowed")) as wire:
+            code, rejected = handler._handle_scan()
+        self.assertEqual(code, 502)
+        self.assertEqual(rejected["scan_status"], "FAILED")
+        evaluator.assert_not_called()
+        delivery.assert_not_called()
+        wire.assert_not_called()
+        code, health = handler._handle_health()
+        self.assertEqual(code, 200)
+        self.assertEqual(health["broker"]["connection_state"], "UNAVAILABLE_MISSING_CREDENTIALS")
+        self.assertFalse(health["broker"]["live_signals_allowed"])
+        self.assertFalse(health["live_acceptance"]["accepted"])
+        self.assertFalse(health["scheduler"]["running"])
+        self.assertEqual(handler._handle_signals({})[1]["items"], [])
+        self.assertEqual(handler._handle_scans({})[1]["items"][0]["status"], "FAILED")
+
+    def test_cash_dashboard_stale_mock_wire_rejects_before_evaluation_and_persists_failure(self):
+        rows = self._rows(start=datetime(2026, 10, 16, 9, 15, tzinfo=IST), count=3, interval=5)
+        engine, _, _ = self._engine("angelone", rows)
+        handler = self._cash_dashboard_handler(engine)
+        with patch("scanner_engine.evaluate_order_block_fvg") as evaluator, \
+             patch.object(engine.telegram, "send_signal") as delivery:
+            code, rejected = handler._handle_scan()
+        self.assertEqual(code, 502)
+        self.assertEqual(rejected["scan_status"], "FAILED")
+        self.assertFalse(rejected["freshness"]["live_signal_allowed"])
+        evaluator.assert_not_called()
+        delivery.assert_not_called()
+        _, health = handler._handle_health()
+        self.assertEqual(health["broker"]["connection_state"], "ERROR")
+        self.assertFalse(health["broker"]["live_signals_allowed"])
+        self.assertFalse(health["live_acceptance"]["accepted"])
+        self.assertEqual(health["last_scan"]["scan_status"], "FAILED")
+        self.assertEqual(handler._handle_signals({})[1]["items"], [])
+        self.assertEqual(handler._handle_scans({})[1]["items"][0]["status"], "FAILED")
+
+    def test_cash_dashboard_fresh_mock_wire_no_signal_uses_actual_evaluators_and_store(self):
+        import scanner_engine
+        from contextlib import ExitStack
+        # Three complete fixture sessions plus the current partial session exceed
+        # every evaluator's warmup, including Supertrend's 200 completed candles.
+        rows = []
+        for day in (13, 14, 15):
+            rows.extend(self._rows(start=datetime(2026, 10, day, 9, 15, tzinfo=IST), count=75, interval=5))
+        rows.extend(self._rows(start=datetime(2026, 10, 16, 9, 15, tzinfo=IST), count=17, interval=5))
+        engine, _, _ = self._engine("angelone", rows)
+        handler = self._cash_dashboard_handler(engine)
+        names = ("evaluate_order_block_fvg", "evaluate_vwap_pullback", "evaluate_orb_breakout", "evaluate_supertrend_pullback")
+        with ExitStack() as stack:
+            evaluated = [stack.enter_context(patch.object(scanner_engine, name, wraps=getattr(scanner_engine, name)))
+                         for name in names]
+            delivery = stack.enter_context(patch.object(engine.telegram, "send_signal"))
+            code, result = handler._handle_scan()
+        self.assertEqual(code, 200)
+        self.assertEqual(result["scan_status"], "COMPLETED_EMPTY")
+        self.assertEqual(result["total_signals"], 0)
+        self.assertTrue(all(item.call_count == 1 for item in evaluated))
+        for item in evaluated:
+            candles = item.call_args.kwargs["candles"]
+            self.assertEqual(len(filter_completed_candles(candles, interval_min=5, now=self.now)), 241)
+        self.assertEqual(result["instrument_errors"], [])
+        delivery.assert_not_called()
+        self.assertTrue(result["candle_freshness"]["live_signal_allowed"])
+        _, health = handler._handle_health()
+        self.assertEqual(health["broker"]["active_broker"], "angelone")
+        self.assertFalse(health["live_acceptance"]["accepted"])
+        self.assertFalse(health["scheduler"]["running"])
+        self.assertEqual(health["last_scan"]["scan_status"], "COMPLETED_EMPTY")
+        self.assertEqual(handler._handle_signals({})[1]["items"], [])
+        stored = handler._handle_scans({})[1]["items"]
+        self.assertEqual(len(stored), 1)
+        self.assertEqual(stored[0]["status"], "COMPLETED_EMPTY")
+        self.assertEqual(stored[0]["data_mode"], "LIVE")  # Mock wire provenance, not live acceptance.
+
 
 if __name__ == "__main__":
     unittest.main()

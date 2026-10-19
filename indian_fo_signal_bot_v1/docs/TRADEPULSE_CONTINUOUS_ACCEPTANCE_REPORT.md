@@ -448,3 +448,241 @@ started, no production database was used, and no live Telegram message was sent.
 The only newly captured real provider material is the public credential-free master;
 documentation requests and that capture are distinct from account-market acceptance.
 LIVE historical replay and historical Strategy 3 remain blocked; no receipt was issued.
+
+## Cash-equity acceptance sprint addendum - 2026-10-19
+
+**Today's narrow objective is BLOCKED, not passed.** The isolated Angel preflight
+actually ran and exited 1 because all four required Angel fields are unconfigured.
+No real login, quote or candle request was attempted. No real RELIANCE observation
+was received, scanned, persisted or displayed. Offline scanner/API and renderer
+regressions passed independently; they cannot substitute for that live evidence.
+The earlier dated findings/counts above are preserved.
+
+### Starting state and configuration evidence
+
+Project root was confirmed as
+`C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1`.
+Git initially had the preceding mission's 23 staged entries. This sprint issued no
+reset, staging or commit command. `../cash_sprint_starting_snapshot.tmp` retains a non-secret
+66-file code/report/public snapshot captured at **2026-10-19T04:46:21.124168Z**.
+No credentials or production database contents are included.
+
+The existing reports and relevant diagnostic, adapter, identity, scanner,
+qualification, store, handler and frontend paths were checked against this tree.
+The narrow command branches before the legacy diagnostic's store/profile paths.
+Its explicit isolated view does not change the application's selected provider.
+
+Actual command, from the project root:
+
+```powershell
+python -B .\diagnostics.py --market-data-only --symbol RELIANCE --isolated-provider --check-config --json
+```
+
+It completed at **2026-10-19T04:46:37.091305Z (10:16:37 IST)**, actual exit **1**.
+The sanitized JSON has configuration BLOCKED, configuration_ready=false and
+overall_status=FAIL. Missing configuration field names are exactly:
+
+- `ANGEL_API_KEY`
+- `ANGEL_CLIENT_CODE`
+- `ANGEL_PIN`
+- `ANGEL_TOTP_SECRET`
+
+Its effective configuration reports active_broker=upstox, telegram_dry_run=true,
+enable_background_scheduler=false and application_provider_changed=false.
+Data persistence, readiness receipt and historical replay flags are all false.
+Raw sanitized output and the real exit are retained in
+`../cash_sprint_angel_preflight.tmp` and `../cash_sprint_angel_preflight_exit.tmp`.
+The [sprint evidence JSON](evidence/cash_equity_sprint_20261019.json) retains that
+same safe output together with explicitly separate offline observations.
+
+`config._load_dotenv` reads `.env` relative to the **process working directory**;
+existing process environment values take precedence via setdefault. Both workspace
+and project `.env` files exist, and `git check-ignore -v` confirms both are excluded
+by the existing `.gitignore:2` rule. Only existence/ignore metadata was inspected;
+their contents were not displayed, copied or edited. The documented project-root
+command needs the four fields in its project-local `.env` or process environment.
+The evidence does not establish whether another directory has different settings.
+
+### Live acceptance evidence and bounded transport review
+
+| Required item | Actual status | Supporting evidence / boundary |
+| --- | --- | --- |
+| Angel local configuration | BLOCKED | Preflight exit 1 and the four field names above; selected Upstox preserved. |
+| Authentication / HTTP / provider status | NOT_TESTED | Zero real account requests; there is no HTTP status, response error or account-verification result to infer. |
+| Returned cash instrument identity | NOT_TESTED | Instrument check is skipped after configuration fails. Source inspection confirms the existing pinned RELIANCE/NSE/token 2885 mapping; no returned identity was observed. |
+| Quote observation and currentness | NOT_TESTED | No quote or provider observation timestamp exists for this sprint. |
+| Completed candles / OHLCV / ordering / coverage | NOT_TESTED | No live candle response; no completion or freshness result can be accepted. |
+| Today's session / holiday suitability | NOT_TESTED | No external session/calendar acceptance was performed. The local clock alone cannot establish an authoritative exchange session. |
+| Source qualification / historical provenance | NOT_TESTED for a new live artifact; historical gate remains blocked | No new artifact was submitted. `assess_source_evidence` retains historical_eligibility.allowed=false; a current cash observation would not qualify historical replay. |
+| Actual live scanner / persistence | NOT_TESTED / no live observation persisted | Preflight stops before transport and scanner. Temporary offline stores below are distinct. |
+| Actual live dashboard / browser | NOT_TESTED | No qualified live backend result and no available browser automation harness. |
+| Overall narrow cash acceptance | BLOCKED | Required real observation, scanner and dashboard evidence is absent; preflight FAIL is not a failed broker response. |
+
+Source inspection confirms the next narrow diagnostic would allow only:
+POST `loginByPassword`, POST `market/v1/quote/` in FULL mode for RELIANCE NSE,
+then POST `historical/v1/getCandleData` with FIVE_MINUTE after quote validity.
+It permits at most one login, one quote and one candle request; automatic session
+recovery is disabled and caller-owned retry policy is restored in finally.
+It does not read profile, balances, holdings, positions, orders or GTT, scan,
+persist, deliver alerts or issue a receipt. This is call-path evidence, not proof
+that any endpoint succeeded today. No live retry or provider fallback occurred.
+
+### Reproduced dashboard defect and narrow correction
+
+The existing `renderSignalCards` and `renderSelectedSignalInspector` treated every
+record that was not truthy-simulated as LIVE. An UNKNOWN/missing mode or a stored
+unknown-provider record could therefore receive a live label. The store's existing
+unknown-source regression demonstrates that unknown-provider records can be exposed
+without promotion in the backend; the frontend was losing that distinction.
+Persisted older live-source records also lacked an explicit stored-source label.
+
+Actual inline-script execution against a small offline DOM double reproduced
+**3 passed / 3 failed / 0 skipped**, exit 1, before the correction. The two
+untrusted-provenance assertions and the stored-source-label assertion failed.
+The correction shares `describeStoredSignalSource` between cards and inspector:
+consistent explicit simulated records show SIMULATED; explicit LIVE/false records
+from a supported provider show LIVE SOURCE (STORED); unknown, missing or conflicting
+provenance shows UNKNOWN SOURCE. Stored timestamps remain visible. No record gains
+present-day freshness or acceptance from its badge.
+
+All **6 renderer tests now pass**, exit 0. They also verify that a health failure
+clears prior acceptance labels, a signals error removes cached cards/inspector
+prices, and an older successful health response cannot overwrite a newer failure.
+The actual dashboard script runs under installed **Node 24.18.0** with built-in
+node:test/vm, without new packages, fetch calls or DOMContentLoaded initialization.
+The DOM/Chart doubles are **not a browser**. Playwright, Selenium and Pyppeteer
+were unavailable, no browser harness was found, and UI end-to-end acceptance stays
+NOT_TESTED. No browser was opened or production service started; only the existing
+temporary loopback HTTP test fixtures ran.
+
+### Actual scanner / backend / persistence evidence - offline only
+
+Three new tests use the existing Angel adapter, MultiBrokerScanner,
+IntradayBotEngine, real strategy evaluators, SQLitePersistenceStore and actual
+DashboardRequestHandler methods. The new tests invoke handlers directly without
+binding a server socket. Each has an independent in-memory database, a fixed
+**fixture clock of 2026-10-16 10:36:05 IST**, dry-run controls and forbidden external
+transport. Provider-shaped rows are mocked at _request_json, not a real response.
+Existing bounded loopback HTTP dashboard tests ran separately in the selections.
+
+| Offline case | Actual backend/scanner outcome | Temporary persistence / safety |
+| --- | --- | --- |
+| Missing Angel credentials | Scan HTTP 502 / FAILED; health connection UNAVAILABLE_MISSING_CREDENTIALS; live_signals_allowed=false. No HTTP transport or strategy/delivery call. | One FAILED scan, zero signals; readiness accepted=false; scheduler running=false. |
+| Stale mocked candles | Latest completed start 09:25; reason STALE at the 10:36:05 fixture clock. Scan HTTP 502 / FAILED; health ERROR; evaluation/delivery never called. | One FAILED scan, zero signals; no fallback, receipt or paper entry. |
+| Fresh mocked candles, adequate warmup, no setup | 242 rows over three complete fixture sessions and the current partial session; 241 completed, one forming. Latest completed start 10:30, close 10:35; forming 10:35 start excluded. FRESH_IN_SESSION; scan HTTP 200 / COMPLETED_EMPTY. | One COMPLETED_EMPTY scan, zero signals and no delivery; actual receipt acceptance remains false. Mock branch connection CONNECTED_VERIFIED is not real authentication evidence. |
+
+The fresh case was strengthened from a short warmup fixture before final
+verification. Each of the four cash evaluators receives **241 completed candles**,
+exceeding its existing warmup threshold; no threshold or strategy was edited.
+Scanner health retains only the latest completed bar and forming tail for bounded
+clock rechecks; its completed_candles=1 describes that cached tail, not the full
+242-row evaluator input.
+An audit-only Python return trace records each actual final no-setup return:
+
+| Strategy function | Observed return / conditions | Entry / stop / target / paper eligibility |
+| --- | --- | --- |
+| evaluate_order_block_fvg | `strategies.py:1051`, final return None after checking the available patterns | No signal; no levels, sizing or paper entry. |
+| evaluate_vwap_pullback | `strategies.py:1214`, final return None after bullish/bearish setup checks | No signal; no levels, sizing or paper entry. |
+| evaluate_orb_breakout | `strategies.py:1538`, final return None after ORB setup checks | No signal; no levels, sizing or paper entry. |
+| evaluate_supertrend_pullback | `strategies.py:1712`, final return None after setup checks | No signal; no levels, sizing or paper entry. |
+
+All have zero evaluator errors. The audit does not claim a rejected trigger has
+passed risk sizing: with no signal, entry/stop/target and paper risk decisions are
+not applicable. No paper account was supplied. The evidence JSON retains the real
+handler payloads/freshness timestamps and trace results with OFFLINE/MOCKED labels.
+`../cash_sprint_capture_offline.tmp` is the retained non-production capture script;
+its three individual one-test runs pass, exit 0. No synthetic P&L or empirical
+signal-quality claim is made.
+
+### New verification, warning inventory and commands
+
+| Executed verification / log stem | Passed | Failed / skipped | Seconds | Exit | Python warnings / structured application WARNING |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Starting focused confirmation, `cash_sprint_baseline_focused_confirm` | 59 | 0 / 0 | 3.444 | 0 | 0 / 0 |
+| New backend cases, `cash_sprint_backend_new` | 3 | 0 / 0 | 0.116 | 0 | 0 / 0 |
+| Strengthened warmup case, `cash_sprint_warmup_regression` | 1 | 0 / 0 | 0.177 | 0 | 0 / 0 |
+| Final strict full suite, `cash_sprint_verified_full` | 596 | 0 / 0 | 139.700 | 0 | 0 / 3 |
+| Final focused acceptance/HTTP selection, `cash_sprint_verified_focused` | 69 | 0 / 0 | 8.708 | 0 | 0 / 2 |
+| Latest separate safety selection, `cash_sprint_final_safety` | 232 | 0 / 0 | 53.530 | 0 | 0 / 0 |
+| Final renderer regression, `cash_sprint_verified_renderer` | 6 | 0 / 0 | 0.241430 | 0 | No JS warnings |
+
+Selections overlap. The 596 Python tests include three added backend regressions;
+the six Node tests are separate. The separate safety run preceded only the
+strengthened test fixture; final full verification includes all safety tests.
+An earlier full run also passed 596 in 151.918 seconds and an earlier focused run
+passed 69 in 14.071 seconds; those `cash_sprint_final_*` logs are intermediate.
+All logs are at `../<stem>.tmp` with separate `../<stem>_exit.tmp` process exits.
+
+The first sandboxed baseline ran 59 tests with six errored test cases and 12
+setup/cleanup error records, exit 1, from denied temporary SQLite directories.
+Approved execution outside the sandbox passed all 59 without application changes.
+The first sandboxed Node launch failed with spawn EPERM before running renderer
+checks; approved reproduction then established the three real assertion failures
+above. Final Node execution uses --test-isolation=none, avoiding child processes
+while retaining test assertions. No warning filter, test skip or GC change was made.
+
+The three full-suite and two focused WARNING records are expected scan-overlap
+fixtures. Final full/safety/focused runs have respectively 22/1/1 structured ERROR
+records from deliberate disk/provider/missing-credential/staleness failure tests;
+the new handler tests also emit expected rejection messages without a structured
+prefix. These are assertion-covered offline errors, not live failures. There are
+zero Python warning diagnostics. PowerShell's NativeCommandError stderr wrapper
+and echoed ResourceWarning flag are not Python warnings.
+
+Commands actually executed from the project root:
+
+```powershell
+$env:PYTHONDONTWRITEBYTECODE = '1'
+python -B -W error::ResourceWarning -m unittest test_angel_market_data test_market_data_contract test_phase5a_integration test_continuous_acceptance.TestIsolatedAngelAcceptance -v
+python -B -W error::ResourceWarning -m unittest test_market_data_contract.TestSharedMarketDataContract.test_cash_dashboard_missing_angel_credentials_is_unavailable_without_transport test_market_data_contract.TestSharedMarketDataContract.test_cash_dashboard_stale_mock_wire_rejects_before_evaluation_and_persists_failure test_market_data_contract.TestSharedMarketDataContract.test_cash_dashboard_fresh_mock_wire_no_signal_uses_actual_evaluators_and_store -v
+python -B -W error::ResourceWarning -m unittest test_market_data_contract.TestSharedMarketDataContract.test_cash_dashboard_fresh_mock_wire_no_signal_uses_actual_evaluators_and_store -v
+python -B -W error::ResourceWarning test_bot.py -v
+python -B -W error::ResourceWarning -m unittest test_angel_market_data test_market_data_contract test_phase5a_integration test_continuous_acceptance.TestIsolatedAngelAcceptance test_bot.TestIndianFOSignalBotPhase1E test_bot.TestIndianFOSignalBotPhase1F -v
+python -B -W error::ResourceWarning -m unittest test_bot.TestIndianFOSignalBotPhase3B1A test_bot.TestIndianFOSignalBotPhase3B1B test_bot.TestPositionSizingRiskAccounting test_bot.TestStateIsolation test_bot.TestMarketDataFreshness test_bot.TestInstrumentIdentity test_bot.TestInstrumentArchives test_bot.TestSourceEvidenceQualification test_bot.TestOfficialSourceFeasibility test_bot.TestConfigurationPreflight test_bot.TestHTTPErrorFixtureCleanup -v
+node --test test_cash_dashboard.js
+node --test --test-isolation=none test_cash_dashboard.js
+python -B -W error::ResourceWarning ..\cash_sprint_capture_offline.tmp
+```
+
+The first focused command ran before edits (59 tests). Other methods/tests and
+final selections ran as recorded above; capture repeats the three assertions with
+audited return values. The earlier compilation here-string and Git diff commands
+were also rerun. All **32 top-level Python modules compile in memory**. Final
+snapshot/whitespace/newline/diff checks are retained in
+`../cash_sprint_final_checks.tmp`; untracked additions are checked independently.
+Plain `git diff --check` exits 0 with three LF-to-CRLF advisories for this sprint's
+modified tracked files. The per-command autocrlf=false check is quiet; both cached
+diff checks also exit 0. No Git setting was changed.
+
+### Sprint file inventory and next action
+
+Five project files changed/added in this sprint:
+
+- `public/index.html`: source labels shared by signal card and inspector.
+- `test_market_data_contract.py`: three offline cash scanner/handler/store cases.
+- `test_cash_dashboard.js`: six actual-script renderer regressions, no dependencies.
+- `docs/evidence/cash_equity_sprint_20261019.json`: sanitized preflight, actual
+  offline observations, strategy-return trace and final test/exit evidence.
+- `docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md`: this additive dated section.
+
+The prior report prefix and unrelated baseline files are preserved. No broker,
+configuration, strategy, cost/risk, provenance, schema, scheduler or backend API
+implementation was changed. No production database, live Telegram, trading/account
+endpoint or production service was used. Official milestone scores and acceptance
+states remain unchanged: **63.5% implementation / 35.5% readiness; 0/12 accepted**.
+
+**Exact next action:** configure the four existing Angel fields locally in the
+environment used by the project-root command; never share their values. Repeat
+the offline isolated preflight. Only after it passes and an appropriate session
+is established may the same narrow command without --check-config consume the
+single authorized bounded live attempt. Retain sanitized output and its real exit;
+stop after any rejection and do not automatically retry or change providers.
+
+The diagnostic returns a bounded completed sample and does not run/persist a scan.
+The dashboard's normal Scan Market Now action invokes the selected provider and
+configured universe; with Upstox still selected it is not an isolated Angel cash
+acceptance command. No real accepted-batch-to-scanner/dashboard handoff was verified
+today. That bounded handoff must preserve full warmup, identity, provenance and
+clock revalidation without additional live reads; it cannot be inferred from a
+diagnostic PASS or replaced with an ordinary full-universe scan. Until the required
+real observation and end-to-end evidence exist, today's objective stays BLOCKED.
