@@ -695,13 +695,13 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 "message": str(exc),
             }
 
-    def _handle_paper_portfolio(self, query_params, *, accounts=False):
+    def _handle_paper_portfolio(self, query_params, *, accounts=False, ledger=False):
         """Read existing simulated accounts only; never scan, mark, fill or create."""
         assert self.engine is not None
         if self.engine.store is None:
             return 503, {"status": "error", "message": "Database persistence is disabled."}
         try:
-            allowed = set() if accounts else {"account_id"}
+            allowed = set() if accounts else {"account_id", "collection", "limit", "cursor"} if ledger else {"account_id"}
             if set(query_params) - allowed or any(len(v) != 1 for v in query_params.values()):
                 raise ValueError()
             if accounts:
@@ -710,9 +710,19 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             account_id = _get_str_param(query_params, "account_id")
             if not account_id or len(account_id) > 128:
                 raise ValueError()
-            report = self.engine.store.get_paper_portfolio_report(account_id, as_of=self.engine._now_ist())
+            if ledger:
+                page_limit = _get_str_param(query_params, "limit") or "100"
+                if not page_limit.isascii() or not page_limit.isdecimal() or len(page_limit) > 3:
+                    raise ValueError()
+                report = self.engine.store.query_paper_ledger(account_id,
+                    collection=_get_str_param(query_params, "collection") or "events", limit=int(page_limit),
+                    cursor=_get_str_param(query_params, "cursor"))
+            else:
+                report = self.engine.store.get_paper_portfolio_report(account_id, as_of=self.engine._now_ist())
             return (404 if report["status"] == "NOT_CONFIGURED" else 200), report
-        except ValueError:
+        except ValueError as exc:
+            if getattr(exc, "reason_code", "") == "MALFORMED_OR_OVERSIZED_PAPER_RECORD":
+                return 503, {"status": "RECONCILIATION_REQUIRED", "message": "Paper ledger requires inspection."}
             return 400, {"status": "error", "message": "Invalid paper-report query."}
         except Exception:
             return 503, {"status": "error", "message": "Paper portfolio report is unavailable."}
@@ -763,8 +773,10 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         route = raw_path.rstrip("/") or "/"
         query_params = urllib.parse.parse_qs(parsed.query)
 
-        if route in ("/api/paper-accounts", "/api/v1/paper-accounts", "/api/paper-portfolio", "/api/v1/paper-portfolio"):
-            code, payload = self._handle_paper_portfolio(query_params, accounts=route.endswith("paper-accounts"))
+        if route in ("/api/paper-accounts", "/api/v1/paper-accounts", "/api/paper-portfolio", "/api/v1/paper-portfolio",
+                     "/api/paper-ledger", "/api/v1/paper-ledger"):
+            code, payload = self._handle_paper_portfolio(query_params, accounts=route.endswith("paper-accounts"),
+                                                       ledger=route.endswith("paper-ledger"))
             self._send_json(code, payload, send_body=send_body)
             return
         if route in ("/api/contract-masters", "/api/v1/contract-masters", "/api/contract-resolution", "/api/v1/contract-resolution"):

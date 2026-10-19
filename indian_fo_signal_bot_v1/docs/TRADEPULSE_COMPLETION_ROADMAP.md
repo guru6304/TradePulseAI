@@ -58,7 +58,7 @@ tested. Profitable performance remains a separate research question.
 | P2.1 Qualified historical dataset (M04/M08) | Import real supported history only after P0.4. Prove full session coverage, warmup and intended evaluation range; implement replay pagination above the current 10,000-row cap without truncation. | Gaps/missing sessions/duplicates/provider-mode mixing/range changes reject. Pagination has no gaps/duplicates and no limit can silently cut a study short. Per-symbol readiness remains separate from aggregate common-period readiness. |
 | P2.2 Enforced chronological experiment protocol (M08) | Turn the existing split helper and explicit date controls into auditable train/validation/out-of-sample study orchestration. Current `period_type` labels alone do not select a split. | Disjoint chronological periods, strict selection and warmup-only earlier data; frozen parameters and dataset/config hashes; repeatable output; no overlap, look-ahead or use of out-of-sample data for fitting. |
 | P2.3 Historical Strategy 3 contract execution (M05/M07/M08) | Implement exact historical contract-candle entry/exit fills, chain snapshots at decision time, verified prior-session closing OI, expiry/strike selection, dated lot metadata and premium accounting. Depends on P1.3/P2.1. | Changing only option-contract candles changes fills/P&L; underlying changes cannot substitute premium fills; mismatch/missing contract data rejects. Cost/lot/gap/collision/EOD accounting reconciles. Remove the unconditional block only after this complete contract is accepted. |
-| P2.4 Durable forward paper portfolio (M07/M09) | Cash-only offline baseline delivered: immutable account scopes, real scanner handoff, durable queued decisions, atomic reservations/fills/marks/full exits and read-only reporting. Existing sizing/cost contracts are reused. Remaining work is bounded multi-session fault/soak acceptance, large-ledger pagination/export and separately specified derivative/partial-fill support. | Offline regressions cover concurrent capital/duplicate competition, daily realized+unrealized loss, exposure/count limits, exact-once costs, rollback and restart. Next run an offline interruption/EOD/large-ledger exercise before any authorized operational feed. Fills remain SIMULATED and require valid completed observations. |
+| P2.4 Durable forward paper portfolio (M07/M09) | Cash-only offline baseline plus Phase 5C deterministic multi-session interruption/EOD and 10,000-event reporting exercise delivered. Account-scoped bounded cursor pages and indexed streaming reconciliation are implemented. Remaining work includes unresolved-EOD recovery policy, dedicated export, operational soak and separately specified derivative/partial-fill support. | Offline regressions cover concurrent capital/duplicate competition, daily realized+unrealized loss, exact-once costs, write-boundary failures, restart, missing EOD, account isolation and complete stable pagination. See the Phase 5C report for counts and measurements without an invented SLA. Operational feeds remain separately authorized; fills remain SIMULATED and require valid completed observations. |
 | P2.5 EOD reconciliation and research evidence (M08-M10) | Produce a dedicated report from actual ledger/results, reconcile trade totals/equity/drawdown/costs and missing data, then evaluate frozen strategies on qualified out-of-sample history. | Empty-day/multi-day/report-retry tests; reconciled paper/replay statements; losses and uncertainty retained; no fixture profitability claim. Replay EOD square-off and OI closing-baseline storage are not an EOD performance report. |
 
 P2 exit: reproducible qualified cash research, separately accepted derivative execution
@@ -115,7 +115,7 @@ $LASTEXITCODE
 ```
 
 The established `test_bot.py` entry point includes the independent broker/shared and
-Phase 4, Phase 5A and Phase 5B modules through `load_tests`; normal discovery must load each test once.
+Phase 4, Phase 5A, Phase 5B and Phase 5C modules through `load_tests`; normal discovery must load each test once.
 Focused runs remain useful for diagnosis. `test_phase4_strategy` includes a reproduced
 pre-fix counterexample: 241 otherwise fresh consecutive bars whose current-session
 window starts at 10:00 previously emitted an ORB candidate. Its regression requires
@@ -166,10 +166,32 @@ existing paper risk/SQLite boundary. No account is enrolled automatically. Curre
 F&O declarations and historical provenance remain blocked. M09 advances only to
 50/50 under the unchanged rubric; all 12 product milestones remain unaccepted.
 
-Next local task: a bounded offline multi-session scanner-to-paper interruption/EOD
-and large-ledger reporting exercise. Acceptance requires identical reconciled state
+The next local task identified at Phase 5B was a bounded offline multi-session scanner-to-paper interruption/EOD
+and large-ledger reporting exercise. Its acceptance requires identical reconciled state
 after interruption at each write boundary, no stale marks or fabricated EOD exit,
 stable per-day costs/loss limits and paginated reports without missing/duplicate
 events. Keep real-provider diagnostics behind separate authorization; the immediate
 external evidence gate remains one controlled selected-Upstox cash quote/candle
 result with sanitized JSON and actual exit code, not a provider switch or receipt.
+
+## Phase 5C closeout and remaining acceptance
+
+The [Phase 5C report](TRADEPULSE_PHASE5C_ENGINEERING_REPORT.md) supplies fresh baseline,
+strict full/focused evidence, 20 new recovery/pagination tests and measurements for
+100/1,000/10,000-event synthetic ledgers. This closes the scoped deterministic
+offline exercise described above. It does not constitute a long-running operational
+soak or release/backup acceptance. Missing EOD observations remain open, reserved
+and frozen across sessions; no historical candle or next-session price repairs them.
+The policy needs a separately specified resolution process before operational use.
+
+Next external task: one separately authorized selected-Upstox RELIANCE cash quote
+and completed-candle diagnostic, retained as sanitized JSON with actual exit code.
+Do not run it as part of this offline package. Next local paper work: define
+unresolved-EOD recovery and reproducible read-only session export, then verify a
+fixture backup/restore before an operational multi-session soak. Calendar authority,
+derivative contract data and independent historical qualification remain blockers.
+
+Under the unchanged rubric, M09 stays 50/50 and all other rows retain their scores:
+**63.5% implementation / 35.5% verified readiness; 0/12 accepted**. Offline test
+growth cannot satisfy R=75's scoped operational requirement. Keep scheduler disabled,
+Telegram dry run enabled, LIVE historical replay blocked and Strategy 3 contained.

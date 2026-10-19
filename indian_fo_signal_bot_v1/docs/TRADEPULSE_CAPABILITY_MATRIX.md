@@ -1,6 +1,6 @@
 # TradePulse AI capability and completion assessment
 
-Phase 5A/5B audit date: 2026-10-18. Scope: the current workspace, including its Python modules,
+Phase 5A/5B audit date: 2026-10-18; Phase 5C evidence addendum: 2026-10-19. Scope: the current workspace, including its Python modules,
 `public/index.html`, tests and retained phase reports. This is a product-scope audit,
 not a certification of broker access, strategy profitability or production readiness.
 No credentials were inspected for this assessment and no broker requests were made.
@@ -51,7 +51,7 @@ implementation and verified-readiness scores, respectively.
 | M06 Scanner and signal generation | 12% | PARTIAL | PARTIAL | 75 | 50 | `IntradayBotEngine.run_single_scan/_compute_universe_breadth`; five `strategies.py:evaluate_*` functions; `compute_setup_quality_score`; Phase 1B/1C strategy tests, freshness/identity scanner-gating tests | Completed-bar evaluation, explanations, invalidation and quality breakdowns exist. Whole-watchlist real-data coverage is unverified; cross-universe ranking and a general liquidity model are incomplete. Validate a bounded cash scan after provider acceptance, then add explicit ranking semantics and tests. |
 | M07 Risk controls and accounting | 10% | PARTIAL | PARTIAL | 75 | 50 | `strategies.py:size_position`; `backtest_engine.py:IndianCostModel`; `paper_portfolio.py:enter/_snapshot/_reconciliation`; sizing and Phase 5A/5B tests | Explicit cash paper accounts now share capital, entry-notional exposure and daily realized/unrealized loss controls across strategies, with transactional reservations. Ordinary scans remain candidate-only unless a paper account is explicitly supplied. Derivative/margin and cross-account portfolio control, liquidity assumptions and operational acceptance remain incomplete. Costs/stop estimates are not guaranteed fills or maximum losses. |
 | M08 Historical backtesting and reproducible research | 10% | PARTIAL | BLOCKED_BY_EXTERNAL_DEPENDENCY | 50 | 25 | `historical_data.py:validate_and_prepare_historical_dataset/get_point_in_time_candle_slice`; `backtest_engine.py:run_backtest/split_sessions_chronologically`; `readiness_policy.py:execution_gate/historical_coverage`; Phase 3A/3B/3B.1A/3B.1B and official-source tests | Mechanics are verified on fixtures; LIVE historical identity/source qualification remains blocked. Split helper is not automatic experiment orchestration; explicit dates constrain evaluation, but period labels alone do not select disjoint ranges. Reads above the 10,000-row replay cap are blocked. Obtain qualified data, enforce study splits and implement pagination; Strategy 3 needs a separate contract execution engine. |
-| M09 Paper trading and persistence | 6% | PARTIAL | PARTIAL | 50 | 50 | `paper_portfolio.py:PaperAccountConfig/PaperPortfolio`; `forward_paper.py:ForwardPaperCoordinator`; `run_single_scan(paper_portfolio=...)`; existing store tables/transactions; Phase 5A/5B concurrency, failure, accounting and restart tests | Durable cash-only simulated entries, marks/full exits, candidate/risk linkage, EOD handling and reconciliation now run through the real scanner boundary. Current-provider operational evidence, derivative paper execution, partial fills/adjustments, dedicated EOD reporting and large-ledger/soak/recovery acceptance remain missing. Do not enable services or claim live executions. |
+| M09 Paper trading and persistence | 6% | PARTIAL | PARTIAL | 50 | 50 | `paper_portfolio.py:PaperAccountConfig/PaperPortfolio`; `forward_paper.py:ForwardPaperCoordinator`; `run_single_scan(paper_portfolio=...)`; existing store transactions; Phase 5A/5B tests plus `test_phase5c_recovery` | Durable cash-only simulated entries, marks/full exits, candidate/risk linkage and reconciliation run through the scanner boundary. Phase 5C adds deterministic multi-session/EOD/fault/concurrency acceptance and bounded indexed pages through 10,000 synthetic events. Current-provider operational evidence, derivative execution, partial fills/adjustments, unresolved-EOD repair, dedicated EOD export and long-running operational soak remain missing. Do not enable services or claim live executions. |
 | M10 Telegram reporting and dashboard/API | 4% | PARTIAL | PARTIAL | 50 | 50 | `TelegramSignalDispatcher.format_signal_html/send_signal`; `server.py:DashboardRequestHandler/create_http_server`; `public/index.html:runBacktestSimulation`; Phase 1D/1E/1F HTTP/security tests and Telegram state-isolation tests | Dry-run formatting/dedup and local API workflows have offline evidence. Dashboard hypothetical curves do not execute the backtest engine. Dedicated EOD performance reporting and empirical calibration are absent; external asset dependencies need deployment review. Keep live Telegram off; connect real persisted results only with truthful labels. |
 | M11 Scheduling and operational resilience | 3% | PARTIAL | PARTIAL | 75 | 50 | `MarketScanScheduler.is_market_session_open/run_scheduled_cycle/start/stop`; scanner lock/error handling; `test_p1d_scan_overlap_prevention`, `test_p1d_scheduler_session_boundaries_weekends_holidays_and_lifecycle`, Phase 1F concurrent API tests | Session/overlap/lifecycle behavior is tested in fixtures; production scheduler was not enabled. No sustained provider-outage/rate-limit/long-running recovery drill is evidenced. Run bounded offline fault-injection/soak scenarios before separately authorizing operation. |
 | M12 Release, deployment, monitoring and recovery | 3% | PARTIAL | IMPLEMENTED_UNVERIFIED | 25 | 0 | Localhost defaults in `server.py:run_server`; health/status paths, SQLite cleanup and Markdown commands; no release automation/backup runner in initial tree | A runnable local application and reports exist. Reproducible installation, supported-version matrix, deployment access controls, centralized alerts, backup/restore verification and rollback drills are not delivered. Build a local release package and prove recovery without changing the current safety posture. |
@@ -207,3 +207,24 @@ The [paper report](TRADEPULSE_PAPER_PORTFOLIO_REPORT.md) documents the explicit
 completed-observation close fill policy and remaining limits. The provenance design
 retains the absent-verifier block. All seven reports describe the same checkout;
 earlier phase counts remain historical evidence rather than current totals.
+
+## Phase 5C evidence addendum
+
+The [Phase 5C engineering report](TRADEPULSE_PHASE5C_ENGINEERING_REPORT.md) records
+the fresh 539-test baseline and final verification. Twenty additional deterministic
+tests establish offline multi-session interruption/EOD behavior, rollback across
+candidate/reservation/entry/mark/exit/fee/report boundaries, concurrent mark/exit
+safety and bounded account-scoped reporting through 10,000 synthetic events.
+Indexed streaming reconciliation replaces full-history materialization; stable
+watermark cursors cover events, positions and candidate decisions. No operational
+feed, authoritative calendar, dedicated EOD export or missing-EOD resolution policy
+was accepted. Missing final observations retain open reservations and block entries
+across sessions. Finite synthetic ledgers do not establish market returns or a soak SLA.
+
+All M01-M12 scores, weights and completion criteria remain unchanged. M09 remains
+I=50/R=50: its cash-only functional gaps remain, and R=75 requires applicable scoped
+operational acceptance. M12's release/backup requirements remain absent despite
+stronger local exception/restart evidence. Totals remain **63.50% implementation /
+35.50% verified readiness; 0 of 12 accepted**. The required current-provider,
+derivative-contract and independent historical-source evidence is still missing;
+LIVE replay and historical Strategy 3 remain blocked.

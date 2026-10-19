@@ -1,5 +1,6 @@
 from instrument_identity import IdentityValidationError, validate_signal_identity
 import json
+import base64
 import logging
 import math
 import os
@@ -722,6 +723,26 @@ class SQLitePersistenceStore:
                         signal_key TEXT NOT NULL, scan_run_id TEXT NOT NULL,
                         payload_json TEXT NOT NULL, UNIQUE(account_id, signal_key)
                     )""")
+                    # Durable append order, independent of implicit rowids/VACUUM.
+                    # Companion metadata preserves the existing ledger row layouts.
+                    conn.execute("""CREATE TABLE IF NOT EXISTS paper_ledger_order (
+                        sequence_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        account_id TEXT NOT NULL, collection TEXT NOT NULL,
+                        entity_id TEXT NOT NULL, UNIQUE(collection, entity_id)
+                    )""")
+                    conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_ledger_page "
+                                 "ON paper_ledger_order(account_id, collection, sequence_id)")
+                    conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_positions_account "
+                                 "ON paper_positions(account_id, position_id)")
+                    conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_events_position "
+                                 "ON paper_events(account_id, position_id)")
+                    conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_events_append ON paper_events(account_id)")
+                    for collection, table, key in self._paper_collections():
+                        conn.execute(f"INSERT OR IGNORE INTO paper_ledger_order(account_id,collection,entity_id) "
+                                     f"SELECT account_id,?,{key} FROM {table} ORDER BY rowid", (collection,))
+                        conn.execute(f"CREATE TRIGGER IF NOT EXISTS {table}_page_order AFTER INSERT ON {table} "
+                                     f"BEGIN INSERT INTO paper_ledger_order(account_id,collection,entity_id) "
+                                     f"VALUES(NEW.account_id,'{collection}',NEW.{key}); END")
                     # Local normalized declarations are NOT an accepted current master.
                     conn.execute("""CREATE TABLE IF NOT EXISTS contract_master_candidates (
                         master_id TEXT PRIMARY KEY, provider TEXT NOT NULL,
@@ -775,6 +796,78 @@ class SQLitePersistenceStore:
     def get_paper_portfolio_report(self, account_id, as_of=None):
         from paper_portfolio import PaperPortfolio
         return PaperPortfolio.report_existing(self, account_id, as_of=as_of)
+
+    @staticmethod
+    def _paper_collections():
+        return (("events", "paper_events", "event_id"),
+                ("positions", "paper_positions", "position_id"),
+                ("candidate_decisions", "paper_candidate_decisions", "candidate_id"))
+
+    def query_paper_ledger(self, account_id, collection="events", limit=100, cursor=None):
+        """Read-only keyset pages. Cursor pins membership, not mutable row contents.
+
+        JSON bodies are capped before fetching/decoding; a page holds at most 200
+        records / 900 KiB. Corruption fails closed without echoing stored bodies.
+        Cursors bind account and collection and are never authorization tokens.
+        """
+        from paper_portfolio import _name, _encode, PaperPortfolioError
+        _name(account_id)
+        collections = {name: (table, key) for name, table, key in self._paper_collections()}
+        if collection not in collections or type(limit) is not int or not 1 <= limit <= 200:
+            raise PersistenceValidationError("Invalid paper ledger page.")
+        table, key = collections[collection]
+        with self.paper_transaction(write=False) as conn:
+            if not conn.execute("SELECT 1 FROM paper_accounts WHERE account_id=?", (account_id,)).fetchone():
+                return dict(status="NOT_CONFIGURED", account_id=account_id, items=[], next_cursor=None)
+            through = conn.execute("SELECT COALESCE(MAX(sequence_id),0) FROM paper_ledger_order "
+                                   "WHERE account_id=? AND collection=?", (account_id, collection)).fetchone()[0]
+            after = 0
+            if cursor is not None:
+                try:
+                    if not isinstance(cursor, str) or not 1 <= len(cursor) <= 2048:
+                        raise ValueError()
+                    value = json.loads(base64.b64decode(cursor.encode("ascii"), altchars=b"-_", validate=True))
+                    if (not isinstance(value, dict) or set(value) != {"v", "account", "collection", "after", "through"}
+                            or type(value["v"]) is not int or value["v"] != 1
+                            or value["account"] != account_id or value["collection"] != collection
+                            or type(value["after"]) is not int or type(value["through"]) is not int
+                            or not 0 <= value["after"] <= value["through"] <= through):
+                        raise ValueError()
+                    after, through = value["after"], value["through"]
+                except (ValueError, TypeError, UnicodeError):
+                    raise PersistenceValidationError("Invalid paper ledger cursor.") from None
+            rows = conn.execute(f"SELECT o.sequence_id,o.entity_id,"
+                f"CASE WHEN length(CAST(t.payload_json AS BLOB))<=524288 THEN t.payload_json END AS body "
+                f"FROM paper_ledger_order o LEFT JOIN {table} t ON t.{key}=o.entity_id AND t.account_id=o.account_id "
+                "WHERE o.account_id=? AND o.collection=? AND o.sequence_id>? AND o.sequence_id<=? "
+                "ORDER BY o.sequence_id LIMIT ?", (account_id, collection, after, through, limit + 1))
+            items, used, last, more = [], 0, after, False
+            for row in rows:
+                if len(items) == limit:
+                    more = True
+                    break
+                try:
+                    body = json.loads(row["body"])
+                    if not isinstance(body, dict):
+                        raise ValueError()
+                    item = dict(sequence_id=row["sequence_id"], entity_id=row["entity_id"], payload=body)
+                    size = len(json.dumps(item, allow_nan=False).encode("utf-8")) + 2
+                    if size > 900 * 1024:
+                        raise ValueError()
+                except (ValueError, TypeError, RecursionError):
+                    raise PaperPortfolioError("MALFORMED_OR_OVERSIZED_PAPER_RECORD") from None
+                if used + size > 900 * 1024:
+                    more = True
+                    break
+                items.append(item)
+                used += size
+                last = row["sequence_id"]
+            token = None
+            if more:
+                token = base64.urlsafe_b64encode(_encode(dict(v=1, account=account_id,
+                    collection=collection, after=last, through=through)).encode()).decode("ascii")
+            return dict(status="OK", account_id=account_id, execution_mode="SIMULATED", collection=collection,
+                        items=items, next_cursor=token, through_sequence=through, limit=limit)
 
     def ingest_contract_master_bytes(self, raw_bytes, *, provider, source_reference,
                                      source_version, captured_at=None):

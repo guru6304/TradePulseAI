@@ -191,45 +191,73 @@ class PaperPortfolio:
             return instance._snapshot(conn, instance._now())
 
     def _positions(self, conn):
-        return [json.loads(row["payload_json"]) for row in conn.execute(
-            "SELECT payload_json FROM paper_positions WHERE account_id=? ORDER BY position_id", (self.config.account_id,))]
+        for row in conn.execute("SELECT position_id,CASE WHEN length(CAST(payload_json AS BLOB))<=524288 "
+                                "THEN payload_json END AS body FROM paper_positions "
+                                "WHERE account_id=? ORDER BY position_id", (self.config.account_id,)):
+            position = self._decode(row["body"])
+            if position["position_id"] != row["position_id"]:
+                _reject("POSITION_ID_MISMATCH")
+            yield position
 
-    def _events(self, conn):
-        return [dict(row, payload=json.loads(row["payload_json"])) for row in conn.execute(
-            "SELECT event_id,event_key,kind,position_id,payload_json FROM paper_events WHERE account_id=? ORDER BY rowid",
-            (self.config.account_id,))]
+    @staticmethod
+    def _decode(body):
+        value = json.loads(body)
+        if not isinstance(value, dict):
+            _reject("MALFORMED_PAPER_LEDGER")
+        return value
 
-    def _reconciliation(self, conn, positions, events):
+    def _events(self, conn, position_id=None, *, preview=False):
+        scope = " AND position_id=?" if position_id is not None else ""
+        order = " ORDER BY rowid DESC LIMIT 200" if preview else " ORDER BY rowid"
+        params = (self.config.account_id, position_id) if position_id is not None else (self.config.account_id,)
+        for row in conn.execute("SELECT event_id,event_key,kind,position_id,"
+                                "CASE WHEN length(CAST(payload_json AS BLOB))<=524288 THEN payload_json END AS body "
+                                "FROM paper_events WHERE account_id=?" + scope + order, params):
+            yield dict(event_id=row["event_id"], event_key=row["event_key"], kind=row["kind"],
+                       position_id=row["position_id"], payload=self._decode(row["body"]))
+
+    def _reconciliation(self, conn):
         try:
-            return self._reconcile_checked(conn, positions, events)
-        except (KeyError, ValueError, TypeError, ArithmeticError):
+            return self._reconcile_checked(conn)
+        except (KeyError, ValueError, TypeError, ArithmeticError, RecursionError):
             return dict(status="RECONCILIATION_REQUIRED", errors=["MALFORMED_PAPER_LEDGER"])
 
-    def _reconcile_checked(self, conn, positions, events):
-        errors = []
-        by_id = {position["position_id"]: position for position in positions}
-        for position in positions:
-            own = [event for event in events if event["position_id"] == position["position_id"]]
-            entries = [event for event in own if event["kind"] == "ENTRY"]
-            exits = [event for event in own if event["kind"] == "EXIT"]
-            if (position["status"] not in ("OPEN", "CLOSED") or len(entries) != 1
-                    or len(exits) != (1 if position["status"] == "CLOSED" else 0)
+    def _reconcile_checked(self, conn):
+        errors = set()
+        # Indexed per-position streams retain only the last mark and single
+        # entry/exit, even if one position has many thousands of observations.
+        for position in self._positions(conn):
+            entry, exit_event, mark = None, None, None
+            entries, exits = 0, 0
+            for event in self._events(conn, position["position_id"]):
+                if event["kind"] == "ENTRY":
+                    entry = event["payload"]["entry"]
+                    entries += 1
+                elif event["kind"] == "EXIT":
+                    exit_event = event["payload"]["exit"]
+                    exits += 1
+                elif event["kind"] == "MARK":
+                    if exits:
+                        errors.add("MARK_AFTER_CLOSED_POSITION")
+                    mark = event["payload"]["mark"]
+                else:
+                    errors.add("UNKNOWN_PAPER_EVENT_KIND")
+            if (position["status"] not in ("OPEN", "CLOSED") or entries != 1
+                    or exits != (1 if position["status"] == "CLOSED" else 0)
                     or position["config_hash"] != self.config.config_hash
                     or position["account_id"] != self.config.account_id
                     or position["provider"] != self.config.provider
                     or position["source_data_mode"] != self.config.source_data_mode
                     or position["execution_mode"] != "SIMULATED"):
-                errors.append("POSITION_LEDGER_SCOPE_OR_LIFECYCLE_MISMATCH")
+                errors.add("POSITION_LEDGER_SCOPE_OR_LIFECYCLE_MISMATCH")
                 continue
-            expected_entry = entries[0]["payload"]["entry"]
-            for key, value in expected_entry.items():
+            for key, value in entry.items():
                 if position.get(key) != value:
-                    errors.append("POSITION_ENTRY_LEDGER_MISMATCH")
+                    errors.add("POSITION_ENTRY_LEDGER_MISMATCH")
                     break
             if exits:
-                expected_exit = exits[0]["payload"]["exit"]
-                if any(position.get(key) != value for key, value in expected_exit.items()):
-                    errors.append("POSITION_EXIT_LEDGER_MISMATCH")
+                if any(position.get(key) != value for key, value in exit_event.items()):
+                    errors.add("POSITION_EXIT_LEDGER_MISMATCH")
                 costs = self._costs(position["raw_entry_price"], position["raw_exit_price"], position["quantity"], position["side"])
                 sign = 1 if position["side"] == "LONG" else -1
                 gross = _money(sign * (position["raw_exit_price"] - position["raw_entry_price"]) * position["quantity"])
@@ -237,86 +265,127 @@ class PaperPortfolio:
                         or position["net_pnl_inr"] != _sum([gross, -costs["total_costs_inr"]])
                         or position["reserved_capital_inr"] != 0
                         or position["effective_exit_price"] != costs["effective_exit_price"]):
-                    errors.append("RECALCULATED_EXIT_ACCOUNTING_MISMATCH")
+                    errors.add("RECALCULATED_EXIT_ACCOUNTING_MISMATCH")
             else:
-                marks = [event["payload"]["mark"] for event in own if event["kind"] == "MARK"]
-                if not marks or any(position.get(key) != value for key, value in marks[-1].items()):
-                    errors.append("POSITION_MARK_LEDGER_MISMATCH")
+                if mark is None or any(position.get(key) != value for key, value in mark.items()):
+                    errors.add("POSITION_MARK_LEDGER_MISMATCH")
                 costs = self._costs(position["raw_entry_price"], position["mark_price"], position["quantity"], position["side"])
                 sign = 1 if position["side"] == "LONG" else -1
                 gross = _money(sign * (position["mark_price"] - position["raw_entry_price"]) * position["quantity"])
                 if (position["estimated_close_costs"] != costs or position["unrealized_gross_pnl_inr"] != gross
                         or position["unrealized_net_pnl_inr"] != _sum([gross, -costs["total_costs_inr"]])
                         or position["reserved_capital_inr"] != position["initial_reserved_capital_inr"]):
-                    errors.append("RECALCULATED_MARK_ACCOUNTING_MISMATCH")
-        for event in events:
-            if event["position_id"] not in by_id:
-                errors.append("ORPHAN_PAPER_EVENT")
+                    errors.add("RECALCULATED_MARK_ACCOUNTING_MISMATCH")
+        if conn.execute("SELECT 1 FROM paper_events e LEFT JOIN paper_positions p "
+                        "ON p.position_id=e.position_id AND p.account_id=e.account_id "
+                        "WHERE e.account_id=? AND p.position_id IS NULL LIMIT 1", (self.config.account_id,)).fetchone():
+            errors.add("ORPHAN_PAPER_EVENT")
         account = conn.execute("SELECT config_hash,config_json FROM paper_accounts WHERE account_id=?",
                                (self.config.account_id,)).fetchone()
         if not account or account["config_hash"] != self.config.config_hash or account["config_json"] != _encode(self.config.to_dict()):
-            errors.append("ACCOUNT_CONFIG_CORRUPT")
-        return dict(status="OK" if not errors else "RECONCILIATION_REQUIRED", errors=sorted(set(errors)))
+            errors.add("ACCOUNT_CONFIG_CORRUPT")
+        return dict(status="OK" if not errors else "RECONCILIATION_REQUIRED", errors=sorted(errors))
 
     def _snapshot(self, conn, now):
-        positions, events = self._positions(conn), self._events(conn)
-        reconciliation = self._reconciliation(conn, positions, events)
-        opened = [p for p in positions if p["status"] == "OPEN"]
-        closed = [p for p in positions if p["status"] == "CLOSED"]
+        try:
+            return self._snapshot_checked(conn, now)
+        except (KeyError, ValueError, TypeError, ArithmeticError, RecursionError):
+            return dict(status="RECONCILIATION_REQUIRED", account_id=self.config.account_id,
+                        execution_mode="SIMULATED", accounting=None, entry_blocks=["RECONCILIATION_REQUIRED"],
+                        reconciliation=dict(status="RECONCILIATION_REQUIRED", errors=["MALFORMED_PAPER_LEDGER"]),
+                        positions=[], events=[], candidate_decisions=[])
+
+    @staticmethod
+    def _preview_append(items, item, used):
+        size = len(json.dumps(item, allow_nan=False).encode("utf-8"))
+        if len(items) < 200 and used + size <= 256 * 1024:
+            items.append(item)
+            return used + size
+        return used
+
+    def _snapshot_checked(self, conn, now):
+        reconciliation = self._reconciliation(conn)
         day = now.date().isoformat()
-        realized = _sum(p["net_pnl_inr"] for p in closed)
-        unrealized = _sum(p["unrealized_net_pnl_inr"] for p in opened)
-        reserved = _sum(p["reserved_capital_inr"] for p in opened)
-        raw_losses = _sum(min(0, p["unrealized_gross_pnl_inr"]) for p in opened)
-        exposure = _sum(p["raw_entry_price"] * p["quantity"] for p in opened)
-        daily_realized = _sum(p["net_pnl_inr"] for p in closed if p["exit_timestamp_ist"][:10] == day)
-        daily_net = _sum([daily_realized, unrealized])
-        blocks = []
+        totals = dict.fromkeys(("realized", "unrealized", "reserved", "raw_losses", "exposure", "daily_realized", "fees", "slippage"), Decimal(0))
+        positions, used, opened, closed, entries = [], 0, 0, 0, 0
+        blocks = set()
         if reconciliation["status"] != "OK":
-            blocks.append("RECONCILIATION_REQUIRED")
-        for position in opened:
-            closed_at = parse_ist_timestamp(position["mark_timestamp_ist"]) + timedelta(minutes=self.config.interval_min)
-            age = (now - closed_at).total_seconds()
-            if age < 0 or age > self.config.max_mark_age_seconds:
-                blocks.append("MISSING_OR_STALE_MARKS")
-            square_off = datetime.combine(parse_ist_timestamp(position["entry_timestamp_ist"]).date(),
-                                          time.fromisoformat(self.config.square_off_ist), tzinfo=IST)
-            if now >= square_off:
-                blocks.append("UNRESOLVED_EOD_POSITION")
+            blocks.add("RECONCILIATION_REQUIRED")
+        for p in self._positions(conn):
+            used = self._preview_append(positions, p, used)
+            entries += p["entry_timestamp_ist"][:10] == day
+            if p["status"] == "CLOSED":
+                closed += 1
+                values = dict(realized=p["net_pnl_inr"], fees=p["costs"]["charges_inr"], slippage=p["costs"]["slippage_inr"],
+                              daily_realized=p["net_pnl_inr"] if p["exit_timestamp_ist"][:10] == day else 0)
+            elif p["status"] == "OPEN":
+                opened += 1
+                values = dict(unrealized=p["unrealized_net_pnl_inr"], reserved=p["reserved_capital_inr"],
+                              raw_losses=min(0, p["unrealized_gross_pnl_inr"]), exposure=p["raw_entry_price"] * p["quantity"])
+                closed_at = parse_ist_timestamp(p["mark_timestamp_ist"]) + timedelta(minutes=self.config.interval_min)
+                age = (now - closed_at).total_seconds()
+                if age < 0 or age > self.config.max_mark_age_seconds:
+                    blocks.add("MISSING_OR_STALE_MARKS")
+                square_off = datetime.combine(parse_ist_timestamp(p["entry_timestamp_ist"]).date(),
+                                              time.fromisoformat(self.config.square_off_ist), tzinfo=IST)
+                if now >= square_off:
+                    blocks.add("UNRESOLVED_EOD_POSITION")
+            else:
+                _reject("INVALID_POSITION_STATUS")
+            for key, value in values.items():
+                totals[key] += Decimal(str(value))
+        realized, unrealized, reserved, raw_losses, exposure, daily_realized, fees, slippage = map(_money, totals.values())
+        daily_net = _sum([daily_realized, unrealized])
         loss_breached = daily_net <= -self.config.max_daily_loss_inr
         if loss_breached:
-            blocks.append("DAILY_LOSS_LIMIT")
-        entries = sum(p["entry_timestamp_ist"][:10] == day for p in positions)
+            blocks.add("DAILY_LOSS_LIMIT")
         if entries >= self.config.max_entries_per_day:
-            blocks.append("DAILY_ENTRY_LIMIT")
-        if len(opened) >= self.config.max_open_positions:
-            blocks.append("OPEN_POSITION_LIMIT")
+            blocks.add("DAILY_ENTRY_LIMIT")
+        if opened >= self.config.max_open_positions:
+            blocks.add("OPEN_POSITION_LIMIT")
         accounting = dict(starting_capital_inr=self.config.starting_capital_inr,
             realized_net_pnl_inr=realized, unrealized_net_pnl_inr=unrealized,
             equity_inr=_sum([self.config.starting_capital_inr, realized, unrealized]), reserved_capital_inr=reserved,
             available_capital_inr=max(0, _sum([self.config.starting_capital_inr, realized, raw_losses, -reserved])),
-            gross_exposure_inr=exposure, fees_paid_inr=_sum(p["costs"]["charges_inr"] for p in closed),
-            slippage_paid_inr=_sum(p["costs"]["slippage_inr"] for p in closed),
-            open_positions=len(opened), closed_positions=len(closed),
+            gross_exposure_inr=exposure, fees_paid_inr=fees, slippage_paid_inr=slippage,
+            open_positions=opened, closed_positions=closed,
             day=dict(date=day, entries=entries, realized_net_pnl_inr=daily_realized,
                      unrealized_net_pnl_inr=unrealized, net_pnl_inr=daily_net, loss_limit_breached=loss_breached))
-        decisions = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? "
-                                 "ORDER BY candidate_id LIMIT 200", (self.config.account_id,)).fetchall()
+        decisions, events = [], []
+        used = 0
+        for row in conn.execute("SELECT CASE WHEN length(CAST(payload_json AS BLOB))<=524288 THEN payload_json END AS body "
+                                "FROM paper_candidate_decisions WHERE account_id=? ORDER BY candidate_id LIMIT 200", (self.config.account_id,)):
+            used = self._preview_append(decisions, self._decode(row["body"]), used)
+        used = 0
+        for e in self._events(conn, preview=True):
+            used = self._preview_append(events, dict(event_id=e["event_id"], event_key=e["event_key"], kind=e["kind"],
+                                                   position_id=e["position_id"], **e["payload"]), used)
+        events.reverse()
+        total_events = conn.execute("SELECT COUNT(*) FROM paper_events WHERE account_id=?", (self.config.account_id,)).fetchone()[0]
+        total_decisions = conn.execute("SELECT COUNT(*) FROM paper_candidate_decisions WHERE account_id=?", (self.config.account_id,)).fetchone()[0]
         return dict(status="RECONCILIATION_REQUIRED" if reconciliation["status"] != "OK" else "BLOCKED" if blocks else "OK",
             account_id=self.config.account_id, run_id=self.config.run_id, config_hash=self.config.config_hash,
             provider=self.config.provider, source_data_mode=self.config.source_data_mode, execution_mode="SIMULATED",
             fill_policy=self.config.fill_policy, as_of_ist=format_ist_timestamp(now), accounting=accounting,
-            entry_blocks=sorted(set(blocks)), reconciliation=reconciliation, positions=positions,
-            events=[dict(event_id=e["event_id"], event_key=e["event_key"], kind=e["kind"], position_id=e["position_id"],
-                         **e["payload"]) for e in events[-200:]], total_events=len(events),
-            candidate_decisions=[json.loads(decision[0]) for decision in decisions])
+            entry_blocks=sorted(blocks), reconciliation=reconciliation, positions=positions,
+            events=events, total_events=total_events, candidate_decisions=decisions,
+            total_positions=opened + closed, total_candidate_decisions=total_decisions,
+            previews_truncated=dict(positions=len(positions) < opened + closed, events=len(events) < total_events,
+                                    candidate_decisions=len(decisions) < total_decisions),
+            ledger_page_path="/api/paper-ledger")
 
     def snapshot(self, as_of=None):
         with self.store.paper_transaction(write=False) as conn:
             return self._snapshot(conn, self._now(as_of))
 
     def reconcile(self):
-        return self.snapshot()["reconciliation"]
+        with self.store.paper_transaction(write=False) as conn:
+            return self._reconciliation(conn)
+
+    def open_positions(self):
+        """Internal coordinator input, independent of bounded report previews."""
+        with self.store.paper_transaction(write=False) as conn:
+            return [p for p in self._positions(conn) if p["status"] == "OPEN"]
 
     def _bar(self, bar, identity, now):
         if not isinstance(bar, dict) or bar.get("is_complete") is not True:
@@ -375,6 +444,8 @@ class PaperPortfolio:
         data = candidate.to_dict() if isinstance(candidate, TradeSignal) else candidate
         if not isinstance(data, dict):
             _reject("PAPER_CANDIDATE_REQUIRED")
+        if len(_encode(data).encode("utf-8")) > 65536:
+            _reject("BOUNDED_CANDIDATE_REQUIRED")
         data = json.loads(_encode(data))
         if (data.get("provider") != self.config.provider or data.get("data_mode") != self.config.source_data_mode
                 or data.get("is_simulated") is not (self.config.source_data_mode == "SIMULATED")
@@ -511,7 +582,7 @@ class PaperPortfolio:
             forward_close = self.config.fill_policy == FORWARD_FILL_POLICY
             if not forward_close and any(p["status"] == "CLOSED" and
                     parse_ist_timestamp(p["exit_timestamp_ist"]) + timedelta(minutes=5) > fill_time
-                    for p in snapshot["positions"]):
+                    for p in self._positions(conn)):
                 _reject("CAPITAL_RELEASE_AFTER_ASSUMED_FILL")
             opening = bar["close"] if forward_close else bar["open"]
             sign = 1 if side == "LONG" else -1
@@ -581,10 +652,11 @@ class PaperPortfolio:
             retry = self._event_retry(conn, event_key, command_hash)
             if retry:
                 return retry
-            positions, events = self._positions(conn), self._events(conn)
-            if self._reconciliation(conn, positions, events)["status"] != "OK":
+            if self._reconciliation(conn)["status"] != "OK":
                 _reject("RECONCILIATION_REQUIRED")
-            position = next((p for p in positions if p["position_id"] == position_id), None)
+            row = conn.execute("SELECT payload_json FROM paper_positions WHERE account_id=? AND position_id=?",
+                               (self.config.account_id, position_id)).fetchone()
+            position = self._decode(row[0]) if row else None
             if position is None:
                 _reject("POSITION_NOT_IN_ACCOUNT")
             if position["status"] != "OPEN":

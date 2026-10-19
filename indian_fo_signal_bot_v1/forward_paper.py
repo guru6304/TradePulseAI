@@ -137,9 +137,7 @@ class ForwardPaperCoordinator:
                 failures[symbol] = exc.reason_code if isinstance(exc, PaperPortfolioError) else "INVALID_OBSERVATION_BATCH"
         # Mark/exit prior positions at the observed close before considering new
         # close-priced entries; intrabar outcomes cannot fund an earlier open.
-        for position in self.paper.snapshot()["positions"]:
-            if position["status"] != "OPEN":
-                continue
+        for position in self.paper.open_positions():
             rows = batches.get(position["symbol"])
             if not rows:
                 actions.append(dict(position_id=position["position_id"], status="DEFERRED", reason_code="MARK_UNAVAILABLE"))
@@ -154,9 +152,13 @@ class ForwardPaperCoordinator:
             except PaperPortfolioError as exc:
                 actions.append(dict(position_id=position["position_id"], status="DEFERRED", reason_code=exc.reason_code))
         with self.store.paper_transaction(write=False) as conn:
-            rows = conn.execute("SELECT candidate_id,payload_json FROM paper_candidate_decisions WHERE account_id=? ORDER BY candidate_id",
-                                (self.config.account_id,)).fetchall()
-        pending = [json.loads(row["payload_json"]) for row in rows if json.loads(row["payload_json"])["status"] == "QUEUED"]
+            rows = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? ORDER BY candidate_id",
+                                (self.config.account_id,))
+            pending = []
+            for row in rows:
+                decision = json.loads(row["payload_json"])
+                if decision["status"] == "QUEUED":
+                    pending.append(decision)
         pending.sort(key=lambda d: (d["candidate"].get("timestamp", ""), d["candidate"].get("strategy_id", ""), d["candidate_id"]))
         for decision in pending:
             candidate_id, data = decision["candidate_id"], decision["candidate"]
