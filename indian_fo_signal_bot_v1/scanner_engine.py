@@ -24,6 +24,8 @@ from strategies import (
     parse_ist_timestamp,
     size_position,
     normalize_state_scope,
+    validate_trade_signal,
+    rank_signal_candidates,
 )
 from storage import (
     PersistenceError,
@@ -874,8 +876,14 @@ class IntradayBotEngine:
                 sig.position_qty = sizing["quantity"]
                 sig.capital_risk_inr = sizing["estimated_risk_inr"]
                 sig.est_charges_inr = sizing["estimated_charges_inr"]
+                try:
+                    validate_trade_signal(sig)
+                except ValueError:
+                    instrument_errors.append(dict(symbol=sig.symbol, strategy=sig.strategy_id,
+                        reason_code="INVALID_SIGNAL_LEVELS", error="Candidate levels or metadata failed validation."))
+                    continue
                 sized_signals.append(sig)
-            signals = sized_signals
+            signals = rank_signal_candidates(sized_signals)
 
             # 3. Persist Signals, Deduplicate & Dispatch New Signals to Telegram
             persisted_signals_count = 0
@@ -1000,6 +1008,8 @@ class IntradayBotEngine:
                 "data_mode": data_mode,
                 "market_breadth": market_breadth,
                 "total_signals": len(signals),
+                "ranking_policy": "QUALITY_THEN_TARGET1_REWARD_RISK_THEN_IDENTITY_V1",
+                "ranking_scope": "CANDIDATE_PRIORITY_ONLY_NO_CAPITAL_ALLOCATION",
                 "persisted_signals": persisted_signals_count,
                 "duplicate_signals": duplicate_signals_count,
                 "oi_snapshots_saved": oi_snapshots_saved,

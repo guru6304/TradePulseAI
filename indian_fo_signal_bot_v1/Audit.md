@@ -1,266 +1,150 @@
-# TRADEPULSE AI — DUAL-BROKER AUDIT, BLOCKER ANALYSIS & READINESS REASSESSMENT
+# TRADEPULSE AI — POST-EXECUTION FORENSIC AUDIT, MISSING REPORT RECOVERY, AND COMPLETION VERIFICATION
 
-## Mission
+## Immediate instruction
 
-Continue the existing TradePulse AI / Indian F&O Signal Bot project in the current workspace.
+The previous task was marked complete, but the required new standalone reports were not delivered to the user. The user also cannot confirm that the implementation and readiness targets were achieved.
 
-Perform a complete evidence-based audit of:
-1. Angel One SmartAPI integration.
-2. Upstox integration.
-3. Shared provider selection and configuration.
-4. Cash-equity market-data acceptance.
-5. Scanner, persistence, API, and dashboard integration.
-6. Historical data, F&O, paper-trading, and release blockers.
-7. Overall implementation completeness, readiness, and the formal M01–M12 milestone acceptance status.
+**Reopen the task. Do not trust the previous completion label. Do not merely edit the existing reports. Do not create documentation that claims unverified success.**
 
-The local `.env` placement mistake has been corrected. The latest diagnostic shows that configuration preflight passes, an Angel One RELIANCE quote was returned, but the candle request failed with HTTP 403 and the overall diagnostic exited 1. Upstox remains the active application provider.
+Your first responsibility is to determine what actually happened in the workspace, what was actually implemented, what tests actually passed, and whether the required acceptance targets have been achieved.
 
-Do not assume that any previous report or test result is still current. Inspect the actual workspace and verify the evidence.
+The mandatory targets remain:
 
-## 1. Mandatory safety rules
+- Implementation: at least 80%.
+- Readiness: at least 50%.
 
-- Do not place, modify, or cancel orders.
-- Do not call broker order, position, holdings, balance, or other unnecessary account endpoints.
-- Do not enable production services, scheduled jobs, real trading, or live Telegram delivery.
-- Preserve `telegram_dry_run=true` and `enable_background_scheduler=false`.
-- Do not make any new live broker requests during this audit. The recent diagnostic already provides a bounded observation. Diagnose the evidence and code first.
-- Do not switch the configured provider to force a pass.
-- Do not change credentials or configuration values automatically.
-- Never print or request `.env` contents, API keys, PINs, TOTP secrets, tokens, authentication headers, or other secrets.
-- Never fabricate market data, provider responses, timestamps, test results, or successful acceptance.
-- Never weaken identity, provenance, source qualification, freshness, completed-candle, session, duplicate, risk, replay, or safety checks.
-- Preserve existing user modifications, architecture, and unrelated work.
-- Do not delete files, perform broad refactors, add unnecessary dependencies, skip tests, or weaken assertions.
-- Treat the latest diagnostic output as evidence, not as proof that every integration stage works.
-- Clearly distinguish source-code inspection, mocked tests, historical reports, and genuine provider observations.
-- Do not mark an official milestone accepted without satisfying its full existing acceptance rubric.
+Use the existing official M01–M12 scoring rubric and its original formulas. Calculate both scores independently.
 
-## 2. Establish the workspace and preserve changes
+## Step 1 — Audit the actual execution
 
-Confirm that the project root is:
+Inspect the current workspace at:
 
 `C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1`
 
-Verify the working directory before running any command.
+Do not rely solely on the previous agent's final message or its claims.
 
-Inspect the current working-tree changes using Git if repository metadata is available. If Git metadata is unavailable, do not initialize a repository or alter the workspace just to obtain a diff.
+1. Find the existing canonical reports and the latest task-specific reports, if any.
+2. Check whether the six required new reports were actually created and where they were saved.
+3. Inspect the current source tree, tests, configuration-validation code, relevant documentation, and changed-file evidence.
+4. Inspect the real Git diff and status if Git metadata is available. If unavailable, state that limitation and use other reliable evidence without inventing a before-and-after diff.
+5. Identify the actual changes made during the previous task, distinguishing them from pre-existing functionality.
+6. Rerun appropriate tests against the current code. Do not copy historical test results as though they were just executed.
+7. Verify the current configuration-only preflight without printing `.env` contents or making live broker requests.
+8. Recalculate implementation and readiness from the official rubric. Verify the milestone weights and formulas first.
 
-Read these existing documents if present:
+Preserve unrelated user work. Do not revert the previous task or overwrite existing reports.
 
-- `docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md`
-- `docs/TRADEPULSE_PHASE5C_ENGINEERING_REPORT.md`
-- `docs/TRADEPULSE_MARKET_DATA_ACCEPTANCE_MATRIX.md`
-- `docs/TRADEPULSE_FO_CONTRACT_COVERAGE.md`
-- `docs/TRADEPULSE_HISTORICAL_PROVENANCE_DESIGN.md`
-- `docs/TRADEPULSE_PAPER_PORTFOLIO_REPORT.md`
-- `docs/TRADEPULSE_CAPABILITY_MATRIX.md`
-- `docs/TRADEPULSE_COMPLETION_ROADMAP.md`
+## Step 2 — Create the missing reports immediately
 
-Use the actual files and current contents. If a document is missing, report it instead of inventing its contents.
+Create a new task-specific report directory, using `docs/reports/` unless an established report convention already exists.
 
-Record:
-- The current branch and existing changes, if available.
-- The exact Python version and environment used.
-- The active application provider.
-- Configuration-loading behavior and source precedence, without revealing values.
-- Current scheduler and Telegram safety settings.
-- The baseline tests and reports used for this reassessment.
+Generate these six new Markdown files with unique filenames:
 
-## 3. Audit `.env` discovery and configuration loading
+1. `TRADEPULSE_PROJECT_INVENTORY_<TASK_ID>.md`
+2. `TRADEPULSE_TASK_IMPLEMENTATION_REPORT_<TASK_ID>.md`
+3. `TRADEPULSE_CHANGE_LEDGER_<TASK_ID>.md`
+4. `TRADEPULSE_CAPABILITY_ACCEPTANCE_REPORT_<TASK_ID>.md`
+5. `TRADEPULSE_SCORECARD_AND_MILESTONE_EVIDENCE_<TASK_ID>.md`
+6. `TRADEPULSE_BLOCKERS_AND_NEXT_ACTIONS_<TASK_ID>.md`
 
-Inspect how the application loads environment variables. Trace the configuration path from process startup to broker initialization.
+Replace `<TASK_ID>` with a real unique identifier for this execution.
 
-Determine:
-- Which directory is used to locate `.env`, if any.
-- Whether loading depends on the current working directory.
-- Whether the project uses an explicit path, a dotenv library, or process-level environment variables.
-- Whether the four existing Angel One fields are recognized.
-- Whether configuration preflight checks field presence and basic validity without exposing values.
-- Whether provider selection remains explicitly controlled by the existing configuration.
-- Whether tests accurately cover the original wrong-directory failure and the corrected project-root behavior.
+These are six separate, substantive, standalone reports. **Do not treat updating an existing report, producing a brief summary, or listing planned filenames as completion.**
 
-Do not print secret values or dump the environment. Do not modify provider selection or silently add fallback credentials.
+### Report 1: Complete current project inventory
 
-If a reproducible configuration bug exists, make the smallest safe correction and add a regression test. Preserve the existing configuration architecture.
+Document what is actually present in the project: architecture, directory structure, relevant source files, functions/classes, broker adapters, configuration, cash scanner, F&O, risk, backtesting, paper trading, persistence, API/dashboard, Telegram, scheduling, tests, dependencies, and documentation.
 
-## 4. Audit Angel One end to end
+Explain the real end-to-end execution flow, identify disconnected or incomplete paths, and classify capabilities as implemented, partial, mock-only, blocked, unverified, or not implemented.
 
-Inspect the actual Angel One implementation, including authentication, quote retrieval, candle retrieval, instrument mapping, rate-limit handling, timestamp parsing, source qualification, and error sanitization.
+### Report 2: Actual task implementation
 
-Use the latest supplied diagnostic as the initial evidence:
+Document what the previous task genuinely changed, why each change was needed, the implementation details, tests executed, failures corrected, regression checks, unresolved work, and final status.
 
-- Provider: `angelone`.
-- Symbol: `RELIANCE`.
-- Exchange: `NSE`.
-- Instrument token reported: `2885`.
-- Configuration check: PASS.
-- Instrument reference check: PASS, with historical validity not established.
-- Quote check: PASS, LTP `1220.3`, observation age `0.622` seconds, timestamp `2026-10-19 10:51:51`.
-- Candle check: FAIL, HTTP `403`, error category `ACCESS_DENIED`.
-- Authentication acceptance: FAIL because no successful authorized market-data response was observed.
-- Overall status: FAIL.
-- Exit code: `1`.
-- Data persisted: `false`.
-- Readiness receipt issued: `false`.
-- Active application provider: `upstox`.
-- Scheduler disabled; Telegram dry run enabled.
+Separate pre-existing functionality from newly implemented functionality. If a reliable baseline diff is unavailable, say so explicitly.
 
-Investigate, using source code and existing sanitized logs, whether the HTTP 403 originates from:
-- The specific candle endpoint or request format.
-- Provider permissions or subscription/authorization restrictions.
-- Session/token handling.
-- Rate limiting or provider throttling.
-- Incorrect segment, exchange, instrument identity, or historical request parameters.
-- Another documented or evidenced cause.
+### Report 3: File-by-file change ledger
 
-Do not select a cause merely because it is plausible. Label the cause UNKNOWN when evidence is insufficient.
+List actual created, modified, and deleted files, their previous and current behavior where evidence exists, the functions/classes changed, and the tests supporting each claim.
 
-Check whether the implementation correctly:
-- Uses the documented supported authentication and market-data flow.
-- Separates a successful quote from successful candle acceptance.
-- Limits retries and does not automatically recover a session.
-- Sanitizes errors and avoids credential leakage.
-- Validates response schema, instrument identity, timestamps, candle completion, session, and freshness.
-- Rejects unqualified observations and avoids issuing a readiness receipt.
-- Prevents isolated provider diagnostics from changing the configured application provider.
+Reconcile the ledger against the actual diff or clearly document the evidence limitation.
 
-Do not issue another live request to confirm the 403. If external authorization is the remaining blocker, state the exact evidence needed for the next authorized test.
+### Report 4: Complete capability acceptance
 
-## 5. Audit Upstox end to end
+Document every major capability, its implementation location, test coverage, evidence type, integration state, known defects, external dependencies, acceptance status, and next action.
 
-Inspect the actual Upstox implementation and the earlier reported HTTP 403/FORBIDDEN result.
+Explicitly distinguish offline fixture success from live market-data acceptance and operational readiness.
 
-Trace:
-- Configuration and credential discovery.
-- Authentication and token lifecycle.
-- Read-only quote and candle request construction.
-- Instrument mapping and segment requirements.
-- Response parsing and error handling.
-- Timestamp, freshness, candle completion, and source qualification.
-- Persistence and downstream scanner integration.
-- Existing offline tests and their limitations.
+### Report 5: Auditable scorecard
 
-Determine whether the earlier 403 cause is established, still unknown, or superseded by later evidence.
+For M01–M12, include the official weight, verified baseline implementation/readiness values, final values, weighted contributions, supporting evidence, and remaining acceptance gates.
 
-Do not assume that Upstox works simply because it is selected. Do not assume it fails solely because of an older report. Report the newest actual evidence and its date.
+Show the exact arithmetic for both overall scores, the percentage-point changes, and the distance from the 80% and 50% targets.
 
-Do not switch to Angel One or change the active provider. Treat provider selection and isolated diagnostics as separate concerns.
+Do not change the rubric or award unsupported credit.
 
-For each provider, create an evidence matrix with:
-- Configuration readiness.
-- Authentication acceptance.
-- Quote acceptance.
-- Candle acceptance.
-- Instrument identity qualification.
-- Timestamp/freshness qualification.
-- Persistence.
-- Scanner integration.
-- Dashboard integration.
-- Current blockers.
-- Last verified evidence and verification method.
+### Report 6: Blockers and next actions
 
-Use PASS, FAIL, BLOCKED, PARTIAL, or NOT TESTED precisely.
+For each remaining blocker, state the evidence, classification, remediation already completed, exact remaining work, and safe next action.
 
-## 6. Audit the cash-equity scanner and dashboard
+For the known malformed `.env` assignment, give a local-only diagnostic that reveals the parse error without printing configuration values or secrets.
 
-Inspect the actual scanner, backend routes, persistence layer, and dashboard implementation.
+Do not request credentials or ask the user to paste `.env`.
 
-Verify offline that:
-- Invalid credentials are rejected safely.
-- Stale candles are rejected.
-- Incomplete candles are not accepted as completed observations.
-- Invalid or unqualified source provenance is rejected.
-- Duplicate and replay protections remain effective.
-- A genuine no-signal evaluation is distinguishable from missing data or a failed provider request.
-- Scanner output is exposed through the correct existing backend routes.
-- The dashboard does not represent unknown provenance or old stored data as current live data.
-- `LIVE SOURCE (STORED)` is distinguishable from a current accepted live observation.
-- Error and unavailable states are truthful.
-- Scheduler and Telegram dry-run protections remain intact.
+## Step 3 — Resume implementation if the targets are not achieved
 
-Determine whether the current dashboard is merely implemented, has passed static/renderer tests, has passed API tests, or has passed a real browser end-to-end test.
+Creating reports is necessary but is not a substitute for completing the software.
 
-Do not call browser acceptance complete without actual browser evidence. Do not create synthetic data that masquerades as live data.
+If implementation is below 80%, or readiness is below 50%, identify the remaining score gap and continue the actual implementation work.
 
-## 7. Re-run offline tests and inspect regressions
+Prioritize safe, independent engineering work that improves the relevant milestone scores. Implement changes, add regression tests, run the focused and broader test suites, fix failures, inspect the diff, and recalculate both scores.
 
-Use the existing test suite and test conventions. Run the focused provider/configuration tests, relevant safety tests, JavaScript renderer tests if available, and the full strict suite if the environment permits.
+Do not stop after generating the reports.
 
-Compile the affected Python modules.
+If a local configuration defect blocks one workflow, provide a safe local diagnostic and continue unrelated work. If broker authorization or other external evidence is required, do not fabricate it or make unauthorized live requests. Finish independent work and give the user the exact safe next action.
 
-Record the exact commands, actual exit codes, pass/fail/skip counts, warnings, and environment.
+## Step 4 — Mandatory safety rules
 
-Check the final diff for:
-- Weakened validation.
-- Removed assertions.
-- Unnecessary provider-selection changes.
-- Secret leakage.
-- Changed retry behavior or transport limits.
-- Scheduler or Telegram safety regressions.
-- Misleading live labels.
-- Unrelated changes.
+- No order placement, modification, cancellation, or trading endpoints.
+- No live broker requests during this recovery audit and offline implementation.
+- No repeated requests to investigate 403 or permission failures.
+- No secrets in logs, reports, or chat.
+- No fake candles, fake provider responses, or fake acceptance receipts.
+- No automatic provider switching.
+- No weakening data-quality, provenance, session, freshness, identity, or risk controls.
+- Keep Telegram in dry-run mode and production scheduling disabled.
+- Do not skip or weaken tests to manufacture a pass.
+- Do not claim a test passed unless it was actually executed.
+- Do not mark the task complete while either mandatory score is below target.
 
-Do not claim that tests passed unless they were actually run during this audit. If a test cannot run, explain why.
+## Step 5 — Verify the deliverables physically
 
-## 8. Audit the remaining project-wide blockers
+Before finishing:
 
-Assess the actual evidence for these areas:
+1. Confirm all six new reports exist in the workspace.
+2. Confirm each report contains substantive content rather than headings or placeholders.
+3. Reconcile their claims with actual source files, diffs, and test results.
+4. Verify that the scorecard arithmetic is correct.
+5. Verify that no secrets were written to the reports.
+6. Confirm that the original reports were not overwritten.
+7. Record the exact relative path of each new report.
+8. Check that the current implementation and readiness scores are evidence-backed.
 
-1. Authoritative cash-equity and F&O instrument identity.
-2. Genuine live cash quote and completed-candle acceptance.
-3. Authoritative F&O contract masters, expiries, identifiers, and executable contract mapping.
-4. Historical price authenticity, provenance, chronological replay, and data-repair policy.
-5. Strategy validation, realistic transaction costs, risk-adjusted metrics, and out-of-sample testing.
-6. Paper portfolio recovery, market-calendar handling, missing EOD candles, financial reconciliation, and operational soak.
-7. Strategy 3 acceptance and other explicitly blocked strategies.
-8. Dashboard browser end-to-end acceptance.
-9. Release, backup/restore, rollback, monitoring, and operational recovery.
-10. Credential security and documented local setup.
+## Step 6 — Return a verifiable final response
 
-Distinguish implementation existing in code from operational acceptance. Do not call a strategy profitable without reliable test evidence. Do not treat a local schema or matching hash as proof of authoritative source authenticity.
+Your final response must include:
 
-## 9. Recalculate readiness from the official rubric
+- Actual completion status: `COMPLETED — BOTH TARGETS VERIFIED`, `PARTIAL — EXTERNAL BLOCKER; SAFE WORK EXHAUSTED`, or `INCOMPLETE — TARGETS NOT ACHIEVED`.
+- Verified baseline and final implementation scores.
+- Verified baseline and final readiness scores.
+- Exact percentage-point changes and score calculations.
+- Accepted milestone count out of 12, with justification.
+- Actual test commands and current observed outcomes.
+- The complete changed-file inventory or a clear reference to the new change-ledger report.
+- All six exact report paths.
+- Any remaining blockers and precise user actions.
+- A clear statement of whether additional implementation work is still required.
 
-Read the existing capability matrix and roadmap. Recalculate:
-- Implementation completeness.
-- Operational readiness.
-- M01–M12 milestone acceptance status.
-- Number of milestones fully accepted.
-- Remaining acceptance blockers.
-- The smallest next work package that can move the project forward.
+Do not report completion based on the existence of the six reports alone.
 
-Use the existing scoring definitions and weights. If the rubric is ambiguous or the available evidence is insufficient, state that and provide a range or an explicitly provisional score instead of inventing precision.
-
-For every score, explain the evidence and the remaining criteria. Keep implementation completeness separate from readiness.
-
-Do not mark any milestone accepted unless every mandatory criterion is supported by evidence.
-
-## 10. Produce the deliverables
-
-Update `docs/TRADEPULSE_CONTINUOUS_ACCEPTANCE_REPORT.md` additively with a dated audit section. Preserve the previous report and historical evidence.
-
-Create or update a concise dual-broker matrix, using an existing project document where appropriate instead of creating unnecessary new files.
-
-The final report must contain:
-
-1. Executive verdict.
-2. Workspace and configuration-loading findings.
-3. Angel One findings, including the quote/candle discrepancy and HTTP 403 evidence.
-4. Upstox findings and the current status of its prior 403.
-5. Exact commands and offline test results.
-6. Cash scanner, persistence, API, and dashboard status.
-7. Project readiness scores with their evidence and methodology.
-8. M01–M12 accepted versus unaccepted status.
-9. All unresolved blockers, with clear owners/actions where determinable.
-10. A prioritized next-step plan.
-11. A precise go/no-go decision for the next live cash-equity observation.
-12. The exact conditions required before considering derivatives or live trading.
-
-Do not include credentials, tokens, headers, or raw environment contents in the report.
-
-## Required final response format
-
-Return:
-- **Current verdict:** READY, NOT READY, or BLOCKED, with the scope stated.
-- **Angel One status:** concise evidence-backed conclusion.
-- **Upstox status:** concise evidence-backed conclusion
+**The task is complete only when both numerical targets are met with valid evidence and the six new reports are created, populated, and verified. If either target remains unmet, explicitly state that the task is not complete and continue implementation wherever it is safe and possible.**

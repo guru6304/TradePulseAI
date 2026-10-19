@@ -7391,6 +7391,33 @@ class TestStateIsolation(unittest.TestCase):
     def _signal(self, **changes):
         from instrument_identity import spot_identity
         data = dict(self.signal.to_dict(), **changes)
+        if "position_type" not in changes:
+            direction = data.get("direction", "")
+            segment = data.get("segment", "")
+            if "BUY CE" in direction:
+                data["position_type"] = "LONG_CALL_OPTION"
+            elif "BUY PE" in direction:
+                data["position_type"] = "LONG_PUT_OPTION"
+            elif "BULLISH" in direction and segment == "NSE_FO_INDEX":
+                data["position_type"] = "LONG_INDEX_FUTURE"
+            elif "BEARISH" in direction and segment == "NSE_FO_INDEX":
+                data["position_type"] = "SHORT_INDEX_FUTURE"
+            elif "BULLISH" in direction:
+                data["position_type"] = "LONG_EQUITY_INTRADAY"
+            elif "BEARISH" in direction:
+                data["position_type"] = "SHORT_EQUITY_INTRADAY"
+
+            entry = float(data.get("entry_price", 100.0))
+            if str(data.get("position_type", "")).startswith("SHORT"):
+                data["stop_loss"] = entry + 2.0
+                data["invalidation_level"] = entry + 1.5
+                data["target_1"] = entry - 4.0
+                data["target_2"] = entry - 6.0
+            else:
+                data["stop_loss"] = entry - 2.0
+                data["invalidation_level"] = entry - 1.5
+                data["target_1"] = entry + 4.0
+                data["target_2"] = entry + 6.0
         if (data["data_mode"] == "LIVE" and data["state_context"] == "SCANNER"
                 and data["provider"] in ("angelone", "dhan", "upstox")):
             data["instrument_identity"] = spot_identity(self.cfg_meta(data["symbol"]), data["provider"])
@@ -8491,7 +8518,8 @@ class TestInstrumentIdentity(unittest.TestCase):
         signal = evaluate_order_block_fvg("RELIANCE", sim.get_intraday_candles({"symbol": "RELIANCE"}, pattern="order_block_bull"), now=self.now)
         signal = TradeSignal(**dict(signal.to_dict(), symbol="NIFTY", segment="NSE_FO_INDEX",
             strategy_id="strat_3_option_apex_oi", direction="BULLISH (BUY CE)", position_type="LONG_CALL_OPTION",
-            entry_price=100, stop_loss=90, target_1=120, target_2=130, instrument_label="NIFTY 24750 CE"))
+            entry_price=100, stop_loss=90, invalidation_level=90, entry_zone_low=95, entry_zone_high=100,
+            target_1=120, target_2=130, instrument_label="NIFTY 24750 CE"))
         with patch.object(engine.broker, "fetch_option_chain", side_effect=lambda sym: deepcopy(chain) if sym == "NIFTY" else None), \
                 patch("scanner_engine.evaluate_option_apex_oi_shift", return_value=signal), \
                 patch.object(engine.telegram, "send_signal", return_value={"dry_run": True}):
@@ -10276,7 +10304,8 @@ def load_tests(loader, tests, pattern):
         for module in ("test_angel_market_data", "test_market_data_contract", "test_phase4_market_data",
                        "test_phase4_e2e", "test_phase4_strategy", "test_phase5a_contracts",
                        "test_phase5a_provenance", "test_phase5a_paper", "test_phase5a_integration", "test_phase5b_forward",
-                       "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal"):
+                       "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal", "test_completion_engineering",
+                       "test_release_management"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

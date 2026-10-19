@@ -91,6 +91,58 @@ def normalize_state_scope(provider: str, data_mode: str, state_context: str) -> 
     return source, mode, context
 
 
+def validate_trade_signal(signal: TradeSignal) -> None:
+    """Validate candidate price geometry; identity/provenance remain separate gates.
+
+    The entry zone describes the setup area and need not contain the observed entry.
+    Long put/call candidates buy premium, so both use long-price geometry.
+    """
+    if not isinstance(signal, TradeSignal):
+        raise ValueError("A TradeSignal candidate is required.")
+    for name in ("entry_price", "entry_zone_low", "entry_zone_high", "stop_loss",
+                 "invalidation_level", "target_1", "target_2", "capital_risk_inr", "est_charges_inr"):
+        value = getattr(signal, name)
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+            raise ValueError(f"Signal {name} must be finite numeric data.")
+        if value < 0 or (name not in ("capital_risk_inr", "est_charges_inr") and value == 0):
+            raise ValueError(f"Signal {name} is outside its supported range.")
+    if type(signal.quality_score) is not int or not 0 <= signal.quality_score <= 100:
+        raise ValueError("Signal setup quality must be an integer from 0 to 100.")
+    if type(signal.position_qty) is not int or signal.position_qty < 1:
+        raise ValueError("Signal quantity must be a positive whole unit count.")
+    if signal.entry_zone_low > signal.entry_zone_high:
+        raise ValueError("Signal setup zone is inverted.")
+    expected = ("LONG_CALL_OPTION" if "BUY CE" in signal.direction else "LONG_PUT_OPTION" if "BUY PE" in signal.direction
+        else "LONG_INDEX_FUTURE" if "BULLISH" in signal.direction and signal.segment == "NSE_FO_INDEX"
+        else "SHORT_INDEX_FUTURE" if "BEARISH" in signal.direction and signal.segment == "NSE_FO_INDEX"
+        else "LONG_EQUITY_INTRADAY" if "BULLISH" in signal.direction else
+        "SHORT_EQUITY_INTRADAY" if "BEARISH" in signal.direction else None)
+    if signal.position_type != expected or expected is None:
+        raise ValueError("Signal direction and position type disagree.")
+    if expected.startswith("LONG"):
+        valid = signal.stop_loss <= signal.invalidation_level < signal.entry_price < signal.target_1 <= signal.target_2
+    else:
+        valid = signal.target_2 <= signal.target_1 < signal.entry_price < signal.invalidation_level <= signal.stop_loss
+    if not valid:
+        raise ValueError("Signal stop, invalidation, entry and targets are inconsistent.")
+
+
+def rank_signal_candidates(signals: List[TradeSignal]) -> List[TradeSignal]:
+    """Quality descending, then observed T1 reward/risk descending, then identity.
+
+    A deterministic candidate order is not a profitability estimate or allocation.
+    Recompute numeric reward/risk rather than trusting the display-only ratio string.
+    """
+    for signal in signals:
+        validate_trade_signal(signal)
+    def key(signal):
+        ratio = abs(signal.target_1 - signal.entry_price) / abs(signal.entry_price - signal.stop_loss)
+        return (-signal.quality_score, -ratio, signal.symbol, signal.strategy_id, signal.direction,
+                signal.position_type, signal.timestamp, signal.instrument_label,
+                json.dumps(signal.to_dict(), sort_keys=True, allow_nan=False))
+    return sorted(signals, key=key)
+
+
 def signal_state_identity(sig: Any, broker_name: str = "") -> Tuple[str, Tuple[str, str, str]]:
     """Shared persistence/alert identity, including the complete candle timestamp.
 

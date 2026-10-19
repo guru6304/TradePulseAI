@@ -40,7 +40,7 @@ class TelegramSignalDispatcher:
             f"<b>Instrument:</b> <code>{_esc(sig.instrument_label)}</code>\n"
             f"<b>Action:</b> <b>{_esc(sig.direction)}</b>\n"
             f"<b>Strategy:</b> {_esc(sig.strategy_name)}\n"
-            f"<b>Confidence:</b> {int(sig.confidence_pct)}% ({_esc(sig.win_rate_benchmark)})\n"
+            f"<b>Setup Quality:</b> {int(sig.quality_score)}/100 (rule score; predictive performance unverified)\n"
             f"━━━━━━━━━━━━━━━━━━━━━━\n"
             f"🎯 <b>Entry Price:</b> ₹{float(sig.entry_price):,.2f} <i>(Zone: ₹{float(sig.entry_zone_low):,.2f} – ₹{float(sig.entry_zone_high):,.2f})</i>\n"
             f"🛑 <b>Stop-Loss (S1):</b> ₹{float(sig.stop_loss):,.2f}\n"
@@ -48,7 +48,7 @@ class TelegramSignalDispatcher:
             f"🚀 <b>Target 2 (T2):</b> ₹{float(sig.target_2):,.2f}\n"
             f"⚖️ <b>Risk-Reward:</b> {_esc(sig.risk_reward)}\n"
             f"━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"💼 <b>Position Sizing (1% Risk):</b> {int(sig.position_qty)} Qty (Risk: ₹{float(sig.capital_risk_inr):,.2f} | Est. NSE Charges: ₹{float(sig.est_charges_inr):,.2f})\n"
+            f"💼 <b>Position Sizing ({float(self.config.max_risk_per_trade_pct):g}% configured risk limit):</b> {int(sig.position_qty)} Qty (Estimated Risk: ₹{float(sig.capital_risk_inr):,.2f} | Est. NSE Charges: ₹{float(sig.est_charges_inr):,.2f})\n"
             f"🧠 <b>Setup Logic:</b> {_esc(sig.rationale)}\n"
             f"🔌 <b>Data Feed:</b> {_esc(broker_name)} | 🕒 <code>{_esc(sig.timestamp)} IST</code>"
         )

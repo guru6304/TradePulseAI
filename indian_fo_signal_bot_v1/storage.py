@@ -22,6 +22,7 @@ from strategies import (
     validate_option_chain_for_strategy,
     normalize_state_scope,
     signal_state_identity,
+    validate_trade_signal,
 )
 
 logger = logging.getLogger("tradepulse.storage")
@@ -2332,6 +2333,10 @@ class SQLitePersistenceStore:
         """
         if not isinstance(sig, TradeSignal):
             raise PersistenceValidationError("save_signal requires a TradeSignal instance.")
+        try:
+            validate_trade_signal(sig)
+        except ValueError as exc:
+            raise PersistenceValidationError(str(exc)) from None
 
         for num_name, num_val in (
             ("entry_price", sig.entry_price),

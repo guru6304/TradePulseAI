@@ -11,6 +11,11 @@ from typing import List, Dict, Optional, Any
 class ConfigValidationError(ValueError):
     """Raised when BotConfig contains invalid or unsafe configuration parameters."""
 
+    def __init__(self, message, *, reason_code="CONFIGURATION_INVALID", line_number=None):
+        super().__init__(message)
+        self.reason_code = reason_code
+        self.line_number = line_number
+
 
 def _is_placeholder_value(val: Optional[str]) -> bool:
     if not val or not str(val).strip():
@@ -67,12 +72,15 @@ def _load_dotenv(filepath: Optional[str] = None) -> None:
                     continue
                 key, separator, value = line.partition("=")
                 key, value = key.strip(), value.strip()
-                if (not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key)
-                        or "\x00" in value):
-                    raise ConfigValidationError(f"Malformed configuration assignment at line {number}.")
+                if not separator or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key) or "\x00" in value:
+                    code = ("DOTENV_ASSIGNMENT_MISSING_EQUALS" if not separator else
+                            "DOTENV_KEY_INVALID" if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", key) else "DOTENV_NUL_BYTE")
+                    raise ConfigValidationError(f"Malformed configuration assignment at line {number}.",
+                        reason_code=code, line_number=number)
                 if value.startswith(("'", '"')):
                     if len(value) < 2 or value[-1] != value[0]:
-                        raise ConfigValidationError(f"Unterminated configuration quote at line {number}.")
+                        raise ConfigValidationError(f"Unterminated configuration quote at line {number}.",
+                            reason_code="DOTENV_QUOTE_UNTERMINATED", line_number=number)
                     value = value[1:-1]
                 pending.setdefault(key, value)
     except (OSError, UnicodeError, ValueError) as exc:
