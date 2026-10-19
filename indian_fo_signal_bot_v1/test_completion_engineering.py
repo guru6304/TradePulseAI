@@ -59,6 +59,98 @@ class TestCompletionConfiguration(unittest.TestCase):
                 self.assertNotIn("SECRET_CANARY", result.stdout + result.stderr)
                 self.assertNotIn("Traceback", result.stderr)
 
+    def test_comments_blank_lines_and_empty_values_are_handled_safely(self):
+        repository = Path(__file__).resolve().parent
+        with tempfile.TemporaryDirectory() as directory:
+            temporary = Path(directory)
+            shutil.copyfile(repository / "config.py", temporary / "config.py")
+            content = (
+                "# Header comment\n"
+                "   # Indented comment\n"
+                "\n"
+                "   \n"
+                "TEST_EMPTY_VAL=\n"
+                "ACTIVE_BROKER=paper_sim\n"
+            )
+            (temporary / ".env").write_text(content, encoding="utf-8")
+            snippet = ("import sys,runpy;sys.path[:0]=sys.argv[1:3];"
+                       "sys.argv=[sys.argv[3]];runpy.run_path(sys.argv[0],run_name='__main__')")
+            result = subprocess.run([sys.executable, "-B", "-c", snippet, str(temporary), str(repository),
+                str(repository / "configuration_check.py")], cwd=temporary, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0)
+            report = json.loads(result.stdout)
+            self.assertEqual(report["status"], "PASS")
+            self.assertTrue(report["configuration_ready"])
+            self.assertEqual(report["reason_code"], "LOCAL_CONFIGURATION_VALID")
+
+    def test_nul_byte_and_missing_key_diagnostics(self):
+        repository = Path(__file__).resolve().parent
+        for raw, reason, expected_line in (
+            ("=MISSING_KEY_CANARY", "DOTENV_KEY_INVALID", 2),
+            ("VALID_KEY=VALUE\x00NUL_CANARY", "DOTENV_NUL_BYTE", 2),
+        ):
+            with self.subTest(reason=reason), tempfile.TemporaryDirectory() as directory:
+                temporary = Path(directory)
+                shutil.copyfile(repository / "config.py", temporary / "config.py")
+                (temporary / ".env").write_text("# header\n" + raw + "\n", encoding="utf-8")
+                snippet = ("import sys,runpy;sys.path[:0]=sys.argv[1:3];"
+                           "sys.argv=[sys.argv[3]];runpy.run_path(sys.argv[0],run_name='__main__')")
+                result = subprocess.run([sys.executable, "-B", "-c", snippet, str(temporary), str(repository),
+                    str(repository / "configuration_check.py")], cwd=temporary, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 1)
+                report = json.loads(result.stdout)
+                self.assertEqual(report["reason_code"], reason)
+                self.assertEqual(report["line_number"], expected_line)
+                self.assertNotIn("CANARY", result.stdout + result.stderr)
+
+    def test_environment_precedence_and_duplicate_keys(self):
+        from config import _load_dotenv
+        with tempfile.TemporaryDirectory() as directory:
+            env_file = Path(directory) / ".env"
+            env_file.write_text("PRECEDENCE_KEY=FROM_FILE_1\nPRECEDENCE_KEY=FROM_FILE_2\nOTHER_KEY=FROM_FILE\n", encoding="utf-8")
+            with patch.dict(os.environ, {"OTHER_KEY": "FROM_PROCESS"}, clear=False):
+                _load_dotenv(str(env_file))
+                self.assertEqual(os.environ["PRECEDENCE_KEY"], "FROM_FILE_1")
+                self.assertEqual(os.environ["OTHER_KEY"], "FROM_PROCESS")
+
+    def test_workspace_relative_discovery_ignores_arbitrary_cwd(self):
+        repository = Path(__file__).resolve().parent
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            proj = root / "proj"
+            proj.mkdir()
+            shutil.copyfile(repository / "config.py", proj / "config.py")
+            (proj / ".env").write_text("ACTIVE_BROKER=paper_sim\nDISCOVERED_TOKEN=FROM_PROJ\n", encoding="utf-8")
+            other_dir = root / "arbitrary_cwd"
+            other_dir.mkdir()
+            (other_dir / ".env").write_text("ACTIVE_BROKER=upstox\nDISCOVERED_TOKEN=FROM_CWD\n", encoding="utf-8")
+            code = ("import sys,os;sys.path.insert(0, sys.argv[1]);from config import BotConfig,_load_dotenv;"
+                    "_load_dotenv();print(os.environ.get('DISCOVERED_TOKEN',''))")
+            result = subprocess.run([sys.executable, "-B", "-c", code, str(proj)],
+                cwd=other_dir, capture_output=True, text=True, check=True)
+            self.assertEqual(result.stdout.strip(), "FROM_PROJ")
+
+    def test_syntax_pass_does_not_declare_broker_or_readiness_receipt(self):
+        repository = Path(__file__).resolve().parent
+        with tempfile.TemporaryDirectory() as directory:
+            temporary = Path(directory)
+            shutil.copyfile(repository / "config.py", temporary / "config.py")
+            (temporary / ".env").write_text("ACTIVE_BROKER=paper_sim\nTELEGRAM_DRY_RUN=true\nENABLE_BACKGROUND_SCHEDULER=false\n", encoding="utf-8")
+            snippet = ("import sys,runpy;sys.path[:0]=sys.argv[1:3];"
+                       "sys.argv=[sys.argv[3]];runpy.run_path(sys.argv[0],run_name='__main__')")
+            result = subprocess.run([sys.executable, "-B", "-c", snippet, str(temporary), str(repository),
+                str(repository / "configuration_check.py")], cwd=temporary, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0)
+            report = json.loads(result.stdout)
+            self.assertEqual(report["status"], "PASS")
+            self.assertEqual(report["scope"], "LOCAL_CONFIGURATION_ONLY")
+            self.assertEqual(report["authentication"], "NOT_TESTED")
+            self.assertEqual(report["quote"], "NOT_TESTED")
+            self.assertEqual(report["candles"], "NOT_TESTED")
+            self.assertFalse(report["readiness_receipt_issued"])
+            self.assertFalse(report["live_requests"])
+
+
 
 class TestCandidateValidationAndRanking(unittest.TestCase):
     def test_quality_then_observed_reward_risk_then_identity_order_is_input_invariant(self):
