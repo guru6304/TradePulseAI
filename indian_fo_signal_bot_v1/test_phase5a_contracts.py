@@ -97,6 +97,20 @@ class TestPhase5AContractDeclarations(unittest.TestCase):
                         self.assertEqual(identity["lot_size"], raw["lot_size"])
                         self.assertEqual(identity["multiplier"], 1)
 
+    def test_present_call_put_pair_requires_matching_quantity_contract(self):
+        for provider in self.PROVIDERS:
+            records = contract_fixture_records(provider)
+            call = next(record for record in records if record["instrument_type"] == "OPTIDX")
+            put = dict(call, symbol=call["symbol"][:-2] + "PE", option_type="PE",
+                       identifier="NSE_FO|900001" if provider == "upstox" else "900001")
+            valid = self._prepare(provider, records=records + [put])
+            self.assertEqual(valid["status"], "BLOCKED_UNQUALIFIED_MASTER")
+            for field, value in (("lot_size", call["lot_size"] + 1), ("valid_from", "2026-10-02")):
+                with self.subTest(provider=provider, field=field):
+                    invalid = self._prepare(provider, records=records + [dict(put, **{field: value})])
+                    self.assertEqual(invalid["status"], "REJECTED")
+                    self.assertEqual(invalid["validation"]["reason_code"], "CONFLICTING_OPTION_PAIR")
+
     def test_every_provider_and_type_remains_blocked_after_unique_structural_resolution(self):
         for provider in self.PROVIDERS:
             master = self._prepare(provider)

@@ -567,6 +567,7 @@ def prepare_contract_master(raw_bytes, *, provider, source_reference, source_ver
             reject("INVALID_CONTRACT_MASTER_RECORDS", "A bounded nonempty list of normalized records is required.")
         records = [validate_contract_identity(row, provider=provider) for row in rows]
         identifiers, terms = set(), set()
+        option_pairs = {}
         for record in records:
             identifier_key = (record["exchange"], record["identifier"])
             if identifier_key in identifiers:
@@ -577,6 +578,13 @@ def prepare_contract_master(raw_bytes, *, provider, source_reference, source_ver
             if term_key in terms:
                 reject("AMBIGUOUS_CONTRACT", "Multiple identifiers or labels claim the same contract terms.")
             terms.add(term_key)
+            if record["instrument_type"] in ("OPTIDX", "OPTSTK"):
+                pair_key = (record["instrument_type"], record["underlying"], record["expiry"], record["strike"])
+                quantity_scope = tuple(record[key] for key in ("underlying_identifier", "lot_size", "multiplier",
+                    "price_unit", "quantity_unit", "valid_from", "valid_to"))
+                if pair_key in option_pairs and option_pairs[pair_key] != quantity_scope:
+                    reject("CONFLICTING_OPTION_PAIR", "Declared call/put pairs require matching quantity and effective-date terms.")
+                option_pairs[pair_key] = quantity_scope
         spots = {(record["instrument_type"], record["symbol"], record["identifier"]): record
                  for record in records if record["instrument_type"] in ("EQ", "INDEX_SPOT")}
         for record in records:

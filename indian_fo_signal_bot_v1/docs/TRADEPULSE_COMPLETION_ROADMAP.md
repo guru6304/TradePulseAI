@@ -1,15 +1,16 @@
 # TradePulse AI remaining-work roadmap
 
-Phase 4 audit date: 2026-10-18. The current stage is offline integration and market-data
+Phase 5A/5B audit date: 2026-10-18. The current stage is offline scanner-to-paper integration and market-data
 acceptance preparation. Real provider cash-data acceptance is unestablished; LIVE
 historical replay and historical Strategy 3 remain blocked. The companion
 [capability matrix](TRADEPULSE_CAPABILITY_MATRIX.md) defines the weighted scope and
-evidence rules: **62% implementation, 34% verified readiness; 0/12 fully accepted
+evidence rules: **63.5% implementation, 35.5% verified readiness; 0/12 fully accepted
 product milestones, 12 remaining**. These are audit estimates, not forecasts of
 profitability or production readiness.
 
 Fresh baseline, fixes, commands, exit codes and warning inventory are recorded in the
-[Phase 4 engineering report](TRADEPULSE_PHASE4_ENGINEERING_REPORT.md). The
+[Phase 5A closeout and Phase 5B engineering report](TRADEPULSE_PHASE5A_ENGINEERING_REPORT.md).
+The retained [Phase 4 engineering report](TRADEPULSE_PHASE4_ENGINEERING_REPORT.md) is historical. The
 [market-data acceptance matrix](TRADEPULSE_MARKET_DATA_ACCEPTANCE_MATRIX.md) separates
 provider transport/authentication, quote validity, completed candles, cash/index/F&O
 scope and historical provenance. The capability matrix traces the actual
@@ -57,7 +58,7 @@ tested. Profitable performance remains a separate research question.
 | P2.1 Qualified historical dataset (M04/M08) | Import real supported history only after P0.4. Prove full session coverage, warmup and intended evaluation range; implement replay pagination above the current 10,000-row cap without truncation. | Gaps/missing sessions/duplicates/provider-mode mixing/range changes reject. Pagination has no gaps/duplicates and no limit can silently cut a study short. Per-symbol readiness remains separate from aggregate common-period readiness. |
 | P2.2 Enforced chronological experiment protocol (M08) | Turn the existing split helper and explicit date controls into auditable train/validation/out-of-sample study orchestration. Current `period_type` labels alone do not select a split. | Disjoint chronological periods, strict selection and warmup-only earlier data; frozen parameters and dataset/config hashes; repeatable output; no overlap, look-ahead or use of out-of-sample data for fitting. |
 | P2.3 Historical Strategy 3 contract execution (M05/M07/M08) | Implement exact historical contract-candle entry/exit fills, chain snapshots at decision time, verified prior-session closing OI, expiry/strike selection, dated lot metadata and premium accounting. Depends on P1.3/P2.1. | Changing only option-contract candles changes fills/P&L; underlying changes cannot substitute premium fills; mismatch/missing contract data rejects. Cost/lot/gap/collision/EOD accounting reconciles. Remove the unconditional block only after this complete contract is accepted. |
-| P2.4 Durable forward paper portfolio (M07/M09) | Add an order-free paper fill/position/exit/mark-to-market ledger and shared capital/exposure/daily loss accounting. Reuse sizing and replay cost contracts; keep synthetic data labelled. | Concurrent candidates cannot each reserve the same capital; daily realized/unrealized loss and position limits block later entries; costs book once; restart reconciliation/idempotency and provider/mode/context isolation hold. |
+| P2.4 Durable forward paper portfolio (M07/M09) | Cash-only offline baseline delivered: immutable account scopes, real scanner handoff, durable queued decisions, atomic reservations/fills/marks/full exits and read-only reporting. Existing sizing/cost contracts are reused. Remaining work is bounded multi-session fault/soak acceptance, large-ledger pagination/export and separately specified derivative/partial-fill support. | Offline regressions cover concurrent capital/duplicate competition, daily realized+unrealized loss, exposure/count limits, exact-once costs, rollback and restart. Next run an offline interruption/EOD/large-ledger exercise before any authorized operational feed. Fills remain SIMULATED and require valid completed observations. |
 | P2.5 EOD reconciliation and research evidence (M08-M10) | Produce a dedicated report from actual ledger/results, reconcile trade totals/equity/drawdown/costs and missing data, then evaluate frozen strategies on qualified out-of-sample history. | Empty-day/multi-day/report-retry tests; reconciled paper/replay statements; losses and uncertainty retained; no fixture profitability claim. Replay EOD square-off and OI closing-baseline storage are not an EOD performance report. |
 
 P2 exit: reproducible qualified cash research, separately accepted derivative execution
@@ -114,7 +115,7 @@ $LASTEXITCODE
 ```
 
 The established `test_bot.py` entry point includes the independent broker/shared and
-Phase 4 modules through `load_tests`; normal discovery must load each test once.
+Phase 4, Phase 5A and Phase 5B modules through `load_tests`; normal discovery must load each test once.
 Focused runs remain useful for diagnosis. `test_phase4_strategy` includes a reproduced
 pre-fix counterexample: 241 otherwise fresh consecutive bars whose current-session
 window starts at 10:00 previously emitted an ORB candidate. Its regression requires
@@ -153,6 +154,22 @@ manual accepted flag, trusting a current quote, or switching brokers.
 Completion of Phase 4 offline work means the scoped software controls and deterministic
 end-to-end path pass the recorded checks. It does not complete P0 real-provider
 acceptance, authorize F&O proposals from cash observations, establish current/historical
-master authority, create the missing paper ledger, or release historical Strategy 3.
+master authority, establish operational paper acceptance, or release historical Strategy 3.
 Keep Telegram dry run enabled and the production scheduler disabled until separately
 reviewed operational gates are satisfied.
+
+## Phase 5B closeout and next bounded task
+
+The explicit `run_single_scan(paper_portfolio=...)` handoff queues stored scanner
+candidates and uses the following completed observation's close through the
+existing paper risk/SQLite boundary. No account is enrolled automatically. Current
+F&O declarations and historical provenance remain blocked. M09 advances only to
+50/50 under the unchanged rubric; all 12 product milestones remain unaccepted.
+
+Next local task: a bounded offline multi-session scanner-to-paper interruption/EOD
+and large-ledger reporting exercise. Acceptance requires identical reconciled state
+after interruption at each write boundary, no stale marks or fabricated EOD exit,
+stable per-day costs/loss limits and paginated reports without missing/duplicate
+events. Keep real-provider diagnostics behind separate authorization; the immediate
+external evidence gate remains one controlled selected-Upstox cash quote/candle
+result with sanitized JSON and actual exit code, not a provider switch or receipt.

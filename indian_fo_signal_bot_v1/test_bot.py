@@ -10268,7 +10268,8 @@ def load_tests(loader, tests, pattern):
     """Include independent broker/contract regressions in the established command."""
     if pattern is None:  # Discovery loads these files itself; avoid duplicate cases.
         for module in ("test_angel_market_data", "test_market_data_contract", "test_phase4_market_data",
-                       "test_phase4_e2e", "test_phase4_strategy"):
+                       "test_phase4_e2e", "test_phase4_strategy", "test_phase5a_contracts",
+                       "test_phase5a_provenance", "test_phase5a_paper", "test_phase5a_integration", "test_phase5b_forward"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

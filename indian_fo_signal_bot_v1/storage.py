@@ -716,6 +716,12 @@ class SQLitePersistenceStore:
                     )""")
                     conn.execute("CREATE INDEX IF NOT EXISTS idx_paper_events_account "
                                  "ON paper_events(account_id, event_id)")
+                    conn.execute("""CREATE TABLE IF NOT EXISTS paper_candidate_decisions (
+                        candidate_id TEXT PRIMARY KEY,
+                        account_id TEXT NOT NULL REFERENCES paper_accounts(account_id),
+                        signal_key TEXT NOT NULL, scan_run_id TEXT NOT NULL,
+                        payload_json TEXT NOT NULL, UNIQUE(account_id, signal_key)
+                    )""")
                     # Local normalized declarations are NOT an accepted current master.
                     conn.execute("""CREATE TABLE IF NOT EXISTS contract_master_candidates (
                         master_id TEXT PRIMARY KEY, provider TEXT NOT NULL,

@@ -572,9 +572,13 @@ live connectivity or profitability.
 
 ## Repository Documentation Index
 
+- [Phase 5A closeout and Phase 5B engineering evidence](docs/TRADEPULSE_PHASE5A_ENGINEERING_REPORT.md): current offline implementation, verification, safety gates and remaining work.
+- [F&O contract coverage](docs/TRADEPULSE_FO_CONTRACT_COVERAGE.md), [historical provenance design](docs/TRADEPULSE_HISTORICAL_PROVENANCE_DESIGN.md), and [durable paper portfolio](docs/TRADEPULSE_PAPER_PORTFOLIO_REPORT.md).
+- Current weighted audit estimates are **63.5% implementation / 35.5% verified readiness**; **0/12** full product milestones accepted. Explicit cash paper accounts have offline evidence; live broker acceptance and qualified F&O/history remain separate.
+
 - [Phase 4 engineering evidence](docs/TRADEPULSE_PHASE4_ENGINEERING_REPORT.md): fresh 429-test baseline, seven confirmed control fixes, final 461 passing offline tests and separately gated live acceptance.
 - [Market-data acceptance matrix](docs/TRADEPULSE_MARKET_DATA_ACCEPTANCE_MATRIX.md): separate provider, quote/candle, cash/index/F&O and historical-evidence scopes.
-- [Capability matrix](docs/TRADEPULSE_CAPABILITY_MATRIX.md) and [completion roadmap](docs/TRADEPULSE_COMPLETION_ROADMAP.md): documented 62% implementation / 34% readiness estimates; 0/12 full product milestones accepted.
+- [Capability matrix](docs/TRADEPULSE_CAPABILITY_MATRIX.md) and [completion roadmap](docs/TRADEPULSE_COMPLETION_ROADMAP.md): current M01-M12 rubric, dependencies and next actions; the earlier Phase 4 estimates are retained in its report.
 
 - `PHASE_3B_REPORT.md` (`docs/PHASE_3B_REPORT.md`) — Master Phase 3B implementation report, baseline comparison, and file change log.
 - `PHASE_3B_TEST_REPORT.md` (`docs/PHASE_3B_TEST_REPORT.md`) — Complete 101-test verification output and SQLite `ResourceWarning` fix analysis.

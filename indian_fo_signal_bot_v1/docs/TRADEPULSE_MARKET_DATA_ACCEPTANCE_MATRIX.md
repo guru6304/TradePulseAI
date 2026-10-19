@@ -76,3 +76,18 @@ $LASTEXITCODE
 ```
 
 This command contacts the existing quote endpoint and, only after an eligible quote, the intraday-candle endpoint. It does not call profile, funds, holdings, positions or trading endpoints. Stop after a rejection and review the sanitized status/code/message and exit code. No automatic retry loop or provider switch is part of this procedure. A successful result accepts only the tested RELIANCE cash-data path and cannot authorize F&O, historical replay or Strategy 3.
+
+## Phase 5A/5B addendum: declaration and paper boundaries
+
+The [current engineering report](TRADEPULSE_PHASE5A_ENGINEERING_REPORT.md) owns final
+verification. Existing Phase 4 provider claims above retain their limited scope.
+There was no new broker request or operational acceptance. Selected-Upstox
+configuration preflight remains separate from authentication/candles; Angel remains
+unselected, not disproven.
+
+| Additional boundary | Status / evidence | Limit / exact next action |
+| --- | --- | --- |
+| Six-type local normalized contract declarations | PASS for structural validation/store reparse and explicit negative resolution, `test_phase5a_contracts` and integration tests | Every valid candidate stays BLOCKED_UNQUALIFIED_MASTER/eligible false. No current F&O universe or live contract-candle executor was added. Obtain attributable original master evidence and a supported conversion/trust boundary. |
+| Historical authenticity/effective dates | BLOCKED; existing source gates plus 12 new adversarial provenance tests | No verifier/trust root or authoritative artifact is supplied. Resolve the actual acquisition/date-authority evidence design; preserve replay and Strategy 3 blocks. |
+| Scanner to forward paper | PASS for offline cash implementation, `test_phase5b_forward` through actual mocked wire/real evaluator and real SQLite | Explicit immutable account plus next completed observation's close; every fill remains SIMULATED. No claim of liquidity, accepted broker observations, futures/options readiness or profitability. Next perform bounded offline multi-session/fault/EOD acceptance. |
+| Account/contract inspection APIs | PASS for GET/HEAD/no mutation/no transport, `test_phase5a_integration` | Reporting does not scan, fill, create an account, download a master or issue a receipt. Large-ledger pagination remains work. |

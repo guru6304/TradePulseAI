@@ -17,6 +17,8 @@ from brokers import assess_live_candle_batch, candle_session_context
 from instrument_identity import IdentityValidationError, check_echo, validate_signal_identity
 from strategies import IST, TradeSignal, format_ist_timestamp, parse_ist_timestamp, signal_state_identity, size_position, validate_candles
 
+FORWARD_FILL_POLICY = "NEXT_COMPLETED_BAR_CLOSE_V1"
+
 
 class PaperPortfolioError(ValueError):
     def __init__(self, reason_code):
@@ -117,7 +119,7 @@ class PaperAccountConfig:
                 clocks.append(time.fromisoformat(value))
             if not clocks[0] < clocks[1] <= clocks[2] or any(c.minute % 5 for c in clocks):
                 raise ValueError()
-            if self.fill_policy != "OBSERVED_NEXT_COMPLETED_BAR_OPEN_STOP_FIRST_V1":
+            if self.fill_policy not in ("OBSERVED_NEXT_COMPLETED_BAR_OPEN_STOP_FIRST_V1", FORWARD_FILL_POLICY):
                 raise ValueError()
             if not isinstance(self.cost_model_json, str):
                 raise ValueError()
@@ -176,14 +178,14 @@ class PaperPortfolio:
         with store.paper_transaction(write=False) as conn:
             row = conn.execute("SELECT config_hash,config_json FROM paper_accounts WHERE account_id=?", (account_id,)).fetchone()
             if row is None:
-                return dict(status="NOT_CONFIGURED", account_id=account_id, execution_mode="SIMULATED", positions=[], events=[])
+                return dict(status="NOT_CONFIGURED", account_id=account_id, execution_mode="SIMULATED", positions=[], events=[], candidate_decisions=[])
             try:
                 config = PaperAccountConfig(**json.loads(row["config_json"]))
                 if config.config_hash != row["config_hash"]:
                     raise ValueError()
             except (ValueError, TypeError):
                 return dict(status="RECONCILIATION_REQUIRED", account_id=account_id,
-                            execution_mode="SIMULATED", entry_blocks=["ACCOUNT_CONFIG_CORRUPT"], positions=[], events=[])
+                            execution_mode="SIMULATED", entry_blocks=["ACCOUNT_CONFIG_CORRUPT"], positions=[], events=[], candidate_decisions=[])
             instance = cls.__new__(cls)
             instance.store, instance.config, instance.clock = store, config, lambda: now
             return instance._snapshot(conn, instance._now())
@@ -298,13 +300,16 @@ class PaperPortfolio:
             open_positions=len(opened), closed_positions=len(closed),
             day=dict(date=day, entries=entries, realized_net_pnl_inr=daily_realized,
                      unrealized_net_pnl_inr=unrealized, net_pnl_inr=daily_net, loss_limit_breached=loss_breached))
+        decisions = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? "
+                                 "ORDER BY candidate_id LIMIT 200", (self.config.account_id,)).fetchall()
         return dict(status="RECONCILIATION_REQUIRED" if reconciliation["status"] != "OK" else "BLOCKED" if blocks else "OK",
             account_id=self.config.account_id, run_id=self.config.run_id, config_hash=self.config.config_hash,
             provider=self.config.provider, source_data_mode=self.config.source_data_mode, execution_mode="SIMULATED",
             fill_policy=self.config.fill_policy, as_of_ist=format_ist_timestamp(now), accounting=accounting,
             entry_blocks=sorted(set(blocks)), reconciliation=reconciliation, positions=positions,
             events=[dict(event_id=e["event_id"], event_key=e["event_key"], kind=e["kind"], position_id=e["position_id"],
-                         **e["payload"]) for e in events[-200:]], total_events=len(events))
+                         **e["payload"]) for e in events[-200:]], total_events=len(events),
+            candidate_decisions=[json.loads(decision[0]) for decision in decisions])
 
     def snapshot(self, as_of=None):
         with self.store.paper_transaction(write=False) as conn:
@@ -426,21 +431,21 @@ class PaperPortfolio:
         conn.execute("UPDATE paper_positions SET payload_json=? WHERE account_id=? AND position_id=?",
                      (_encode(position), self.config.account_id, position["position_id"]))
 
-    def _mark_or_exit(self, conn, position, bar, key, command_hash):
+    def _mark_or_exit(self, conn, position, bar, key, command_hash, *, mark_only=False):
         sign = 1 if position["side"] == "LONG" else -1
         opening, stop, target = bar["open"], position["stop_loss"], position["target_price"]
         loss_touch = bar["low"] <= stop if sign == 1 else bar["high"] >= stop
         profit_touch = bar["high"] >= target if sign == 1 else bar["low"] <= target
         reason, exit_price = None, None
-        if sign * opening <= sign * stop:
+        if not mark_only and sign * opening <= sign * stop:
             reason, exit_price = "STOP_GAP", opening
-        elif sign * opening >= sign * target:
+        elif not mark_only and sign * opening >= sign * target:
             reason, exit_price = "TARGET_GAP_CAPPED", target
-        elif loss_touch:
+        elif not mark_only and loss_touch:
             reason, exit_price = "STOP_FIRST_COLLISION" if profit_touch else "STOP", stop
-        elif profit_touch:
+        elif not mark_only and profit_touch:
             reason, exit_price = "TARGET", target
-        elif (parse_ist_timestamp(bar["timestamp"]) + timedelta(minutes=5)).time() >= time.fromisoformat(self.config.square_off_ist):
+        elif not mark_only and (parse_ist_timestamp(bar["timestamp"]) + timedelta(minutes=5)).time() >= time.fromisoformat(self.config.square_off_ist):
             reason, exit_price = "EOD", bar["close"]
         if reason:
             costs = self._costs(position["raw_entry_price"], exit_price, position["quantity"], position["side"])
@@ -466,7 +471,7 @@ class PaperPortfolio:
             self._event(conn, key, "MARK", position, dict(command_hash=command_hash, mark=mark, result=result))
         return result
 
-    def enter(self, candidate, completed_next_bar, event_key):
+    def enter(self, candidate, completed_next_bar, event_key, *, candidate_decision_id=None):
         """Atomically reserve and simulate the next completed bar, including exits."""
         data, side = self._candidate(candidate)
         now = self._now()
@@ -475,6 +480,14 @@ class PaperPortfolio:
             retry = self._event_retry(conn, event_key, command_hash)
             if retry:
                 return retry
+            decision = None
+            if candidate_decision_id is not None:
+                row = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND candidate_id=?",
+                                   (self.config.account_id, candidate_decision_id)).fetchone()
+                decision = json.loads(row[0]) if row else None
+                if (not decision or candidate_decision_id != event_key or decision["status"] != "QUEUED"
+                        or decision["candidate_hash"] != _hash(data) or decision["config_hash"] != self.config.config_hash):
+                    _reject("PAPER_DECISION_NOT_ELIGIBLE")
             bar = self._bar(completed_next_bar, data["instrument_identity"], now)
             signal_time = parse_ist_timestamp(data["timestamp"])
             fill_time = parse_ist_timestamp(bar["timestamp"])
@@ -495,8 +508,16 @@ class PaperPortfolio:
                 _reject(snapshot["entry_blocks"][0])
             if (datetime.combine(now.date(), time.fromisoformat(self.config.square_off_ist), tzinfo=IST) <= now):
                 _reject("ENTRY_AFTER_SQUARE_OFF")
-            opening = bar["open"]
+            forward_close = self.config.fill_policy == FORWARD_FILL_POLICY
+            if not forward_close and any(p["status"] == "CLOSED" and
+                    parse_ist_timestamp(p["exit_timestamp_ist"]) + timedelta(minutes=5) > fill_time
+                    for p in snapshot["positions"]):
+                _reject("CAPITAL_RELEASE_AFTER_ASSUMED_FILL")
+            opening = bar["close"] if forward_close else bar["open"]
             sign = 1 if side == "LONG" else -1
+            if forward_close and ((bar["low"] <= data["invalidation_level"] or bar["high"] >= data["target_1"])
+                    if side == "LONG" else (bar["high"] >= data["invalidation_level"] or bar["low"] <= data["target_1"])):
+                _reject("SETUP_INVALIDATED_BEFORE_CLOSE_FILL")
             effective = self._costs(opening, data["stop_loss"], 1, side)["effective_entry_price"]
             if not (sign * data["stop_loss"] < sign * opening < sign * data["target_1"]
                     and sign * data["stop_loss"] < sign * effective < sign * data["target_1"]
@@ -527,10 +548,12 @@ class PaperPortfolio:
                 run_id=self.config.run_id, config_hash=self.config.config_hash, provider=self.config.provider,
                 source_data_mode=self.config.source_data_mode, execution_mode="SIMULATED", strategy_id=data["strategy_id"],
                 symbol=data["symbol"], instrument_identity=data["instrument_identity"], candidate_hash=_hash(data),
+                candidate=data, risk_decision=sizing,
                 candidate_timestamp_ist=format_ist_timestamp(signal_time), entry_key=entry_key, side=side,
                 raw_entry_price=opening, effective_entry_price=sizing["effective_entry_price"],
                 quantity=sizing["quantity"], stop_loss=data["stop_loss"], target_price=data["target_1"],
                 invalidation_level=data["invalidation_level"], entry_timestamp_ist=bar["timestamp"],
+                fill_timestamp_ist=format_ist_timestamp(fill_time + timedelta(minutes=5) if forward_close else fill_time),
                 estimated_stop_risk_inr=sizing["estimated_risk_inr"], initial_reserved_capital_inr=sizing["capital_required_inr"],
                 status="OPEN", reserved_capital_inr=sizing["capital_required_inr"], fill_policy=self.config.fill_policy,
                 entry_provenance=bar)
@@ -538,9 +561,15 @@ class PaperPortfolio:
                 (position["position_id"], self.config.account_id, entry_key, _encode(position)))
             immutable = {key: value for key, value in position.items() if key not in ("status", "reserved_capital_inr")}
             # Entry and first-bar result commit together; no capital-only orphan.
-            result = self._mark_or_exit(conn, position, bar, event_key + ":fill", command_hash)
+            result = self._mark_or_exit(conn, position, bar, event_key + ":fill", command_hash, mark_only=forward_close)
             self._event(conn, event_key, "ENTRY", position,
                 dict(command_hash=command_hash, entry=immutable, result=result))
+            if decision is not None:
+                transition = dict(status="FILLED", reason_code="PAPER_RISK_APPROVED", observed_at_ist=format_ist_timestamp(now))
+                decision.update(transition, position_id=position["position_id"])
+                decision["history"] = (decision["history"] + [transition])[-32:]
+                conn.execute("UPDATE paper_candidate_decisions SET payload_json=? WHERE account_id=? AND candidate_id=?",
+                             (_encode(decision), self.config.account_id, candidate_decision_id))
             return result
 
     def process_bar(self, position_id, completed_bar, event_key):

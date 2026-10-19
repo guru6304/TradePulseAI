@@ -464,7 +464,15 @@ class IntradayBotEngine:
             return None
         return {"advances": advances, "declines": declines}
 
-    def run_single_scan(self) -> Dict[str, Any]:
+    def run_single_scan(self, *, paper_portfolio=None) -> Dict[str, Any]:
+        paper_coordinator = None
+        if paper_portfolio is not None:
+            from forward_paper import ForwardPaperCoordinator
+            paper_coordinator = ForwardPaperCoordinator(paper_portfolio)
+            if (paper_portfolio.store is not self.store or paper_portfolio.config.provider != self.config.active_broker
+                    or not self.config.telegram_dry_run or self.config.enable_background_scheduler
+                    or paper_portfolio.config.source_data_mode != ("SIMULATED" if self.broker.get_active_adapter().is_simulated else "LIVE")):
+                raise ValueError("Explicit paper account/store/provider and safe runtime configuration must agree.")
         started_wall = time.perf_counter()
         now_dt = self._now_ist()
         started_ist = format_ist_timestamp(now_dt)
@@ -1004,6 +1012,14 @@ class IntradayBotEngine:
                                      else self._freshness_status(provider, self._now_ist())),
             }
             self.last_scan_summary = summary
+            if paper_coordinator is not None:
+                try:
+                    summary["paper_portfolio"] = paper_coordinator.consume_scan(summary, all_candles_map)
+                except Exception:
+                    # Signal generation and paper effects are separate claims.
+                    # Durable event keys allow recovery after a partial handoff.
+                    summary["paper_portfolio"] = {"status": "UNAVAILABLE", "execution_mode": "SIMULATED",
+                                                  "reason_code": "PAPER_CYCLE_REQUIRES_RECOVERY"}
             return summary
         except (CandleFreshnessError, BrokerIdentityError) as exc:
             self.last_broker_error = str(exc)
