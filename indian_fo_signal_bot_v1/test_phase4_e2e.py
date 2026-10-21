@@ -110,7 +110,7 @@ class TestPhase4OfflineEndToEnd(unittest.TestCase):
                      path in (self.ANGEL_LOGIN, self.ANGEL_QUOTE, self.ANGEL_CANDLES)) or
                     (provider == "upstox" and request.get_method() == "GET" and
                      (path == "/v2/market-quote/quotes" or
-                      path == "/v2/historical-candle/intraday/NSE_EQ%7CINE002A01018/1minute")))
+                      path == "/v3/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/1")))
         if not expected:
             self.forbidden_requests.append((provider, request.get_method(), path))
             raise AssertionError("Only explicitly fixture-backed read endpoints are permitted")

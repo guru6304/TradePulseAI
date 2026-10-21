@@ -548,8 +548,8 @@ class IntradayBotEngine:
             telegram_dispatches: List[Dict[str, Any]] = []
             instrument_errors: List[Dict[str, str]] = []
             oi_snapshots_saved = 0
-            persistence_status = "OK" if self.store is not None else "DISABLED"
-            persistence_error: Optional[str] = None
+            persistence_status = "OK" if self.store is not None else ("ERROR" if self.config.enable_persistence else "DISABLED")
+            persistence_error: Optional[str] = self.last_persistence_error if persistence_status == "ERROR" else None
 
             try:
                 index_candles_map: Dict[str, List[Dict[str, Any]]] = {}
@@ -920,7 +920,17 @@ class IntradayBotEngine:
                         self.last_persistence_error = str(db_exc)
                         logger.error("Signal persistence failed for %s: %s", sig.symbol, db_exc)
 
-                if is_duplicate_in_db:
+                if (self.config.enable_persistence or self.store is not None) and persistence_status != "OK":
+                    # An unaudited recommendation must not escape after a required
+                    # store fails. Keep the candidate visible with explicit failure.
+                    telegram_dispatches.append({
+                        "ok": False,
+                        "skipped": True,
+                        "reason": "persistence_unavailable",
+                        "symbol": sig.symbol,
+                        "strategy_id": sig.strategy_id,
+                    })
+                elif is_duplicate_in_db:
                     telegram_dispatches.append({
                         "ok": True,
                         "skipped": True,

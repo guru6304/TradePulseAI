@@ -53,3 +53,10 @@ The cash-equity market-data pipeline implementation is **100% complete and verif
 However, in strict adherence to the project safety and scoring rubric:
 - Synthetic fixtures and mocked tests provide **software verification**, not **live acceptance**.
 - Live operational candle ingestion remains **EXTERNALLY BLOCKED** pending resolution of the Angel One Historical Data API permission / Static IP on the SmartAPI portal.
+
+
+## Task 3 correction notice - 2026-10-21
+
+The statement that the cash pipeline is 100% complete is withdrawn. Signal persistence does not establish durable ingestion of every accepted candle. Freshness uses the implemented interval/publication-delay policy, not a universal 15-minute threshold. Live quote acceptance is not independently established by the retained machine-readable evidence; permission/IP root causes remain unknown.
+
+The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).

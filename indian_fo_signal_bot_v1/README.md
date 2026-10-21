@@ -498,9 +498,9 @@ The existing Upstox adapter now supports standalone V2 full quotes and a dedicat
 one-instrument diagnostic. See [the implementation and verification report](docs/UPSTOX_READINESS_IMPLEMENTATION.md).
 Successful live Upstox connectivity remains unverified; the user-reported attempt
 failed with HTTP 403. See [HTTP error reporting and verification](docs/UPSTOX_HTTP_ERROR_REPORT.md).
-The root `.gitignore` excludes local
-environment/credential files and preserves `.env.example`; this exported workspace
-has no Git metadata, so whether secrets were tracked in another checkout is unknown.
+The root `.gitignore` excludes local environment/credential files and preserves
+`.env.example`. Task 3 verified this checkout's Git history and that its local `.env`
+is ignored and untracked; see the [current forensic report](docs/reports/TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).
 
 Configure your local `.env` privately in `indian_fo_signal_bot_v1`: select
 `ACTIVE_BROKER=upstox` and provide `UPSTOX_ACCESS_TOKEN` from an external authorized
@@ -543,8 +543,13 @@ HTTP failures additionally report `http_status` and, when safely extractable,
 limit (plus one overflow-detection byte); only the first documented error is used.
 Provider messages are sanitized, limited to one line and 240 characters, and may
 be omitted when unsafe or unavailable. HTTP 403 alone does not identify its cause.
-The official V2 intraday endpoint is deprecated; compatibility is still unverified
-against the real provider. This change does not migrate the endpoint or change gates.
+Task 3 migrated candle reads to the documented V3 route
+`/v3/historical-candle/intraday/{instrument_key}/minutes/{interval}` while retaining
+V2 full quotes and the existing `UpstoxV2Adapter` interface. Five- and fifteen-minute
+bars still aggregate validated one-minute observations; thirty-minute reads request
+thirty-minute observations. Identity, freshness and completion gates remain enforced.
+See the [official V3 contract](https://upstox.com/developer/api-documentation/v3/get-intra-day-candle-data/).
+Mocked transport verification does not establish real-provider availability.
 
 Checks use `PASS`, `FAIL`, `BLOCKED` or `NOT_TESTED`; exit 0 requires every required
 check to pass. Configuration presence is separate from successful authorized reads.

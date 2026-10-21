@@ -80,3 +80,10 @@ Before any live trading or live scheduler service can be authorized:
 - [ ] Authoritative NFO derivative scrip master ingested and validated.
 - [ ] Continuous paper trading runs across multi-session soak without state corruption.
 - [ ] Full recovery drill executed using `release_management.py:DatabaseBackupRecovery`.
+
+
+## Task 3 correction notice - 2026-10-21
+
+Do not follow the historical instructions to infer subscription/IP causes, disable IP restrictions, or replace observed option premiums with Black-Scholes/delta fills. A locally generated hash/HMAC does not authenticate an external publisher. Source qualification currently has no supported verifier. Task 3 supplies corrected owners, prerequisites and closure criteria.
+
+The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).

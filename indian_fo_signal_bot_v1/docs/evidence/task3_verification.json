@@ -1,0 +1,375 @@
+{
+  "audit_date": "2026-10-21",
+  "timezone": "Asia/Kolkata",
+  "scope": "OFFLINE_ONLY_NO_OPERATIONAL_ACCEPTANCE",
+  "root": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b",
+  "application_root": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+  "branch": "main",
+  "head": "abf9f51015a0f6a96096edefd08a0dd0e827480a",
+  "initial_working_tree_clean": true,
+  "final_git_status": [
+    "M README.md",
+    " M brokers.py",
+    " M docs/TRADEPULSE_CAPABILITY_MATRIX.md",
+    " M docs/reports/TRADEPULSE_TASK2_BLOCKERS_AND_NEXT_ACTIONS.md",
+    " M docs/reports/TRADEPULSE_TASK2_CASH_DATA_ACCEPTANCE_MATRIX.md",
+    " M docs/reports/TRADEPULSE_TASK2_CHANGE_LEDGER.md",
+    " M docs/reports/TRADEPULSE_TASK2_IMPLEMENTATION_AND_TEST_REPORT.md",
+    " M docs/reports/TRADEPULSE_TASK2_M01_M12_SCORECARD.md",
+    " M docs/reports/TRADEPULSE_TASK2_PROJECT_FORENSIC_INVENTORY.md",
+    " M release_management.py",
+    " M scanner_engine.py",
+    " M test_bot.py",
+    " M test_completion_engineering.py",
+    " M test_phase4_e2e.py",
+    " M test_phase4_market_data.py",
+    " M test_release_management.py",
+    "?? docs/evidence/task3_dashboard_tests.txt",
+    "?? docs/evidence/task3_focused_tests.txt",
+    "?? docs/evidence/task3_focused_tests_final.txt",
+    "?? docs/evidence/task3_persistence_delivery_after.txt",
+    "?? docs/evidence/task3_persistence_delivery_before.txt",
+    "?? docs/evidence/task3_regression_verified.txt",
+    "?? docs/evidence/task3_scanner_repairs_final.txt",
+    "?? docs/evidence/task3_store_initialization_before.txt",
+    "?? docs/evidence/task3_test_inventory.json",
+    "?? docs/evidence/task3_unified_tests.txt",
+    "?? docs/evidence/task3_unified_tests_final.txt",
+    "?? docs/evidence/task3_upstox_diagnostics_final.txt",
+    "?? docs/evidence/task3_upstox_diagnostics_verified.txt",
+    "?? docs/evidence/task3_verification.json",
+    "?? docs/reports/TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md"
+  ],
+  "scores": {
+    "weights": [
+      8,
+      12,
+      12,
+      10,
+      10,
+      12,
+      10,
+      10,
+      6,
+      4,
+      3,
+      3
+    ],
+    "implementation": [
+      75,
+      75,
+      75,
+      75,
+      25,
+      75,
+      75,
+      50,
+      50,
+      50,
+      75,
+      50
+    ],
+    "readiness": [
+      50,
+      25,
+      50,
+      25,
+      0,
+      50,
+      50,
+      25,
+      50,
+      50,
+      50,
+      50
+    ],
+    "weighted_implementation": 64.25,
+    "weighted_readiness": 37.0,
+    "fully_accepted": 0,
+    "milestones": 12
+  },
+  "final_commands": [
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot -v",
+      "exit_code": 0,
+      "executed": 648,
+      "passed": 648,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "evidence": "docs/evidence/task3_regression_verified.txt",
+      "input_evidence": "synthetic/mocked/temporary integration"
+    },
+    {
+      "command": "node test_cash_dashboard.js",
+      "exit_code": 0,
+      "executed": 6,
+      "passed": 6,
+      "failures": 0,
+      "skipped": 0,
+      "evidence": "docs/evidence/task3_dashboard_tests.txt",
+      "input_evidence": "DOM double and actual inline dashboard script"
+    },
+    {
+      "command": "py_compile.compile for each root *.py with doraise=True",
+      "exit_code": 0,
+      "compiled_files": 37,
+      "is_test_count": false
+    },
+    {
+      "command": "python -B configuration_check.py",
+      "exit_code": 0,
+      "result": {
+        "active_broker": "upstox",
+        "authentication": "NOT_TESTED",
+        "candles": "NOT_TESTED",
+        "configuration_ready": true,
+        "data_persisted": false,
+        "enable_background_scheduler": false,
+        "line_number": null,
+        "live_requests": false,
+        "quote": "NOT_TESTED",
+        "readiness_receipt_issued": false,
+        "reason_code": "LOCAL_CONFIGURATION_VALID",
+        "scope": "LOCAL_CONFIGURATION_ONLY",
+        "status": "PASS",
+        "telegram_dry_run": true
+      }
+    }
+  ],
+  "test_inventory": "docs/evidence/task3_test_inventory.json",
+  "report": {
+    "path": "docs/reports/TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md",
+    "sha256": "a717c87bcbdb834f052cf9b887674745730127758739a38ccf253471a6e895ac",
+    "sections_verified": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "exact_test_locators_checked": 18
+  },
+  "historical_reports": [
+    {
+      "path": "docs/reports/TRADEPULSE_TASK2_BLOCKERS_AND_NEXT_ACTIONS.md",
+      "original_body_retained": true,
+      "original_git_sha256": "1fb42fa817b3df8aa896f63168130a9fd5525b49c572191bf693696495c5ad80"
+    },
+    {
+      "path": "docs/reports/TRADEPULSE_TASK2_CASH_DATA_ACCEPTANCE_MATRIX.md",
+      "original_body_retained": true,
+      "original_git_sha256": "9d4196da9a97f5c07d19f86c6857b87de3dc7db9055dfaa9463de0677fde78cf"
+    },
+    {
+      "path": "docs/reports/TRADEPULSE_TASK2_CHANGE_LEDGER.md",
+      "original_body_retained": true,
+      "original_git_sha256": "2a367af3a6a698ae4e97f0af4d15ff798010216d6891fdcf023915519bf1a7d9"
+    },
+    {
+      "path": "docs/reports/TRADEPULSE_TASK2_IMPLEMENTATION_AND_TEST_REPORT.md",
+      "original_body_retained": true,
+      "original_git_sha256": "7cf803260195165cedb840bef59906bdfb3df2d10f55b5d54d7d0b635b4f3126"
+    },
+    {
+      "path": "docs/reports/TRADEPULSE_TASK2_M01_M12_SCORECARD.md",
+      "original_body_retained": true,
+      "original_git_sha256": "de49ee4c1bf4e814fe7cb72020ca170c0ba57498038afc3b45848a87234760df"
+    },
+    {
+      "path": "docs/reports/TRADEPULSE_TASK2_PROJECT_FORENSIC_INVENTORY.md",
+      "original_body_retained": true,
+      "original_git_sha256": "61134ed503cbd4902ffa79c988d5e50c5b0a74f52a5d393cb43d315f8cf921c0"
+    }
+  ],
+  "python_file_sha256": {
+    "backtest_engine.py": "9bc71e03e51e56675d298bd2467608bf7806cce1b73572c33aa8bc22c7b69cb4",
+    "brokers.py": "f53e9cde8bd0bb996424931d767d84c84fb72b31d64be1ff02f75b7ff3dadcb4",
+    "config.py": "e8392482de4a38d8da926560f4aecad38d14d7df2155b147bca078b4824a929e",
+    "configuration_check.py": "8d320650914e4603393d1376b5abc27e1744f87d5a019cc16db70f172048e76a",
+    "diagnostics.py": "bc1462ffc0e69537f8a993c278d681ae4d1629ecb2843a95d5bdf1f12c4cbc4a",
+    "forward_paper.py": "c3026be8b3813be6c55d1bb21712d9b758815ae35e515751c6b5d12e6b96a3c4",
+    "historical_data.py": "b8eb2d7f47a04a16b4c78732eaafcd3e3f38d86efc05a868b4b9662aba2466a9",
+    "instrument_archive.py": "ae4d6ac52611953a88274e4adfab489c70b2ebc36e09c6a6493404bb89a81418",
+    "instrument_identity.py": "2ddf9cdc4e0c36a5ad2a79977f84e154d0d80671a3556a994f18cdc30e257c08",
+    "paper_portfolio.py": "664b1de60daf926457440ae69c84f3dba0c05013830d9c980891ed71c3f3da50",
+    "performance_acceptance.py": "1979d0dc0393ec720f7b18561638301e1c2d7173737bb0862821d1c8bfb94387",
+    "readiness_policy.py": "d4e78ea3230ff128fad7ccfe1958c1c77a0df0f56af45ff1f01a489b6914d286",
+    "release_management.py": "9aca9dd320302c5c56666fe2dfc7a61e3c8bb32f6efc4e9b3a219f0ec32748bc",
+    "research_protocol.py": "0c2635364d4958b52cf79a9e354116e52d07de01ef079e4136f231808aed58d2",
+    "scanner_engine.py": "005d9ad1e506bd01f5b587568ee28161652698518968368f01f3a59855787b6b",
+    "server.py": "0a36d43d5aeda8fb767801eafad572b3003549a1f64590037e2f9e61d67e6ac9",
+    "source_qualification.py": "05af9e8728b5b420e4e493e3ab8d20876df879ce90868810f937716dbeda97b3",
+    "storage.py": "e1bb2654114159d1d44be91be924e9bd06ed78bf0531962aeae52812f9545d96",
+    "strategies.py": "90625a7a66984a6fd9a9f799e61229dd8c086220fd5ab7455ac75fe4266222ab",
+    "telegram_bot.py": "4d2f2eeae55c813e7d030b9362aaac964c06a45db7977fd268ad6cb1aa2f6ef5",
+    "test_angel_market_data.py": "683bb6b181e443a35485bd37b4d8435290dbebcc16c29a0bb73243e371f1d450",
+    "test_blocker_removal.py": "d56e0e6ab4bdcf58458e897270012661a671473e580d609bf86380dc98c2cd58",
+    "test_bot.py": "446be45e6645510528ac1cbae3d5bf56fb43f9cc128505914315d24ed7964a1c",
+    "test_completion_engineering.py": "c479e186d115dd40421051e245f0790413800211bfd0a0a1c9c58b2c1a1a7ca4",
+    "test_continuous_acceptance.py": "0a8aed2247bb018bb8f718795d214c3bdb7f7f6e54028d74f9f2a3071d549191",
+    "test_market_data_contract.py": "a9fb0fbfa1bdefe5aebbe56e74c385fd690670bb7b07b32850c17ee0ae06e93e",
+    "test_phase4_e2e.py": "1bc019e6c1231b895c028e1932ced22fea6441cbce5a28113383e6dff3dcfd85",
+    "test_phase4_market_data.py": "b4920f16e14026b00da9a080c3e202950896ff008e979181d0f8fe5b4313386d",
+    "test_phase4_strategy.py": "c8462b6ed413f14a7aaf0d3371db9eed049d00577b2b24c6b6888764083b542a",
+    "test_phase5a_contracts.py": "de1014845de35ad3c3888cbcd4bf906c0fc0e9c55d0366dbc6e1735b87339186",
+    "test_phase5a_integration.py": "202a8aa5ac9c8a9542b00eaab575ac2e790efc24707f273b3158cf6ab9a22b61",
+    "test_phase5a_paper.py": "a5dc2057fd374b08b916eb20fed062abb42c123733c6d60d81339944724e4b74",
+    "test_phase5a_provenance.py": "fc47b7603827aaa6a027a21b18e7ff03dd1b18fe23e18815d3dcd425d71705bb",
+    "test_phase5b_forward.py": "b4c7df03d1c8fad11b424f1ee28916e832d5130a7bf936d5dee025d86dad730e",
+    "test_phase5c_recovery.py": "8526e4aa110cec9755a30d075ddf9574f5e663dea8a38bebedb089015c7516e9",
+    "test_release_management.py": "74cb3eead8c2212fc6033faae704165852495294a19cf05a2e1562a1455d5fb1",
+    "upstox_diagnostics.py": "d45582fa5a61eddc30189361f9535cce88adff62ad5550c07ed830061d41ddf6"
+  },
+  "artifacts": [
+    {
+      "path": "docs/evidence/task3_dashboard_tests.txt",
+      "bytes": 1226,
+      "sha256": "a91bf511e6326cef1f418067bc902643fec595395321cde61ca0f9500ea56169",
+      "observed_summary": []
+    },
+    {
+      "path": "docs/evidence/task3_focused_tests.txt",
+      "bytes": 157634,
+      "sha256": "27273910a0dfb75019a2c919c9cb74cfe723bdce9967006dd2213402ceeebc59",
+      "observed_summary": [
+        "Ran 133 tests in 8.488s",
+        "FAILED (failures=9, errors=11)"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_focused_tests_final.txt",
+      "bytes": 74950,
+      "sha256": "025322486f4f2fb1d3464a9788da5ee2a9015ef8294374662d011227a666ca4b",
+      "observed_summary": [
+        "Ran 133 tests in 9.943s",
+        "OK"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_persistence_delivery_after.txt",
+      "bytes": 5830,
+      "sha256": "8838b089120a6896ed35fc4655aa27762243cdf933a89b8b4075624388efcdd8",
+      "observed_summary": [
+        "Ran 1 test in 0.527s",
+        "OK"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_persistence_delivery_before.txt",
+      "bytes": 56332,
+      "sha256": "9fd67ebe17ce9290a513c1b837be29c88515c5a48d5a5e5284ce1713404b2a44",
+      "observed_summary": [
+        "Ran 1 test in 0.706s",
+        "FAILED (failures=1)"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_regression_verified.txt",
+      "bytes": 311692,
+      "sha256": "cf942070a460c7f441af1f6a04cae2adaee45217eca1a359a641c66a5206aa34",
+      "observed_summary": [
+        "Ran 648 tests in 171.242s",
+        "OK"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_scanner_repairs_final.txt",
+      "bytes": 7234,
+      "sha256": "13724efc822e35008e5e3951f1112d508f8986a24de429f43978b068d19797c3",
+      "observed_summary": [
+        "Ran 2 tests in 1.094s",
+        "OK"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_store_initialization_before.txt",
+      "bytes": 3932,
+      "sha256": "74b28a6eef900742cdf84edabca03d8a4ff0bcf03df82b95ae192a3720479c6c",
+      "observed_summary": [
+        "Ran 1 test in 0.778s",
+        "FAILED (failures=1)"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_test_inventory.json",
+      "bytes": 74715,
+      "sha256": "d9b121465ae7925787cc399123ab2009c33f0f2ba8bf99be5f898f55707a0c7e",
+      "observed_summary": []
+    },
+    {
+      "path": "docs/evidence/task3_unified_tests.txt",
+      "bytes": 322742,
+      "sha256": "f21352b808d1490550839f0597c9dd3872129f17d6df6d214d9d2668cbbdbae7",
+      "observed_summary": [
+        "Ran 647 tests in 166.486s",
+        "FAILED (failures=4, errors=2)"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_unified_tests_final.txt",
+      "bytes": 324194,
+      "sha256": "4e0432c5b9f77d44a443ee8f9dc0708debf2aa86f2baca205131dac882be8725",
+      "observed_summary": [
+        "Ran 648 tests in 180.568s",
+        "FAILED (failures=4, errors=2)"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_upstox_diagnostics_final.txt",
+      "bytes": 18426,
+      "sha256": "4be5d79691fc462951597f0a086226320efb64b7101e0e5b8a8eebeaecf94cb1",
+      "observed_summary": [
+        "Ran 49 tests in 0.331s",
+        "OK"
+      ]
+    },
+    {
+      "path": "docs/evidence/task3_upstox_diagnostics_verified.txt",
+      "bytes": 28206,
+      "sha256": "ed2b076cbec481a620bcbafd5195c8c0243e55ed573f11808277693197c77585",
+      "observed_summary": [
+        "Ran 49 tests in 0.343s",
+        "FAILED (errors=2)"
+      ]
+    }
+  ],
+  "checks": {
+    "git_diff_check_exit": 0,
+    "dotenv_ignored": true,
+    "dotenv_untracked": true,
+    "local_config_public_comment_only_repair": {
+      "lines": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "all_other_bytes_unchanged_at_repair": true
+    },
+    "no_production_services_or_external_market_requests": true,
+    "live_trading_accepted": false,
+    "read_only_test_prerequisite": "operator confirmation of intended account, authorization, token provenance and window"
+  },
+  "read_only_decision": "NO - BLOCKED",
+  "live_trading_decision": "NO - NOT AUTHORIZED OR NOT ACCEPTED"
+}

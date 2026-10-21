@@ -134,7 +134,7 @@ class TestPhase4BrokerAcceptance(unittest.TestCase):
                 paths = [urllib.parse.urlsplit(request.full_url).path for request in self.requests]
                 self.assertEqual(paths, (["/rest/secure/angelbroking/market/v1/quote/",
                     "/rest/secure/angelbroking/historical/v1/getCandleData"] if provider == "angelone" else
-                    ["/v2/market-quote/quotes", "/v2/historical-candle/intraday/NSE_EQ%7CINE002A01018/1minute"]))
+                    ["/v2/market-quote/quotes", "/v3/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/1"]))
                 self.assertEqual(report["checks"]["authentication"]["status"], "PASS")
                 self.assertEqual(report["authentication_scope"], "AUTHORIZED_MARKET_DATA_READ_ONLY_NO_PROFILE_CHECK")
                 self.assertEqual(len(report["checks"]["candles"]["completed_sample"]), 2)
@@ -346,6 +346,10 @@ class TestPhase4BrokerAcceptance(unittest.TestCase):
     def test_upstox_intraday_allowlist_rejects_malformed_and_traversal_routes_before_transport(self):
         adapter = self._adapter("upstox")
         invalid_paths = ("/historical-candle/intraday/../../order/place",
+            "/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/5",
+            "/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/1?private=CANARY",
+            "/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/1#fragment",
+            "/historical-candle/intraday/%2e%2e%2forder/minutes/1",
             "/historical-candle/intraday/NSE_EQ%7CINE002A01018/1minute?private=CANARY",
             "/historical-candle/intraday/NSE_EQ%7CINE002A01018/1minute#fragment",
             "/historical-candle/intraday/NSE_EQ%7CINE002A01018/1minute/extra",
@@ -355,6 +359,22 @@ class TestPhase4BrokerAcceptance(unittest.TestCase):
             with self.subTest(path=path), self.assertRaises(BrokerDataError):
                 adapter._request_json(path)
         self.assertEqual(self.requests, [])
+
+    def test_upstox_v3_candles_keep_v2_quotes_and_read_only_transport(self):
+        adapter = self._adapter("upstox")
+        meta = next(m for m in adapter.config.equity_watchlist if m["symbol"] == "RELIANCE")
+        self._reset_wire(self._quote("upstox"), self._candles("upstox"))
+        adapter.get_quote(meta)
+        candles = adapter.get_intraday_candles(meta, interval_min=5)
+        self.assertEqual([r.full_url for r in self.requests], [
+            "https://api.upstox.com/v2/market-quote/quotes?instrument_key=NSE_EQ%7CINE002A01018",
+            "https://api.upstox.com/v3/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/1"])
+        for request in self.requests:
+            self.assertEqual(request.get_method(), "GET")
+            self.assertIsNone(request.data)
+            self.assertEqual(request.get_header("Authorization"), "Bearer OFFLINE_PHASE4_TOKEN")
+        self.assertEqual(len(filter_completed_candles(candles, interval_min=5, now=self.now)), 2)
+        self.assertTrue(all(stream.closed for stream in self.streams))
 
     def test_both_index_spot_quote_mappings_are_checked_separately_from_cash_and_contracts(self):
         for provider in self.PROVIDERS:

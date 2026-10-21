@@ -3230,15 +3230,16 @@ def _safe_upstox_read(function):
 class UpstoxV2Adapter(BaseBrokerAdapter):
     """
     Official Upstox API v2 Adapter:
-    - Intraday Candles: GET https://api.upstox.com/v2/historical-candle/intraday/{instrument_key}/{interval}
-      Official v2 intervals: '1minute', '30minute' (Error UDAPI1020 on other strings).
-      For 5m and 15m requests, fetches '1minute' bars and aggregates completed NSE session-aligned buckets.
+    - Intraday Candles: GET https://api.upstox.com/v3/historical-candle/intraday/{instrument_key}/minutes/{interval}
+      The public class name is retained for compatibility with existing callers.
+      For 5m and 15m requests, fetches 1-minute bars and aggregates completed NSE session-aligned buckets.
     - Option Contracts (Expiry Resolution): GET https://api.upstox.com/v2/option/contract?instrument_key={key}
     - Put/Call Option Chain: GET https://api.upstox.com/v2/option/chain?instrument_key={key}&expiry_date={expiry}
     """
     name = "Upstox API v2"
     is_simulated = False
     BASE_URL = "https://api.upstox.com/v2"
+    CANDLE_BASE_URL = "https://api.upstox.com/v3"
     SUPPORTED_INTERVALS = (1, 5, 15, 30)
 
     def __init__(self, config: BotConfig, clock: Optional[Callable[[], datetime]] = None):
@@ -3287,7 +3288,7 @@ class UpstoxV2Adapter(BaseBrokerAdapter):
     def _request_json(self, path, params=None):
         """Bounded GET only; allowlist prevents this helper reaching trading routes."""
         self._validate_credentials()
-        intraday = re.fullmatch(r"/historical-candle/intraday/([^/]+)/(1minute|30minute)", path)
+        intraday = re.fullmatch(r"/historical-candle/intraday/([^/]+)/minutes/(1|30)", path)
         safe_intraday = False
         if intraday:
             try:
@@ -3302,7 +3303,8 @@ class UpstoxV2Adapter(BaseBrokerAdapter):
         if not (path in ("/market-quote/quotes", "/option/contract", "/option/chain") or safe_intraday):
             self._fail("UNSUPPORTED_ENDPOINT", "Upstox diagnostic transport permits only supported market-data reads.")
         token_sha = hashlib.sha256(self.config.upstox_access_token.encode()).hexdigest()
-        url = self.BASE_URL + path + (("?" + urllib.parse.urlencode(params)) if params else "")
+        base_url = self.CANDLE_BASE_URL if safe_intraday else self.BASE_URL
+        url = base_url + path + (("?" + urllib.parse.urlencode(params)) if params else "")
         req = urllib.request.Request(url, headers=self._headers(), method="GET")
         def unique_fields(pairs):
             result = {}
@@ -3446,8 +3448,7 @@ class UpstoxV2Adapter(BaseBrokerAdapter):
 
         inst_key = urllib.parse.quote(validated_meta["upstox_key"], safe="")
         source_interval_min = 30 if interval_min == 30 else 1
-        upstox_interval_str = "30minute" if source_interval_min == 30 else "1minute"
-        raw = self._request_json(f"/historical-candle/intraday/{inst_key}/{upstox_interval_str}")
+        raw = self._request_json(f"/historical-candle/intraday/{inst_key}/minutes/{source_interval_min}")
 
         if not isinstance(raw, dict) or raw.get("status") != "success":
             raise BrokerDataError("Upstox intraday candle response returned unsuccessful status.")

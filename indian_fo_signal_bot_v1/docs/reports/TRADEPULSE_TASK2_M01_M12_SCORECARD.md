@@ -87,3 +87,10 @@ R &= (8 \times 0.75) + (12 \times 0.25) + (12 \times 0.50) + (10 \times 0.50) + 
 - **Milestones with $R \ge 75$**: **5 milestones** (M01, M06, M07, M09, M10).
 - **Justification for Non-Promotion**:
   In accordance with Section 9 of the project rubric, no milestone is declared complete without satisfying all live operational prerequisites. Software implementations are fully verified across 636 passing tests, but live trading operations remain safely gated by external broker access controls.
+
+
+## Task 3 correction notice - 2026-10-21
+
+The 85.0%/54.5% allocation is superseded by Task 3. Its arithmetic is correct but several awards contradict the official row scope and readiness definitions. In particular, unimplemented source authentication and derivative controls cannot earn I=100, and fixture tests cannot establish R=75 operational acceptance.
+
+The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).

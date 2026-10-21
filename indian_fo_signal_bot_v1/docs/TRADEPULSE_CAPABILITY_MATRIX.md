@@ -276,3 +276,42 @@ cash candles/scanner operations, authoritative master/calendar/history and the
 remaining paper/release gates are unaccepted. Fix local syntax, run only offline
 preflight, then obtain missing sanitized provider evidence before separately
 authorizing any bounded live acceptance.
+
+## Task 3 current-evidence reconciliation - 2026-10-21
+
+The [Task 3 forensic, stability and readiness report](reports/TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md)
+supersedes the separate Task 2 allocation of 85.0% implementation / 54.5% readiness.
+The official weights and definitions above are unchanged. Historical rows remain
+historical; this addendum records the current assessment against their agreed scope.
+
+| ID | Weight | Current I | Current R |
+| --- | ---: | ---: | ---: |
+| M01 | 8 | 75 | 50 |
+| M02 | 12 | 75 | 25 |
+| M03 | 12 | 75 | 50 |
+| M04 | 10 | 75 | 25 |
+| M05 | 10 | 25 | 0 |
+| M06 | 12 | 75 | 50 |
+| M07 | 10 | 75 | 50 |
+| M08 | 10 | 50 | 25 |
+| M09 | 6 | 50 | 50 |
+| M10 | 4 | 50 | 50 |
+| M11 | 3 | 75 | 50 |
+| M12 | 3 | 50 | 50 |
+
+`sum(weight * score / 100)` yields **64.25% implementation / 37.00% verified
+readiness; 0/12 accepted**. Only M12 crosses the next official threshold from the
+retained 63.50/35.50 baseline: complete local manifest verification, non-overwriting
+backups, actual isolated restore with logical-content comparison and read-only
+storage health checks now have integration evidence. A release helper is not a
+complete deployment/monitoring system. Supported runtime bounds are declarations,
+not a multi-version test result.
+
+Task 3 also fixes the deprecated Upstox candle route and required-persistence
+notification failure behavior. Final execution: 648 unique Python cases and six
+separate Node renderer cases pass; fixture tests remain fixture evidence. Local
+configuration is valid after restoring only missing public-comment prefixes.
+No broker requests, token refresh, production scheduling or Telegram delivery ran.
+Current provider access, cash pipeline, qualified NFO/history, paper soak and release
+operations remain unaccepted. The report supplies exact tests, failures/reruns,
+blocker owners and closure gates; no new test count or report alone raises a score.

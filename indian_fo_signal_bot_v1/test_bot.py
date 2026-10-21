@@ -647,7 +647,8 @@ class TestIndianFOSignalBotPhase1B(unittest.TestCase):
                 interval_min=5,
             )
             req_url = mocked_get.call_args[0][0].full_url
-            self.assertIn("/1minute", req_url)
+            self.assertIn("/v3/historical-candle/intraday/", req_url)
+            self.assertTrue(req_url.endswith("/minutes/1"))
 
         self.assertEqual(len(bars_5m), 2)
         # First 5m bucket (09:15..09:19) has all 5 component bars and elapsed -> complete
@@ -1636,7 +1637,8 @@ class TestIndianFOSignalBotPhase1D(unittest.TestCase):
         scanner.adapters["paper_sim"] = _BidirectionalFixtureAdapter(self.sim)
         engine = IntradayBotEngine(cfg, clock=self.fixed_clock, broker_scanner=scanner)
 
-        with patch.object(engine.store, "save_signal", side_effect=PersistenceError("Simulated disk I/O error")):
+        with patch.object(engine.store, "save_signal", side_effect=PersistenceError("Simulated disk I/O error")), \
+                patch.object(engine.telegram, "send_signal", wraps=engine.telegram.send_signal) as delivery:
             res = engine.run_single_scan()
 
         # Scan must still return signals in memory, but MUST report persistence_status == ERROR
@@ -1645,6 +1647,10 @@ class TestIndianFOSignalBotPhase1D(unittest.TestCase):
         self.assertEqual(res["persistence_status"], "ERROR")
         self.assertIn("Simulated disk I/O error", res["persistence_error"])
         self.assertEqual(engine.last_persistence_status, "ERROR")
+        delivery.assert_not_called()
+        self.assertEqual(len(res["telegram_dispatches"]), res["total_signals"])
+        self.assertTrue(all(item.get("skipped") and item.get("reason") == "persistence_unavailable"
+                            for item in res["telegram_dispatches"]))
 
     # 8. HTTP API Contracts, Query Parameter Validation, Pagination & Secret Redaction
     def test_p1d_http_api_contracts_validation_pagination_and_secret_redaction(self):
@@ -9543,7 +9549,10 @@ class TestUpstoxReadOnlyReadiness(unittest.TestCase):
         def reply(request, timeout=8):
             self.assertEqual(request.get_method(), "GET")
             self.assertEqual(timeout, 8)
-            self.assertTrue(request.full_url.startswith("https://api.upstox.com/v2/"))
+            self.assertIn(request.full_url, (
+                "https://api.upstox.com/v2/market-quote/quotes?instrument_key=NSE_EQ%7CINE002A01018",
+                "https://api.upstox.com/v2/market-quote/quotes?instrument_key=NSE_INDEX%7CNifty+50",
+                "https://api.upstox.com/v3/historical-candle/intraday/NSE_EQ%7CINE002A01018/minutes/1"))
             value = queue.pop(0)
             if isinstance(value, Exception):
                 raise value

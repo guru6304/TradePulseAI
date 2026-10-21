@@ -129,3 +129,10 @@ graph TD
 - **Git Status**: Clean working directory on branch `main` (commit `e646e1d` + Task 2 updates).
 - **Module Compilation**: All 20 Python modules compiled cleanly with zero syntax errors via `py_compile`.
 - **Test Integrity**: Zero live broker calls, zero credential disclosures, zero weakened validation gates.
+
+
+## Task 3 correction notice - 2026-10-21
+
+Task 3 found the application below the repository root, with .gitignore at the parent root and no tracked favicon.ico. Fresh loader counts differ from this inventory (including Angel 28, continuous acceptance 34, Phase 4 E2E 9 and strategy 4). The source-qualification module has no supported publisher verifier. See Task 3 for current evidence.
+
+The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).

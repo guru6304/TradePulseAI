@@ -62,3 +62,10 @@
 3. **Core Application Safeguards**:
    - `telegram_dry_run=True` and `enable_background_scheduler=False` were preserved as default constraints.
    - Provider selection, risk sizing rules, and candle completion checks were left completely uncompromised.
+
+
+## Task 3 correction notice - 2026-10-21
+
+Git confirms e646e1d as the parent implementation baseline and abf9f51 as the Task 2 reports/test commit. The original editor-open assertion cannot be independently verified. Task 3 made a separately authorized, comment-only local syntax repair; the original Task 2 history remains below.
+
+The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).

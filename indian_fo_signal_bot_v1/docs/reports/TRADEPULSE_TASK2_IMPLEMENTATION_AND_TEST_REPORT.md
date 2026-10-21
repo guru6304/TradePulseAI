@@ -87,3 +87,10 @@
 - `python diagnostics.py` (with live requests): **NOT RUN**. Prompt safety boundaries strictly prohibit making live broker requests, refreshing tokens, or contacting real broker endpoints during this task.
 - `python -m upstox_diagnostics` (live): **NOT RUN**. Upstox API v2 intraday candle endpoint is deprecated; live transport is disabled to prevent 403 errors and account lockouts.
 - `python server.py --run`: **NOT RUN**. Starting production background services or servers is forbidden; HTTP handlers and dashboard JS were verified offline using unit tests and `test_cash_dashboard.js`.
+
+
+## Task 3 correction notice - 2026-10-21
+
+The retained 630/636 counts are historical assertions, not fresh Task 3 results. Task 3 observed 635 baseline Python executions and repaired public-template comments at local dotenv lines 7-17 without changing assignments. Live transport is available in the diagnostic CLI and must not be invoked without separate authorization. Endpoint deprecation does not establish a quote 403 cause.
+
+The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).

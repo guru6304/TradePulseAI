@@ -39,6 +39,34 @@ def signal_fixture(**changes):
 
 
 class TestCompletionConfiguration(unittest.TestCase):
+    def test_commented_template_documentation_preserves_assignment_bytes_and_values(self):
+        from config import _load_dotenv, ConfigValidationError
+        heading = "Official Endpoints Used:"
+        template = Path(__file__).with_name(".env.example").read_text(encoding="utf-8")
+        self.assertIn(heading, template)
+        assignments = "ACTIVE_BROKER=upstox\nUPSTOX_ACCESS_TOKEN=OFFLINE_REPAIR_CANARY\n"
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {}, clear=True):
+            path = Path(directory) / ".env"
+            path.write_text(heading + "\n" + assignments, encoding="utf-8")
+            with self.assertRaises(ConfigValidationError):
+                _load_dotenv(str(path))
+            self.assertNotIn("ACTIVE_BROKER", os.environ)
+            path.write_text("# " + heading + "\n" + assignments, encoding="utf-8")
+            _load_dotenv(str(path))
+            self.assertEqual(os.environ["ACTIVE_BROKER"], "upstox")
+            self.assertEqual(os.environ["UPSTOX_ACCESS_TOKEN"], "OFFLINE_REPAIR_CANARY")
+            self.assertTrue(path.read_text().endswith(assignments))
+
+    def test_invalid_utf8_does_not_apply_any_partial_configuration_or_echo_input(self):
+        from config import _load_dotenv, ConfigValidationError
+        with tempfile.TemporaryDirectory() as directory, patch.dict(os.environ, {}, clear=True):
+            path = Path(directory) / ".env"
+            path.write_bytes(b"ACTIVE_BROKER=upstox\nCANARY=PRIVATE_CANARY\xff\n")
+            with self.assertRaises(ConfigValidationError) as caught:
+                _load_dotenv(str(path))
+            self.assertNotIn("ACTIVE_BROKER", os.environ)
+            self.assertNotIn("PRIVATE_CANARY", str(caught.exception))
+
     def test_syntax_diagnostic_classifies_without_disclosing_line_or_values(self):
         repository = Path(__file__).resolve().parent
         for raw, reason in (("MALFORMED_SECRET_CANARY", "DOTENV_ASSIGNMENT_MISSING_EQUALS"),
@@ -153,6 +181,29 @@ class TestCompletionConfiguration(unittest.TestCase):
 
 
 class TestCandidateValidationAndRanking(unittest.TestCase):
+    def test_required_store_initialization_failure_blocks_delivery_and_reports_error(self):
+        from datetime import datetime
+        from brokers import MultiBrokerScanner, SimulatedNSEAdapter
+        from scanner_engine import IntradayBotEngine
+        from storage import PersistenceError
+        from strategies import IST
+        clock = lambda: datetime(2026, 10, 16, 10, 35, tzinfo=IST)
+        cfg = BotConfig(active_broker="paper_sim", telegram_dry_run=True,
+                        enable_persistence=True, database_url=":memory:")
+        scanner = MultiBrokerScanner(cfg, clock=clock)
+        scanner.adapters["paper_sim"] = _fixtures._FixtureTriggeredAdapter(SimulatedNSEAdapter(clock=clock))
+        with patch("scanner_engine.SQLitePersistenceStore", side_effect=PersistenceError("Offline init failure")):
+            engine = IntradayBotEngine(cfg, clock=clock, broker_scanner=scanner)
+        self.addCleanup(engine.close)
+        with patch.object(engine.telegram, "send_signal", side_effect=AssertionError("No unaudited delivery")) as delivery:
+            report = engine.run_single_scan()
+        self.assertGreater(report["total_signals"], 0)
+        self.assertEqual(report["persistence_status"], "ERROR")
+        self.assertEqual(report["persistence_error"], "Offline init failure")
+        delivery.assert_not_called()
+        self.assertTrue(all(item.get("reason") == "persistence_unavailable"
+                            for item in report["telegram_dispatches"]))
+
     def test_quality_then_observed_reward_risk_then_identity_order_is_input_invariant(self):
         from strategies import rank_signal_candidates
         signals = [signal_fixture(symbol="TCS", instrument_label="TCS EQ"),
