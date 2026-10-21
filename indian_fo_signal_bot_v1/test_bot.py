@@ -10314,7 +10314,7 @@ def load_tests(loader, tests, pattern):
                        "test_phase4_e2e", "test_phase4_strategy", "test_phase5a_contracts",
                        "test_phase5a_provenance", "test_phase5a_paper", "test_phase5a_integration", "test_phase5b_forward",
                        "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal", "test_completion_engineering",
-                       "test_release_management"):
+                       "test_release_management", "test_cash_lineage"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

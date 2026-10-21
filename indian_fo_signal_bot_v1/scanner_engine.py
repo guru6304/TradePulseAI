@@ -227,8 +227,8 @@ class IntradayBotEngine:
             self._candle_evidence[(provider, symbol)] = {"report": report, "candles": None}
             raise
 
-    def _require_current_scan_data(self, provider):
-        status = self._freshness_status(provider, self._now_ist())
+    def _require_current_scan_data(self, provider, now_dt=None):
+        status = self._freshness_status(provider, now_dt if now_dt is not None else self._now_ist())
         if not status["live_signal_allowed"]:
             rejected = next(r for r in status["instruments"].values() if not r.get("live_signal_allowed"))
             raise CandleFreshnessError(rejected)
@@ -466,7 +466,40 @@ class IntradayBotEngine:
             return None
         return {"advances": advances, "declines": declines}
 
-    def run_single_scan(self, *, paper_portfolio=None) -> Dict[str, Any]:
+    def _replay_cash_result(self, work, paper_coordinator=None):
+        from candle_lineage import replay_summary
+        summary = replay_summary(work)
+        if paper_coordinator is not None:
+            snapshot = work["snapshot"]
+            observations = dict(snapshot["auxiliary"]["index_candles"])
+            observations.update({b["content"]["identity"]["symbol"]: b["content"]["candles"]
+                                 for b in snapshot["batches"]})
+            try:
+                summary["paper_portfolio"] = paper_coordinator.consume_scan(work["result"], observations)
+            except Exception:
+                summary["paper_portfolio"] = dict(status="UNAVAILABLE", execution_mode="SIMULATED",
+                                                  reason_code="PAPER_CYCLE_REQUIRES_RECOVERY")
+        self.last_scan_summary = summary
+        return summary
+
+    def resume_cash_scan(self, run_id, *, paper_portfolio=None):
+        """Explicit OFFLINE recovery; no transport or notification delivery."""
+        return self.run_single_scan(paper_portfolio=paper_portfolio, resume_run_id=run_id)
+
+    def run_single_scan(self, *, paper_portfolio=None, resume_run_id=None) -> Dict[str, Any]:
+        from candle_lineage import (runtime_profile, code_fingerprint, digest, make_snapshot,
+                                    completed_cash_batch)
+        recovery = None
+        if resume_run_id is not None:
+            if self.store is None or not self.config.telegram_dry_run or self.config.enable_background_scheduler:
+                raise PersistenceValidationError("LINEAGE_SAFE_OFFLINE_RECOVERY_REQUIRED")
+            recovery = self.store.load_cash_scan(resume_run_id)
+            snapshot = recovery["snapshot"]
+            if (digest(runtime_profile(self.config)) != snapshot["profile_digest"]
+                    or code_fingerprint() != snapshot["code_digest"]):
+                raise PersistenceValidationError("LINEAGE_RECOVERY_CONFIGURATION_OR_CODE_CHANGED")
+            for batch, meta in zip(snapshot["batches"], self.config.equity_watchlist):
+                completed_cash_batch(batch["content"]["candles"], meta, snapshot["profile"], snapshot["reference"])
         paper_coordinator = None
         if paper_portfolio is not None:
             from forward_paper import ForwardPaperCoordinator
@@ -476,9 +509,15 @@ class IntradayBotEngine:
                     or paper_portfolio.config.source_data_mode != ("SIMULATED" if self.broker.get_active_adapter().is_simulated else "LIVE")):
                 raise ValueError("Explicit paper account/store/provider and safe runtime configuration must agree.")
         started_wall = time.perf_counter()
-        now_dt = self._now_ist()
+        recovery_clock = parse_ist_timestamp(recovery["snapshot"]["reference"]) if recovery else None
+        scan_now = lambda: recovery_clock if recovery_clock is not None else self._now_ist()
+        now_dt = scan_now()
         started_ist = format_ist_timestamp(now_dt)
-        run_id = f"scan_{now_dt.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        run_id = recovery["run_id"] if recovery else f"scan_{now_dt.strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        lineage_tx, durable_work = None, None
+        result_committed = False
+        is_simulated = None
+        deferred_dispatches = []
 
         if not self._scan_lock.acquire(blocking=False):
             logger.warning("Scan %s skipped because another scan is already in progress.", run_id)
@@ -494,7 +533,7 @@ class IntradayBotEngine:
                 "signals": [],
                 "telegram_dispatches": [],
             }
-            if self.store is not None:
+            if self.store is not None and recovery is None:
                 try:
                     adapter = self.broker.get_active_adapter()
                     self.store.record_scan_run(
@@ -524,6 +563,10 @@ class IntradayBotEngine:
             is_simulated = bool(adapter.is_simulated)
             data_mode = "SIMULATED" if is_simulated else "LIVE"
             provider, data_mode, state_context = self._scanner_scope(adapter)
+            if recovery is not None and recovery["status"] == "COMMITTED":
+                return self._replay_cash_result(recovery, paper_coordinator)
+            if not is_simulated and self.config.enable_persistence and self.store is None:
+                raise PersistenceError("Required scanner storage is unavailable; no acquisition attempted.")
             if not is_simulated:
                 _, _, _, session_state, _ = candle_session_context(
                     now_dt, self.config.configured_holidays, self.config.session_start_ist, self.config.session_end_ist)
@@ -540,7 +583,7 @@ class IntradayBotEngine:
             for segment in ("NSE_FO_INDEX", "NSE_EQUITY_INTRADAY"):
                 loaded = self._load_zone_state(provider, data_mode, segment)
                 zone_states[segment] = loaded if is_simulated else set(loaded)
-            now_val = self.clock() if self.clock is not None else None
+            now_val = now_dt if recovery else (self.clock() if self.clock is not None else None)
 
             logger.info("Starting scan %s via %s (mode=%s)", run_id, broker_label, data_mode)
 
@@ -556,10 +599,14 @@ class IntradayBotEngine:
                 index_oc_map: Dict[str, Optional[Dict[str, Any]]] = {}
                 for idx_sym, idx_meta in self.config.fo_indices.items():
                     meta_with_sym = dict(idx_meta, symbol=idx_sym)
-                    index_candles_map[idx_sym] = (self.broker.fetch_candles(meta_with_sym, interval_min=5) if is_simulated
-                                                 else self._fetch_scan_candles(meta_with_sym, provider))
+                    index_candles_map[idx_sym] = (recovery["snapshot"]["auxiliary"]["index_candles"][idx_sym] if recovery else
+                        self.broker.fetch_candles(meta_with_sym, interval_min=5) if is_simulated
+                        else self._fetch_scan_candles(meta_with_sym, provider))
+                    if recovery:
+                        index_candles_map[idx_sym] = self._assess_scan_candles(index_candles_map[idx_sym], idx_sym, provider, now_dt)
                     try:
-                        index_oc_map[idx_sym] = self.broker.fetch_option_chain(idx_sym)
+                        index_oc_map[idx_sym] = (recovery["snapshot"]["auxiliary"]["option_chains"][idx_sym]
+                                                if recovery else self.broker.fetch_option_chain(idx_sym))
                         if not is_simulated and index_oc_map[idx_sym]:
                             oc = index_oc_map[idx_sym]
                             requested = index_candles_map[idx_sym][-1]["instrument_identity"]
@@ -600,18 +647,23 @@ class IntradayBotEngine:
                 equity_candles_map: Dict[str, List[Dict[str, Any]]] = {}
                 for eq_meta in self.config.equity_watchlist:
                     sym = eq_meta["symbol"]
-                    equity_candles_map[sym] = (self.broker.fetch_candles(eq_meta, interval_min=5) if is_simulated
-                                              else self._fetch_scan_candles(eq_meta, provider))
+                    if recovery:
+                        bars = next(b["content"]["candles"] for b in recovery["snapshot"]["batches"]
+                                    if b["content"]["identity"]["symbol"] == sym)
+                        equity_candles_map[sym] = self._assess_scan_candles(bars, sym, provider, now_dt)
+                    else:
+                        equity_candles_map[sym] = (self.broker.fetch_candles(eq_meta, interval_min=5) if is_simulated
+                                                  else self._fetch_scan_candles(eq_meta, provider))
 
                 # Record latest candle timestamp from retrieved index/equity candles
                 if not is_simulated:
-                    self._require_current_scan_data(provider)
-                    now_val = self._now_ist()
+                    self._require_current_scan_data(provider, now_dt=scan_now())
+                    now_val = scan_now()
                 sample_candles = index_candles_map.get("NIFTY") or next(iter(equity_candles_map.values()), [])
                 if sample_candles:
                     self.last_candle_timestamp_ist = format_ist_timestamp(sample_candles[-1]["timestamp"])
-                if not is_simulated:
-                    self.last_broker_verified_at = format_ist_timestamp(self._now_ist())
+                if not is_simulated and not recovery:
+                    self.last_broker_verified_at = format_ist_timestamp(scan_now())
                     self.last_broker_error = None
                     self.last_broker_error_category = "NONE"
             except BrokerDataError as exc:
@@ -620,8 +672,8 @@ class IntradayBotEngine:
                 self.last_broker_error = str(exc)
                 self.last_broker_error_category = getattr(exc, "error_category", None) or getattr(adapter, "last_error_category", "NETWORK_API_FAILURE")
                 duration_ms = round((time.perf_counter() - started_wall) * 1000.0, 2)
-                completed_ist = format_ist_timestamp(self._now_ist())
-                self.last_candle_freshness = self._freshness_status(provider, self._now_ist())
+                completed_ist = format_ist_timestamp(scan_now())
+                self.last_candle_freshness = self._freshness_status(provider, scan_now())
                 self.last_scan_summary = dict(
                     status="error", scan_status="FAILED", run_id=run_id,
                     started_at_ist=started_ist, completed_at_ist=completed_ist, duration_ms=duration_ms,
@@ -651,6 +703,34 @@ class IntradayBotEngine:
                         logger.error("Failed to record FAILED scan run %s: %s", run_id, db_exc)
                 raise
 
+            if not is_simulated and self.store is not None and equity_candles_map:
+                if recovery:
+                    durable_work = recovery
+                else:
+                    snapshot = make_snapshot(self.config, equity_candles_map, index_candles_map,
+                                             index_oc_map, zone_states, scan_now())
+                    snapshot["acquisition_errors"] = instrument_errors[:]
+                    durable_work = self.store.prepare_cash_scan(run_id, snapshot)
+                requested_run_id = run_id
+                run_id = durable_work["run_id"]
+                lineage_tx = self.store.scan_result_transaction()
+                lineage_tx.__enter__()
+                durable_work = self.store.load_cash_scan(run_id)
+                if durable_work["status"] == "COMMITTED":
+                    transaction, lineage_tx = lineage_tx, None
+                    transaction.__exit__(None, None, None)
+                    return self._replay_cash_result(durable_work, paper_coordinator)
+                retained = durable_work["snapshot"]
+                # Retry always evaluates the first accepted input/zone state at its original reference.
+                if recovery or run_id != requested_run_id:
+                    recovery_clock = parse_ist_timestamp(retained["reference"])
+                now_dt, now_val = parse_ist_timestamp(retained["reference"]), parse_ist_timestamp(retained["reference"])
+                started_ist = format_ist_timestamp(now_dt)
+                zone_states = {key: set(value) for key, value in retained["zones"].items()}
+                equity_candles_map = {b["content"]["identity"]["symbol"]: b["content"]["candles"] for b in retained["batches"]}
+                index_candles_map = retained["auxiliary"]["index_candles"]
+                index_oc_map = retained["auxiliary"]["option_chains"]
+                instrument_errors = retained.get("acquisition_errors", [])[:]
             all_candles_map = dict(index_candles_map, **equity_candles_map)
             market_breadth = self._compute_universe_breadth(all_candles_map, now_val=now_val)
 
@@ -891,7 +971,7 @@ class IntradayBotEngine:
 
             for sig in signals:
                 if not is_simulated:
-                    self._require_current_scan_data(provider)
+                    self._require_current_scan_data(provider, now_dt=scan_now())
                 sig.provider = provider
                 sig.state_context = state_context
                 sig.interval_min = 5
@@ -908,6 +988,8 @@ class IntradayBotEngine:
                             scan_run_id=run_id,
                             now_ist=now_dt,
                         )
+                        if durable_work:
+                            self.store._lineage_checkpoint("after_signal_write")
                         if was_inserted:
                             persisted_signals_count += 1
                         else:
@@ -938,14 +1020,17 @@ class IntradayBotEngine:
                         "symbol": sig.symbol,
                         "strategy_id": sig.strategy_id,
                     })
+                elif durable_work:
+                    deferred_dispatches.append((len(telegram_dispatches), sig))
+                    telegram_dispatches.append(dict(ok=False, skipped=True, reason="delivery_not_recorded"))
                 else:
                     if not is_simulated:
-                        self._require_current_scan_data(provider)
+                        self._require_current_scan_data(provider, now_dt=scan_now())
                     res = self.telegram.send_signal(sig, broker_name=broker_label)
                     telegram_dispatches.append(res)
 
             if not is_simulated:
-                self._require_current_scan_data(provider)
+                self._require_current_scan_data(provider, now_dt=scan_now())
             if self.store is not None:
                 try:
                     for segment, zones in zone_states.items():
@@ -953,17 +1038,20 @@ class IntradayBotEngine:
                             zones, provider=provider, data_mode=data_mode, state_context=state_context,
                             segment=segment, interval_min=5, now_ist=now_dt,
                         )
+                        if durable_work:
+                            self.store._lineage_checkpoint("after_zone_write")
                 except Exception as db_exc:
                     persistence_status = "ERROR"
                     persistence_error = str(db_exc)
                     self.last_persistence_status = "ERROR"
                     self.last_persistence_error = str(db_exc)
                     logger.error("Mitigated Order Block persistence failed: %s", db_exc)
-            for segment, zones in zone_states.items():
-                self._zone_states[(provider, data_mode, segment)].update(zones)
+            if not durable_work:
+                for segment, zones in zone_states.items():
+                    self._zone_states[(provider, data_mode, segment)].update(zones)
 
             duration_ms = round((time.perf_counter() - started_wall) * 1000.0, 2)
-            completed_ist = format_ist_timestamp(self._now_ist())
+            completed_ist = format_ist_timestamp(scan_now())
             scan_status = "COMPLETED" if len(signals) > 0 else "COMPLETED_EMPTY"
 
             if self.store is not None:
@@ -985,6 +1073,8 @@ class IntradayBotEngine:
                         error_type="PersistenceError" if persistence_status == "ERROR" else None,
                         error_message=persistence_error,
                     )
+                    if durable_work:
+                        self.store._lineage_checkpoint("after_scan_result_write")
                     if persistence_status != "ERROR":
                         self.last_persistence_status = "OK"
                         self.last_persistence_error = None
@@ -996,7 +1086,8 @@ class IntradayBotEngine:
                     logger.error("Scan-run metadata persistence failed for %s: %s", run_id, db_exc)
 
             logger.info(
-                "Completed scan %s in %.2fms: status=%s, signals=%d, persisted=%d, duplicates=%d, persistence=%s",
+                "%s scan %s in %.2fms: status=%s, signals=%d, persisted=%d, duplicates=%d, persistence=%s",
+                "Staged" if durable_work else "Completed",
                 run_id,
                 duration_ms,
                 scan_status,
@@ -1029,8 +1120,36 @@ class IntradayBotEngine:
                 "signals": [s.to_dict() for s in signals],
                 "telegram_dispatches": telegram_dispatches,
                 "candle_freshness": ({"status": "SIMULATED", "live_signal_allowed": False} if is_simulated
-                                     else self._freshness_status(provider, self._now_ist())),
+                                     else self._freshness_status(provider, scan_now())),
             }
+            if durable_work:
+                if persistence_status != "OK":
+                    raise PersistenceError("LINEAGE_SCAN_RESULT_ROLLED_BACK")
+                summary["input_lineage"] = dict(version="cash-lineage-v1", run_id=run_id,
+                    batch_ids=[b["batch_id"] for b in durable_work["snapshot"]["batches"]],
+                    work_id=durable_work["snapshot"]["work_id"], reference=durable_work["snapshot"]["reference"],
+                    source_authenticity="NOT_ESTABLISHED", recovery_mode=bool(recovery or recovery_clock))
+                if recovery or recovery_clock:
+                    summary["candle_freshness"] = dict(status="RECOVERED_ACCEPTED_INPUT", live_signal_allowed=False)
+                self.store.finish_cash_scan(run_id, summary)
+                transaction, lineage_tx = lineage_tx, None
+                transaction.__exit__(None, None, None)
+                result_committed = True
+                logger.info("Committed scan %s with exact cash input linkage", run_id)
+                self.store._lineage_checkpoint("after_result_commit")
+                for segment, zones in zone_states.items():
+                    self._zone_states[(provider, data_mode, segment)].update(zones)
+                for index, sig in deferred_dispatches:
+                    if recovery or recovery_clock or not self._freshness_status(provider, scan_now())["live_signal_allowed"]:
+                        summary["telegram_dispatches"][index] = dict(ok=False, skipped=True, reason="recovery_or_stale_delivery_suppressed")
+                    else:
+                        try:
+                            summary["telegram_dispatches"][index] = self.telegram.send_signal(sig, broker_name=broker_label)
+                        except Exception:
+                            summary["telegram_dispatches"][index] = dict(ok=False, skipped=True, reason="delivery_unconfirmed")
+                if recovery or recovery_clock:
+                    for symbol in all_candles_map:
+                        self._candle_evidence.pop((provider, symbol), None)
             self.last_scan_summary = summary
             if paper_coordinator is not None:
                 try:
@@ -1044,22 +1163,49 @@ class IntradayBotEngine:
         except (CandleFreshnessError, BrokerIdentityError) as exc:
             self.last_broker_error = str(exc)
             self.last_broker_error_category = exc.error_category
-            self.last_candle_freshness = self._freshness_status(provider, self._now_ist())
+            self.last_candle_freshness = self._freshness_status(provider, scan_now())
+            if durable_work and not result_committed:
+                # All staged result writes are rolled back by the owner context.
+                persisted_signals_count = 0
+                self.last_persistence_status = "ERROR"
+                self.last_persistence_error = "LINEAGE_SCAN_RESULT_ROLLED_BACK"
             self.last_scan_summary = dict(status="error", scan_status="FAILED", error_type=type(exc).__name__,
                                           freshness=getattr(exc, "freshness", None), rejection=getattr(exc, "rejection", None), total_signals=persisted_signals_count,
                                           persisted_signals=persisted_signals_count, signals=[], telegram_dispatches=[])
-            if self.store is not None:
+            if self.store is not None and not durable_work:
                 try:
                     self.store.record_scan_run(
-                        run_id=run_id, started_at_ist=started_ist, completed_at_ist=format_ist_timestamp(self._now_ist()),
+                        run_id=run_id, started_at_ist=started_ist, completed_at_ist=format_ist_timestamp(scan_now()),
                         duration_ms=(time.perf_counter()-started_wall)*1000, status="FAILED", broker=adapter.name,
                         data_mode="LIVE", is_simulated=False, total_signals=persisted_signals_count,
                         persisted_signals=persisted_signals_count, error_type=type(exc).__name__, error_message=str(exc))
                 except PersistenceError as db_exc:
                     self.last_persistence_status, self.last_persistence_error = "ERROR", str(db_exc)
             raise
+        except (PersistenceError, PersistenceValidationError) as exc:
+            self.last_persistence_status, self.last_persistence_error = "ERROR", str(exc)
+            self.last_scan_summary = dict(status="error", scan_status="FAILED", run_id=run_id,
+                persistence_status="ERROR", total_signals=0, persisted_signals=0, signals=[], telegram_dispatches=[],
+                reason_code="LINEAGE_REQUIRES_RECOVERY", error_type=type(exc).__name__)
+            raise
+        except BrokerDataError:
+            # Acquisition failures already publish their existing FAILED outcome.
+            raise
+        except Exception as exc:
+            if is_simulated is False and self.store is not None:
+                self.last_persistence_status = "RECONCILIATION_REQUIRED" if result_committed else "ERROR"
+                self.last_persistence_error = type(exc).__name__
+                self.last_scan_summary = dict(status="error", scan_status="RECOVERY_REQUIRED", run_id=run_id,
+                    persistence_status=self.last_persistence_status, total_signals=0, persisted_signals=0,
+                    signals=[], telegram_dispatches=[], reason_code="LINEAGE_REQUIRES_RECOVERY",
+                    error_type=type(exc).__name__)
+            raise
         finally:
-            self._scan_lock.release()
+            try:
+                if lineage_tx is not None:
+                    lineage_tx.__exit__(*sys.exc_info())
+            finally:
+                self._scan_lock.release()
 
 
 class MarketScanScheduler:

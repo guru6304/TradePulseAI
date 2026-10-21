@@ -49,6 +49,7 @@ class ReleasePackager:
         "instrument_archive.py",
         "performance_acceptance.py",
         "release_management.py",
+        "candle_lineage.py",
     ]
 
     REQUIRED_ASSETS = [

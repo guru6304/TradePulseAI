@@ -1,0 +1,13 @@
+{
+  "head": "60834ddf0f6258e63fc73680df508075f5dd21b8",
+  "branch": "main",
+  "git_status": [
+    " M release_management.py",
+    " M scanner_engine.py",
+    " M storage.py",
+    "?? candle_lineage.py",
+    "?? docs/evidence/task4_initial_integration.txt",
+    "?? test_cash_lineage.py"
+  ],
+  "note": "Continuation: operator commit 60834dd now contains Task 3 and initial Task 4 baseline/design; preserve it."
+}

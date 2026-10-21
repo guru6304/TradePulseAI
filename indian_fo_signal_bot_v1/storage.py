@@ -36,6 +36,28 @@ class PersistenceValidationError(ValueError):
     """Raised when a signal, OI snapshot, or OI baseline record fails validation prior to database persistence."""
 
 
+class _BorrowedScanConnection:
+    """Existing writers may nest with-connection blocks, but cannot commit a scan."""
+    def __init__(self, connection):
+        self.connection, self.failed = connection, False
+
+    def __getattr__(self, name):
+        return getattr(self.connection, name)
+
+    def _reject_transaction_control(self):
+        self.failed = True
+        raise PersistenceError("LINEAGE_OUTER_TRANSACTION_OWNS_CONNECTION")
+
+    commit = rollback = close = _reject_transaction_control
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, traceback):
+        self.failed = self.failed or exc_type is not None
+        return False
+
+
 def resolve_sqlite_path(database_url: str) -> str:
     """
     Resolves a configured DATABASE_URL into a valid sqlite3 path or ':memory:'.
@@ -229,12 +251,16 @@ class SQLitePersistenceStore:
         self.database_url = database_url
         self.db_path = resolve_sqlite_path(database_url)
         self._db_lock = threading.RLock()
+        self._scan_local = threading.local()
         self._memory_conn: Optional[sqlite3.Connection] = None
         self._closed: bool = False
         _ACTIVE_SQLITE_STORES.add(self)
         self.initialize_schema()
 
     def _get_connection(self) -> sqlite3.Connection:
+        borrowed = getattr(self._scan_local, "connection", None)
+        if borrowed is not None:
+            return borrowed
         try:
             if self.db_path == ":memory:":
                 if self._memory_conn is None:
@@ -270,6 +296,8 @@ class SQLitePersistenceStore:
             raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
 
     def _close_if_file(self, conn: Optional[sqlite3.Connection]) -> None:
+        if isinstance(conn, _BorrowedScanConnection):
+            return
         if conn is not None and self.db_path != ":memory:":
             try:
                 conn.close()
@@ -772,11 +800,69 @@ class SQLitePersistenceStore:
                         master_id TEXT PRIMARY KEY, provider TEXT NOT NULL,
                         original_bytes BLOB NOT NULL, candidate_json TEXT NOT NULL
                     )""")
+                    from candle_lineage import create_schema
+                    create_schema(conn)
             except Exception as exc:
                 logger.error("Schema initialization failed: %s", exc)
                 raise PersistenceError(f"Failed to initialize SQLite schema: {exc}") from exc
             finally:
                 self._close_if_file(conn)
+
+    def _lineage_checkpoint(self, boundary):
+        """Named real write boundaries for controlled offline interruption tests."""
+
+    @contextmanager
+    def lineage_read(self):
+        borrowed = getattr(self._scan_local, "connection", None)
+        if borrowed is not None:
+            yield borrowed
+        else:
+            with self.paper_transaction(write=False) as conn:
+                yield conn
+
+    @contextmanager
+    def scan_result_transaction(self):
+        """One SQLite transaction for legacy scanner writers, never network I/O."""
+        with self._db_lock:
+            if getattr(self._scan_local, "connection", None) is not None:
+                raise PersistenceError("Nested scan-result transactions are unsupported.")
+            conn = self._get_connection()
+            borrowed = _BorrowedScanConnection(conn)
+            try:
+                conn.execute("BEGIN IMMEDIATE")
+                self._scan_local.connection = borrowed
+                yield borrowed
+                if borrowed.failed:
+                    raise PersistenceError("LINEAGE_NESTED_WRITE_FAILED")
+                conn.commit()
+            except sqlite3.Error as exc:
+                conn.rollback()
+                raise PersistenceError("LINEAGE_RESULT_STORAGE_FAILURE") from exc
+            except BaseException:
+                conn.rollback()
+                raise
+            finally:
+                self._scan_local.connection = None
+                self._close_if_file(conn)
+
+    def prepare_cash_scan(self, run_id, snapshot):
+        from candle_lineage import prepare
+        return prepare(self, run_id, snapshot)
+
+    def load_cash_scan(self, run_id):
+        from candle_lineage import load
+        return load(self, run_id)
+
+    def pending_cash_scans(self, limit=100):
+        if type(limit) is not int or not 1 <= limit <= 200:
+            raise PersistenceValidationError("Invalid pending scan limit.")
+        with self.lineage_read() as conn:
+            return [dict(row) for row in conn.execute(
+                "SELECT run_id,work_id,status FROM cash_candle_scans WHERE status='PENDING' ORDER BY run_id LIMIT ?", (limit,))]
+
+    def finish_cash_scan(self, run_id, summary):
+        from candle_lineage import finish
+        return finish(self, run_id, summary)
 
     @contextmanager
     def paper_transaction(self, write=True):

@@ -87,3 +87,19 @@ Before any live trading or live scheduler service can be authorized:
 Do not follow the historical instructions to infer subscription/IP causes, disable IP restrictions, or replace observed option premiums with Black-Scholes/delta fills. A locally generated hash/HMAC does not authenticate an external publisher. Source qualification currently has no supported verifier. Task 3 supplies corrected owners, prerequisites and closure criteria.
 
 The original report body above is retained as historical evidence. Current authority: [Task 3 forensic, stability and readiness report](TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md).
+
+## Task 4 B04 update - 2026-10-21
+
+[Task 4 cash-candle lineage and recovery evidence](TRADEPULSE_TASK4_CASH_CANDLE_LINEAGE_AND_RECOVERY_REPORT.md)
+closes B04's defined offline implementation/recovery work: immutable accepted completed
+cash inputs, transactional scan/signal linkage, pending-work recovery, duplicate and
+correction protection, and interrupted paper-handoff reconciliation. Live provider
+handoff and operational acceptance remain unverified; this does not close end-to-end
+cash acceptance. Task 3's remaining B02 and B05-B12 dependencies and owners remain
+applicable; the Task 4 report carries their current closure requirements forward.
+
+Next acceptance task: operator/account/token/scope confirmation followed by separate
+authorization for the bounded Upstox RELIANCE quote/candle diagnostic. No live request
+is authorized by this addendum. The offline B05 dynamic NFO import/source-universe
+work can proceed independently when its authoritative input/scope is available.
+Scores remain 64.25% implementation / 37.00% verified readiness; 0/12 accepted.

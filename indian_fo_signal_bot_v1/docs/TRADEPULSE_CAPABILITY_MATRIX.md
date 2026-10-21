@@ -315,3 +315,29 @@ No broker requests, token refresh, production scheduling or Telegram delivery ra
 Current provider access, cash pipeline, qualified NFO/history, paper soak and release
 operations remain unaccepted. The report supplies exact tests, failures/reruns,
 blocker owners and closure gates; no new test count or report alone raises a score.
+
+## Task 4 cash lineage and recovery addendum - 2026-10-21
+
+The [Task 4 cash-candle lineage and recovery report](reports/TRADEPULSE_TASK4_CASH_CANDLE_LINEAGE_AND_RECOVERY_REPORT.md)
+records B04's new offline implementation and acceptance evidence. Validated completed
+cash inputs now have immutable SQLite facts/batches, exact scan/signal links, pending
+work discovery and atomic scanner-result persistence. Explicit offline recovery
+reuses the original inputs/configuration/code/reference and suppresses notification
+delivery; interrupted paper handoffs retain existing ledger idempotency. Input commit
+alone never claims a successful scan. Local hashes establish integrity, not publisher
+authenticity. Conflicting accepted candle corrections fail closed.
+
+B04's defined offline engineering criteria are complete. Real-provider handoff and
+operational acceptance remain live-unverified. Different pending work for one provider
+requires recovery first; this is not a durable notification outbox or a general F&O/
+historical replay guarantee. The Task 4 report supplies exact fault tests, observed
+database states, current blockers and final regression results.
+
+No whole milestone crosses the official rubric's next threshold: **64.25%
+implementation / 37.00% verified readiness; 0/12 accepted** remain unchanged from
+Task 3. M03/M06 gain durable input/result mechanics, M09 gains interrupted-handoff
+evidence and M11/M12 gain local recovery evidence, while their broader functional
+and operational requirements remain unmet. No broker requests, live token refresh,
+orders, production scheduling or Telegram delivery were performed. Separate operator
+authorization/account evidence remains prerequisite to bounded Upstox read-only
+acceptance; live trading remains unauthorized and unaccepted.

@@ -1,0 +1,456 @@
+{
+  "scope": "OFFLINE_ONLY_NO_OPERATIONAL_ACCEPTANCE",
+  "head": "60834ddf0f6258e63fc73680df508075f5dd21b8",
+  "branch": "main",
+  "commands": [
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage test_phase4_e2e test_phase5b_forward test_release_management -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 45,
+        "passed": 45,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 9.917,
+      "evidence": "docs/evidence/task4_initial_integration.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 19,
+        "passed": 19,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 4.033,
+      "evidence": "docs/evidence/task4_recovery_first.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 25,
+        "passed": 25,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 5.011,
+      "evidence": "docs/evidence/task4_recovery_hardening.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot -v",
+      "exit_code": 1,
+      "counts": {
+        "executed": 673,
+        "passed": 671,
+        "failure_records": 3,
+        "failed_cases": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 196.248,
+      "evidence": "docs/evidence/task4_full_offline_suite.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage.TestCashScannerRecovery.test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals -v",
+      "exit_code": 1,
+      "counts": {
+        "executed": 1,
+        "passed": 0,
+        "failure_records": 1,
+        "failed_cases": 1,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 0.197,
+      "evidence": "docs/evidence/task4_freshness_rollback_before.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage test_phase4_e2e test_continuous_acceptance.TestPerformanceAcceptanceHarness -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 37,
+        "passed": 37,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 10.764,
+      "evidence": "docs/evidence/task4_status_regression.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 674,
+        "passed": 674,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 107.987,
+      "evidence": "docs/evidence/task4_full_offline_suite_final.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage.TestCashScannerRecovery.test_overlapping_recovery_cannot_replace_original_committed_scan_outcome -v",
+      "exit_code": 1,
+      "counts": {
+        "executed": 1,
+        "passed": 0,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 1,
+        "skipped": 0
+      },
+      "seconds": 0.162,
+      "evidence": "docs/evidence/task4_overlap_before.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_cash_lineage test_phase4_e2e -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 36,
+        "passed": 36,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 7.365,
+      "evidence": "docs/evidence/task4_overlap_after.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    },
+    {
+      "command": "python -B -W error::ResourceWarning -m unittest test_bot -v",
+      "exit_code": 0,
+      "counts": {
+        "executed": 675,
+        "passed": 675,
+        "failure_records": 0,
+        "failed_cases": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "seconds": 111.901,
+      "evidence": "docs/evidence/task4_regression_verified.txt",
+      "scope": "OFFLINE_FIXTURE_MOCK_TEMPORARY_SQLITE"
+    }
+  ],
+  "unique_python_cases": 675,
+  "node": {
+    "command": "node test_cash_dashboard.js",
+    "exit_code": 0,
+    "passed": 6,
+    "failures": 0,
+    "skipped": 0
+  },
+  "compile": {
+    "files": 39,
+    "exit_code": 0,
+    "is_test_count": false
+  },
+  "configuration": {
+    "active_broker": "upstox",
+    "authentication": "NOT_TESTED",
+    "candles": "NOT_TESTED",
+    "configuration_ready": true,
+    "data_persisted": false,
+    "enable_background_scheduler": false,
+    "line_number": null,
+    "live_requests": false,
+    "quote": "NOT_TESTED",
+    "readiness_receipt_issued": false,
+    "reason_code": "LOCAL_CONFIGURATION_VALID",
+    "scope": "LOCAL_CONFIGURATION_ONLY",
+    "status": "PASS",
+    "telegram_dry_run": true
+  },
+  "scores": {
+    "weights": [
+      8,
+      12,
+      12,
+      10,
+      10,
+      12,
+      10,
+      10,
+      6,
+      4,
+      3,
+      3
+    ],
+    "implementation": [
+      75,
+      75,
+      75,
+      75,
+      25,
+      75,
+      75,
+      50,
+      50,
+      50,
+      75,
+      50
+    ],
+    "readiness": [
+      50,
+      25,
+      50,
+      25,
+      0,
+      50,
+      50,
+      25,
+      50,
+      50,
+      50,
+      50
+    ],
+    "weighted_implementation": 64.25,
+    "weighted_readiness": 37.0,
+    "fully_accepted": 0,
+    "milestones": 12
+  },
+  "unchanged_task3_python": {
+    "backtest_engine.py": true,
+    "brokers.py": true,
+    "config.py": true,
+    "configuration_check.py": true,
+    "diagnostics.py": true,
+    "forward_paper.py": true,
+    "historical_data.py": true,
+    "instrument_archive.py": true,
+    "instrument_identity.py": true,
+    "paper_portfolio.py": true,
+    "performance_acceptance.py": true,
+    "readiness_policy.py": true,
+    "research_protocol.py": true,
+    "server.py": true,
+    "source_qualification.py": true,
+    "strategies.py": true,
+    "telegram_bot.py": true,
+    "test_angel_market_data.py": true,
+    "test_blocker_removal.py": true,
+    "test_completion_engineering.py": true,
+    "test_continuous_acceptance.py": true,
+    "test_market_data_contract.py": true,
+    "test_phase4_e2e.py": true,
+    "test_phase4_market_data.py": true,
+    "test_phase4_strategy.py": true,
+    "test_phase5a_contracts.py": true,
+    "test_phase5a_integration.py": true,
+    "test_phase5a_paper.py": true,
+    "test_phase5a_provenance.py": true,
+    "test_phase5b_forward.py": true,
+    "test_phase5c_recovery.py": true,
+    "test_release_management.py": true,
+    "upstox_diagnostics.py": true
+  },
+  "historical_reports_unchanged": {
+    "docs\\reports\\TRADEPULSE_BLOCKERS_AND_NEXT_ACTIONS_20261019_FORENSIC_AUDIT.md": true,
+    "docs\\reports\\TRADEPULSE_CAPABILITY_ACCEPTANCE_REPORT_20261019_FORENSIC_AUDIT.md": true,
+    "docs\\reports\\TRADEPULSE_CHANGE_LEDGER_20261019_FORENSIC_AUDIT.md": true,
+    "docs\\reports\\TRADEPULSE_PROJECT_INVENTORY_20261019_FORENSIC_AUDIT.md": true,
+    "docs\\reports\\TRADEPULSE_SCORECARD_AND_MILESTONE_EVIDENCE_20261019_FORENSIC_AUDIT.md": true,
+    "docs\\reports\\TRADEPULSE_TASK2_CASH_DATA_ACCEPTANCE_MATRIX.md": true,
+    "docs\\reports\\TRADEPULSE_TASK2_CHANGE_LEDGER.md": true,
+    "docs\\reports\\TRADEPULSE_TASK2_IMPLEMENTATION_AND_TEST_REPORT.md": true,
+    "docs\\reports\\TRADEPULSE_TASK2_M01_M12_SCORECARD.md": true,
+    "docs\\reports\\TRADEPULSE_TASK2_PROJECT_FORENSIC_INVENTORY.md": true,
+    "docs\\reports\\TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md": true,
+    "docs\\reports\\TRADEPULSE_TASK_IMPLEMENTATION_REPORT_20261019_FORENSIC_AUDIT.md": true
+  },
+  "original_report_prefixes_preserved": {
+    "docs/TRADEPULSE_CAPABILITY_MATRIX.md": true,
+    "docs/reports/TRADEPULSE_TASK2_BLOCKERS_AND_NEXT_ACTIONS.md": true
+  },
+  "python_sha256": {
+    "backtest_engine.py": "9bc71e03e51e56675d298bd2467608bf7806cce1b73572c33aa8bc22c7b69cb4",
+    "brokers.py": "f53e9cde8bd0bb996424931d767d84c84fb72b31d64be1ff02f75b7ff3dadcb4",
+    "candle_lineage.py": "ef8563bc6ea8106d17a82d2ff87de5250bed34305c81e7e95c006246b7b9ba06",
+    "config.py": "e8392482de4a38d8da926560f4aecad38d14d7df2155b147bca078b4824a929e",
+    "configuration_check.py": "8d320650914e4603393d1376b5abc27e1744f87d5a019cc16db70f172048e76a",
+    "diagnostics.py": "bc1462ffc0e69537f8a993c278d681ae4d1629ecb2843a95d5bdf1f12c4cbc4a",
+    "forward_paper.py": "c3026be8b3813be6c55d1bb21712d9b758815ae35e515751c6b5d12e6b96a3c4",
+    "historical_data.py": "b8eb2d7f47a04a16b4c78732eaafcd3e3f38d86efc05a868b4b9662aba2466a9",
+    "instrument_archive.py": "ae4d6ac52611953a88274e4adfab489c70b2ebc36e09c6a6493404bb89a81418",
+    "instrument_identity.py": "2ddf9cdc4e0c36a5ad2a79977f84e154d0d80671a3556a994f18cdc30e257c08",
+    "paper_portfolio.py": "664b1de60daf926457440ae69c84f3dba0c05013830d9c980891ed71c3f3da50",
+    "performance_acceptance.py": "1979d0dc0393ec720f7b18561638301e1c2d7173737bb0862821d1c8bfb94387",
+    "readiness_policy.py": "d4e78ea3230ff128fad7ccfe1958c1c77a0df0f56af45ff1f01a489b6914d286",
+    "release_management.py": "2cccf005d08aa8ab72566573bc69bb60f96bdde0853e40e253ca90db3182c2ce",
+    "research_protocol.py": "0c2635364d4958b52cf79a9e354116e52d07de01ef079e4136f231808aed58d2",
+    "scanner_engine.py": "72d54246efb1f691b7e271515b50f97b8e9f235f76aaf0fa7845b3ed5774386c",
+    "server.py": "0a36d43d5aeda8fb767801eafad572b3003549a1f64590037e2f9e61d67e6ac9",
+    "source_qualification.py": "05af9e8728b5b420e4e493e3ab8d20876df879ce90868810f937716dbeda97b3",
+    "storage.py": "8d6a6cf15733a7d1cee929e5f399af577fc5da8fcc8eb6fb222f8117cb5e1561",
+    "strategies.py": "90625a7a66984a6fd9a9f799e61229dd8c086220fd5ab7455ac75fe4266222ab",
+    "telegram_bot.py": "4d2f2eeae55c813e7d030b9362aaac964c06a45db7977fd268ad6cb1aa2f6ef5",
+    "test_angel_market_data.py": "683bb6b181e443a35485bd37b4d8435290dbebcc16c29a0bb73243e371f1d450",
+    "test_blocker_removal.py": "d56e0e6ab4bdcf58458e897270012661a671473e580d609bf86380dc98c2cd58",
+    "test_bot.py": "b2f68102a6f51d60147aab27448574dacbbdd7c0253c8ff5202a02977ca7b9f3",
+    "test_cash_lineage.py": "239641a3f5456e18c1bfccdff8974867130a06d2faca4ce4ab4da1ae682e1df7",
+    "test_completion_engineering.py": "c479e186d115dd40421051e245f0790413800211bfd0a0a1c9c58b2c1a1a7ca4",
+    "test_continuous_acceptance.py": "0a8aed2247bb018bb8f718795d214c3bdb7f7f6e54028d74f9f2a3071d549191",
+    "test_market_data_contract.py": "a9fb0fbfa1bdefe5aebbe56e74c385fd690670bb7b07b32850c17ee0ae06e93e",
+    "test_phase4_e2e.py": "1bc019e6c1231b895c028e1932ced22fea6441cbce5a28113383e6dff3dcfd85",
+    "test_phase4_market_data.py": "b4920f16e14026b00da9a080c3e202950896ff008e979181d0f8fe5b4313386d",
+    "test_phase4_strategy.py": "c8462b6ed413f14a7aaf0d3371db9eed049d00577b2b24c6b6888764083b542a",
+    "test_phase5a_contracts.py": "de1014845de35ad3c3888cbcd4bf906c0fc0e9c55d0366dbc6e1735b87339186",
+    "test_phase5a_integration.py": "202a8aa5ac9c8a9542b00eaab575ac2e790efc24707f273b3158cf6ab9a22b61",
+    "test_phase5a_paper.py": "a5dc2057fd374b08b916eb20fed062abb42c123733c6d60d81339944724e4b74",
+    "test_phase5a_provenance.py": "fc47b7603827aaa6a027a21b18e7ff03dd1b18fe23e18815d3dcd425d71705bb",
+    "test_phase5b_forward.py": "b4c7df03d1c8fad11b424f1ee28916e832d5130a7bf936d5dee025d86dad730e",
+    "test_phase5c_recovery.py": "8526e4aa110cec9755a30d075ddf9574f5e663dea8a38bebedb089015c7516e9",
+    "test_release_management.py": "74cb3eead8c2212fc6033faae704165852495294a19cf05a2e1562a1455d5fb1",
+    "upstox_diagnostics.py": "d45582fa5a61eddc30189361f9535cce88adff62ad5550c07ed830061d41ddf6"
+  },
+  "report": {
+    "path": "docs\\reports\\TRADEPULSE_TASK4_CASH_CANDLE_LINEAGE_AND_RECOVERY_REPORT.md",
+    "sha256": "a3d9dd79f4c5aea331d6e3fc2d419c06eea1e9abb0c8c547943fd79812ea17ad",
+    "physically_reopened": true
+  },
+  "git_status": [
+    "M docs/TRADEPULSE_CAPABILITY_MATRIX.md",
+    " M docs/reports/TRADEPULSE_TASK2_BLOCKERS_AND_NEXT_ACTIONS.md",
+    " M docs/reports/TRADEPULSE_TASK4_CASH_CANDLE_LINEAGE_AND_RECOVERY_REPORT.md",
+    " M release_management.py",
+    " M scanner_engine.py",
+    " M storage.py",
+    " M test_bot.py",
+    "?? candle_lineage.py",
+    "?? docs/TRADEPULSE_EXECUTION_LEDGER.md",
+    "?? docs/evidence/master_phase0_task4_audit.txt",
+    "?? docs/evidence/task4_compile.txt",
+    "?? docs/evidence/task4_configuration_check.txt",
+    "?? docs/evidence/task4_dashboard_tests.txt",
+    "?? docs/evidence/task4_freshness_rollback_before.txt",
+    "?? docs/evidence/task4_full_offline_suite.txt",
+    "?? docs/evidence/task4_full_offline_suite_final.txt",
+    "?? docs/evidence/task4_initial_integration.txt",
+    "?? docs/evidence/task4_node_syntax.txt",
+    "?? docs/evidence/task4_overlap_after.txt",
+    "?? docs/evidence/task4_overlap_before.txt",
+    "?? docs/evidence/task4_recovery_first.txt",
+    "?? docs/evidence/task4_recovery_hardening.txt",
+    "?? docs/evidence/task4_regression_verified.txt",
+    "?? docs/evidence/task4_resume_baseline.json",
+    "?? docs/evidence/task4_status_regression.txt",
+    "?? docs/evidence/task4_test_inventory.json",
+    "?? docs/evidence/task4_verification.json",
+    "?? docs/evidence/task4_verify.py",
+    "?? test_cash_lineage.py"
+  ],
+  "artifacts": [
+    {
+      "path": "docs\\evidence\\task4_baseline.json",
+      "bytes": 8746,
+      "sha256": "a798a872af0bd51d688d49637677d1d30cf98edd4fc87a6e4806760a83d57668"
+    },
+    {
+      "path": "docs\\evidence\\task4_compile.txt",
+      "bytes": 54,
+      "sha256": "0e4bd4c8f9386d3a14d0486db963a8137a09500907a985756d7b34af916aae3e"
+    },
+    {
+      "path": "docs\\evidence\\task4_configuration_check.txt",
+      "bytes": 814,
+      "sha256": "f0fa61908a138266a39db479b94964cc88bad8276744c875edd0d116f308155b"
+    },
+    {
+      "path": "docs\\evidence\\task4_dashboard_tests.txt",
+      "bytes": 1224,
+      "sha256": "1bc96593c0a10e80960b74a0c6400eea1f2837755cdc6f28145ab3ffa939476c"
+    },
+    {
+      "path": "docs\\evidence\\task4_freshness_rollback_before.txt",
+      "bytes": 3120,
+      "sha256": "1796fce11c84faf6e294446be644d7db3702f451bc7323ab3b0c727a601ef1a7"
+    },
+    {
+      "path": "docs\\evidence\\task4_full_offline_suite.txt",
+      "bytes": 356814,
+      "sha256": "758d2d6baafc51e3ea2df7f93e4b34fef8deb93672185dd2097943e1f2370387"
+    },
+    {
+      "path": "docs\\evidence\\task4_full_offline_suite_final.txt",
+      "bytes": 351846,
+      "sha256": "87523f4dbd53e742d6c04ec52755821457d1dc5f88cff2fecb4d1802fbccc248"
+    },
+    {
+      "path": "docs\\evidence\\task4_initial_integration.txt",
+      "bytes": 37316,
+      "sha256": "a77536598c31fa36ce8ff24d7a11c5059ed9e71a0c6a720d25ab5294ca8e64e1"
+    },
+    {
+      "path": "docs\\evidence\\task4_node_syntax.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs\\evidence\\task4_overlap_after.txt",
+      "bytes": 62304,
+      "sha256": "3e7c5d71a22603c000a93b20effa583f99beb7f4e3c277b887af3557157bfd92"
+    },
+    {
+      "path": "docs\\evidence\\task4_overlap_before.txt",
+      "bytes": 5714,
+      "sha256": "72f0f0a2b43debb5af9cadbff54159b5e925b7e7b47a85cb29e8a1253961670a"
+    },
+    {
+      "path": "docs\\evidence\\task4_recovery_first.txt",
+      "bytes": 18304,
+      "sha256": "65b47fcc6e7528771205268af06173d075b1c123f912a053195255aa46446558"
+    },
+    {
+      "path": "docs\\evidence\\task4_recovery_hardening.txt",
+      "bytes": 32690,
+      "sha256": "f2321fc8d6c902ba6d5f021eec5aff59470bcdf6e252f98bbad877dd7ac441ae"
+    },
+    {
+      "path": "docs\\evidence\\task4_regression_verified.txt",
+      "bytes": 353430,
+      "sha256": "f48eba041d4977d225ac1deeecf088815c4a2e2a305ec3dcc15b710ddd8b7dbb"
+    },
+    {
+      "path": "docs\\evidence\\task4_resume_baseline.json",
+      "bytes": 426,
+      "sha256": "cc5612f86129502a68bb3a006b71bbf8923284b4516b1af6544befc77d7476e7"
+    },
+    {
+      "path": "docs\\evidence\\task4_status_regression.txt",
+      "bytes": 61546,
+      "sha256": "8996b2aee8d2bac0c90d123739531d266ab9c91818968369473c8198598f1a34"
+    },
+    {
+      "path": "docs\\evidence\\task4_test_inventory.json",
+      "bytes": 77109,
+      "sha256": "d84174aac21a3ad7dfee745abe1b0c6d497b8d902546a5cbc3a41da8a37ec375"
+    },
+    {
+      "path": "docs\\evidence\\task4_verify.py",
+      "bytes": 8237,
+      "sha256": "50952bac0ad145b2e6c04b7a0333af295c6992831697409b641e5d56106e213f"
+    }
+  ]
+}
