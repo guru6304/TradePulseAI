@@ -56,6 +56,23 @@ from telegram_bot import TelegramSignalDispatcher
 from scanner_engine import IntradayBotEngine, MarketScanScheduler
 
 
+def _set_loopback_request_context(handler):
+    """Complete in-memory HTTP fixtures with the same context as a local socket.
+
+    Keep the real request security guard active; real hostile requests have
+    independent HTTP coverage in test_local_api_security.
+    """
+    from email.message import Message
+    from types import SimpleNamespace
+    headers = Message()
+    for key, value in getattr(handler, "headers", {}).items():
+        headers[key] = value
+    headers["Host"] = "127.0.0.1:8080"
+    handler.headers = headers
+    handler.server = SimpleNamespace(server_address=("127.0.0.1", 8080))
+    handler.client_address = ("127.0.0.1", 12345)
+
+
 class _FixtureTriggeredAdapter(BaseBrokerAdapter):
     """
     Test-only adapter that supplies a known valid setup for one symbol and non-triggering
@@ -1677,6 +1694,7 @@ class TestIndianFOSignalBotPhase1D(unittest.TestCase):
         # Helper to invoke DashboardRequestHandler in-memory without opening a network socket
         def call_api(method: str, path: str) -> tuple:
             handler = DashboardRequestHandler.__new__(DashboardRequestHandler)
+            _set_loopback_request_context(handler)
             handler.engine = engine
             handler.scheduler = scheduler
             handler.path = path
@@ -1920,6 +1938,7 @@ class TestIndianFOSignalBotPhase1D(unittest.TestCase):
 
         def get_health_payload() -> dict:
             handler = DashboardRequestHandler.__new__(DashboardRequestHandler)
+            _set_loopback_request_context(handler)
             handler.path = "/api/health"
             handler.command = "GET"
             handler.request_version = "HTTP/1.1"
@@ -2053,7 +2072,7 @@ class TestIndianFOSignalBotPhase1E(unittest.TestCase):
             opt_req = urllib.request.Request(f"http://127.0.0.1:{port}/api/scan", method="OPTIONS")
             with urllib.request.urlopen(opt_req, timeout=5) as resp:
                 self.assertEqual(resp.status, 204)
-                self.assertEqual(resp.headers.get("Access-Control-Allow-Origin"), "*")
+                self.assertIsNone(resp.headers.get("Access-Control-Allow-Origin"))
                 self.assertIn("POST", resp.headers.get("Access-Control-Allow-Methods", ""))
 
             # 3) Private files, dotfiles inside public/, and non-allowlisted extensions inside public/ must return 404
@@ -6431,6 +6450,7 @@ class TestIndianFOSignalBotPhase3B1A(unittest.TestCase):
                     handler = object.__new__(DashboardRequestHandler)
                     handler.path = path
                     handler.headers = {"Content-Length": str(len(body))}
+                    _set_loopback_request_context(handler)
                     handler.rfile = io.BytesIO(body)
                     handler.engine = SimpleNamespace(
                         config=self.cfg, store=self.store,
@@ -6871,7 +6891,7 @@ class TestIndianFOSignalBotPhase3B1B(unittest.TestCase):
 
     def test_truncated_reads_and_storage_errors_fail_closed(self):
         from readiness_policy import historical_coverage, live_acceptance
-        with patch.object(self.store, "query_historical_candles", return_value={"total_count": 10001, "items": []}):
+        with patch.object(self.store, "read_historical_snapshot", return_value={"total_count": 10001, "items": []}):
             self.assertEqual(historical_coverage(self.cfg, self.store, "angelone", "RELIANCE")["status"], "COVERAGE_UNVERIFIABLE_READ_LIMIT")
         with patch.object(self.store, "load_live_acceptance_evidence", side_effect=OSError("unreadable")):
             self.assertFalse(live_acceptance(self.cfg, self.store, "angelone", "RELIANCE", self.now)["accepted"])
@@ -8045,6 +8065,7 @@ class TestMarketDataFreshness(unittest.TestCase):
                 handler = object.__new__(DashboardRequestHandler)
                 handler.engine = engine
                 handler.path = route
+                _set_loopback_request_context(handler)
                 handler._ensure_initialized = MagicMock()
                 handler._send_json = MagicMock()
                 getattr(handler, method)()
@@ -10314,7 +10335,9 @@ def load_tests(loader, tests, pattern):
                        "test_phase4_e2e", "test_phase4_strategy", "test_phase5a_contracts",
                        "test_phase5a_provenance", "test_phase5a_paper", "test_phase5a_integration", "test_phase5b_forward",
                        "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal", "test_completion_engineering",
-                       "test_release_management", "test_cash_lineage"):
+                       "test_release_management", "test_cash_lineage", "test_cash_workflow", "test_verify_offline",
+                       "test_contract_universe", "test_historical_pagination", "test_notification_outbox", "test_local_api_security",
+                       "test_release_operations", "test_paper_sessions"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

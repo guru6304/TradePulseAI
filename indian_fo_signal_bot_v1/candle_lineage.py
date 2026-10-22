@@ -281,11 +281,17 @@ def _check_committed_outcome(conn, run_id, snapshot, result):
     for sig in result["signals"]:
         key = compute_signal_dedup_key(sig, result["broker"])
         persisted = conn.execute("SELECT * FROM signals WHERE dedup_key=?", (key,)).fetchone()
-        if (not persisted or persisted["symbol"] != sig["symbol"]
-                or persisted["segment"] != sig["segment"]
+        money = ("entry_price", "entry_zone_low", "entry_zone_high", "stop_loss", "invalidation_level",
+                 "target_1", "target_2", "capital_risk_inr", "est_charges_inr")
+        exact = ("symbol", "segment", "strategy_id", "strategy_name", "direction", "position_type",
+                 "instrument_label", "risk_reward", "confidence_pct", "quality_score", "position_qty",
+                 "win_rate_benchmark", "rationale", "provider", "state_context", "interval_min", "data_mode")
+        if (not persisted or any(persisted[k] != sig[k] for k in exact)
+                or persisted["is_simulated"] != int(sig["is_simulated"])
+                or persisted["candle_timestamp"] != sig["timestamp"]
                 or json.loads(persisted["instrument_identity_json"]) != sig["instrument_identity"]
-                or any(persisted[k] != round(float(sig[k]), 2) for k in
-                       ("entry_price", "stop_loss", "target_1", "target_2"))):
+                or json.loads(persisted["score_breakdown_json"]) != sig["score_breakdown"]
+                or any(persisted[k] != round(float(sig[k]), 2) for k in money)):
             raise PersistenceValidationError("LINEAGE_SIGNAL_INTEGRITY_FAILURE")
         if sig["segment"] == "NSE_EQUITY_INTRADAY":
             if sig["symbol"] not in by_symbol:
@@ -295,6 +301,10 @@ def _check_committed_outcome(conn, run_id, snapshot, result):
         "SELECT dedup_key,batch_id FROM cash_candle_signal_inputs WHERE run_id=?", (run_id,))}
     if expected != actual:
         raise PersistenceValidationError("LINEAGE_SIGNAL_LINK_INTEGRITY_FAILURE")
+    if "notification_intents" in result:
+        outbox = {r[0] for r in conn.execute("SELECT intent_id FROM notification_outbox WHERE run_id=?", (run_id,))}
+        if outbox != set(result["notification_intents"]):
+            raise PersistenceValidationError("LINEAGE_NOTIFICATION_LINK_INTEGRITY_FAILURE")
 
 
 def finish(store, run_id, summary):
@@ -321,6 +331,53 @@ def finish(store, run_id, summary):
     conn.execute("UPDATE cash_candle_scans SET status='COMMITTED',result_json=?,result_digest=? WHERE run_id=?",
                  (body, digest(summary), run_id))
     store._lineage_checkpoint("before_result_commit")
+
+
+def public_summary(work):
+    """Bounded source locators for read-only API inspection; no runtime secrets."""
+    snapshot = work["snapshot"]
+    return dict(run_id=work["run_id"], status=work["status"], work_id=snapshot["work_id"],
+        version=snapshot["version"], reference=snapshot["reference"], code_digest=snapshot["code_digest"],
+        profile_digest=snapshot["profile_digest"], source_authenticity="NOT_ESTABLISHED",
+        historical_replay_allowed=False, current_live_acceptance=False,
+        batches=[dict(batch_id=b["batch_id"], identity=b["content"]["identity"], interval_min=5,
+            candle_count=len(b["content"]["candles"]), first_timestamp=b["content"]["candles"][0]["timestamp"],
+            last_timestamp=b["content"]["candles"][-1]["timestamp"], validation=b["validation"],
+            retrieved_at=b["retrieved_at"], source_observation_at=b["source_observation_at"])
+            for b in snapshot["batches"]])
+
+
+def annotate_signals(store, items, account_id=None):
+    """Reconcile archived candidates before exposing their lineage or paper state."""
+    from storage import PersistenceValidationError
+    cache = {}
+    with store.lineage_read() as conn:
+        for item in items:
+            run_id = item["scan_run_id"]
+            if run_id not in cache:
+                exists = conn.execute("SELECT 1 FROM cash_candle_scans WHERE run_id=?", (run_id,)).fetchone()
+                cache[run_id] = load(store, run_id, connection=conn) if exists else None
+            work = cache[run_id]
+            if work:
+                item["lineage"] = public_summary(work)
+                item["lineage"]["batch_ids"] = [r[0] for r in conn.execute(
+                    "SELECT batch_id FROM cash_candle_signal_inputs WHERE run_id=? AND dedup_key=?",
+                    (run_id, item["dedup_key"]))]
+            else:
+                item["lineage"] = dict(status="NOT_RETAINED", run_id=run_id, batch_ids=[])
+            item["actionable"] = False  # Stored candidates never authorize real execution.
+            item["recommendation_status"] = "CANDIDATE_ONLY"
+            if account_id:
+                row = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND signal_key=?",
+                                   (account_id, item["dedup_key"])).fetchone()
+                if row:
+                    decision = json.loads(row[0])
+                    if decision["signal_key"] != item["dedup_key"] or decision["account_id"] != account_id:
+                        raise PersistenceValidationError("PAPER_DECISION_SCOPE_CONFLICT")
+                    item["paper_decision"] = {k: decision[k] for k in ("status", "reason_code", "position_id", "account_id")}
+                    item["recommendation_status"] = "PAPER_" + decision["status"]
+            item.setdefault("paper_decision", dict(status="NOT_EVALUATED", reason_code="NO_PAPER_DECISION"))
+    return items
 
 
 def replay_summary(work):

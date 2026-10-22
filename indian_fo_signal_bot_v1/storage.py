@@ -802,6 +802,10 @@ class SQLitePersistenceStore:
                     )""")
                     from candle_lineage import create_schema
                     create_schema(conn)
+                    from contract_universe import create_schema as create_contract_cache_schema
+                    create_contract_cache_schema(conn)
+                    from notification_outbox import create_schema as create_outbox_schema
+                    create_outbox_schema(conn)
             except Exception as exc:
                 logger.error("Schema initialization failed: %s", exc)
                 raise PersistenceError(f"Failed to initialize SQLite schema: {exc}") from exc
@@ -863,6 +867,21 @@ class SQLitePersistenceStore:
     def finish_cash_scan(self, run_id, summary):
         from candle_lineage import finish
         return finish(self, run_id, summary)
+
+    def _notification_checkpoint(self, boundary):
+        """Fault-injection boundary before/after a local preview acknowledgement."""
+
+    def enqueue_notification_preview(self, *args, **kwargs):
+        from notification_outbox import enqueue
+        return enqueue(self, *args, **kwargs)
+
+    def preview_notification(self, intent_id, now=None):
+        from notification_outbox import preview
+        return preview(self, intent_id, now)
+
+    def list_notification_outbox(self, limit=100, status=None):
+        from notification_outbox import list_items
+        return list_items(self, limit, status)
 
     @contextmanager
     def paper_transaction(self, write=True):
@@ -1044,6 +1063,21 @@ class SQLitePersistenceStore:
                          (candidate["master_id"], provider, original,
                           json.dumps(payload, sort_keys=True, allow_nan=False)))
         return self.get_contract_master_candidate(candidate["master_id"])
+
+    def _contract_cache_checkpoint(self, boundary):
+        """Fault-injection boundary before the atomic inspection-cache commit."""
+
+    def refresh_contract_cache(self, raw_bytes, **metadata):
+        from contract_universe import refresh_cache
+        return refresh_cache(self, raw_bytes, **metadata)
+
+    def contract_cache_status(self, provider, now=None):
+        from contract_universe import cache_status
+        return cache_status(self, provider, now)
+
+    def inspect_cached_contract(self, provider, **request):
+        from contract_universe import inspect_cached
+        return inspect_cached(self, provider, **request)
 
     def get_contract_master_candidate(self, master_id, *, include_original=False):
         """Reparse retained bytes and bind metadata on every inspection/resolution."""
@@ -3668,6 +3702,14 @@ class SQLitePersistenceStore:
                 raise PersistenceError(f"Failed to query historical candles: {exc}") from exc
             finally:
                 self._close_if_file(conn)
+
+    def query_historical_candle_page(self, symbol, **scope):
+        from historical_pagination import query_page
+        return query_page(self, symbol, **scope)
+
+    def read_historical_snapshot(self, symbol, **scope):
+        from historical_pagination import read_snapshot
+        return read_snapshot(self, symbol, **scope)
 
     # ------------------------------------------------------------------------
     # Phase 3B Backtest Run & Trade Ledger Persistence

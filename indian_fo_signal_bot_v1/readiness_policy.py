@@ -167,7 +167,7 @@ def historical_coverage(config, store, provider, symbol, data_mode="LIVE", candl
     """Validate rows, not manifest counters. Coverage spans whole sessions, including holes.
 
     Without explicit bounds this proves only the first-through-last stored session range.
-    Reads exceeding the existing cap fail closed; replay pagination is a separate package.
+    A consistent bounded snapshot spans all pages; incomplete reads fail closed.
     """
     base = {"symbol": symbol, "segment": segment, "provider": provider, "data_mode": data_mode,
             "ready_for_30_bar_strategies": False, "ready_for_200_bar_supertrend": False,
@@ -179,8 +179,7 @@ def historical_coverage(config, store, provider, symbol, data_mode="LIVE", candl
         if candles is None:
             if store is None:
                 raise ValueError("No historical store or candles.")
-            rows = store.query_historical_candles(symbol=symbol, interval_min=5, data_mode="LIVE",
-                                                  provider=provider, limit=10000, offset=0)
+            rows = store.read_historical_snapshot(symbol=symbol, interval_min=5, data_mode="LIVE", provider=provider)
             candles = rows["items"]
             if rows["total_count"] != len(candles):
                 return {**base, "status": "COVERAGE_UNVERIFIABLE_READ_LIMIT"}

@@ -3,13 +3,14 @@ import logging
 import os
 import threading
 import urllib.parse
+import ipaddress
 from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
 from typing import Any, Dict, List, Optional, Tuple
 
 from config import BotConfig, ConfigValidationError
 from brokers import BrokerDataError
 from scanner_engine import IntradayBotEngine, MarketScanScheduler
-from storage import PersistenceError
+from storage import PersistenceError, PersistenceValidationError
 
 logger = logging.getLogger("tradepulse.api")
 
@@ -95,6 +96,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
     """
     engine: Optional[IntradayBotEngine] = None
     scheduler: Optional[MarketScanScheduler] = None
+    paper_portfolio = None  # Explicit operator/test injection, never created by a GET.
+    evidence_scope = None
 
     def log_message(self, format: str, *args: Any) -> None:
         logger.info("%s - %s", self.address_string(), format % args)
@@ -105,6 +108,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         configure_server_runtime()
 
     def _send_json(self, status_code: int, payload: Dict[str, Any], send_body: bool = True) -> None:
+        if self.evidence_scope:
+            payload = dict(payload, evidence_scope=self.evidence_scope)
         body = json.dumps(payload).encode("utf-8")
         try:
             self.send_response(status_code)
@@ -112,7 +117,6 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(body)))
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
-            self.send_header("Access-Control-Allow-Origin", "*")
             self.send_header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS")
             self.send_header("Access-Control-Allow-Headers", "Content-Type, Accept")
             self.end_headers()
@@ -195,11 +199,16 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         if self.engine.store is not None:
             try:
                 db_info = self.engine.store.check_health()
-            except Exception as exc:
-                db_info = {"status": "ERROR", "error": str(exc)}
+                if db_info.get("status") not in ("ok", "OK", "HEALTHY"):
+                    http_code = 503
+            except Exception:
+                db_info = {"status": "ERROR", "reason_code": "STORAGE_HEALTH_UNAVAILABLE"}
                 http_code = 503
         else:
-            db_info = {"status": "DISABLED"}
+            required = bool(getattr(self.engine.config, "enable_persistence", False))
+            db_info = {"status": "ERROR" if required else "DISABLED"}
+            if required:
+                http_code = 503
 
         last_scan = None
         if self.engine.last_scan_summary is not None:
@@ -212,9 +221,40 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 "duration_ms": s.get("duration_ms"),
                 "total_signals": s.get("total_signals"),
                 "persistence_status": s.get("persistence_status"),
+                "empty_reason": s.get("empty_reason"),
+                "reason_code": s.get("reason_code"),
+                "input_lineage": s.get("input_lineage"),
             }
 
-        overall_status = "ok" if http_code == 200 and broker_info["connection_state"] != "INVALID_CONFIG" else "degraded"
+        operations = dict(scope="LOCAL_OPERATIONAL_OBSERVATIONS", alerts=[], real_delivery_enabled=False)
+        if self.engine.store is not None and http_code == 200:
+            try:
+                pending = self.engine.store.pending_cash_scans(limit=200)
+                outbox = self.engine.store.list_notification_outbox(limit=1)
+                operations.update(pending_cash_preview_count=len(pending), pending_cash_preview_limit=200,
+                                  notification_counts=outbox["counts"])
+                if pending:
+                    operations["alerts"].append("PENDING_CASH_RECOVERY_REQUIRED")
+                if any(outbox["counts"].get(state, 0) for state in ("PENDING", "RETRY", "DEAD")):
+                    operations["alerts"].append("NOTIFICATION_PREVIEW_REQUIRES_ATTENTION")
+                if self.paper_portfolio:
+                    report = self.engine.store.get_paper_portfolio_report(self.paper_portfolio.config.account_id,
+                                                                        as_of=self.engine._now_ist())
+                    operations["paper_reconciliation"] = report.get("reconciliation", {}).get("status", "UNKNOWN")
+                    if operations["paper_reconciliation"] != "OK":
+                        operations["alerts"].append("PAPER_RECONCILIATION_REQUIRED")
+                        http_code = 503
+            except Exception:
+                operations["alerts"].append("OPERATIONAL_STORAGE_REQUIRES_INSPECTION")
+                http_code = 503
+        if last_scan and last_scan.get("scan_status") == "FAILED":
+            operations["alerts"].append("LAST_SCAN_FAILED")
+        if broker_info.get("candle_freshness", {}).get("status") == "STALE":
+            operations["alerts"].append("STALE_PROVIDER_CANDLES")
+        if broker_info.get("error_category") not in (None, "NONE", "SIMULATED"):
+            operations["alerts"].append("PROVIDER_REQUIRES_ATTENTION")
+        overall_status = "ok" if (http_code == 200 and broker_info["connection_state"] != "INVALID_CONFIG"
+                                  and not operations["alerts"]) else "degraded"
         from readiness_policy import live_acceptance
         symbols = [str(m["symbol"]).upper() for m in self.engine.config.equity_watchlist]
         clock = getattr(self.engine, "clock", None)
@@ -227,6 +267,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             "database": db_info,
             "scheduler": sched_info,
             "last_scan": last_scan,
+            "paper_account_id": self.paper_portfolio.config.account_id if self.paper_portfolio else None,
+            "operations": operations,
             "live_acceptance": {"accepted": bool(symbols) and all(r["accepted"] for r in acceptance.values()),
                                 "by_symbol": acceptance},
         }
@@ -234,7 +276,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
     def _handle_scan(self) -> Tuple[int, Dict[str, Any]]:
         assert self.engine is not None
         try:
-            data = self.engine.run_single_scan()
+            data = (self.engine.run_single_scan(paper_portfolio=self.paper_portfolio) if self.paper_portfolio
+                    else self.engine.run_single_scan())
             if data.get("scan_status") == "SKIPPED_OVERLAP":
                 return 409, data
             return 200, data
@@ -258,6 +301,9 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 "identity_rejection": getattr(exc, "rejection", None),
                 "reason_code": getattr(exc, "rejection", getattr(exc, "freshness", {})).get("reason_code", "PROVIDER_ERROR"),
             }
+        except (PersistenceError, PersistenceValidationError):
+            return 503, {"status": "error", "scan_status": "FAILED", "reason_code": "PERSISTENCE_REQUIRES_RECOVERY",
+                         "message": "Required persistence failed; inspect retained pending work.", "total_signals": 0}
         except Exception as exc:
             logger.error("Unexpected internal error during scan: %s", exc)
             return 500, {
@@ -290,7 +336,23 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 start_time=_get_str_param(query_params, "start_time"),
                 end_time=_get_str_param(query_params, "end_time"),
             )
+            from candle_lineage import annotate_signals
+            try:
+                if self.paper_portfolio:
+                    paper = self.engine.store.get_paper_portfolio_report(self.paper_portfolio.config.account_id,
+                                                                        as_of=self.engine._now_ist())
+                    if paper.get("reconciliation", {}).get("status") not in (None, "OK"):
+                        raise PersistenceValidationError("PAPER_RECONCILIATION_REQUIRED")
+                annotate_signals(self.engine.store, res["items"],
+                                 self.paper_portfolio.config.account_id if self.paper_portfolio else None)
+            except Exception:
+                return 503, {"status": "RECONCILIATION_REQUIRED", "message": "Stored signal lineage requires inspection."}
+            if self.evidence_scope:
+                for item in res["items"]:
+                    item["evidence_scope"] = self.evidence_scope
             return 200, {"status": "ok", **res}
+        except PersistenceValidationError:
+            return 503, {"status": "RECONCILIATION_REQUIRED", "message": "Stored signal lineage requires inspection."}
         except ValueError as exc:
             return 400, {
                 "status": "error",
@@ -330,6 +392,37 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 "error_type": "PersistenceError",
                 "message": str(exc),
             }
+
+    def _handle_cash_lineage(self, query, *, candles=False):
+        """Inspect immutable accepted inputs; never acquire, resume or mutate."""
+        if self.engine.store is None:
+            return 503, {"status": "error", "message": "Required storage unavailable."}
+        try:
+            allowed = {"run_id", "batch_id", "limit", "offset"} if candles else {"run_id"}
+            if set(query)-allowed or any(len(v) != 1 for v in query.values()):
+                raise ValueError()
+            run_id = _get_str_param(query, "run_id")
+            if not run_id or len(run_id) > 160:
+                raise ValueError()
+            from candle_lineage import public_summary
+            work = self.engine.store.load_cash_scan(run_id)
+            if not candles:
+                return 200, public_summary(work)
+            batch = next((b for b in work["snapshot"]["batches"] if b["batch_id"] == _get_str_param(query,"batch_id")), None)
+            if batch is None:
+                return 404, {"status": "NOT_FOUND"}
+            limit = _parse_int_param(query, "limit", 100, 1, 200)
+            offset = _parse_int_param(query, "offset", 0, 0, 25000)
+            rows = batch["content"]["candles"]
+            return 200, dict(status="ok", run_id=run_id, batch_id=batch["batch_id"],
+                             total_count=len(rows), limit=limit, offset=offset, items=rows[offset:offset+limit])
+        except PersistenceValidationError as exc:
+            return (404 if str(exc)=="LINEAGE_SCAN_NOT_FOUND" else 503), {
+                "status": "RECONCILIATION_REQUIRED", "message": "Retained cash input is unavailable or inconsistent."}
+        except ValueError:
+            return 400, {"status": "error", "message": "Invalid cash-lineage query."}
+        except Exception:
+            return 503, {"status": "error", "message": "Cash lineage storage unavailable."}
 
     def _handle_oi_snapshots(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
         assert self.engine is not None
@@ -774,12 +867,51 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             "scheduler": self.scheduler.get_status(),
         }
 
+    def _handle_operational_read(self, query, *, history=False):
+        """Bounded stored facts only; no acquisition, preview dispatch or replay."""
+        if self.engine.store is None:
+            return 503, {"status": "error", "reason_code": "REQUIRED_STORAGE_UNAVAILABLE"}
+        try:
+            allowed = ({"symbol", "interval_min", "data_mode", "provider", "start_time_ist", "end_time_ist",
+                        "decision_time_ist", "cursor", "limit"} if history else {"limit", "status"})
+            if (set(query)-allowed or any(len(values)!=1 for values in query.values())
+                    or any(len(values[0])>4096 for values in query.values())):
+                raise ValueError()
+            limit = _parse_int_param(query, "limit", 100, 1, 200 if not history else 10000)
+            if not history:
+                return 200, self.engine.store.list_notification_outbox(limit=limit, status=_get_str_param(query,"status"))
+            symbol = _get_str_param(query, "symbol")
+            if not symbol:
+                raise ValueError()
+            options = {key: values[0] for key, values in query.items() if key not in ("symbol", "interval_min", "limit")}
+            options["interval_min"] = _parse_int_param(query,"interval_min",5,1,1440)
+            return 200, self.engine.store.query_historical_candle_page(symbol, limit=limit, **options)
+        except PersistenceValidationError:
+            return 503, {"status": "RECONCILIATION_REQUIRED", "reason_code": "OPERATIONAL_RECORD_REQUIRES_INSPECTION"}
+        except (ValueError, TypeError):
+            return 400, {"status": "error", "reason_code": "INVALID_OPERATIONAL_QUERY"}
+        except Exception:
+            return 503, {"status": "error", "reason_code": "OPERATIONAL_STORAGE_UNAVAILABLE"}
+
     def _dispatch_get_or_head(self, send_body: bool = True) -> None:
+        if not self._allow_local_request():
+            return
         self._ensure_initialized()
         parsed = urllib.parse.urlparse(self.path)
         raw_path = parsed.path or "/"
         route = raw_path.rstrip("/") or "/"
         query_params = urllib.parse.parse_qs(parsed.query)
+
+        if route in ("/api/notification-outbox", "/api/v1/notification-outbox",
+                     "/api/historical-candle-pages", "/api/v1/historical-candle-pages"):
+            code, payload = self._handle_operational_read(query_params, history=route.endswith("historical-candle-pages"))
+            self._send_json(code, payload, send_body=send_body)
+            return
+
+        if route in ("/api/scan-lineage", "/api/v1/scan-lineage", "/api/cash-candles", "/api/v1/cash-candles"):
+            code, payload = self._handle_cash_lineage(query_params, candles=route.endswith("cash-candles"))
+            self._send_json(code, payload, send_body=send_body)
+            return
 
         if route in ("/api/paper-accounts", "/api/v1/paper-accounts", "/api/paper-portfolio", "/api/v1/paper-portfolio",
                      "/api/paper-ledger", "/api/v1/paper-ledger", "/api/paper-session", "/api/v1/paper-session"):
@@ -873,12 +1005,13 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         self._dispatch_get_or_head(send_body=False)
 
     def do_OPTIONS(self) -> None:
+        if not self._allow_local_request():
+            return
         parsed = urllib.parse.urlparse(self.path)
         route = (parsed.path or "/").rstrip("/") or "/"
         if route.startswith("/api/") or route == "/api":
             try:
                 self.send_response(204)
-                self.send_header("Access-Control-Allow-Origin", "*")
                 self.send_header("Access-Control-Allow-Methods", "GET, POST, HEAD, OPTIONS")
                 self.send_header("Access-Control-Allow-Headers", "Content-Type, Accept")
                 self.send_header("Content-Length", "0")
@@ -893,6 +1026,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         })
 
     def do_POST(self) -> None:
+        if not self._allow_local_request():
+            return
         self._ensure_initialized()
         parsed = urllib.parse.urlparse(self.path)
         route = parsed.path.rstrip("/") or "/"
@@ -909,6 +1044,26 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             "error_type": "MethodNotAllowedError",
             "message": f"POST is not supported on {route}. Live order execution is strictly disabled.",
         })
+
+    def _allow_local_request(self):
+        """Same-origin browser/loopback CLI only; no public API authorization."""
+        try:
+            hosts = self.headers.get_all("Host") or []
+            if len(hosts)!=1:
+                raise ValueError()
+            host = urllib.parse.urlsplit("http://"+hosts[0])
+            local = host.hostname=="localhost" or ipaddress.ip_address(host.hostname).is_loopback
+            if (not local or host.username is not None or host.password is not None
+                    or host.path or host.query or host.fragment or (host.port or 80)!=self.server.server_address[1]
+                    or not ipaddress.ip_address(self.client_address[0]).is_loopback
+                    or self.headers.get("Sec-Fetch-Site")=="cross-site"
+                    or self.headers.get("Origin") not in (None, "http://"+hosts[0])):
+                raise ValueError()
+            return True
+        except (ValueError, TypeError):
+            self._send_json(403, {"status": "error", "reason_code": "LOCAL_SAME_ORIGIN_REQUIRED",
+                                  "message": "Open the dashboard from its loopback server address."})
+            return False
 
 
 def configure_server_runtime(

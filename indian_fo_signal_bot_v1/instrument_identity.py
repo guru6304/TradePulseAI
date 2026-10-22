@@ -620,7 +620,7 @@ def prepare_contract_master(raw_bytes, *, provider, source_reference, source_ver
     """
     if provider not in PROVIDERS:
         reject("UNSUPPORTED_PROVIDER", "The contract-master provider is unsupported.")
-    if parser_version not in (None,CONTRACT_MASTER_PARSER_VERSION,'angel-native-observation-v1'):
+    if parser_version not in (None,CONTRACT_MASTER_PARSER_VERSION,'angel-native-observation-v1','upstox-native-observation-v1'):
         reject('UNSUPPORTED_CONTRACT_MASTER_PARSER','The retained parser version is unsupported.')
     if not isinstance(raw_bytes, bytes) or not raw_bytes or len(raw_bytes) > MAX_CONTRACT_MASTER_BYTES:
         reject("INVALID_CONTRACT_MASTER_SIZE", "A bounded nonempty original byte artifact is required.")
@@ -663,6 +663,15 @@ def prepare_contract_master(raw_bytes, *, provider, source_reference, source_ver
                             parser_version='angel-native-observation-v1')
             candidate.update(observed_records=observed,observed_record_count=len(observed),observed_sha256=digest(observed),
                 status='BLOCKED_NATIVE_MASTER_AUTHORITY_AND_EFFECTIVE_DATES')
+            candidate['master_id']=digest({k:v for k,v in candidate.items() if k!='original_bytes'})
+            return candidate
+        if provider=='upstox' and isinstance(payload,list) and parser_version in (None,'upstox-native-observation-v1'):
+            from contract_universe import inspect_upstox_native_contracts
+            observed = inspect_upstox_native_contracts(payload)
+            metadata.update(source_kind='UPSTOX_NATIVE_SNAPSHOT_UNQUALIFIED', effective_date_evidence='UNKNOWN',
+                            parser_version='upstox-native-observation-v1')
+            candidate.update(observed_records=observed, observed_record_count=len(observed), observed_sha256=digest(observed),
+                             status='BLOCKED_NATIVE_MASTER_AUTHORITY_AND_EFFECTIVE_DATES')
             candidate['master_id']=digest({k:v for k,v in candidate.items() if k!='original_bytes'})
             return candidate
         if (not isinstance(payload, dict) or payload.get("schema_version") != CONTRACT_MASTER_SCHEMA

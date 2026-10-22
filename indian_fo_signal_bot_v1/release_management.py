@@ -6,6 +6,7 @@ Implements M12 capability:
 3. OperationalHealthMonitor: Local configuration safety, persistence health, operational readiness checks.
 """
 import hashlib
+from contextlib import closing
 import json
 import os
 from pathlib import Path
@@ -13,6 +14,7 @@ import re
 import sqlite3
 import sys
 import tempfile
+import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 
 
@@ -50,6 +52,10 @@ class ReleasePackager:
         "performance_acceptance.py",
         "release_management.py",
         "candle_lineage.py",
+        "verify_offline.py",
+        "contract_universe.py",
+        "historical_pagination.py",
+        "notification_outbox.py",
     ]
 
     REQUIRED_ASSETS = [
@@ -132,6 +138,81 @@ class ReleasePackager:
         if manifest.get("manifest_digest") != hasher.hexdigest():
             errors.append("Manifest digest mismatch.")
         return (len(errors) == 0, errors)
+
+    @staticmethod
+    def _bundle_path_allowed(name):
+        return (name in set(ReleasePackager.CORE_MODULES + ReleasePackager.REQUIRED_ASSETS)
+                or re.fullmatch(r"test_[a-z0-9_]+\.(py|js)", name) is not None
+                or name in ("README.md", "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md"))
+
+    def build_bundle(self, destination):
+        """Deterministic local candidate, including its offline verification tools.
+
+        Only explicitly permitted public source is read. Existing artifacts are
+        never overwritten; no credentials, databases or machine logs are included.
+        """
+        targets = set(self.CORE_MODULES + self.REQUIRED_ASSETS)
+        targets.update(p.name for p in self.root.glob("test_*.py"))
+        targets.update(p.name for p in self.root.glob("test_*.js"))
+        targets.add("docs/TRADEPULSE_OPERATIONS_RUNBOOK.md")
+        if (self.root/"README.md").is_file():
+            targets.add("README.md")
+        contents = {}
+        for name in sorted(targets):
+            path = self.root/name
+            if not self._bundle_path_allowed(name) or path.is_symlink():
+                raise ReleaseManagementError("Invalid release source path.")
+            try:
+                path.resolve().relative_to(self.root.resolve())
+                contents[name] = path.read_bytes()
+            except (OSError, ValueError):
+                raise ReleaseManagementError("Missing or escaped release source.") from None
+        manifest = dict(kind="OFFLINE_RELEASE_CANDIDATE", live_acceptance=False,
+            files={name: dict(size_bytes=len(body), sha256=hashlib.sha256(body).hexdigest())
+                   for name, body in contents.items()})
+        manifest_bytes = json.dumps(manifest, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        contents["RELEASE_MANIFEST.json"] = manifest_bytes
+        try:
+            with Path(destination).open("xb") as output, zipfile.ZipFile(output, "w", compression=zipfile.ZIP_STORED) as archive:
+                for name, body in sorted(contents.items()):
+                    info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+                    info.create_system, info.external_attr = 3, 0o100644 << 16
+                    archive.writestr(info, body)
+        except OSError:
+            raise ReleaseManagementError("Release destination unavailable or already exists.") from None
+        return self.inspect_bundle(destination)
+
+    def inspect_bundle(self, path):
+        """Validate the declared archive in place, without extracting any path."""
+        try:
+            if Path(path).stat().st_size>70*1024*1024:
+                raise ValueError()
+            with zipfile.ZipFile(path) as archive:
+                entries = archive.infolist()
+                names = [entry.filename for entry in entries]
+                if (len(names)!=len(set(names)) or "RELEASE_MANIFEST.json" not in names
+                        or sum(entry.file_size for entry in entries)>64*1024*1024
+                        or any(entry.file_size>16*1024*1024 or entry.is_dir()
+                               or entry.external_attr>>16 & 0o170000 == 0o120000 for entry in entries)):
+                    raise ValueError()
+                manifest = json.loads(archive.read("RELEASE_MANIFEST.json"))
+                files = manifest["files"]
+                required = set(self.CORE_MODULES + self.REQUIRED_ASSETS + ["test_bot.py", "test_cash_dashboard.js",
+                                "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md"])
+                if (manifest.get("kind")!="OFFLINE_RELEASE_CANDIDATE" or manifest.get("live_acceptance") is not False
+                        or not required.issubset(files) or set(names)!=set(files)|{"RELEASE_MANIFEST.json"}
+                        or any(not self._bundle_path_allowed(name) for name in files)):
+                    raise ValueError()
+                for name, metadata in files.items():
+                    body = archive.read(name)
+                    if metadata!={"size_bytes":len(body), "sha256":hashlib.sha256(body).hexdigest()}:
+                        raise ValueError()
+            return dict(status="PASS", scope="OFFLINE_RELEASE_CANDIDATE", files=len(files),
+                sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest(),
+                manifest_sha256=hashlib.sha256(json.dumps(manifest, sort_keys=True,
+                    separators=(",", ":")).encode("utf-8")).hexdigest(), publisher_authentication="NOT_ESTABLISHED")
+        except (OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile, RuntimeError):
+            raise ReleaseManagementError("Release archive failed integrity or scope validation.") from None
 
 
 class DatabaseBackupRecovery:
@@ -248,6 +329,62 @@ class DatabaseBackupRecovery:
             report.update(status="RESTORE_FAILED", rollback_ready=False)
         return report
 
+    def verify_application_restore(self, backup_path, as_of):
+        """Open only an isolated restored copy and reconcile real application facts.
+
+        SQLite integrity alone cannot qualify rollback. No scanner, broker,
+        notification sender or account creation service runs in this drill.
+        """
+        from storage import SQLitePersistenceStore
+        from strategies import parse_ist_timestamp
+        from notification_outbox import _checked, _check_attempts
+        report = dict(status="APPLICATION_RESTORE_FAILED", rollback_ready=False,
+            cash_scans_checked=0, paper_accounts_checked=0, notification_intents_checked=0,
+            scope="ISOLATED_LOCAL_RESTORE_NO_LIVE_ACCEPTANCE")
+        store = None
+        try:
+            reference = parse_ist_timestamp(as_of)
+            backup = Path(backup_path).resolve()
+            if not backup.is_file():
+                return report
+            before = hashlib.sha256(backup.read_bytes()).hexdigest()
+            if not self.verify_restore_drill(str(backup))["rollback_ready"]:
+                return report
+            with tempfile.TemporaryDirectory(prefix="tradepulse_application_restore_") as directory:
+                restored = Path(directory)/"restored.db"
+                with closing(sqlite3.connect(backup.as_uri()+"?mode=ro", uri=True)) as source:
+                    with closing(sqlite3.connect(restored)) as target:
+                        source.backup(target)
+                store = SQLitePersistenceStore(str(restored))
+                try:
+                    with store.paper_transaction(write=False) as conn:
+                        scans = [r[0] for r in conn.execute("SELECT run_id FROM cash_candle_scans ORDER BY run_id")]
+                        accounts = [r[0] for r in conn.execute("SELECT account_id FROM paper_accounts ORDER BY account_id")]
+                        for row in conn.execute("SELECT * FROM notification_outbox ORDER BY intent_id"):
+                            _checked(row)
+                            _check_attempts(conn, row)
+                            report["notification_intents_checked"] += 1
+                    for run_id in scans:
+                        store.load_cash_scan(run_id)
+                        report["cash_scans_checked"] += 1
+                    for account in accounts:
+                        paper = store.get_paper_portfolio_report(account, as_of=reference)
+                        if paper.get("reconciliation", {}).get("status")!="OK":
+                            raise ValueError("RESTORED_LEDGER_REQUIRES_RECONCILIATION")
+                        report["paper_accounts_checked"] += 1
+                    if not scans and not accounts:
+                        raise ValueError("EMPTY_DATABASE_IS_NOT_APPLICATION_QUALIFICATION")
+                    if hashlib.sha256(backup.read_bytes()).hexdigest()!=before:
+                        raise ValueError("BACKUP_CHANGED_DURING_DRILL")
+                    report.update(status="APPLICATION_RESTORE_VERIFIED", rollback_ready=True,
+                                  backup_sha256=before, backup_unchanged=True)
+                finally:
+                    store.close()
+        except Exception:
+            # Fixed reason only; no ledger payload, identity or exception message.
+            report.update(reason_code="APPLICATION_RESTORE_REQUIRES_INSPECTION")
+        return report
+
 
 class OperationalHealthMonitor:
     """Inspects runtime health, safe operational flags, and storage readiness."""
@@ -307,3 +444,32 @@ class OperationalHealthMonitor:
             "database": db_health,
             "active_broker": broker,
         }
+
+
+def main(argv=None):
+    """Explicit local artifacts and isolated recovery; no server or live calls."""
+    import argparse
+    parser = argparse.ArgumentParser(description="Local release candidate and isolated application recovery")
+    sub = parser.add_subparsers(dest="operation", required=True)
+    sub.add_parser("bundle").add_argument("--output", required=True, type=Path)
+    sub.add_parser("inspect").add_argument("--archive", required=True, type=Path)
+    drill = sub.add_parser("restore-drill")
+    drill.add_argument("--backup", required=True, type=Path)
+    drill.add_argument("--as-of", required=True, help="Explicit aware reference timestamp")
+    args = parser.parse_args(argv)
+    try:
+        if args.operation == "bundle":
+            report = ReleasePackager().build_bundle(args.output)
+        elif args.operation == "inspect":
+            report = ReleasePackager().inspect_bundle(args.archive)
+        else:
+            report = DatabaseBackupRecovery(str(args.backup)).verify_application_restore(str(args.backup), args.as_of)
+        print(json.dumps(report, sort_keys=True))
+        return 0 if report["status"] in ("PASS", "APPLICATION_RESTORE_VERIFIED") else 1
+    except Exception:
+        print(json.dumps(dict(status="FAIL", reason_code="LOCAL_RELEASE_OPERATION_REQUIRES_INSPECTION")))
+        return 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

@@ -341,3 +341,43 @@ and operational requirements remain unmet. No broker requests, live token refres
 orders, production scheduling or Telegram delivery were performed. Separate operator
 authorization/account evidence remains prerequisite to bounded Upstox read-only
 acceptance; live trading remains unauthorized and unaccepted.
+
+## Master execution accepted offline engineering update - 2026-10-22
+
+The [execution ledger](TRADEPULSE_EXECUTION_LEDGER.md),
+[testing readiness report](reports/TRADEPULSE_TEST_READINESS_REPORT.md) and
+[production readiness decision](reports/TRADEPULSE_PRODUCTION_READINESS_REPORT.md)
+record actual implementation and fresh execution after Task 4. The final current
+source passed **722/722 Python cases**, zero failures/errors/skips, **10/10 Node
+renderer cases**, syntax and 51-file compilation. The source/log evidence validator
+returned 0 for `evidence/master_final_accepted.json`. Intermediate failed runs are
+retained and explained, including Windows evidence-path normalization; they are
+not relabeled as accepted results.
+
+Offline Gate 2 is now PASS through the actual adapter-fixture -> completed candle
+storage -> scanner/quality/ranking/risk -> committed result -> forward paper decision
+and ledger -> HTTP -> actual dashboard renderer. Full persisted candidate-field
+reconciliation, true empty/error states, paper rejection labels and source batch
+inspection close the demonstrated integration gaps. This gate is narrower than
+whole-product real-data/operational acceptance.
+
+Additional accepted local subsets are native Upstox stock/index derivative
+observation import/cache with last-good/expiry/conflict protection; resumable
+chronological history beyond 10,000 rows with paged/direct replay equivalence;
+transactional dry-run notification intents/receipts/retry audit; paper/EOD/research
+API/UI reporting; loopback/same-origin request security; three configured synthetic
+paper sessions with stable EOD digests; reproducible ZIP/manifest/bootstrap and
+isolated application-level backup restore. CI is implemented but not hosted-run.
+The tested release candidate is `evidence/master_release_candidate_002.zip`; hashes
+and report/source identity are retained in `evidence/master_closeout.json`.
+
+The production report reassesses every row's previous/current implementation,
+test evidence, status, remaining criterion and score impact under the unchanged
+rubric. Recomputed allocation remains M01 75/50, M02 75/25, M03 75/50, M04 75/25,
+M05 25/0, M06 75/50, M07 75/50, M08 50/25, M09 50/50, M10 50/50, M11 75/50,
+M12 50/50. Weighted **I=64.25 / R=37.00; 0/12 whole milestones accepted**.
+Major qualified-data/options/deployment/monitoring/operating scope remains, so
+these useful new subsets do not cross a whole-row 75/100 threshold. The source
+authenticator and actual option execution remain missing implementation, separately
+from the absent licensed artifacts and precise live read authorization. Real orders,
+live token refresh, production scheduling and real Telegram delivery remain off.

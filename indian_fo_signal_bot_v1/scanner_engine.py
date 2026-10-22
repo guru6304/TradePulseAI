@@ -1111,6 +1111,7 @@ class IntradayBotEngine:
                 "total_signals": len(signals),
                 "ranking_policy": "QUALITY_THEN_TARGET1_REWARD_RISK_THEN_IDENTITY_V1",
                 "ranking_scope": "CANDIDATE_PRIORITY_ONLY_NO_CAPITAL_ALLOCATION",
+                "empty_reason": (None if signals else "NO_ELIGIBLE_SETUP_FOR_ACCEPTED_INPUT"),
                 "persisted_signals": persisted_signals_count,
                 "duplicate_signals": duplicate_signals_count,
                 "oi_snapshots_saved": oi_snapshots_saved,
@@ -1131,6 +1132,9 @@ class IntradayBotEngine:
                     source_authenticity="NOT_ESTABLISHED", recovery_mode=bool(recovery or recovery_clock))
                 if recovery or recovery_clock:
                     summary["candle_freshness"] = dict(status="RECOVERED_ACCEPTED_INPUT", live_signal_allowed=False)
+                summary["notification_intents"] = [self.store.enqueue_notification_preview(
+                    run_id, sig, self.telegram, broker_label, summary["input_lineage"]["batch_ids"], now_dt)
+                    for _, sig in deferred_dispatches]
                 self.store.finish_cash_scan(run_id, summary)
                 transaction, lineage_tx = lineage_tx, None
                 transaction.__exit__(None, None, None)
@@ -1139,12 +1143,16 @@ class IntradayBotEngine:
                 self.store._lineage_checkpoint("after_result_commit")
                 for segment, zones in zone_states.items():
                     self._zone_states[(provider, data_mode, segment)].update(zones)
-                for index, sig in deferred_dispatches:
+                for ordinal, (index, sig) in enumerate(deferred_dispatches):
                     if recovery or recovery_clock or not self._freshness_status(provider, scan_now())["live_signal_allowed"]:
                         summary["telegram_dispatches"][index] = dict(ok=False, skipped=True, reason="recovery_or_stale_delivery_suppressed")
                     else:
                         try:
-                            summary["telegram_dispatches"][index] = self.telegram.send_signal(sig, broker_name=broker_label)
+                            if not self.config.telegram_dry_run:
+                                summary["telegram_dispatches"][index] = dict(ok=False, skipped=True, reason="durable_live_delivery_not_authorized")
+                            else:
+                                summary["telegram_dispatches"][index] = self.store.preview_notification(
+                                    summary["notification_intents"][ordinal], now=scan_now())
                         except Exception:
                             summary["telegram_dispatches"][index] = dict(ok=False, skipped=True, reason="delivery_unconfirmed")
                 if recovery or recovery_clock:

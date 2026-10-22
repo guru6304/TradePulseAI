@@ -1237,17 +1237,17 @@ class DeterministicBacktestEngine:
             )
 
         # Load candles from SQLite store if not passed directly
+        storage_snapshot = None
         if candles is None:
             if self.store is None:
                 raise BacktestValidationError("No candles list provided and SQLite store is None.")
-            q_res = self.store.query_historical_candles(
+            q_res = self.store.read_historical_snapshot(
                 symbol=sym,
                 interval_min=interval_min,
                 data_mode=dm,
                 provider=provider if provider and provider != "synthetic_fixture" else None,
-                limit=10000,
-                offset=0,
             )
+            storage_snapshot = {k:v for k,v in q_res.items() if k!="items"}
             candles = q_res.get("items", [])
             if not candles:
                 raise BacktestEligibilityError(
@@ -1840,6 +1840,7 @@ class DeterministicBacktestEngine:
 
         assumptions = {
             "engine_version": BACKTEST_ENGINE_VERSION,
+            "storage_snapshot": storage_snapshot,
             "execution_scope": gate["execution_scope"],
             "sizing_policy": "ALL_IN_PLANNED_STOP_RISK_FULL_NOTIONAL_V1",
             "estimated_risk_is_guaranteed_loss": False,

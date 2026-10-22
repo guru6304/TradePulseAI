@@ -1,0 +1,197 @@
+{
+  "kind": "MASTER_EXECUTION_CLOSEOUT",
+  "scope": "OFFLINE_ONLY_NO_LIVE_ACCEPTANCE",
+  "completed_at": "2026-10-22T06:02:56.420100+00:00",
+  "head": "bd499cdb8d312e41ef79d6a11199bbc9b6e75c6f",
+  "branch": "main",
+  "working_tree": "M backtest_engine.py\n M candle_lineage.py\n M docs/TRADEPULSE_CAPABILITY_MATRIX.md\n M docs/TRADEPULSE_EXECUTION_LEDGER.md\nMM docs/evidence/master_phase0_python.txt\n M instrument_identity.py\n M public/index.html\n M readiness_policy.py\n M release_management.py\n M scanner_engine.py\n M server.py\n M storage.py\n M test_bot.py\n M test_cash_dashboard.js\n?? ../.github/\n?? contract_universe.py\n?? docs/TRADEPULSE_OPERATIONS_RUNBOOK.md\n?? docs/evidence/master_cash_workflow_before.txt\n?? docs/evidence/master_cash_workflow_first_fix.txt\n?? docs/evidence/master_cash_workflow_verified.txt\n?? docs/evidence/master_closeout.py\n?? docs/evidence/master_contracts_before.txt\n?? docs/evidence/master_contracts_first_fix.txt\n?? docs/evidence/master_contracts_verified.txt\n?? docs/evidence/master_evidence_negative_before.txt\n?? docs/evidence/master_final.json\n?? docs/evidence/master_final_accepted.json\n?? docs/evidence/master_final_accepted_node.txt\n?? docs/evidence/master_final_accepted_python.txt\n?? docs/evidence/master_final_accepted_syntax.txt\n?? docs/evidence/master_final_accepted_validation.json\n?? docs/evidence/master_final_config.txt\n?? docs/evidence/master_final_diff_check.txt\n?? docs/evidence/master_final_evidence_validation.json\n?? docs/evidence/master_final_node.txt\n?? docs/evidence/master_final_python.txt\n?? docs/evidence/master_final_syntax.txt\n?? docs/evidence/master_final_verified.json\n?? docs/evidence/master_final_verified_node.txt\n?? docs/evidence/master_final_verified_python.txt\n?? docs/evidence/master_final_verified_syntax.txt\n?? docs/evidence/master_full_failure_reproduction.txt\n?? docs/evidence/master_gate2.json\n?? docs/evidence/master_gate2_node.txt\n?? docs/evidence/master_gate2_python.txt\n?? docs/evidence/master_gate2_syntax.txt\n?? docs/evidence/master_history.json\n?? docs/evidence/master_history_before.txt\n?? docs/evidence/master_history_first_fix.txt\n?? docs/evidence/master_history_node.txt\n?? docs/evidence/master_history_python.txt\n?? docs/evidence/master_history_syntax.txt\n?? docs/evidence/master_observability_before.txt\n?? docs/evidence/master_observability_first_fix.txt\n?? docs/evidence/master_observability_verified.txt\n?? docs/evidence/master_operations_before.txt\n?? docs/evidence/master_operations_first_fix.txt\n?? docs/evidence/master_operations_verified.txt\n?? docs/evidence/master_release_before.txt\n?? docs/evidence/master_release_bundle_verified.txt\n?? docs/evidence/master_release_candidate_001.zip\n?? docs/evidence/master_release_candidate_002.zip\n?? docs/evidence/master_release_candidate_002_build.json\n?? docs/evidence/master_release_candidate_002_inspect.json\n?? docs/evidence/master_release_candidate_build.json\n?? docs/evidence/master_release_candidate_inspect.json\n?? docs/evidence/master_release_first_fix.txt\n?? docs/evidence/master_release_sessions_verified.txt\n?? docs/evidence/master_reporting_node.txt\n?? docs/evidence/master_request_context_verified.txt\n?? docs/evidence/master_resume_focused.txt\n?? docs/evidence/master_verification_entrypoint_focused.txt\n?? docs/evidence/master_windows_evidence_before.txt\n?? docs/evidence/master_windows_evidence_verified.txt\n?? docs/reports/TRADEPULSE_PRODUCTION_READINESS_REPORT.md\n?? docs/reports/TRADEPULSE_TEST_READINESS_REPORT.md\n?? historical_pagination.py\n?? notification_outbox.py\n?? test_cash_workflow.py\n?? test_contract_universe.py\n?? test_historical_pagination.py\n?? test_local_api_security.py\n?? test_notification_outbox.py\n?? test_paper_sessions.py\n?? test_release_operations.py\n?? test_verify_offline.py\n?? verify_offline.py",
+  "outcomes": {
+    "testing_ready": "PASS",
+    "production_ready": "BLOCKED",
+    "live_read_only": "BLOCKED",
+    "real_trading": "NOT_AUTHORIZED"
+  },
+  "external_reason": "BLOCKED_PENDING_OPERATOR_AUTHORIZATION",
+  "final_verification": {
+    "file": "docs/evidence/master_final_accepted.json",
+    "sha256": "e21206a12f74ceddfc65d52cf79fc91a25d1b31172baace0dadb255128670da7",
+    "status": "PASS",
+    "exit_code": 0,
+    "python_executed": 722,
+    "python_passed": 722,
+    "failure_records": 0,
+    "error_records": 0,
+    "skipped": 0,
+    "stale_log_references": [],
+    "current_source_matches": true
+  },
+  "stage_results": [
+    {
+      "file": "docs/evidence/master_gate2.json",
+      "sha256": "8b5a9ce076a1aebae20e6c8adbac3fdfce86108e4c80f3c7657fc9a1fecc4868",
+      "status": "PASS",
+      "exit_code": 0,
+      "python_executed": 686,
+      "python_passed": 686,
+      "failure_records": 0,
+      "error_records": 0,
+      "skipped": 0,
+      "stale_log_references": [],
+      "current_source_matches": false
+    },
+    {
+      "file": "docs/evidence/master_history.json",
+      "sha256": "01198dcbbed488b620bd9e053a443d94e53d797d2f01b1c0a382a116b025fc80",
+      "status": "PASS",
+      "exit_code": 0,
+      "python_executed": 700,
+      "python_passed": 700,
+      "failure_records": 0,
+      "error_records": 0,
+      "skipped": 0,
+      "stale_log_references": [],
+      "current_source_matches": false
+    },
+    {
+      "file": "docs/evidence/master_final.json",
+      "sha256": "08453a661e4b358df26a5f9b06fc60eb5456d974e1bb4d10877965f3b631b9a9",
+      "status": "FAIL",
+      "exit_code": 1,
+      "python_executed": 721,
+      "python_passed": 717,
+      "failure_records": 0,
+      "error_records": 7,
+      "skipped": 0,
+      "stale_log_references": [
+        "docs/evidence/master_final_diff_check.txt"
+      ],
+      "current_source_matches": false
+    },
+    {
+      "file": "docs/evidence/master_final_verified.json",
+      "sha256": "e828fa2d7ba7a4e9a64d3dd14e87c21e6e1acb98966cf2cd343594bfd58c4d28",
+      "status": "PASS",
+      "exit_code": 0,
+      "python_executed": 721,
+      "python_passed": 721,
+      "failure_records": 0,
+      "error_records": 0,
+      "skipped": 0,
+      "stale_log_references": [],
+      "current_source_matches": false
+    },
+    {
+      "file": "docs/evidence/master_final_accepted.json",
+      "sha256": "e21206a12f74ceddfc65d52cf79fc91a25d1b31172baace0dadb255128670da7",
+      "status": "PASS",
+      "exit_code": 0,
+      "python_executed": 722,
+      "python_passed": 722,
+      "failure_records": 0,
+      "error_records": 0,
+      "skipped": 0,
+      "stale_log_references": [],
+      "current_source_matches": true
+    }
+  ],
+  "overlapping_counts_summed": false,
+  "official_scores": {
+    "implementation": 64.25,
+    "readiness": 37.0,
+    "whole_milestones_accepted": 0
+  },
+  "starting_baseline": {
+    "executed": 675,
+    "passed": 675,
+    "log": "docs/evidence/master_phase0_python.txt",
+    "sha256": "57f158c638355e65965de99d050ab7ebf1a967d1a55db562d692621b0201c508"
+  },
+  "python_execution_delta": 47,
+  "final_checks": [
+    {
+      "command": [
+        "node",
+        "test_cash_dashboard.js"
+      ],
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "started_at": "2026-10-22T06:01:11.107414+00:00",
+      "completed_at": "2026-10-22T06:01:11.283701+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/evidence/master_final_accepted_node.txt",
+      "executed": 10,
+      "passed": 10,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "test_cash_dashboard.js"
+      ],
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "started_at": "2026-10-22T06:01:11.299088+00:00",
+      "completed_at": "2026-10-22T06:01:11.366090+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/evidence/master_final_accepted_syntax.txt"
+    },
+    {
+      "command": "py_compile.compile(root *.py, doraise=True)",
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "exit_code": 0,
+      "status": "PASS",
+      "compiled_files": 51
+    }
+  ],
+  "unraisable_errors": [],
+  "release_source_exclusions": {
+    "public/rea": "EMPTY_UNSERVED_TRACKED_PLACEHOLDER"
+  },
+  "release": {
+    "path": "docs/evidence/master_release_candidate_002.zip",
+    "status": "PASS",
+    "scope": "OFFLINE_RELEASE_CANDIDATE",
+    "files": 56,
+    "sha256": "3cf10852e3d85f4a167d1479381a929d24aadef76fcddeddca7f24e8020a937e",
+    "manifest_sha256": "f88a1c20ed400d24bacc629c8fe22574501df5aba0e2da2d1070e6e7992ad47f",
+    "publisher_authentication": "NOT_ESTABLISHED"
+  },
+  "safety": {
+    "active_broker": "upstox",
+    "authentication": "NOT_TESTED",
+    "candles": "NOT_TESTED",
+    "configuration_ready": true,
+    "data_persisted": false,
+    "enable_background_scheduler": false,
+    "line_number": null,
+    "live_requests": false,
+    "quote": "NOT_TESTED",
+    "readiness_receipt_issued": false,
+    "reason_code": "LOCAL_CONFIGURATION_VALID",
+    "scope": "LOCAL_CONFIGURATION_ONLY",
+    "status": "PASS",
+    "telegram_dry_run": true
+  },
+  "diff_check_exit_code": 0,
+  "report_hashes": {
+    "docs/TRADEPULSE_EXECUTION_LEDGER.md": "9209798370b202f18b25a9d0246a3be83c8811dcc79327d639283234525d61e2",
+    "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md": "40260f0deb8cb29680b77729c5af54ca969d939ffd00759a6957b5767bc64ff1",
+    "docs/TRADEPULSE_CAPABILITY_MATRIX.md": "393c32de615c228abfd26d8374716d33548fdf289e5b13a1e647f2bfa281237b",
+    "docs/reports/TRADEPULSE_TEST_READINESS_REPORT.md": "d206d74c9d2ade81904d06cc71cba6075d2a22a93337838c05ca73fe4c37d1a5",
+    "docs/reports/TRADEPULSE_PRODUCTION_READINESS_REPORT.md": "f6d9e4e77ff7beee47f4525df619fd58821c9b6fa7182d5eedbaddee6b8fc3db"
+  },
+  "workflow_sha256": "7098021e6265a764bf4a80f35392e20cd7a6dcca784ee941b63e8c7e152c62b4",
+  "closeout_verifier_sha256": "8e13094018ba7f24d4460f6839ef8f3561e65c03e60c4479e01aebed6dc6e9e4",
+  "hosted_ci_executed": false,
+  "production_deployment_executed": false,
+  "local_implementation_gaps": [
+    "INDEPENDENT_SOURCE_AUTHENTICITY_EFFECTIVE_DATE_VERIFIER",
+    "HISTORICAL_OPTION_EXECUTION",
+    "DERIVATIVE_MARGIN_PARTIAL_EXECUTION",
+    "REAL_DELIVERY_OUTBOX_WORKER",
+    "AUTHENTICATED_NONLOCAL_DEPLOYMENT_CENTRAL_ALERTING"
+  ],
+  "next_action": "Declare independently verifiable publisher trust/effective-date policy; implement fail-closed source verifier without restarting baseline audit."
+}

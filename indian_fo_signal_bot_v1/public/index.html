@@ -637,6 +637,12 @@
 
             <!-- Honest Broker Connection & Scheduler Cards -->
             <div id="healthDetailsContainer" class="space-y-2.5 text-xs"></div>
+            <div class="pt-3 border-t border-slate-800 text-xs space-y-2">
+              <h3 class="font-bold text-slate-200">Stored paper, EOD and research reports</h3>
+              <label>Configured session date <input id="paperReportSession" type="date" class="bg-slate-900 text-slate-200" /></label>
+              <button id="refreshStoredReports" class="border border-slate-600 rounded px-2 py-1">Read stored reports</button>
+              <div id="storedReportsContainer">No report requested. Reading does not scan, fill or deliver.</div>
+            </div>
 
             <!-- Read-Only Server Configuration Summary (Zero Secrets Exposed) -->
             <div class="pt-3 border-t border-slate-800 space-y-2 text-xs">
@@ -815,6 +821,10 @@
         getScans: function(params) { return this.request('GET', '/api/scans', params, 8000); },
         getOiSnapshots: function(params) { return this.request('GET', '/api/oi-snapshots', params, 8000); },
         getOiBaselines: function(params) { return this.request('GET', '/api/oi-baselines', params, 8000); },
+        getPaperReport: function(params) { return this.request('GET', '/api/paper-portfolio', params, 8000); },
+        getPaperSession: function(params) { return this.request('GET', '/api/paper-session', params, 8000); },
+        getBacktestRuns: function() { return this.request('GET', '/api/backtest-runs', {limit: 5}, 8000); },
+        getNotificationOutbox: function() { return this.request('GET', '/api/notification-outbox', {limit: 5}, 8000); },
         triggerScan: function() { return this.request('POST', '/api/scan', null, 20000); }
       };
 
@@ -974,6 +984,8 @@
           if (seq !== state.reqSeq.health) return;
 
           state.health = healthData;
+          state.reqSeq.reports = (state.reqSeq.reports || 0) + 1;
+          document.getElementById('storedReportsContainer').textContent = 'Read stored reports for this health snapshot.';
           state.config = configData;
           state.lastRefreshIst = new Date().toLocaleTimeString('en-IN', { hour12: false });
 
@@ -984,9 +996,67 @@
         } catch (err) {
           if (seq !== state.reqSeq.health) return;
           state.health = null;
+          state.reqSeq.reports = (state.reqSeq.reports || 0) + 1;
+          document.getElementById('storedReportsContainer').textContent = 'Reports unavailable: current health request failed.';
           renderHeaderOffline(err);
           renderSystemHealthOffline(err);
         }
+      }
+
+      async function loadStoredReports() {
+        const seq = state.reqSeq.reports = (state.reqSeq.reports || 0) + 1;
+        const container = document.getElementById('storedReportsContainer');
+        container.textContent = 'Reading retained reports...';
+        const health = state.health;
+        if (!health) {
+          container.textContent = 'Reports unavailable: read current health first.';
+          return;
+        }
+        const account = health.paper_account_id;
+        const session = document.getElementById('paperReportSession').value;
+        const requests = [
+          ['Notification previews', () => apiClient.getNotificationOutbox()],
+          ['Stored research runs', () => apiClient.getBacktestRuns()]
+        ];
+        if (account) requests.push(['Paper ledger', () => apiClient.getPaperReport({account_id: account})]);
+        if (account && session) requests.push(['EOD statement', () => apiClient.getPaperSession({account_id: account, session_date: session})]);
+        const results = await Promise.all(requests.map(async pair => {
+          try { return {label: pair[0], data: await pair[1]()}; }
+          catch (err) { return {label: pair[0], unavailable: true}; }
+        }));
+        if (seq !== state.reqSeq.reports || state.health !== health) return;
+        renderStoredReports(results, account);
+      }
+
+      function renderStoredReports(results, account) {
+        const container = document.getElementById('storedReportsContainer');
+        clearChildren(container);
+        container.appendChild(el('div', 'text-amber-300', 'LOCAL STORED EVIDENCE. Paper fills and research execution are simulations; live acceptance is separate.'));
+        if (!account) container.appendChild(el('div', '', 'No paper account explicitly attached to this server.'));
+        results.forEach(function(result) {
+          const data = result.data || {};
+          let text = result.label + ': ';
+          if (result.unavailable) text += 'UNAVAILABLE (no cached values retained)';
+          else if (result.label === 'Paper ledger') {
+            const recon = (data.reconciliation || {}).status;
+            if (recon !== 'OK') text += 'RECONCILIATION REQUIRED; accounting unavailable';
+            else {
+              const a = data.accounting || {};
+              text += 'Reconciliation OK | Open ' + a.open_positions + ' | Closed ' + a.closed_positions +
+                ' | Equity ' + formatInr(a.equity_inr) + ' | Fees ' + formatInr(a.fees_paid_inr);
+            }
+          } else if (result.label === 'EOD statement') {
+            text += data.status + ' | ' + (data.eod_status || 'No accepted EOD statement') +
+              ' | ' + (data.session_date || '--') + ' | Statement ' + (data.statement_sha256 || 'unavailable');
+          } else if (result.label === 'Notification previews') {
+            text += 'LOCAL PREVIEW ONLY; real delivery disabled | ' + JSON.stringify(data.counts || {});
+          } else {
+            text += 'Retained ' + (data.total_count ?? '--') + ' | ' + (data.items || []).map(function(run) {
+              return [run.run_id, run.data_mode || 'UNQUALIFIED', run.strategy_id, run.symbol].join(' / ');
+            }).join('; ');
+          }
+          container.appendChild(el('div', 'mono border-b border-slate-800 py-1', text));
+        });
       }
 
       function renderHeaderHealth(health) {
@@ -1003,7 +1073,9 @@
         stateBadge.className = connInfo.badgeCls;
 
         const modeBadge = document.getElementById('headerDataModeBadge');
-        if (broker.is_simulated || broker.data_mode === 'SIMULATED') {
+        if (health && health.evidence_scope === 'OFFLINE_FIXTURE_NOT_LIVE_ACCEPTANCE') {
+          modeBadge.textContent = 'OFFLINE FIXTURE';
+        } else if (broker.is_simulated || broker.data_mode === 'SIMULATED') {
           modeBadge.textContent = 'SIMULATED DATA MODE';
           modeBadge.className = 'text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 mono';
         } else if (health && health.live_acceptance && health.live_acceptance.accepted === true) {
@@ -1084,6 +1156,8 @@
           cFresh.latest_candle_timestamp_ist ? (' (Bar: ' + cFresh.latest_candle_timestamp_ist + ' IST)') : ''
         );
         const rows = [
+          ['Operational alerts', ((health.operations || {}).alerts || []).join(', ') || 'None recorded (local scope)'],
+          ['Notification previews', JSON.stringify((health.operations || {}).notification_counts || {}) + ' (no real delivery)'],
           ['Broker Adapter', (broker.broker_name || '--') + ' [' + (broker.active_broker || '--') + ']'],
           ['Broker Connection State', (broker.connection_state || '--') + (broker.error_category && broker.error_category !== 'NONE' && broker.error_category !== 'SIMULATED' ? (' [' + broker.error_category + ']') : '')],
           ['Live Connectivity Verified', broker.connectivity_verified ? 'YES (Verified @ ' + (broker.last_verified_at_ist || '--') + ' IST)' : 'NO (Not Live-Verified)'],
@@ -1228,7 +1302,9 @@
       function describeStoredSignalSource(signal) {
         let label = 'UNKNOWN SOURCE';
         let palette = 'bg-slate-800 text-slate-300 border-slate-600';
-        if (signal.data_mode === 'SIMULATED' && signal.is_simulated === true) {
+        if (signal.evidence_scope === 'OFFLINE_FIXTURE_NOT_LIVE_ACCEPTANCE') {
+          label = 'OFFLINE FIXTURE';
+        } else if (signal.data_mode === 'SIMULATED' && signal.is_simulated === true) {
           label = 'SIMULATED';
           palette = 'bg-amber-500/20 text-amber-300 border-amber-500/40';
         } else if (signal.data_mode === 'LIVE' && signal.is_simulated === false &&
@@ -1336,6 +1412,14 @@
           midRow.appendChild(el('span', 'text-slate-300 font-medium', (s.strategy_name || s.strategy_id || '--') + ' • ' + (s.position_type || '--')));
           midRow.appendChild(el('span', 'mono text-slate-400', 'Qty: ' + previewQty + ' | R:R ' + (s.risk_reward || '--')));
           card.appendChild(midRow);
+          const decision = s.paper_decision || {};
+          card.appendChild(el('div', 'mt-1 text-xs text-amber-200 mono',
+            'Stored candidate | ' + (s.recommendation_status || 'CANDIDATE_ONLY') +
+            ' | ' + (decision.reason_code || 'Paper eligibility not evaluated')));
+          if (s.lineage && s.lineage.batch_ids && s.lineage.batch_ids.length) {
+            card.appendChild(el('div', 'mt-1 text-xs text-slate-400 mono',
+              'Input batch: ' + s.lineage.batch_ids.join(', ') + ' | Scan: ' + s.scan_run_id));
+          }
 
           // Bottom row: Entry, Stop, Invalidation, T1, T2
           const gridRow = el('div', 'mt-2.5 grid grid-cols-5 gap-2 pt-2 border-t border-slate-800/80 text-xs mono');
@@ -1460,7 +1544,10 @@
           'Risk: ' + formatInr(sig.capital_risk_inr) + ' | Est. NSE Charges: ' + formatInr(sig.est_charges_inr);
         document.getElementById('detailTimestampAndBroker').textContent =
           (sig.timestamp || '--') + ' IST • ' + (sig.broker || '--');
-        document.getElementById('detailRationale').textContent = sig.rationale || 'No rationale text provided.';
+        document.getElementById('detailRationale').textContent = (sig.rationale || 'No rationale text provided.') +
+          ' | ' + (sig.recommendation_status || 'CANDIDATE_ONLY') + ' | ' +
+          ((sig.paper_decision || {}).reason_code || 'Paper eligibility not evaluated') +
+          ' | Input batches: ' + ((sig.lineage || {}).batch_ids || []).join(', ');
 
         // Plot verified signal price levels on #signalPriceChart
         const ctx = document.getElementById('signalPriceChart').getContext('2d');
@@ -2148,6 +2235,7 @@
           });
         });
 
+        document.getElementById('refreshStoredReports').addEventListener('click', loadStoredReports);
         document.getElementById('btnRefreshDashboard').addEventListener('click', function() {
           refreshAllDashboardData();
           showToast('Refreshed dashboard data from backend (no scan triggered).', false);

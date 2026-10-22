@@ -1,0 +1,46 @@
+name: Offline verification
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python: ['3.10', '3.11', '3.12', '3.13', '3.14']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: indian_fo_signal_bot_v1
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Run credential-free offline checks
+        run: python -B -W error::ResourceWarning verify_offline.py --stage ci
+      - name: Validate source-bound evidence
+        run: python -B verify_offline.py --validate-evidence docs/evidence/master_ci.json
+      - name: Retain only explicit offline evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: offline-${{ matrix.os }}-python-${{ matrix.python }}
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            indian_fo_signal_bot_v1/docs/evidence/master_ci.json
+            indian_fo_signal_bot_v1/docs/evidence/master_ci_python.txt
+            indian_fo_signal_bot_v1/docs/evidence/master_ci_node.txt
+            indian_fo_signal_bot_v1/docs/evidence/master_ci_syntax.txt
