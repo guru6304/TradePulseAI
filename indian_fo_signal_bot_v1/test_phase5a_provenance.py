@@ -251,7 +251,7 @@ class TestPhase5AHistoricalProvenance(unittest.TestCase):
                     with self.assertRaises(BacktestEligibilityError) as strategy3:
                         engine.run_backtest("strat_3_option_apex_oi", "RELIANCE", candles=copy.deepcopy(bars),
                             provider=provider, data_mode="LIVE")
-                    self.assertEqual(strategy3.exception.details["reason_code"], "HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED")
+                    self.assertEqual(strategy3.exception.details["reason_code"], "OPTION_EXECUTION_INPUT_REQUIRED")
                     evaluator.assert_not_called()
                     writer.assert_not_called()
                 self.assertEqual(self.store.check_health()["backtest_runs_count"], 0)

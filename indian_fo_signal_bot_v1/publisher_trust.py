@@ -21,10 +21,9 @@ dependency blocker; HMAC or custom asymmetric crypto is never substituted.
 Dependency required for live verification:
   cryptography >= 42   (Python 3.10-3.14 supported wheel)
   Install: pip install "cryptography>=42"
-  Environment blocker recorded: PyPI unreachable from this machine (read
-  timeout connecting to pypi.org); no wheel was found for Python 3.14.6.
-  All verifier code is fully implemented and will activate automatically
-  when the dependency becomes available.
+  Install the repository's requirements.txt into the interpreter running tests.
+  Dependency availability is measured in that runtime, never inferred from a
+  previous installer timeout. Missing backends remain fail-closed.
 """
 from __future__ import annotations
 
@@ -281,6 +280,13 @@ class TrustAnchorConfig:
     def policy_version(self) -> str:
         return self._policy_version
 
+    @property
+    def fingerprint(self):
+        return hashlib.sha256(json.dumps(dict(policy=self._policy_version,anchors=self._anchors,
+            artifacts=sorted(self._permitted_artifact_types) if self._permitted_artifact_types is not None else None,
+            providers=sorted(self._permitted_providers) if self._permitted_providers is not None else None),
+            sort_keys=True,separators=(",",":"),allow_nan=False).encode()).hexdigest()
+
     def find_anchor(self, publisher_id: str, key_id: str):
         """Return matching anchor dict or None.  Matching is exact on both fields."""
         for anchor in self._anchors:
@@ -315,6 +321,7 @@ class TrustVerificationResult:
         "_key_id", "_publisher_id", "_effective_from", "_effective_until",
         "_signed_artifact_digest", "_signature_algorithm",
         "_signed_publisher_time_claim", "_integrity_note",
+        "_trust_config_digest",
     )
 
     _INTEGRITY_NOTE = (
@@ -338,6 +345,7 @@ class TrustVerificationResult:
         signature_algorithm=None,
         signed_publisher_time_claim=None,
         integrity_note: str = _INTEGRITY_NOTE,
+        trust_config_digest=None,
     ) -> None:
         self._allowed = allowed
         self._reason_code = reason_code
@@ -351,6 +359,7 @@ class TrustVerificationResult:
         self._signature_algorithm = signature_algorithm
         self._signed_publisher_time_claim = signed_publisher_time_claim
         self._integrity_note = integrity_note
+        self._trust_config_digest=trust_config_digest
 
     @property
     def allowed(self) -> bool:
@@ -415,6 +424,7 @@ class TrustVerificationResult:
             "signature_algorithm": self._signature_algorithm,
             "signed_publisher_time_claim": self._signed_publisher_time_claim,
             "integrity_note": self._integrity_note,
+            "trust_config_digest": self._trust_config_digest,
         }
 
     @classmethod
@@ -482,6 +492,8 @@ class PublisherTrustVerifier:
             return self._verify_inner(manifest_json, original_bytes, vtime, required_scope)
         except _VerificationError as exc:
             return TrustVerificationResult._fail(exc.reason_code, exc.detail)
+        except (ValueError,TypeError,KeyError,ArithmeticError):
+            return TrustVerificationResult._fail(REASON_MALFORMED_MANIFEST, "Malformed verification input.")
 
     # ------------------------------------------------------------------
     # Internal helpers
@@ -510,8 +522,6 @@ class PublisherTrustVerifier:
                     "The 'cryptography' package is required for Ed25519 signature "
                     "verification but is not installed.  "
                     "Install with: pip install 'cryptography>=42'.  "
-                    "Environment blocker: PyPI unreachable from this machine "
-                    "(read timeout connecting to pypi.org).  "
                     "All verification code is implemented and will activate "
                     "when the dependency is available.  "
                     "This is not a substitution with HMAC or custom crypto."
@@ -680,6 +690,10 @@ class PublisherTrustVerifier:
                 f"effective_from ({eff_from.isoformat()}) must be strictly before "
                 f"effective_until ({eff_until.isoformat()}).",
             )
+        published = _parse_utc(manifest["publisher_publication_time"],"publisher_publication_time")
+        captured = _parse_utc(manifest["capture_observation_time"],"capture_observation_time")
+        if published>captured or captured>vtime:
+            raise _VerificationError(REASON_OUTSIDE_EFFECTIVE_DATE,"Publication/capture time is future or reversed.")
 
         # Step 11: rights reference
         rights = manifest.get("rights_reference", "")
@@ -721,6 +735,7 @@ class PublisherTrustVerifier:
             signed_artifact_digest=actual_digest,
             signature_algorithm=sig_algorithm,
             signed_publisher_time_claim=manifest.get("publisher_publication_time"),
+            trust_config_digest=self._config.fingerprint,
         )
 
 

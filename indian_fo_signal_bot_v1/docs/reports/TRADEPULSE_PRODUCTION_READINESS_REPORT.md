@@ -7,11 +7,11 @@ authorization to operate accounts or place orders.
 ## Current release decision
 
 TESTING READY: **PASS for current source**. Final full execution and current-source
-evidence validation both returned 0: **722/722 Python cases passed**, 0 failures,
-errors or skips, 267.497s; **10/10 standalone Node cases passed**, syntax exit 0,
-51 Python files compiled, no unraisable errors, source before/after identical.
-Evidence: `master_final_accepted.json` and bound logs, plus
-`master_final_accepted_validation.json`. Exact commands are in the ledger and
+evidence validation both returned 0: **758/758 Python cases passed**, 0 failures,
+errors or skips, 265.931s; **10/10 standalone Node cases passed**, syntax exit 0,
+56 Python files compiled, no unraisable errors, source before/after identical.
+Evidence: `master_phase4ab_verified.json` and bound logs, plus
+`phase4ab_final_validation.json`. Exact commands are in the ledger and
 testing report. Earlier Gate 2 (686 cases) and later intermediate runs remain
 historical; their counts are not added to this final run.
 
@@ -19,17 +19,19 @@ PRODUCTION READY: **BLOCKED**. LIVE READ-ONLY ACCEPTANCE:
 **BLOCKED_EXTERNAL_DEPENDENCY: BLOCKED_PENDING_OPERATOR_AUTHORIZATION**.
 REAL TRADING: **NOT AUTHORIZED**. These decisions do not assert that credentials
 are rejected; no private broker endpoint was contacted, token refreshed or order
-sent. Upstox selection, Telegram dry-run and disabled scheduler are preserved.
+sent. The explicit current selection is paper_sim, Telegram dry-run true and
+scheduler disabled. Only the existing broker-selection line was changed to honor
+this mission; no credential was printed or altered.
 
 ## Gates and concrete limits
 
 | Gate | Current evidence | Remaining acceptance |
 | --- | --- | --- |
-| Current baseline / offline integrity | Fresh 675-case baseline; final 722/722, Node 10/10, source/log validation exit 0 | No current regression failure; broader qualified/operating requirements below. |
+| Current baseline / offline integrity | Earlier baseline 675; supplied 736 artifact confirmed; current 758/758, Node 10/10, source/log validation exit 0 | No current regression failure; broader qualified/operating requirements below. |
 | Cash test readiness | Actual mocked adapter, validators, immutable input, scanner/ranking/risk, transactions, paper decisions, HTTP and actual renderer | Real declared universe/provider/calendar/warmup and separately authorized end-to-end handoff. |
 | Adapter contract | Public V3 intraday/V2 full-quote contracts reviewed; existing bounded parsing/no automatic retry/error categorization retained | Actual account authorization and sanitized fresh observation/identity evidence, not inferred from local configuration. |
 | Contract universe | Local native Upstox stock/index derivatives import, exact terms, immutable retained bytes, atomic inspection cache, stale/expiry/last-good tests | Authentic current source capture, agreed coverage/rights/trust/effective dates, derivative price and execution acceptance. Imported facts remain ineligible. |
-| Historical research | Consistent paged storage beyond 10,000 rows; chronological snapshot and actual paged/direct cash backtest equivalence | Qualified licensed cash/options, independent source/effective-date verifier, actual historical option execution. Existing denial gates remain. |
+| Historical research | Consistent paged storage; cash equivalence; genuine Ed25519 source verifier and current trust-to-replay path; bounded exact-option bid/ask execution | Real authorized publisher roots/licensed signed inputs, actual empirical studies; broader derivative/partial/margin models and operating acceptance. |
 | Paper operations and delivery | Final full regression passes: transactional cash ledger/EOD/recovery, durable local previews/retries/attempt audit, three fixture sessions across restart, actual API/UI reporting | Agreed real-session soak, derivative/margin and partial-execution scope, approved repair and real-delivery policy. |
 | Release engineering | Final full regression and source/log validation pass; isolated actual store/cash/paper/outbox restore; deterministic scoped ZIP and extracted inventory bootstrap; same-origin guard/alerts; CI definition | Hosted runtime matrix, authenticated deployment/central alerting/browser visuals and real operating acceptance. |
 
@@ -50,11 +52,11 @@ Documentation review is not live endpoint/account acceptance.
 | Precise read authorization | Operator privately confirms intended account/environment, locally verified credentials/permissions and exactly one RELIANCE quote GET + one candle GET; no secrets in chat | Offline input/scanner/paper/API/UI, regression and release engineering. |
 | Authoritative NFO/calendar scope | Publisher/project owner supplies authentic retained current/dated native master/calendar, rights and independently supportable trust/effective dates | Native parser/cache/expiry/conflict/refresh and calendar failure tests. |
 | Qualified cash/options history | Licensed publisher + project owner supplies genuine observations, exact dated contracts, independent authenticity/effective-date mechanism and approved execution assumptions | Stored-history pagination, chronology, reproducibility, rejection and accounting mechanics. |
-| Actual historical Strategy 3 | Repository research owner + publisher; qualified contract premiums and declared spread/liquidity/rollover model, then real execution implementation | No underlying-as-option-premium substitution or fabricated fill; current rejection remains explicit. |
+| Actual historical Strategy 3 | Bounded long-option model implemented; repository owner/publisher must supply qualified contract/premium/depth/closing-OI artifacts and approve execution assumptions | Existing model/qualification gates remain; no underlying-as-premium substitution or invented fill/settlement. |
 | Operating acceptance | Operator/project owner agrees actual sessions/scenarios, supported deployment/runtime environment and monitoring/restore/rollback criteria | Deterministic failure/restart/EOD/ledger/backup drills, local health and reproducible verification. |
 
-Missing implementation is not reclassified as an external dependency. Actual option
-execution, a source authenticator/effective-date verifier, derivative margin/partial
+Missing implementation is not reclassified as an external dependency. Bounded
+option execution and the publisher verifier now exist. General derivative margin/partial
 execution, a real-delivery outbox worker and authenticated nonlocal deployment with
 central alerting remain local functional gaps. Their acceptance also requires agreed
 scope and independent artifacts. Existing rejection gates are preserved.
@@ -114,6 +116,11 @@ bundle inspection, isolated restore and future reviewed deployment/rollback step
 
 ## Per-milestone reassessment against the unchanged rubric
 
+The following table is the prior master-checkpoint assessment, retained for
+before/after comparison. The Phase 4A/4B addendum below supersedes its old claims
+that the verifier and all historical option execution are missing. Scores remain
+unchanged after reassessment of the same whole-row scope.
+
 Previous state is the accepted Task 3/4 allocation. Current source and fresh
 execution are assessed against the original row's full scope, not against new
 narrow helper functions. Test selections/logs/exit counts are in the execution
@@ -142,7 +149,7 @@ preview durability, reporting and release/recovery evidence. Each is recorded
 against its own scoped criteria. No row reaches the original 75/100 threshold
 merely from these narrower changes or from an increased test count.
 
-## Continuation without restarting the audit
+## Prior continuation target (completed as offline engineering in Phase 4A/4B)
 
 The next research task is an explicit source-verifier interface in
 `source_qualification.py`/`instrument_archive.py`, preserving default denial.
@@ -159,3 +166,94 @@ model, qualified observed premiums and declared spread/liquidity/rollover/margin
 assumptions. It remains explicitly rejected with
 `HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED`. These are outstanding production
 requirements; the current implementation is not declared a completed product.
+
+## Phase 4A acceptance and Phase 4B outcome - 2026-10-22
+
+**Phase 4A PASS - OFFLINE ENGINEERING; Phase 4B PASS - BOUNDED OPTION MECHANICS.**
+HEAD `205803131d7e1a17d6b42ce976efe7dff30e475a`, preserved working tree. Source-bound
+final evidence is `docs/evidence/master_phase4ab_verified.json`; current validator
+returned 0. Exact full command:
+`.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage phase4ab_verified`.
+It executed 758/758 passed, zero failures/errors/skips, 265.931s; Node 10/10,
+56 files compiled, zero unraisable errors and no source change. Actual installed
+runtime is Python 3.14.6 with cryptography 50.0.2/cffi 2.1.1/pycparser 3.11/
+tzdata 2026.5. The source snapshot now binds requirements.txt. Hosted CI remains
+unexecuted; the runtime matrix is not represented as tested here.
+
+The supplied 736 PASS artifact genuinely matched entry source, but the base Python
+had no cryptography and its positive test substituted a hash mock. The corrected
+test case 01 genuinely signs/verifies using Ed25519; case 03 independently proves
+missing-backend denial. A direct backend probe verifies a 64-byte signature and
+InvalidSignature on altered bytes in the exact interpreter used by tests. No
+alternate/mock/HMAC backend is substituted. The old artifact actually compiled
+53 files, correcting the claimed 52. Old release failures were missing production
+module registration and consequent extracted-bootstrap import failure. Both are
+verified fixed; the new engine is also registered as production, with pinned
+dependencies bundled and installed by CI. No test/module was dropped to pass.
+
+`source_qualification.py`, `instrument_archive.py`, `instrument_identity.py`,
+`storage.py`, `publisher_trust.py` and `backtest_engine.py` now enforce exact signed
+bytes versus reparsed records, schema/type/provider/exchange/segment/instrument
+scope, effective dates, publication before replay, current trust/revocation and
+policy fingerprint. Actual store -> qualification -> dated identity -> readiness
+-> cash replay is exercised, including revocation/changed bytes/future-publication
+denials before strategy evaluation. Operator roots enter explicit local service
+configuration, not an HTTP body or a saved assessment. Real roots/manifests and
+licensing evidence remain absent; test keys do not qualify NSE/broker artifacts.
+
+`option_execution.py` is a working execution branch through the existing Strategy 3
+evaluator and cost model, `run_backtest`, readiness admission, actual HTTP and CLI.
+It consumes explicit exact-contract premium bid/ask bars and opening depth, uses
+known prefixes/prior closing OI, fills no earlier than next option open, supports
+long calls/puts, lot/risk/capital checks, marks, opening gap stops/target exits,
+observed expiry/EOD exit, ledger reconciliation and deterministic persisted results.
+Raw observed quotes, modeled capped target references/fills and estimated costs
+are separate. Slippage is applied once per leg, not to stop/target thresholds.
+Fractional OI changes cannot be rounded into signals; exact observed differences
+are required. Underlying bars never supply premium fills. Legacy override flags
+remain blocked; the legacy default API eligibility status is preserved.
+
+Precise V1 limits: NIFTY/BANKNIFTY OPTIDX, one open long position, full premium
+reservation, opening quote liquidity, all-or-none fills. Intrabar stops/collisions
+without executable trigger quotes remain unresolved, with stop priority and no
+target award. Missing prices/depth/EOD retain reservations, never forward-fill or
+settle at invented prices. No short margin, partial fills, overnight exercise/
+settlement, general stock-options engine or real operational calendar acceptance
+is claimed. Inputs must be retained separately: stored results include source
+digests/IDs, assumptions and ledger, not a durable complete option-input archive.
+These are functional limits, not renamed external blockers.
+
+The actual local CLI passed with a temporary synthetic request/in-memory database:
+one trade, observed bid 30, modeled fill 27.0, ledger OK, empirical claims false
+(`phase4b_cli_verified.json`). Eighteen option cases and four new trust-path cases
+raise execution count 736 -> 758; existing fourteen signature cases now use real
+crypto. Failed intermediates, compatibility correction, observation-label and OI
+regressions are retained in the ledger. No current test failure or stale final
+source/log binding remains. A prior passed full run is explicitly historical after
+the final OI fix, rather than relabeled current.
+
+Final local release: `docs/evidence/phase4ab_release_final.zip`, 62 manifested
+source/test/template/runbook/dependency files. Build and inspection exit 0.
+SHA-256 `bc3f3cfc370c5e702dfcb565313f35006419d938469e66593b97910d92db7eff`.
+Extracted bootstrap imports both production modules and requires real crypto.
+The final closeout `docs/evidence/phase4ab_closeout.json` binds reports, source,
+runtime, worktree, release and historical stage outcomes. Earlier master artifacts
+are retained as historical; no previous failed evidence is overwritten.
+
+Reassessment under the unchanged whole-row rubric: M04 gains the implemented,
+genuinely tested trust gate, and M08 gains bounded option replay. Actual licensed
+data, empirical research, broader derivative/margin/partial scope and operating
+acceptance are still absent. No whole-row next threshold is established:
+implementation **64.25 -> 64.25**, readiness **37.00 -> 37.00**, **0/12** accepted.
+Testing readiness passes; production and real historical option study remain
+BLOCKED/NOT ACCEPTED. This is engineering evidence, not profitability evidence.
+
+Next task: obtain the operator-approved real trust-root/publication/rights profile
+and an authentic signed dated master + premium/bid/ask/depth/prior-closing-OI dataset,
+retain its exact inputs and run the existing qualification/engine gates. Require
+scope/date/digest/key verification, no unresolved fills, reconciled ledger and a
+reviewed calendar/cost/study protocol before accepting real research. No keys or
+secrets should be submitted in chat. No live requests, orders, token refresh,
+Telegram delivery or scheduler activation were made; paper_sim/dry-run true/
+scheduler false is confirmed. Package downloads from official PyPI were software
+installation, not broker or market-data acquisition.

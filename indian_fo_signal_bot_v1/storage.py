@@ -1226,14 +1226,19 @@ class SQLitePersistenceStore:
         return identity
 
     def resolve_archived_instrument_identity(self, provider, symbol, identifier, exchange, instrument_type,
-                                             first_date, last_date, lot_size=None, archive_id=None):
+                                             first_date, last_date, lot_size=None, archive_id=None,
+                                             trust_config=None, publisher_manifests=None, verification_time=None):
         from instrument_archive import resolve_archives
         archives = self.list_instrument_master_archives(provider)
         for archive in archives:
-            archive["source_qualification"] = self.qualify_instrument_master_archive(archive["archive_id"])
+            if trust_config is None:
+                archive["source_qualification"] = self.qualify_instrument_master_archive(archive["archive_id"])
             archive["original_bytes"] = self.get_instrument_master_archive(archive["archive_id"], include_original=True)["original_bytes"]
+            if publisher_manifests and archive["archive_id"] in publisher_manifests:
+                archive["metadata"]["publisher_manifest_json"] = publisher_manifests[archive["archive_id"]]
         return resolve_archives(archives, provider, symbol, identifier,
-                                exchange, instrument_type, first_date, last_date, lot_size, archive_id)
+                                exchange, instrument_type, first_date, last_date, lot_size, archive_id,
+                                trust_config=trust_config,verification_time=verification_time)
 
     def _save_live_acceptance_evidence(self, provider: str, symbol: str, evidence: Dict[str, Any]) -> None:
         """Internal diagnostic writer. Local DB writers are inside the trust boundary."""

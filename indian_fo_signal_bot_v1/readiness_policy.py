@@ -238,11 +238,21 @@ def _receipt_covers_history(acceptance, coverage):
 
 
 def execution_gate(config, store, provider, symbol, strategy_id, data_mode="LIVE",
-                   execution_scope=None, now=None, **coverage_args):
+                   execution_scope=None, now=None, option_execution_request=None,
+                   publisher_trust_config=None, option_config=None, **coverage_args):
     scope = execution_scope or ("LIVE_ACCEPTED" if data_mode == "LIVE" else "SIMULATED_TEST")
     result = {"allowed": False, "execution_scope": scope, "policy_version": POLICY_VERSION}
     if strategy_id == STRATEGY_3:
-        return {**result, "reason_code": "HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED"}
+        if option_execution_request is not None:
+            from option_execution import gate
+            from backtest_engine import BacktestConfig
+            from types import SimpleNamespace
+            profile=option_config or BacktestConfig(instrument_type="OPTIDX",execution_scope=scope)
+            profile.validate()
+            context=SimpleNamespace(bot_config=config,publisher_trust_config=publisher_trust_config,
+                clock=lambda:parse_ist_timestamp(now or datetime.now(IST)))
+            return {**result,**gate(context,option_execution_request,data_mode,provider,symbol,profile)}
+        return {**result, "reason_code": "OPTION_EXECUTION_INPUT_REQUIRED"}
     if strategy_id not in STRATEGY_HISTORICAL_DATA_REQUIREMENTS:
         return {**result, "reason_code": "UNKNOWN_STRATEGY"}
     if data_mode == "SIMULATED":
@@ -300,7 +310,7 @@ def readiness_report(config, store=None, broker_status=None, target_data_mode="L
                            "ready_symbols_count": count, "required_inputs": spec["required_fields"]}
         if sid == STRATEGY_3:
             strategies[sid].update(status="BLOCKED_MISSING_HISTORICAL_OPTION_CHAIN",
-                                   reason_code="HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED")
+                                   reason_code="OPTION_EXECUTION_INPUT_REQUIRED")
     result = {"phase": POLICY_VERSION, "evaluated_at_ist": format_ist_timestamp(now or datetime.now(IST)),
               "target_data_mode": target_data_mode, "provider": provider,
               "phase2c_live_accepted": accepted, "phase3_ready_for_execution": ready,

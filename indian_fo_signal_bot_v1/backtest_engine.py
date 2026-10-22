@@ -71,8 +71,8 @@ class BacktestReadinessError(BacktestError):
 
 
 STRATEGY_3_HISTORICAL_BLOCK_REASON = (
-    "Historical Strategy 3 (Option Apex OI Shift) is not supported until validated contract-level "
-    "option execution is implemented. Supplied option chains, contract candles, lot metadata, "
+    "Historical Strategy 3 requires the explicit versioned option execution request with validated contract-level "
+    "premium observations. Legacy supplied option chains, contract candles, lot metadata, "
     "readiness flags, and SIMULATED/LIVE mode cannot enable it. Underlying index candles must "
     "never be used as option-premium execution prices."
 )
@@ -85,12 +85,12 @@ def _strategy_3_historical_rejection() -> Dict[str, Any]:
         "strategy_name": "Option Apex OI Shift Trap + PCR",
         # Retain the existing status for clients; reason_code describes the unconditional block.
         "status": "BLOCKED_MISSING_HISTORICAL_OPTION_CHAIN",
-        "reason_code": "HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED",
+        "reason_code": "OPTION_EXECUTION_INPUT_REQUIRED",
         "reason": STRATEGY_3_HISTORICAL_BLOCK_REASON,
         "required_action": (
-            "Implement and validate point-in-time option contract selection, historical closing-OI "
-            "provenance, contract-candle fills, long-call/long-put accounting, and historical lot "
-            "metadata before separately enabling Strategy 3 historical execution."
+            "Supply tradepulse.option-request.v1: exact dated contracts, historical closing-OI "
+            "provenance and contract-candle fills with observed bid/ask/depth. LIVE research "
+            "additionally requires independently signed master and observation artifacts."
         ),
     }
 
@@ -235,10 +235,10 @@ STRATEGY_BACKTEST_ELIGIBILITY: Dict[str, Dict[str, Any]] = {
             "Targets: T1 = opt_premium + 1.6*risk, T2 = opt_premium + 2.4*risk. Requires historical 5m OHLC of the "
             "specific ATM CE/PE option contract to evaluate intrabar stops and targets."
         ),
-        "historical_data_availability": "UNAVAILABLE_HISTORICAL_OPTION_CHAIN_AND_EXPIRED_CONTRACTS",
+        "historical_data_availability": "REQUIRES_EXACT_CONTRACT_BID_ASK_DEPTH_AND_PRIOR_CLOSING_OI",
         "backtest_eligibility": "BLOCKED_MISSING_HISTORICAL_OPTION_CHAIN",
-        "historical_execution_supported": False,
-        "reason_code": "HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED",
+        "historical_execution_supported": True,
+        "reason_code": "OPTION_EXECUTION_INPUT_REQUIRED",
         "restriction_reason": STRATEGY_3_HISTORICAL_BLOCK_REASON,
     },
     "strat_4_orb_filtered": {
@@ -583,8 +583,8 @@ class BacktestConfig:
                 isinstance(self.historical_lot_size, bool) or not isinstance(self.historical_lot_size, int)
                 or self.historical_lot_size <= 0):
             raise BacktestValidationError("historical_lot_size must be a positive integer when provided.")
-        if str(self.instrument_type).strip().upper() not in ("EQ", "INDEX_SPOT", "FUTIDX"):
-            raise BacktestValidationError("Historical execution supports EQ or explicit FUTIDX contracts; options remain unsupported.")
+        if str(self.instrument_type).strip().upper() not in ("EQ", "INDEX_SPOT", "FUTIDX", "OPTIDX"):
+            raise BacktestValidationError("Historical execution requires EQ, INDEX_SPOT, FUTIDX or explicit OPTIDX requests.")
         if self.execution_convention != "NEXT_CANDLE_OPEN":
             raise BacktestValidationError(
                 f"Unsupported execution_convention {self.execution_convention!r}; only 'NEXT_CANDLE_OPEN' is supported to prevent look-ahead bias."
@@ -1100,11 +1100,15 @@ class DeterministicBacktestEngine:
         store: Optional[SQLitePersistenceStore] = None,
         broker_status: Optional[Dict[str, Any]] = None,
         clock: Optional[Any] = None,
+        publisher_trust_config=None,
+        publisher_manifests=None,
     ) -> None:
         self.bot_config = bot_config or BotConfig()
         self.store = store
         self.broker_status = broker_status
         self.clock = clock or (lambda: datetime.now(IST))
+        self.publisher_trust_config = publisher_trust_config
+        self.publisher_manifests = publisher_manifests
 
     def _invoke_strategy_evaluator(
         self,
@@ -1186,6 +1190,7 @@ class DeterministicBacktestEngine:
         historical_option_chains_by_timestamp: Optional[Dict[str, Dict[str, Any]]] = None,
         historical_option_candles_by_contract: Optional[Dict[str, List[Dict[str, Any]]]] = None,
         persist_run: bool = False,
+        option_execution_request=None,
     ) -> Dict[str, Any]:
         """
         Executes a deterministic historical backtest for `strategy_id` on `symbol`.
@@ -1198,6 +1203,15 @@ class DeterministicBacktestEngine:
         precedence. Effective prices use the cost model's four-decimal rounding. OHLC
         triggers/raw fills remain separate from the existing slippage cost adjustment.
         """
+        if strategy_id=="strat_3_option_apex_oi" and option_execution_request is not None:
+            from option_execution import run
+            cfg=backtest_config or BacktestConfig(instrument_type="OPTIDX")
+            cfg.validate()
+            if cfg.instrument_type!="OPTIDX" or interval_min!=5:
+                raise BacktestValidationError("Option replay requires explicit OPTIDX and 5-minute observations.")
+            from readiness_policy import resolve_provider
+            return run(self,option_execution_request,cfg,symbol,
+                resolve_provider(self.bot_config,data_mode,provider),data_mode,persist_run)
         _ensure_historical_strategy_supported(strategy_id)
 
         bt_cfg = backtest_config or BacktestConfig(
@@ -1324,7 +1338,9 @@ class DeterministicBacktestEngine:
                         raise IdentityValidationError("HISTORICAL_IDENTITY_UNVERIFIED", "Inline/legacy master has no eligible archive provenance and coverage.")
                 historical_identity = self.store.resolve_archived_instrument_identity(provider, sym, instrument_token,
                     exchange, bt_cfg.instrument_type.upper(), validated_bars[0]["session_date"],
-                    validated_bars[-1]["session_date"], bt_cfg.historical_lot_size, archive_id)
+                    validated_bars[-1]["session_date"], bt_cfg.historical_lot_size, archive_id,
+                    trust_config=self.publisher_trust_config, publisher_manifests=self.publisher_manifests,
+                    verification_time=self.clock())
             except IdentityValidationError as exc:
                 error = BacktestEligibilityError(f"{exc.rejection['reason_code']}: {exc}")
                 error.details = exc.rejection
@@ -2019,6 +2035,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument("--historical-instrument-master", help="Local JSON archive under --instrument-import-root; original bytes are preserved.")
     parser.add_argument("--instrument-import-root", default=".", help="Allowed local archive input directory.")
     parser.add_argument("--instrument-archive-id", help="Immutable archive ID previously ingested in this SQLite database.")
+    parser.add_argument("--option-request", help="Local versioned option-request JSON; no provider request is made.")
     args = parser.parse_args(argv)
 
     cfg = BotConfig(database_url=os.getenv("DATABASE_URL", "sqlite:///tradepulse_phase1d.db"))
@@ -2111,6 +2128,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             store.close()
             return 1
     bt_cfg = BacktestConfig(
+        instrument_type="OPTIDX" if args.option_request else "EQ",
         historical_instrument_archive_id=archive_id,
         starting_capital_inr=args.capital,
         risk_per_trade_pct=args.risk_pct,
@@ -2122,6 +2140,14 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     engine = DeterministicBacktestEngine(bot_config=cfg, store=store)
     try:
+        option_request=None
+        if args.option_request:
+            from option_execution import decode
+            with open(args.option_request,"rb") as source:
+                raw=source.read(64*1024*1024+1)
+            if len(raw)>64*1024*1024:
+                raise BacktestValidationError("Option request file exceeds 64 MiB.")
+            option_request=decode(raw.decode("utf-8"))
         res = engine.run_backtest(
             strategy_id=args.strategy,
             symbol=args.symbol,
@@ -2130,6 +2156,7 @@ def main(argv: Optional[List[str]] = None) -> int:
             data_mode=args.data_mode,
             backtest_config=bt_cfg,
             persist_run=args.persist,
+            option_execution_request=option_request,
         )
         if args.json:
             safe_console_print(json.dumps(res, indent=2))

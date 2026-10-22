@@ -31,7 +31,7 @@ class TestReleaseBundle(unittest.TestCase):
                 # This archive was generated above and scope-validated first.
                 archive.extractall(extracted)
             bootstrap = subprocess.run([sys.executable, "-B", "-c",
-                "import unittest,test_bot; from verify_offline import case_ids; "
+                "import unittest,test_bot,publisher_trust,option_execution; assert publisher_trust._CRYPTO_AVAILABLE; from verify_offline import case_ids; "
                 "cases=list(case_ids(unittest.defaultTestLoader.loadTestsFromName('test_bot'))); "
                 "assert len(cases)==len(set(cases)) and len(cases)>0; "
                 "assert not any('FailedTest' in c for c in cases); print('BOOTSTRAP_OK')"],

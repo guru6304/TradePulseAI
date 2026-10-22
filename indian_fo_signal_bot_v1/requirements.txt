@@ -1,0 +1,5 @@
+# Publisher Ed25519 verification and its runtime dependencies; no network in tests.
+cryptography==50.0.2
+cffi==2.1.1
+pycparser==3.11
+tzdata==2026.5

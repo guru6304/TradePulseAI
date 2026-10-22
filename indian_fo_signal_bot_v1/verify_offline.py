@@ -39,7 +39,7 @@ def digest(path):
 
 
 def source_snapshot(root=APP):
-    files = list(root.glob("*.py")) + list(root.glob("test_*.js")) + list((root/"public").rglob("*"))
+    files = list(root.glob("*.py")) + list(root.glob("test_*.js")) + list((root/"public").rglob("*")) + [root/"requirements.txt"]
     return {p.relative_to(root).as_posix(): digest(p) for p in sorted(files) if p.is_file()}
 
 
@@ -208,7 +208,7 @@ def main(argv=None):
         stage=args.stage, started_at=started, completed_at=timestamp(), status="PASS" if passed else "FAIL",
         exit_code=0 if passed else 1, source_before=before, source_after=after, python=python, checks=checks,
         unraisable_errors=unraisable,
-        logs={p.relative_to(APP).as_posix(): digest(p) for p in prefix.parent.glob(prefix.name+"_*.txt")})
+        logs={p.relative_to(APP).as_posix(): digest(p) for p in (logfile,node_log,prefix.with_name(prefix.name+"_syntax.txt"))})
     evidence.write_text(json.dumps(data, indent=2)+"\n", encoding="utf-8")
     print(json.dumps(dict(status=data["status"], tests=python["executed"], passed=python["passed"],
         failures=python["failures"], errors=python["errors"], skipped=python["skipped"], evidence=str(evidence))))

@@ -57,11 +57,13 @@ class ReleasePackager:
         "historical_pagination.py",
         "notification_outbox.py",
         "publisher_trust.py",
+        "option_execution.py",
     ]
 
     REQUIRED_ASSETS = [
         "public/index.html",
         ".env.example",
+        "requirements.txt",
     ]
 
     def __init__(self, root_dir: Optional[str] = None):

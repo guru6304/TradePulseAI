@@ -763,6 +763,7 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 interval_min=int(body.get("interval_min", 5)),
                 data_mode=data_mode,
                 backtest_config=bt_cfg,
+                option_execution_request=body.get("option_execution_request"),
                 persist_run=bool(body.get("persist_run", True)),
             )
             return 200, {"status": "ok", **res}

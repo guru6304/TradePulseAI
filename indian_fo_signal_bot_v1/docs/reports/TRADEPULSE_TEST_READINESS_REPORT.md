@@ -6,13 +6,13 @@ This report covers actual local testing; it grants no live-data or trading accep
 ## Baseline and current gate
 
 **TESTING READY: PASS for the current source.** Final command
-`python -B -W error::ResourceWarning verify_offline.py --stage final_accepted`
-returned **0**: **722/722 Python cases passed**, **0 failures/errors/skips**,
-267.497s; **10/10 standalone Node renderer cases passed**, 0 failed/skipped,
-syntax exit 0 and **51 root Python files compiled**. No unraisable errors occurred;
-source before/after matched. `master_final_accepted.json` binds actual ordered
+`.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage phase4ab_verified`
+returned **0**: **758/758 Python cases passed**, **0 failures/errors/skips**,
+265.931s; **10/10 standalone Node renderer cases passed**, 0 failed/skipped,
+syntax exit 0 and **56 root Python files compiled**. No unraisable errors occurred;
+source before/after matched. `master_phase4ab_verified.json` binds actual ordered
 execution IDs, commands/exits, source and log hashes. The follow-up command
-`python -B verify_offline.py --validate-evidence docs/evidence/master_final_accepted.json`
+`.venv_phase4\Scripts\python.exe -B verify_offline.py --validate-evidence docs/evidence/master_phase4ab_verified.json`
 returned **0**, validating this exact current source and its logs. There are no
 unresolved current regression failures; retained intermediate failures are below.
 
@@ -129,3 +129,57 @@ One ancillary diff-check log captured by the failed `master_final.json` was reus
 for a subsequent working-tree check; that old supplemental hash is stale. Its
 actual test logs remain intact. The ledger and closeout manifest disclose this;
 the failed stage is not used as current acceptance evidence.
+
+## Phase 4A/4B acceptance - 2026-10-22
+
+Current HEAD: `205803131d7e1a17d6b42ce976efe7dff30e475a`; prior counts/HEADs above
+are historical. The supplied 736-case evidence genuinely matched source at entry,
+but its signature test used a hash mock when the base interpreter lacked crypto.
+Actual artifact compilation was 53, correcting the reported 52. The old release
+failure lacked publisher_trust.py in CORE_MODULES and consequently in the extracted
+bootstrap; the registration is retained and passes. No production module/test was
+removed or reclassified.
+
+The tested interpreter is the project-local Python 3.14.6 environment with pinned
+cryptography 50.0.2/cffi 2.1.1/pycparser 3.11/tzdata 2026.5. Case 01 now uses real
+Ed25519 signing and verification under a public test-only key. Case 03 independently
+forces unavailable-backend denial. A direct runtime check also verifies a 64-byte
+signature and rejects changed bytes. No mock fallback or skipped crypto positive
+test remains. The base interpreter is a different environment; an earlier PyPI
+timeout does not describe this installed test backend.
+
+Four new integration cases exercise signed scope/effective coverage, reparse of
+original bytes, the actual store/readiness/cash replay path, current revocation and
+future-publication rejection. Eighteen option tests cover exact contracts, next-open
+chronology/no look-ahead, CE/PE selection, real bid/ask/depth, ticks/slippage/estimated
+charges, capital/lot/risk, malformed/missing/gapped data, OI baseline integrity,
+offsets, expiry/EOD, unresolved collision/exit liquidity, repeat/persistence, actual
+HTTP, and genuine-signature LIVE-shaped fixtures. Fixture roots are never installed
+as production roots or real licensed-data evidence. Cash tests remain in the full
+suite; the legacy API status assertion remains unchanged and now passes.
+
+The actual local CLI also passed using a temporary synthetic request and memory
+database (`phase4b_cli_verified.json`): one modeled trade, actual bid 30 separately
+recorded from modeled exit 27.0, ledger reconciled. Extracted release bootstrap
+imports both production modules and requires real crypto. requirements.txt is now
+in the source binding and release; a changed dependency declaration invalidates
+old proof. Final log binding includes exactly the three commands, not globbed
+unrelated auxiliary files.
+
+The ledger retains all exact commands/exits and failed intermediates. Significant
+results: 33 real-crypto/release cases passed; source-path red run then 18 passed;
+75 affected cash/option/release cases passed; expanded 50 passed after fixes; 65
+final affected cases passed; final 36 source/option/crypto cases passed. These overlap
+and are not added. The first 758-case full run had 757 passed/one legacy metadata
+failure; compatibility was restored in code. A later passing run was superseded
+after a fractional-OI rounding defect was reproduced/fixed. The final 758/758
+execution and current-source evidence validation above both pass.
+
+Phase 4A and bounded Phase 4B offline engineering PASS. Real historical option
+study/production remain unaccepted: authentic licensed signed inputs, actual
+publisher roots, cost/calendar/data/operating acceptance are missing. Supported
+mechanics and limits are specified in the runbook; no partial/short-margin,
+overnight, invented settlement or missing-liquidity fill is claimed. Keep the
+original option request separately; this V1 stores results/digests rather than a
+durable complete option-input archive. Current safety is paper_sim/dry-run true/
+scheduler false. No live broker request, order or Telegram delivery was made.

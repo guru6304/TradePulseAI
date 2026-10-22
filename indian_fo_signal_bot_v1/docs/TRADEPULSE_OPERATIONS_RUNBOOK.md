@@ -5,12 +5,18 @@ checkpoint. These commands do not authorize broker requests or real trading.
 
 ## Repeatable offline testing
 
-Use the application directory with Python and Node installed:
+Use the application directory with Python and Node installed. Signature verification
+now requires the pinned runtime dependencies. On this Windows checkout the tested
+interpreter is `.venv_phase4\Scripts\python.exe` (Python 3.14.6). For a new isolated
+installation, run `python -m venv .venv_phase4`, then
+`.venv_phase4\Scripts\python.exe -m pip install --only-binary=:all: -r requirements.txt`.
+Use that same interpreter for verification; a base interpreter without cryptography
+cannot pass the genuine signature tests. There is no mocked cryptographic fallback.
 
 ```powershell
-python -B -W error::ResourceWarning verify_offline.py --stage operator_001
+.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage operator_001
 $LASTEXITCODE
-python -B verify_offline.py --validate-evidence docs/evidence/master_operator_001.json
+.venv_phase4\Scripts\python.exe -B verify_offline.py --validate-evidence docs/evidence/master_operator_001.json
 $LASTEXITCODE
 ```
 
@@ -22,7 +28,7 @@ not validate a changed source version. Exit nonzero must be investigated; do not
 delete/skip assertions or relabel an intermediate log as final.
 
 `python -B configuration_check.py` is a separate zero-disclosure local preflight.
-PASS establishes local configuration only. Keep Upstox, Telegram dry-run true,
+PASS establishes local configuration only. Keep the current requested paper_sim, Telegram dry-run true,
 scheduler false and localhost. Never put secrets in arguments, reports or fixtures.
 
 ## Pending accepted cash work
@@ -199,3 +205,91 @@ CI is defined in `../.github/workflows/offline.yml` for Python 3.10-3.14 on Wind
 and Ubuntu with Node 24 and explicit offline logs. No secret/application environment
 is requested. Hosted execution, runtime matrix results, browser visuals and real
 deployment acceptance are outstanding; local evidence does not stand in for them.
+
+## Phase 4A trust and Phase 4B option replay
+
+The active safe profile is now paper_sim, dry-run true, scheduler false. The task
+changed only the existing ACTIVE_BROKER assignment to honor that explicit request;
+credentials were neither printed nor altered. Software dependency installation
+contacted PyPI; no broker/data/Telegram endpoint was contacted.
+
+The tested isolated environment contains cryptography 50.0.2, cffi 2.1.1,
+pycparser 3.11 and tzdata 2026.5. `requirements.txt` pins them and is bound by the
+offline source snapshot and release manifest. Missing cryptography fails closed;
+the positive signature tests require genuine Ed25519, not a mocked hash signature.
+See `docs/evidence/phase4ab_crypto_runtime_verified.json`. A past installation
+timeout is not evidence about another interpreter's installed backend.
+
+Operator trust roots enter `DeterministicBacktestEngine(publisher_trust_config=...,
+publisher_manifests={archive_id: signed_manifest_json})` through explicit local
+service configuration. An HTTP body cannot choose its own trust root. Every
+resolution rechecks original bytes, parsed records, signed type/provider/exchange/
+segment/instrument scope, effective dates, current key validity/revocation and
+publication before the requested historical session. Saved assessments cannot
+authorize altered bytes or current policy. No production anchors or authentic
+licensed dataset are installed by this mission.
+
+`option_execution_request` is a versioned local JSON envelope:
+
+```json
+{
+  "schema_version": "tradepulse.option-request.v1",
+  "master_json": "EXACT ORIGINAL UTF-8 V1 MASTER JSON TEXT",
+  "dataset_json": "EXACT ORIGINAL UTF-8 OPTION OBSERVATIONS JSON TEXT",
+  "master_manifest": "DETACHED SIGNED MANIFEST JSON, REQUIRED FOR LIVE RESEARCH",
+  "dataset_manifest": "DETACHED SIGNED MANIFEST JSON, REQUIRED FOR LIVE RESEARCH"
+}
+```
+
+The dataset schema is `tradepulse.option-observations.v1`: exact provider, NIFTY or
+BANKNIFTY, data_mode/is_simulated, chronological `underlying_candles`, `premiums`
+and `chains`. A master contract supplies exact identifier, NFO/OPTIDX, underlying,
+expiry, strike, CE/PE, lot size, tick size and effective interval. Every premium row
+binds `identifier` and `contract_digest` to that record, with aware bar-start
+`timestamp`, `available_at` exactly five minutes later, completion/mode flags,
+observed `bid_open/high/low/close`, `ask_open/high/low/close`, `volume_units`, opening
+`bid_size_units`/`ask_size_units` and `depth_observed_at` at bar start. No crossed
+spread, off-tick price, duplicate/order conflict, naive/future bar or ambiguous
+identity is accepted. The result retains original-byte digests and computed archive
+IDs. Retain the original request file separately: option input bytes are not yet
+stored as a durable dataset archive by this V1 engine; persisting a backtest stores
+its result/ledger/assumptions, not a replacement copy of the complete source input.
+
+Each chain has exact `known_at` at a completed underlying bar end, exact expiry,
+paired ATM row, provider/mode scope, and the prior configured session's 15:30
+`baseline_observed_at` with `baseline_kind=CLOSING_BASELINE`. V1 supports a single
+paired ATM strike: PCR must equal observed put OI/call OI, and integer OI changes
+must equal observed current minus prior OI. It does not silently round fractional
+OI or infer a previous close. The existing Strategy 3 evaluator receives only the
+known underlying prefix and matching chain; contract premiums supply fills.
+
+V1 models one long CE/PE position, next observed option ask open, all-or-none opening
+depth, full premium plus estimated fee affordability, lot/risk/capital/daily limits,
+adverse slippage applied once per fill and tick rounding. Stop/target thresholds
+are tick-rounded independently of slippage. Exits use observed opening bid/depth;
+target price improvement is conservatively capped at the modeled limit. The result
+separates the actual observed bid from modeled fill/reference and estimated costs.
+It never reports a derived limit as an observed price.
+
+An intrabar stop or stop/target collision without observed executable trigger
+liquidity remains UNRESOLVED (stop priority; no optimistic target award). Missing
+next entry rejects the candidate. Missing position/EOD prices or exit depth retain
+the position/reservation and cannot be persisted as a completed result. No forward
+fill, invented zero-price settlement, short-option margin or partial fill exists.
+Expiry uses an observed pre-close EOD exit; absent quotes remain unresolved.
+Configured weekday/holiday calendars and estimated cost schedules need separate
+real-data/operating acceptance. Signed inputs alone do not prove profitability;
+`empirical_performance_claim_allowed` stays false.
+
+The Python entry point is `run_backtest(..., option_execution_request=request,
+backtest_config=BacktestConfig(instrument_type='OPTIDX', execution_scope='SIMULATED_TEST'))`.
+HTTP POST `/api/backtest` accepts the same explicit request and instrument type;
+legacy flags/unbound chains still cannot enable execution. Qualified real inputs
+require HISTORICAL_RESEARCH and current trusted signatures for master and complete
+dataset; the default HTTP service has no real publisher roots.
+
+CLI: `.venv_phase4\Scripts\python.exe -B backtest_engine.py --strategy strat_3_option_apex_oi --symbol NIFTY --provider upstox --data-mode SIMULATED --execution-scope SIMULATED_TEST --option-request LOCAL_FIXTURE.json --json`.
+For a fixture CLI run set the process DATABASE_URL to `:memory:` so it cannot open
+an operational database. `docs/evidence/phase4b_cli_verify.py` automates exactly
+that temporary, credential-free scenario. It is a fixture demonstration, not a
+publisher dataset or provider acceptance.

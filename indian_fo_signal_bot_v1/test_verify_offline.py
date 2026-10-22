@@ -95,6 +95,7 @@ class TestVerificationEvidence(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root/"app.py").write_text("value=1\n", encoding="utf-8")
+            (root/"requirements.txt").write_text("cryptography==50.0.2\n",encoding="utf-8")
             logs = {}
             for name in ("python", "node", "syntax"):
                 local = root/"docs/evidence"/(name+".txt")
@@ -115,6 +116,10 @@ class TestVerificationEvidence(unittest.TestCase):
             path = root/"evidence.json"
             path.write_text(json.dumps(data), encoding="utf-8")
             self.assertEqual(validate_evidence(path, root)["status"], "PASS")
+            (root/"requirements.txt").write_text("cryptography==0\n",encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,"SOURCE_OR_STATUS"):
+                validate_evidence(path,root)
+            (root/"requirements.txt").write_text("cryptography==50.0.2\n",encoding="utf-8")
             (root/"docs/evidence/node.txt").write_text("TAMPERED", encoding="utf-8")
             with self.assertRaises(ValueError):
                 validate_evidence(path, root)

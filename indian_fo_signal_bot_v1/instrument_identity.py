@@ -7,6 +7,7 @@ Archived-master checks trust supplied local research inputs; their digest detect
 corruption, not publisher authenticity. No network, expiry-calendar or lot inference.
 """
 import hashlib
+import math
 import json
 import re
 from datetime import date, datetime
@@ -239,10 +240,10 @@ def dated_identity(archive, symbol, provider, identifier, exchange, instrument_t
             reject("HISTORICAL_IDENTITY_MISMATCH", f"Historical {key} conflicts with the requested dataset.")
     if record.get("multiplier") != 1 or isinstance(record.get("multiplier"), bool):
         reject("UNSUPPORTED_MULTIPLIER", "Historical contract multiplier is missing or unsupported.")
-    expected_segment = "NSE_FO_INDEX" if instrument_type == "FUTIDX" else "NSE_EQUITY_INTRADAY"
+    expected_segment = "NSE_FO_INDEX" if instrument_type in ("FUTIDX","OPTIDX") else "NSE_EQUITY_INTRADAY"
     if "segment" in record and record["segment"] != expected_segment:
         reject("HISTORICAL_IDENTITY_MISMATCH", "Archived exchange segment conflicts with the contract type.")
-    if instrument_type == "FUTIDX":
+    if instrument_type in ("FUTIDX","OPTIDX"):
         try:
             date.fromisoformat(record.get("expiry"))
         except (ValueError, TypeError):
@@ -254,6 +255,11 @@ def dated_identity(archive, symbol, provider, identifier, exchange, instrument_t
             reject("HISTORICAL_CONTRACT_MISMATCH", "Historical lot size conflicts with the archived contract.")
         if identifier in {str(m.get(k)) for m in INDICES.values() for k in ("angel_token", "dhan_security_id", "upstox_key")}:
             reject("HISTORICAL_CONTRACT_MISMATCH", "An index-spot identifier cannot identify an executable future.")
+        if instrument_type=="OPTIDX" and (record.get("option_type") not in ("CE","PE")
+                or type(record.get("strike")) not in (int,float) or not math.isfinite(record["strike"])
+                or record["strike"]<=0 or type(record.get("tick_size")) not in (int,float)
+                or not math.isfinite(record["tick_size"]) or record["tick_size"]<=0):
+            reject("HISTORICAL_CONTRACT_MISMATCH", "Options require exact strike/side and explicit positive tick size.")
     elif instrument_type != "EQ" or record.get("exchange") != "NSE" or symbol in INDICES:
         reject("UNSUPPORTED_HISTORICAL_INSTRUMENT", "Only dated NSE equities and explicit index futures are supported.")
     if instrument_type == "EQ" and "lot_size" in record and positive_integer(record["lot_size"], "lot_size") != 1:

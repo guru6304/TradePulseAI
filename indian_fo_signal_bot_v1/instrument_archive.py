@@ -100,6 +100,11 @@ def _record(raw, provider):
         result["lot_size"] = positive_integer(raw["lot_size"], "lot_size")
         if kind == "EQ" and result["lot_size"] != 1:
             reject("INVALID_CONTRACT_QUANTITY", "Cash equities require unit shares.")
+    if "tick_size" in raw:
+        tick = raw["tick_size"]
+        if isinstance(tick,bool) or not isinstance(tick,(int,float)) or not math.isfinite(tick) or tick<=0:
+            reject("INVALID_ARCHIVE_CONTRACT", "Tick size must be explicit and positive.")
+        result["tick_size"] = tick
     if kind in ("FUTIDX", "OPTIDX"):
         if raw.get("underlying") != symbol or "lot_size" not in result:
             reject("INCOMPLETE_ARCHIVE_CONTRACT", "Index contracts require matching underlying and explicit lot size.")
@@ -318,6 +323,11 @@ def resolve_archives(archives, provider, symbol, identifier, exchange, instrumen
         ]
         raise error
     identity["source_qualification"] = assessment
+    from strategies import parse_ist_timestamp, IST
+    from datetime import time
+    published = assessment["publisher_authenticity"]["publisher_trust_verification"]["signed_publisher_time_claim"]
+    if parse_ist_timestamp(published)>datetime.combine(date.fromisoformat(first_date),time(9,15),IST):
+        raise IdentityValidationError("FUTURE_ARCHIVE_PUBLICATION", "Master was published after the first historical decision.")
     identity["historical_validity"] = "PUBLISHER_TRUST_VERIFIED"
     identity["live_historical_eligible"] = True
     return identity

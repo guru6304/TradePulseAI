@@ -6337,8 +6337,8 @@ class TestIndianFOSignalBotPhase3B1A(unittest.TestCase):
     def _assert_strategy3_rejection(self, rejection):
         self.assertFalse(rejection["eligible"])
         self.assertEqual(rejection["strategy_id"], "strat_3_option_apex_oi")
-        self.assertEqual(rejection["reason_code"], "HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED")
-        self.assertIn("not supported until validated contract-level", rejection["reason"])
+        self.assertEqual(rejection["reason_code"], "OPTION_EXECUTION_INPUT_REQUIRED")
+        self.assertIn("requires the explicit versioned option execution request", rejection["reason"])
         self.assertIn("contract-candle fills", rejection["required_action"])
 
     def test_p3b1a_strategy3_eligibility_blocks_all_option_inputs(self):
@@ -6422,13 +6422,13 @@ class TestIndianFOSignalBotPhase3B1A(unittest.TestCase):
                         self._assert_strategy3_rejection(payload["rejection"])
                     else:
                         self.assertIn("Historical Strategy 3", output.getvalue())
-                        self.assertIn("not supported until", output.getvalue())
+                        self.assertIn("requires the explicit versioned", output.getvalue())
         with patch("backtest_engine.SQLitePersistenceStore", return_value=self.store), \
              patch("sys.stdout", new_callable=io.StringIO) as output:
             self.assertEqual(main(["--eligibility", "--json"]), 0)
         listing = json.loads(output.getvalue())["strategy_eligibility_matrix"]["strat_3_option_apex_oi"]
-        self.assertFalse(listing["historical_execution_supported"])
-        self.assertEqual(listing["reason_code"], "HISTORICAL_OPTION_EXECUTION_NOT_IMPLEMENTED")
+        self.assertTrue(listing["historical_execution_supported"])
+        self.assertEqual(listing["reason_code"], "OPTION_EXECUTION_INPUT_REQUIRED")
 
     def test_p3b1a_strategy3_http_aliases_reject_override_fields(self):
         import io
@@ -10337,7 +10337,8 @@ def load_tests(loader, tests, pattern):
                        "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal", "test_completion_engineering",
                        "test_release_management", "test_cash_lineage", "test_cash_workflow", "test_verify_offline",
                        "test_contract_universe", "test_historical_pagination", "test_notification_outbox", "test_local_api_security",
-                       "test_release_operations", "test_paper_sessions", "test_publisher_trust"):
+                       "test_release_operations", "test_paper_sessions", "test_publisher_trust",
+                       "test_phase4_acceptance", "test_option_execution"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

@@ -62,20 +62,12 @@ from storage import SQLitePersistenceStore
 from strategies import IST
 
 
-class MockEd25519PublicKey:
-    """Synthetic test-only public key for isolated unit tests."""
-    def __init__(self, key_id: str = "test-key-1") -> None:
-        self.key_id = key_id
-
-    def verify(self, signature: bytes, data: bytes) -> None:
-        expected = hashlib.sha256(b"SYNTHETIC_TEST_KEY_SIG:" + data).digest()
-        if signature != expected:
-            raise publisher_trust.InvalidSignature("Mock signature verification failed")
-
-
-def _synthetic_sign(data: bytes) -> bytes:
-    """Produce deterministic signature matching MockEd25519PublicKey."""
-    return hashlib.sha256(b"SYNTHETIC_TEST_KEY_SIG:" + data).digest()
+def test_key_pair():
+    """Public fixture seed, never a production key or trust anchor."""
+    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
+    from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat
+    private = Ed25519PrivateKey.from_private_bytes(bytes(range(32)))
+    return private, private.public_key().public_bytes(Encoding.DER, PublicFormat.SubjectPublicKeyInfo)
 
 
 class TestPublisherTrustMatrix(unittest.TestCase):
@@ -93,24 +85,8 @@ class TestPublisherTrustMatrix(unittest.TestCase):
         transport.start()
         self.addCleanup(transport.stop)
 
-        # Set up synthetic mock crypto if cryptography is unavailable
-        self._real_crypto = publisher_trust._CRYPTO_AVAILABLE
-        self._crypto_patches = []
-        if not self._real_crypto:
-            self._mock_pub_key = MockEd25519PublicKey("key-1")
-            p1 = patch.object(publisher_trust, "_CRYPTO_AVAILABLE", True)
-            p2 = patch.object(publisher_trust, "Ed25519PublicKey", MockEd25519PublicKey)
-            p3 = patch.object(publisher_trust, "load_der_public_key", lambda der: self._mock_pub_key)
-            class MockInvalidSig(Exception):
-                pass
-            p4 = patch.object(publisher_trust, "InvalidSignature", MockInvalidSig)
-            for p in (p1, p2, p3, p4):
-                p.start()
-                self._crypto_patches.append(p)
-
-    def tearDown(self):
-        for p in reversed(self._crypto_patches):
-            p.stop()
+        self.assertTrue(publisher_trust._CRYPTO_AVAILABLE, "Real Ed25519 backend required; install requirements.txt")
+        self.private_key, self.public_der = test_key_pair()
 
     def _sample_raw_bytes(self) -> bytes:
         row = dict(provider="angelone", symbol="RELIANCE", identifier="2885",
@@ -143,7 +119,7 @@ class TestPublisherTrustMatrix(unittest.TestCase):
         manifest.update(overrides)
         if not manifest.get("signature"):
             payload = canonical_signed_payload(manifest)
-            sig_bytes = _synthetic_sign(payload)
+            sig_bytes = self.private_key.sign(payload)
             manifest["signature"] = base64.b64encode(sig_bytes).decode("ascii")
         return manifest
 
@@ -154,7 +130,7 @@ class TestPublisherTrustMatrix(unittest.TestCase):
                     "publisher_id": "angelone",
                     "key_id": "key-1",
                     "algorithm": "Ed25519",
-                    "public_key_der_b64": base64.b64encode(b"MOCK_DER_PUB_KEY").decode("ascii"),
+                    "public_key_der_b64": base64.b64encode(self.public_der).decode("ascii"),
                     "not_before": "2026-01-01T00:00:00+00:00",
                     "not_after": "2026-12-31T23:59:59+00:00",
                     "revoked": False,
@@ -311,7 +287,9 @@ class TestPublisherTrustMatrix(unittest.TestCase):
 
         # Just valid (at not_before boundary)
         at_start = datetime(2026, 1, 1, 0, 0, 0, tzinfo=timezone.utc)
-        res = verifier.verify(json.dumps(manifest), raw, verification_time=at_start)
+        start_manifest=self._build_manifest(raw,publisher_publication_time=at_start.isoformat(),
+            capture_observation_time=at_start.isoformat())
+        res = verifier.verify(json.dumps(start_manifest), raw, verification_time=at_start)
         self.assertTrue(res.allowed)
 
         # Expiry boundary (at not_after boundary)
@@ -331,7 +309,7 @@ class TestPublisherTrustMatrix(unittest.TestCase):
                 "publisher_id": "angelone",
                 "key_id": "key-1",
                 "algorithm": "Ed25519",
-                "public_key_der_b64": base64.b64encode(b"MOCK_DER_PUB_KEY").decode("ascii"),
+                "public_key_der_b64": base64.b64encode(self.public_der).decode("ascii"),
                 "not_before": "2026-01-01T00:00:00+00:00",
                 "not_after": "2026-12-31T23:59:59+00:00",
                 "revoked": True,

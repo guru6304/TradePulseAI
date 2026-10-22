@@ -4,21 +4,22 @@
 
 Deliver a traceable, explainable Indian cash/F&O intelligence product: first prove
 offline end-to-end testing readiness, then implement independent production work.
-Only executed evidence passes a gate. Fixtures are not live acceptance. Keep Upstox,
-Telegram dry-run and disabled production scheduler; no live broker calls, live token
+Only executed evidence passes a gate. Fixtures are not live acceptance. The current
+Phase 4A/4B request selects paper_sim, Telegram dry-run and disabled production scheduler; no live broker calls, live token
 refresh or real orders are authorized. Preserve existing tracked and untracked work.
 
 ## Current stage and next action
 
 Master execution started 2026-10-21; continued 2026-10-22. Active stage:
-**Phase 4 IN_PROGRESS** (qualified-source/research acceptance), with Phase 7
+**Phase 4A/4B PASS - OFFLINE ENGINEERING**, with Phase 4 real-data qualification and Phase 7
 BLOCKED_EXTERNAL_DEPENDENCY. Offline cash testing and the available Phase 5/6
 engineering checks are PASS for the current source.
-Next action: define the independently verifiable publisher trust/effective-date
-contract for `source_qualification.py` / `instrument_archive.py`, implement its
-fail-closed verifier and negative tests, then qualify actual retained artifacts.
-Do not restart the baseline audit. Historical option execution remains a separate
-unimplemented local requirement with qualified premium/model dependencies.
+Next action: obtain operator-approved publisher roots/rights and an authentic
+signed dated contract + bid/ask/depth/prior-closing-OI dataset; run the existing
+qualification gates and option CLI under that explicit local trust profile.
+Trust verification and bounded historical option execution are implemented and
+focused-tested; authentic data/operating acceptance remains separate. Do not restart
+the baseline audit or enable live services.
 Contract cache, history pagination, durable dry-run outbox, operational API/UI,
 three-session paper qualification, isolated application restore and CI are implemented.
 Qualified sources, actual option execution and exact authorized live reads remain
@@ -356,3 +357,159 @@ demonstrate completion or treat locally generated hashes as publisher credential
 - **Retained Intermediate Result:** Initial verification run failed on release manifest test due to unregistered module; preserved per audit rules as `docs/evidence/master_phase4a_source_trust_run1_failed.*` and superseded by passing run.
 - **Official Scores:** Unchanged at 64.25% implementation / 37.00% verified readiness; authentic production trust anchors and licensing evidence remain external blockers.
 - **Next Task:** Strategy 3 historical option execution in `backtest_engine.py` and `strategies.py`.
+
+## Phase 4A acceptance correction and Phase 4B implementation - 2026-10-22
+
+Starting/current observed HEAD: `205803131d7e1a17d6b42ce976efe7dff30e475a`, branch
+main. Existing working/index changes were preserved; no agent commit/reset/clean.
+The earlier Phase 4A entry is historical: the source-bound 736-case artifact did
+validate at entry, but genuine cryptographic acceptance was not established there.
+Its actual compilation count is **53**, not the supplied summary's 52.
+
+### Phase 4A observations, corrections and evidence
+
+- Base `C:\Python314\python.exe` could not import cryptography (ModuleNotFoundError).
+  The positive test silently patched an SHA-256 hash verifier when it was absent.
+  Thus the old 736 PASS proves that test implementation ran, not real Ed25519.
+- A project-local `.venv_phase4` was created. Initial sandbox ensurepip/install
+  failures were retried with the required permission; official PyPI binary packages
+  installed successfully. Actual test interpreter: `.venv_phase4\Scripts\python.exe`,
+  Python 3.14.6, cryptography 50.0.2, cffi 2.1.1, pycparser 3.11, tzdata 2026.5.
+  The first isolated test could not import Asia/Kolkata until tzdata was installed;
+  `phase4a_real_crypto_before.txt` is that failed import, not a signature pass.
+- `test_publisher_trust.py` now uses a public TEST-ONLY deterministic Ed25519 key
+  pair with actual `sign`/`verify`. The hash-based mock class/fallback was removed;
+  missing-backend behavior is independently forced and denied in case 03. Case 01
+  genuinely verifies the exact bytes. `phase4ab_crypto_runtime_verified.json` also
+  proves a 64-byte signature and actual InvalidSignature on changed bytes. The
+  base interpreter remains distinct from the tested isolated environment.
+- `source_qualification.py` reparses originals before trusting normalized records,
+  checks signed artifact/schema/provider/exchange/segment/instrument scope and
+  record effective coverage. `instrument_archive.py` enforces publication before
+  the historical session; `storage.py` and `backtest_engine.py` pass explicit current
+  operator trust/manifests through resolution. Revocation/changed bytes/future
+  master publication cannot reuse a past positive result.
+- `publisher_trust.py` validates publication/capture ordering and current reference
+  time, records a public trust-config fingerprint, and returns structured failures
+  for malformed inputs. No HMAC, handwritten crypto or unsigned fallback exists.
+- Historical release failure 1: publisher_trust.py was missing from CORE_MODULES.
+  Failure 2: the extracted bundle lacked that module, so unittest bootstrap loaded
+  FailedTest. The user's prior registration is retained and directly reverified.
+  `option_execution.py` is also a production module, never reclassified as a test.
+  `requirements.txt` is bundled and source-bound; extracted bootstrap imports both
+  production modules and requires real crypto. CI installs the pinned dependencies.
+
+### Phase 4B actual implementation
+
+- `option_execution.py`: explicit `tradepulse.option-request.v1`, exact original
+  master/dataset text, strict option quote schema, exact dated OPTIDX contracts,
+  per-row contract digest, observed spread/depth, prior closing OI and no-look-ahead
+  Strategy 3 evaluation on known underlying prefixes. No index-as-premium fill.
+- `instrument_identity.py` / `instrument_archive.py`: OPTIDX dated coverage, lot,
+  tick, expiry/strike/CE-PE/underlying validation. Request aliases, conflicting keys,
+  wrong dates, changed lots, duplicates and incomplete/future data fail closed.
+- `backtest_engine.py`, `readiness_policy.py`, `server.py`: real execution branch,
+  explicit readiness admission, actual HTTP and local CLI `--option-request`.
+  Legacy flags/unbound option inputs still fail. The legacy API eligibility status
+  remains compatible; its reason now asks for the explicit request, and the catalog
+  correctly reports that implementation exists. Cash replay semantics are retained.
+- Full-premium long positions, lot/risk/capital/daily limits, modeled tick-rounded
+  entry/exit, observed opening depth and conservative target caps, ledger events,
+  marks, estimated cost schedule, deterministic source/config IDs, persisted results.
+  Thresholds are rounded separately: slippage applies only to fills, once per leg.
+  Actual observed bid is distinct from the modeled target/fill, including in storage.
+- Opening gap stops use actual bid/depth; unknown intrabar trigger liquidity or
+  stop/target collision stays unresolved with stop priority. Missing exit/EOD prices
+  retain reservations. No forward fill, invented settlement or unsupported partial
+  execution is presented as a completed trade.
+- Supported scope is NIFTY/BANKNIFTY long CE/PE, one open position, configured
+  calendar, estimated costs, no overnight/short margin/exercise/partial fills.
+  Original option request bytes must be retained separately; result persistence
+  stores the ledger/assumptions/digests, not a durable copy of the complete dataset.
+  Qualified LIVE-shaped fixture tests use ephemeral TEST-ONLY roots, never installed
+  production trust. Empirical performance claims remain false.
+
+### Executed test/fix loop
+
+Application CWD throughout. Prefix below means
+`.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning -m unittest`.
+Focused selections overlap and are not summed.
+
+| Exact selection / command | Actual result | Evidence in docs/evidence |
+| --- | --- | --- |
+| `test_publisher_trust test_release_operations test_release_management -v` | Exit 0; 33 passed, 0 failures/errors/skips, 6.012s | `phase4a_real_crypto_focused.txt` |
+| `test_phase4_acceptance -v` | Exit 1; 4 cases, 4 failure records and 1 error; scope/dates/rehash/caller-path defects reproduced | `phase4a_integration_before.txt` |
+| `test_publisher_trust test_phase4_acceptance -v` | Exit 0; 18 passed, 0 failures/errors/skips | `phase4a_integration_first_fix.txt` |
+| `test_option_execution -v` | Exit 1; 12 cases, 4 errors: new trades lacked existing metric/persistence aliases | `phase4b_option_first_run.txt` |
+| `test_option_execution test_phase4_acceptance test_publisher_trust -v` | Exit 1; 30 cases, 1 error: test subtraction emitted an off-tick decimal; fixture arithmetic corrected, tick validation retained | `phase4b_option_first_fix.txt` |
+| `test_option_execution test_phase4_acceptance test_publisher_trust test_release_operations test_release_management test_bot.TestIndianFOSignalBotPhase3B1A test_phase5a_provenance -v` | Exit 0; 75 passed, 0 failures/errors/skips, 22.765s | `phase4b_option_integrated.txt` |
+| `test_option_execution test_phase4_acceptance test_publisher_trust test_verify_offline test_release_operations -v` | First exit 1: 50 cases/2 errors (bearish fixture not meeting VWAP rule; dated resolver lacked OPTIDX); second exit 1: 50 cases/1 error (missing math import); third exit 0: 50 passed | `phase4b_option_expanded.txt`, `phase4b_option_expanded_verified.txt`, `phase4b_option_expanded_verified2.txt` |
+| Canonical `verify_offline.py --stage phase4b_option_final` | Exit 1; 758 executed, 757 passed, 1 failure, 0 errors/skips, 266.169s; old API status changed unnecessarily | `master_phase4b_option_final.json` and bound logs |
+| `test_bot.TestIndianFOSignalBotPhase3B.test_p3b_12_sqlite_persistence_http_api_routes_resource_warnings_and_security -v` | Exit 1; 1 failed; reproduced compatibility issue. Original assertion preserved; status restored | `phase4b_legacy_listing_before.txt` |
+| `test_option_execution.TestOptionExecution.test_real_strategy_next_option_open_then_target_and_persistence_are_deterministic -v` | Exit 1; 1 failed; modeled target reference labeled as actual bid. Observed quote/model fields separated and regression retained | `phase4b_observed_bid_label_before.txt` |
+| `test_option_execution test_phase4_acceptance test_publisher_trust test_release_operations test_release_management test_verify_offline test_bot.TestIndianFOSignalBotPhase3B.test_p3b_12_sqlite_persistence_http_api_routes_resource_warnings_and_security -v` | Two distinct runs exit 0; 65 passed, 0 failures/errors/skips; second adds exact threshold/slippage checks | `phase4ab_pre_final_verified.txt`, `phase4ab_pre_final_verified2.txt` |
+| `test_phase4_acceptance test_option_execution test_publisher_trust -v` | Exit 0; 36 passed, 0 failures/errors/skips; signed schema/scope checks | `phase4ab_source_scope_final.txt` |
+| Canonical `verify_offline.py --stage phase4ab_accepted`, then its `--validate-evidence` | Both exit 0; 758/758, 0 failures/errors/skips, 254.037s; Node 10/10, 56 compiled, no unraisable errors/source changes. Historical after the subsequent OI correction | `master_phase4ab_accepted.json`, `phase4ab_evidence_validation.json` |
+| `test_option_execution.TestOptionExecution.test_bad_oi_baseline_or_changed_previous_close_is_rejected -v` | Exit 1; 1 failed: legacy validator rounded fractional OI change. Enforced exact integer difference | `phase4b_fractional_oi_before.txt` |
+| `test_option_execution test_phase4_acceptance test_publisher_trust -v` | Exit 0; 36 passed, 0 failures/errors/skips, 1.366s | `phase4ab_fractional_oi_verified.txt` |
+
+`docs/evidence/phase4b_cli_verify.py` ran the actual CLI, exit 0: one synthetic
+completed trade, actual bid 30, modeled exit 27.0, reconciled ledger; temporary
+request and in-memory database only (`phase4b_cli_verified.json`).
+The early shell-only runtime probe had a quoting SyntaxError; its empty
+`phase4ab_crypto_runtime.json` stdout is not accepted evidence. The standalone
+runtime verifier and `phase4ab_crypto_runtime_verified.json` supersede it.
+
+Actual configuration initially still selected Upstox; only its existing
+ACTIVE_BROKER assignment was changed to explicitly requested paper_sim. Local
+preflight exit 0 confirms dry-run true, scheduler false, no live requests/receipts:
+`phase4ab_safe_configuration_verified.json`. No credentials were printed/changed.
+PyPI dependency downloads are distinct from the unauthorized broker/data downloads;
+no broker, token refresh, Telegram send, scheduler activation or real order occurred.
+
+Final frozen-source command: `.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage phase4ab_verified`.
+Result/validation and release identity follow.
+
+### Phase 4A/4B final acceptance
+
+| Exact command (application CWD) | Executed result | Evidence |
+| --- | --- | --- |
+| `.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage phase4ab_verified` | Exit 0; **758 executed/758 passed**, 0 failures/errors/skips, **265.931s**; Node **10/10**, syntax exit 0, **56 Python files compiled**, no unraisable errors; source before/after identical | `master_phase4ab_verified.json` and bound Python/Node/syntax logs |
+| `.venv_phase4\Scripts\python.exe -B verify_offline.py --validate-evidence docs/evidence/master_phase4ab_verified.json` | Exit 0; current source, requirements and all three exact command-log hashes agree | `phase4ab_final_validation.json` |
+| `.venv_phase4\Scripts\python.exe -B release_management.py bundle --output docs/evidence/phase4ab_release_final.zip` | Exit 0; 62 manifested public code/test/template/runbook/dependency files | `phase4ab_release_final_build.json` |
+| `.venv_phase4\Scripts\python.exe -B release_management.py inspect --archive docs/evidence/phase4ab_release_final.zip` | Exit 0; exact scope/content/manifest validation | `phase4ab_release_final_inspect.json` |
+| `.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning docs/evidence/phase4b_cli_verify.py` | Exit 0; actual CLI, 1 synthetic long-option trade; observed bid 30/model exit 27.0, ledger OK | `phase4b_cli_verified.json` |
+| `.venv_phase4\Scripts\python.exe -B docs/evidence/phase4ab_runtime_verify.py` | Exit 0; real 64-byte Ed25519 verification, changed bytes rejected; paper_sim/dry-run/scheduler safe | `phase4ab_crypto_runtime_verified.json` |
+
+Release SHA-256: `bc3f3cfc370c5e702dfcb565313f35006419d938469e66593b97910d92db7eff`.
+The earlier `phase4ab_release_001.zip` remains historical after the runbook update;
+the final archive is the one above. Both historical failed/full runs and all focused
+corrections remain retained; no old failure was overwritten with a passing label.
+`phase4ab_closeout.py` consumes this source-bound result and records report/archive/
+runtime/worktree identity in exclusive `phase4ab_closeout.json`.
+
+**Phase 4A: PASS - OFFLINE ENGINEERING. Phase 4B: PASS - BOUNDED OPTION MECHANICS.**
+**TESTING READY: PASS. PRODUCTION READY: BLOCKED. REAL HISTORICAL OPTION STUDY:
+NOT ACCEPTED. LIVE READ-ONLY ACCEPTANCE: BLOCKED_PENDING_OPERATOR_AUTHORIZATION.
+REAL TRADING: NOT AUTHORIZED.**
+
+The delta is 736 -> 758 executed cases (+22: four new trust-path cases and eighteen
+option-engine cases). Existing fourteen trust cases now use genuine crypto.
+The earlier 736 artifact compiled 53 files; final compilation is 56, with the three
+new Python files. Counts are not summed across overlapping focused selections.
+No current regression failure, stale final-source binding or stale final log hash
+remains. Old artifacts remain historical; the empty failed shell-probe stdout is
+explicitly not a proof artifact.
+
+Official scores remain **64.25 implementation / 37.00 readiness; 0/12 whole
+milestones accepted**. M04 gains a genuine verifier and integrated replay gate;
+M08 gains bounded exact-option execution. Neither accepts real licensed inputs,
+general derivative/margin/partial execution, calibrated studies or operation.
+These narrower engineering gates do not cross a whole-row threshold.
+
+No real publisher trust roots were installed; public test seeds exist only in tests.
+No private broker requests/data downloads, token refresh, Telegram sends, production
+scheduler activation, real orders or deployment occurred. Only software dependencies
+were downloaded from official PyPI. The current safety selection is paper_sim,
+telegram_dry_run=true, enable_background_scheduler=false. HEAD remains
+`205803131d7e1a17d6b42ce976efe7dff30e475a`; existing user changes are preserved.

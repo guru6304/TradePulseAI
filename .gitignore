@@ -25,4 +25,5 @@ __pycache__/
 *.sqlite
 *.sqlite3
 .venv/
+.venv_phase4/
 env/

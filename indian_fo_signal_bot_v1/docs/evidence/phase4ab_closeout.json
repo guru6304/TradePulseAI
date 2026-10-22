@@ -1,0 +1,353 @@
+{
+  "kind": "PHASE4AB_EXECUTED_CLOSEOUT",
+  "status": "PASS",
+  "head": "205803131d7e1a17d6b42ce976efe7dff30e475a",
+  "working_tree": "M ../.github/workflows/offline.yml\n M ../.gitignore\n M backtest_engine.py\n M docs/TRADEPULSE_EXECUTION_LEDGER.md\n M docs/TRADEPULSE_OPERATIONS_RUNBOOK.md\n M docs/reports/TRADEPULSE_PRODUCTION_READINESS_REPORT.md\n M docs/reports/TRADEPULSE_TEST_READINESS_REPORT.md\n M instrument_archive.py\n M instrument_identity.py\n M publisher_trust.py\n M readiness_policy.py\n M release_management.py\n M server.py\n M source_qualification.py\n M storage.py\n M test_bot.py\n M test_phase5a_provenance.py\n M test_publisher_trust.py\n M test_release_operations.py\n M test_verify_offline.py\n M verify_offline.py\n?? docs/evidence/master_phase4ab_accepted.json\n?? docs/evidence/master_phase4ab_accepted_node.txt\n?? docs/evidence/master_phase4ab_accepted_python.txt\n?? docs/evidence/master_phase4ab_accepted_syntax.txt\n?? docs/evidence/master_phase4ab_verified.json\n?? docs/evidence/master_phase4ab_verified_node.txt\n?? docs/evidence/master_phase4ab_verified_python.txt\n?? docs/evidence/master_phase4ab_verified_syntax.txt\n?? docs/evidence/master_phase4b_option_final.json\n?? docs/evidence/master_phase4b_option_final_node.txt\n?? docs/evidence/master_phase4b_option_final_python.txt\n?? docs/evidence/master_phase4b_option_final_syntax.txt\n?? docs/evidence/phase4a_integration_before.txt\n?? docs/evidence/phase4a_integration_first_fix.txt\n?? docs/evidence/phase4a_real_crypto_before.txt\n?? docs/evidence/phase4a_real_crypto_focused.txt\n?? docs/evidence/phase4ab_closeout.py\n?? docs/evidence/phase4ab_crypto_runtime.json\n?? docs/evidence/phase4ab_crypto_runtime_verified.json\n?? docs/evidence/phase4ab_evidence_validation.json\n?? docs/evidence/phase4ab_final_validation.json\n?? docs/evidence/phase4ab_fractional_oi_verified.txt\n?? docs/evidence/phase4ab_pre_final_verified.txt\n?? docs/evidence/phase4ab_pre_final_verified2.txt\n?? docs/evidence/phase4ab_release_001.zip\n?? docs/evidence/phase4ab_release_build.json\n?? docs/evidence/phase4ab_release_final.zip\n?? docs/evidence/phase4ab_release_final_build.json\n?? docs/evidence/phase4ab_release_final_inspect.json\n?? docs/evidence/phase4ab_release_inspect.json\n?? docs/evidence/phase4ab_runtime_verify.py\n?? docs/evidence/phase4ab_safe_configuration.json\n?? docs/evidence/phase4ab_safe_configuration_verified.json\n?? docs/evidence/phase4ab_source_scope_final.txt\n?? docs/evidence/phase4b_cli_verified.json\n?? docs/evidence/phase4b_cli_verify.py\n?? docs/evidence/phase4b_fractional_oi_before.txt\n?? docs/evidence/phase4b_legacy_listing_before.txt\n?? docs/evidence/phase4b_observed_bid_label_before.txt\n?? docs/evidence/phase4b_option_expanded.txt\n?? docs/evidence/phase4b_option_expanded_verified.txt\n?? docs/evidence/phase4b_option_expanded_verified2.txt\n?? docs/evidence/phase4b_option_first_fix.txt\n?? docs/evidence/phase4b_option_first_run.txt\n?? docs/evidence/phase4b_option_integrated.txt\n?? option_execution.py\n?? requirements.txt\n?? test_option_execution.py\n?? test_phase4_acceptance.py",
+  "scope": "OFFLINE_ENGINEERING_ONLY",
+  "runtime": {
+    "status": "PASS",
+    "interpreter": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "python": "3.14.6",
+    "cryptography": "50.0.2",
+    "tzdata": "2026.5",
+    "real_ed25519_verification": "PASS",
+    "modified_bytes_rejected": true,
+    "signature_size": 64,
+    "active_broker": "paper_sim",
+    "telegram_dry_run": true,
+    "enable_background_scheduler": false,
+    "network_requests": 0,
+    "evidence_scope": "OFFLINE_TEST_KEYS_ONLY_NO_PUBLISHER_ACCEPTANCE"
+  },
+  "safety": {
+    "active_broker": "paper_sim",
+    "authentication": "NOT_TESTED",
+    "candles": "NOT_TESTED",
+    "configuration_ready": true,
+    "data_persisted": false,
+    "enable_background_scheduler": false,
+    "line_number": null,
+    "live_requests": false,
+    "quote": "NOT_TESTED",
+    "readiness_receipt_issued": false,
+    "reason_code": "LOCAL_CONFIGURATION_VALID",
+    "scope": "LOCAL_CONFIGURATION_ONLY",
+    "status": "PASS",
+    "telegram_dry_run": true
+  },
+  "phase4a": "PASS_OFFLINE_ENGINEERING",
+  "phase4b": "PASS_BOUNDED_OPTION_MECHANICS",
+  "production_ready": "BLOCKED",
+  "real_historical_option_study": "NOT_ACCEPTED",
+  "real_trading": "NOT_AUTHORIZED",
+  "live_requests": 0,
+  "final_evidence": "master_phase4ab_verified.json",
+  "final_evidence_sha256": "406daab4cdd944c8afd03b381469ab74c3e566824111d87097fe172168fabe98",
+  "stages": [
+    {
+      "file": "master_phase4a_source_trust_run1_failed.json",
+      "sha256": "9cffae08ac644f89d427c303bd1e3e46ef8105c28269b6be99a4bb4c93c05d53",
+      "status": "FAIL",
+      "exit_code": 1,
+      "executed": 736,
+      "passed": 734,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "compiled_files": 53,
+      "stale_log_references": [
+        "docs/evidence/master_phase4a_source_trust_node.txt",
+        "docs/evidence/master_phase4a_source_trust_python.txt"
+      ],
+      "current_source_matches": false
+    },
+    {
+      "file": "master_phase4a_source_trust.json",
+      "sha256": "564a41712559fe1ab2d52ab9afc6054bfe71baa9407d49210cb84f90aaf44ed1",
+      "status": "PASS",
+      "exit_code": 0,
+      "executed": 736,
+      "passed": 736,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "compiled_files": 53,
+      "stale_log_references": [],
+      "current_source_matches": false
+    },
+    {
+      "file": "master_phase4b_option_final.json",
+      "sha256": "e1d9873b347906320e6ec815cf7ca2ce736eca637477369673e6e2c3e39043ea",
+      "status": "FAIL",
+      "exit_code": 1,
+      "executed": 758,
+      "passed": 757,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "compiled_files": 56,
+      "stale_log_references": [],
+      "current_source_matches": false
+    },
+    {
+      "file": "master_phase4ab_accepted.json",
+      "sha256": "16a508654077794fed71ca4a8deb9eb295656284dceef3c97c326a3ddb8c6ffc",
+      "status": "PASS",
+      "exit_code": 0,
+      "executed": 758,
+      "passed": 758,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "compiled_files": 56,
+      "stale_log_references": [],
+      "current_source_matches": false
+    },
+    {
+      "file": "master_phase4ab_verified.json",
+      "sha256": "406daab4cdd944c8afd03b381469ab74c3e566824111d87097fe172168fabe98",
+      "status": "PASS",
+      "exit_code": 0,
+      "executed": 758,
+      "passed": 758,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "compiled_files": 56,
+      "stale_log_references": [],
+      "current_source_matches": true
+    }
+  ],
+  "focused_runs": [
+    {
+      "file": "phase4a_integration_before.txt",
+      "sha256": "1b1b28170e5a7e5c5131fb297b29363f0131a09a1c2db2596ce3a276374549be",
+      "executed": 4,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "failures=4, errors=1",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4a_integration_first_fix.txt",
+      "sha256": "c0e4086c859730d439c99c1514ba80c1f0c73b31cbad37bb0d7a0d832a630a81",
+      "executed": 18,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4a_real_crypto_focused.txt",
+      "sha256": "f5dccb2df25da25507a06ff31caa844d3fe2901ea5c89d90ec6c2c9e3c0b0078",
+      "executed": 33,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4ab_fractional_oi_verified.txt",
+      "sha256": "63f99fc4edc1febcc29b098062a35612df9a163838fb21c9cd1a341136bf8f02",
+      "executed": 36,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4ab_pre_final_verified.txt",
+      "sha256": "434fd16e5caff5e2d69bda42e56f24b14ac67c9ab7f66fb5f2c4a6affb72b3b0",
+      "executed": 65,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4ab_pre_final_verified2.txt",
+      "sha256": "b6ba78dc2010a274c44eb97f22ccaca41d8fe1065a8e84151c621f9a5fea952a",
+      "executed": 65,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4ab_source_scope_final.txt",
+      "sha256": "0fe4690b46635b80e1e9bec20f21831cb93dafd657da93fb2eb7e26e1188a1e2",
+      "executed": 36,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_fractional_oi_before.txt",
+      "sha256": "bb8da06347f10e7de7a98a841b4666c2dec1b9ef44a37ccf34003d8c4bf833ce",
+      "executed": 1,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "failures=1",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_legacy_listing_before.txt",
+      "sha256": "b8b39aed8e1eb9ba90592cbbea7014c948770bc15c7e3edb4b4166078286526e",
+      "executed": 1,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "failures=1",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_observed_bid_label_before.txt",
+      "sha256": "9050805eb6955cafcbaf902de9f1c153c917f4f06029fb663c3cf1e66d78c43a",
+      "executed": 1,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "failures=1",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_option_expanded.txt",
+      "sha256": "7c05dec5323c25885b92b8eab90336410ea872ed1e2fd8e37962a8885b66a5d2",
+      "executed": 50,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "errors=2",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_option_expanded_verified.txt",
+      "sha256": "cd1acae37d7f70b08ff70e79feb5c1ea1ca10acaee3d2be3efd8314d5bbe2aef",
+      "executed": 50,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "errors=1",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_option_expanded_verified2.txt",
+      "sha256": "e33178aceb40d950accce74d33e8c82c1466e7e49de370b8da80385b2906351d",
+      "executed": 50,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_option_first_fix.txt",
+      "sha256": "cfb30ae88e5c44ea733cb1cf85ad1edb24aa653f4c6816ef8288afdec500f122",
+      "executed": 30,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "errors=1",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_option_first_run.txt",
+      "sha256": "b9bc48095e5f1cee26635d61687c66fb98f4dbf8e8d42dbe0adc1523a230b8cf",
+      "executed": 12,
+      "exit_code": 1,
+      "status": "FAIL",
+      "failure_summary": "errors=4",
+      "overlapping_not_summed": true
+    },
+    {
+      "file": "phase4b_option_integrated.txt",
+      "sha256": "946f9bde53da611efcd5948e8a99d27100c47ae0e7cb3d2ab23a17600df4391c",
+      "executed": 75,
+      "exit_code": 0,
+      "status": "PASS",
+      "failure_summary": null,
+      "overlapping_not_summed": true
+    }
+  ],
+  "final_checks": [
+    {
+      "command": [
+        "node",
+        "test_cash_dashboard.js"
+      ],
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "started_at": "2026-10-22T11:39:24.729668+00:00",
+      "completed_at": "2026-10-22T11:39:24.900385+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/evidence/master_phase4ab_verified_node.txt",
+      "executed": 10,
+      "passed": 10,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "test_cash_dashboard.js"
+      ],
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "started_at": "2026-10-22T11:39:24.915653+00:00",
+      "completed_at": "2026-10-22T11:39:24.978158+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/evidence/master_phase4ab_verified_syntax.txt"
+    },
+    {
+      "command": "py_compile.compile(root *.py, doraise=True)",
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "exit_code": 0,
+      "status": "PASS",
+      "compiled_files": 56
+    }
+  ],
+  "unraisable_errors": [],
+  "release": {
+    "path": "docs/evidence/phase4ab_release_final.zip",
+    "status": "PASS",
+    "scope": "OFFLINE_RELEASE_CANDIDATE",
+    "files": 62,
+    "sha256": "bc3f3cfc370c5e702dfcb565313f35006419d938469e66593b97910d92db7eff",
+    "manifest_sha256": "14d3ea35c2015a73266d4137cf16b7af696f3657cff9cd28402a1c9c286ff46c",
+    "publisher_authentication": "NOT_ESTABLISHED"
+  },
+  "reports": {
+    "docs/TRADEPULSE_EXECUTION_LEDGER.md": "18181b2f188f2b6e885d309e5a651295385550a664190290eaf9620f298d546d",
+    "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md": "5cfbb64f38e9eea9c7030a26002c9d3f90cf58bdf68383b191c2a07d94a5516e",
+    "docs/reports/TRADEPULSE_TEST_READINESS_REPORT.md": "b55407262cf10164a1cb8137d70d2a75dd8bbde5741dec719caa87a72cc489f6",
+    "docs/reports/TRADEPULSE_PRODUCTION_READINESS_REPORT.md": "b96819d123476fc04411a40fdcf34aa450e9d9b7006978d0e42093faaa9b65b0"
+  },
+  "requirements_sha256": "72458e39154a727ce6d08b352da762955f1e940203f44677fa4f24ef5e0bf30a",
+  "workflow_sha256": "007a4561a8033512685049cc0ddee8e3037989d04dee461054297cab5b264960",
+  "original_claim_correction": {
+    "claimed_compiled_files": 52,
+    "artifact_compiled_files": 53,
+    "original_source_bound_check": "PASS_AT_START",
+    "original_crypto_engineering_status": "PARTIAL_HASH_MOCK_FALLBACK_DETECTED"
+  },
+  "scores": {
+    "before_implementation": 64.25,
+    "after_implementation": 64.25,
+    "before_readiness": 37.0,
+    "after_readiness": 37.0,
+    "whole_milestones_accepted": 0,
+    "rubric_changed": false
+  },
+  "limits": [
+    "NIFTY_BANKNIFTY_OPTIDX_LONG_ONLY",
+    "ONE_OPEN_POSITION",
+    "NO_PARTIAL_FILLS_OR_SHORT_MARGIN",
+    "OPENING_QUOTE_DEPTH_ONLY",
+    "INTRABAR_STOP_COLLISION_UNRESOLVED_WITHOUT_EXECUTABLE_QUOTE",
+    "NO_OVERNIGHT_OR_INVENTED_SETTLEMENT",
+    "CONFIGURED_CALENDAR_ESTIMATED_COSTS",
+    "RETAIN_ORIGINAL_REQUEST_SEPARATELY_NO_DURABLE_OPTION_DATASET_ARCHIVE"
+  ],
+  "external_blockers": [
+    "REAL_OPERATOR_TRUST_ANCHORS",
+    "LICENSED_SIGNED_CONTRACT_PREMIUM_DEPTH_AND_CLOSING_OI_DATA",
+    "REAL_CALENDAR_COST_AND_OPERATING_ACCEPTANCE"
+  ],
+  "next_task": "Acquire operator-approved signed dataset/root/rights artifacts and run the existing qualification gates; keep real study unaccepted until then."
+}

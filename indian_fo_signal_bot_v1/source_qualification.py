@@ -1,7 +1,7 @@
 """Archive evidence assessment, independent of structural validation and declarations.
 
-No archive authenticator or independently authoritative historical-date evidence is
-available in this checkout. Public provider documentation establishes documentation
+An explicit publisher signature verifier is available; real operator trust roots and
+independently authorized publisher artifacts are not supplied. Provider documentation establishes documentation
 scope, never the origin/applicability of submitted bytes. No caller flag, URL,
 filename, certificate-shaped object or saved assessment can confer those properties.
 
@@ -64,6 +64,15 @@ def assess_source_evidence(archive, original_bytes, trust_config=None, verificat
     integrity = (isinstance(original_bytes, bytes)
                  and hashlib.sha256(original_bytes).hexdigest() == metadata["original_sha256"]
                  and digest(archive["records"]) == archive["normalized_sha256"])
+    if integrity:
+        # A caller-rehashed normalized object cannot replace the signed originals.
+        from instrument_archive import prepare_archive
+        parsed = prepare_archive(original_bytes, metadata["provider"], metadata["original_filename"],
+            metadata["source_reference"], captured_at=metadata["captured_at"],
+            publisher_published_at=metadata["publisher_published_at"], source_url=metadata["source_url"],
+            input_kind=metadata["input_kind"])
+        integrity = (parsed["archive_id"]==archive["archive_id"] and parsed["records"]==archive["records"]
+                     and parsed["normalized_sha256"]==archive["normalized_sha256"])
     payload = None
     try:
         payload = json.loads(original_bytes.decode("utf-8-sig"))
@@ -99,7 +108,9 @@ def assess_source_evidence(archive, original_bytes, trust_config=None, verificat
             manifest_json,
             original_bytes,
             verification_time=verification_time,
-            required_scope={"provider": metadata["provider"]},
+            required_scope={"provider": metadata["provider"],
+                "exchange": next(iter({r["exchange"] for r in archive["records"]})) if len({r["exchange"] for r in archive["records"]})==1 else "ALL",
+                "market_segment": next(iter({r["segment"] for r in archive["records"]})) if len({r["segment"] for r in archive["records"]})==1 else "ALL"},
         )
         trust_summary = {
             "status": "VERIFIED" if trust_result.allowed else "REJECTED",
@@ -132,6 +143,25 @@ def assess_source_evidence(archive, original_bytes, trust_config=None, verificat
         }
 
     publisher_trust_verified = trust_result is not None and trust_result.allowed
+    if publisher_trust_verified:
+        from datetime import datetime, time
+        from strategies import IST
+        start = datetime.fromisoformat(trust_result.effective_from)
+        end = datetime.fromisoformat(trust_result.effective_until)
+        publisher_trust_verified = all(r.get("valid_from") and r.get("valid_to") and
+            start <= datetime.combine(datetime.fromisoformat(r["valid_from"]).date(), time(9,15),IST) and
+            datetime.combine(datetime.fromisoformat(r["valid_to"]).date(),time(15,30),IST) <= end
+            for r in archive["records"])
+        if not publisher_trust_verified:
+            trust_summary.update(status="REJECTED",reason_code="SIGNED_DATES_DO_NOT_COVER_RECORDS")
+        signed_manifest=json.loads(manifest_json)
+        symbols={r["symbol"] for r in archive["records"]}
+        if (signed_manifest["artifact_type"]!="instrument-master"
+                or signed_manifest["artifact_schema_version"]!=metadata["schema_version"]
+                or signed_manifest["instrument_scope"]!="ALL" and signed_manifest["instrument_scope"] not in symbols
+                or signed_manifest["instrument_scope"]!="ALL" and len(symbols)!=1):
+            publisher_trust_verified=False
+            trust_summary.update(status="REJECTED",reason_code="SIGNED_ARCHIVE_SCHEMA_OR_INSTRUMENT_SCOPE_MISMATCH")
 
     missing = []
     if not integrity:
