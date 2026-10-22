@@ -335,3 +335,24 @@ Further acceptance requires zero unexplained ledger differences, observed qualif
 prices/identities, rejection of changed/expired/unknown trust artifacts, preserved
 no-look-ahead, and the separately agreed operating tests. Do not enable services to
 demonstrate completion or treat locally generated hashes as publisher credentials.
+
+## Phase 4A executed milestone: Publisher Trust Verifier & Evidence Qualification (PASS)
+
+- **Execution Date / Local Time:** `2026-10-22T15:50:00+05:30` (IST)
+- **Scope:** Phase 4A Publisher Trust Verifier, Effective-Date Authority, Replay Gating, and 14-Case Test Matrix.
+- **Implemented Modules:**
+  - `publisher_trust.py`: new fail-closed Ed25519 publisher trust verification module. Implements `TrustAnchorConfig` (local operator-controlled store; never artifact-controlled), `PublisherTrustVerifier`, canonical signed payload generation (`canonical_signed_payload`), structured `TrustVerificationResult`, and all standard reason codes (`VERIFIER_UNAVAILABLE`, `MISSING_TRUST_ANCHOR`, `INVALID_SIGNATURE`, `ARTIFACT_DIGEST_MISMATCH`, etc.).
+  - `source_qualification.py`: integrated `PublisherTrustVerifier` into `assess_source_evidence(..., trust_config, verification_time)`. Sets `publisher_authenticity.status = VERIFIED` and `historical_eligibility.allowed = True` with `PUBLISHER_TRUST_VERIFIED_SOURCE_QUALIFIED` upon valid verification; fails closed otherwise.
+  - `instrument_archive.py`: integrated verifier into `resolve_archives(..., trust_config, verification_time)`. Returns qualified identity with `live_historical_eligible = True` when authentic; fails closed with `HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT` otherwise.
+  - `release_management.py`: added `publisher_trust.py` to `ReleasePackager.CORE_MODULES`.
+  - `test_publisher_trust.py`: full 14-case test matrix covering correct signature, unknown publisher/key, dependency unavailable/fail-closed, tampering, unsupported algorithms/schemas, key validity boundaries & revocation, effective-date boundaries/naive timestamps, missing rights, conflicting artifacts & deterministic selection, archive re-hashing, scope matching, historical backtest gating, last-good archive fail-closed behavior, and safety invariants.
+  - `test_bot.py`: wired `test_publisher_trust` into `load_tests`.
+
+| Exact command | Actual result | Artifact |
+| --- | --- | --- |
+| `python -B -W error::ResourceWarning verify_offline.py --stage phase4a_source_trust` | Exit 0; **736 executed/736 passed**, 0 failures/errors/skips; **10/10 Node passed**; syntax exit 0, **52 Python files compiled**, no unraisable errors, source before/after identical | `master_phase4a_source_trust.json`, `master_phase4a_source_trust_python.txt`, `master_phase4a_source_trust_node.txt`, `master_phase4a_source_trust_syntax.txt` |
+| `python -B verify_offline.py --validate-evidence docs/evidence/master_phase4a_source_trust.json` | Exit 0; `{"status": "PASS", "executed": 736, "scope": "OFFLINE_ONLY"}` | Evidence validated against live source snapshot and logs |
+
+- **Retained Intermediate Result:** Initial verification run failed on release manifest test due to unregistered module; preserved per audit rules as `docs/evidence/master_phase4a_source_trust_run1_failed.*` and superseded by passing run.
+- **Official Scores:** Unchanged at 64.25% implementation / 37.00% verified readiness; authentic production trust anchors and licensing evidence remain external blockers.
+- **Next Task:** Strategy 3 historical option execution in `backtest_engine.py` and `strategies.py`.

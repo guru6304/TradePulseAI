@@ -56,6 +56,7 @@ class ReleasePackager:
         "contract_universe.py",
         "historical_pagination.py",
         "notification_outbox.py",
+        "publisher_trust.py",
     ]
 
     REQUIRED_ASSETS = [

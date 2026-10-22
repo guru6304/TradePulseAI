@@ -10337,7 +10337,7 @@ def load_tests(loader, tests, pattern):
                        "test_phase5c_recovery", "test_continuous_acceptance", "test_blocker_removal", "test_completion_engineering",
                        "test_release_management", "test_cash_lineage", "test_cash_workflow", "test_verify_offline",
                        "test_contract_universe", "test_historical_pagination", "test_notification_outbox", "test_local_api_security",
-                       "test_release_operations", "test_paper_sessions"):
+                       "test_release_operations", "test_paper_sessions", "test_publisher_trust"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

@@ -292,22 +292,35 @@ def resolve_archive_declarations(archives, provider, symbol, identifier, exchang
 
 
 def resolve_archives(archives, provider, symbol, identifier, exchange, instrument_type,
-                     first_date, last_date, lot_size=None, archive_id=None):
+                     first_date, last_date, lot_size=None, archive_id=None,
+                     trust_config=None, verification_time=None):
     """LIVE resolver: coverage and instrument consistency cannot replace source qualification."""
     identity = resolve_archive_declarations(archives, provider, symbol, identifier, exchange, instrument_type,
                                             first_date, last_date, lot_size, archive_id)
     archive = next(a for a in archives if a["archive_id"] == identity["archive_id"])
     from source_qualification import assess_source_evidence
-    assessment = assess_source_evidence(archive, archive.get("original_bytes"))
-    # Only the established local policy is supported; there is no authenticity/date verifier.
-    # Do not consume a caller's allowed/verified flag, including a persisted or pinned verdict.
-    error = IdentityValidationError("HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT",
-        "Archive integrity and declared intervals do not establish publisher authenticity or effective-date authority.")
-    error.rejection["source_qualification"] = assessment
-    error.rejection["required_evidence"] = ["Independent archive-to-publisher source binding/authentication",
-                                           "Authoritative instrument-specific historical effective intervals",
-                                           "A supported verifier for that evidence (none is currently implemented)"]
-    raise error
+    assessment = assess_source_evidence(
+        archive,
+        archive.get("original_bytes"),
+        trust_config=trust_config,
+        verification_time=verification_time,
+    )
+    if not assessment["historical_eligibility"]["allowed"]:
+        error = IdentityValidationError(
+            "HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT",
+            "Archive integrity and declared intervals do not establish publisher authenticity or effective-date authority.",
+        )
+        error.rejection["source_qualification"] = assessment
+        error.rejection["required_evidence"] = [
+            "Independent archive-to-publisher source binding/authentication",
+            "Authoritative instrument-specific historical effective intervals",
+            "A supported verifier for that evidence",
+        ]
+        raise error
+    identity["source_qualification"] = assessment
+    identity["historical_validity"] = "PUBLISHER_TRUST_VERIFIED"
+    identity["live_historical_eligible"] = True
+    return identity
 
 
 def main(argv=None):

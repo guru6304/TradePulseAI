@@ -4,11 +4,23 @@ No archive authenticator or independently authoritative historical-date evidence
 available in this checkout. Public provider documentation establishes documentation
 scope, never the origin/applicability of submitted bytes. No caller flag, URL,
 filename, certificate-shaped object or saved assessment can confer those properties.
+
+Phase 4A: PublisherTrustVerifier is integrated into assess_source_evidence.  When an
+archive metadata field ``publisher_manifest_json`` is present, the verifier runs using
+a locally-controlled trust configuration supplied by the operator.  Without authentic
+trust anchors and signed manifests the result remains NOT_ESTABLISHED/BLOCKED.  The
+integration is fail-closed: no positive verdict can be reached without a valid Ed25519
+signature from a trusted, in-date, non-revoked key.
 """
 import hashlib
 import json
 
 from instrument_identity import digest
+from publisher_trust import (
+    PublisherTrustVerifier,
+    REASON_VERIFIER_UNAVAILABLE,
+    TRUST_POLICY_VERSION as _TRUST_POLICY_VERSION,
+)
 
 
 POLICY_VERSION = "historical-source-evidence-v1"
@@ -33,12 +45,20 @@ SOURCE_DOCUMENTATION = {
 }
 
 
-def assess_source_evidence(archive, original_bytes):
+def assess_source_evidence(archive, original_bytes, trust_config=None, verification_time=None):
     """Assess established facts separately from retained user claims; performs no I/O.
 
     Storage additionally reparses original bytes and validates the immutable archive
     ID before invoking this policy. Content hashes are not publisher authentication.
-    There are deliberately no supported authenticity/date-authority validators yet.
+
+    Phase 4A addition: when ``trust_config`` (a TrustAnchorConfig) is supplied and
+    the archive metadata contains a ``publisher_manifest_json`` field, runs
+    PublisherTrustVerifier and surfaces its structured result. Without authentic
+    trust anchors and a signed manifest the result remains NOT_ESTABLISHED.
+    The verifier is fail-closed: a positive allowed=True result requires a valid
+    Ed25519 signature from a trusted, in-date, non-revoked key whose scope matches
+    the archive provider. Synthetic test keys must never appear in trust_config at
+    production call sites.
     """
     metadata = archive["metadata"]
     integrity = (isinstance(original_bytes, bytes)
@@ -61,14 +81,91 @@ def assess_source_evidence(archive, original_bytes):
         "capture_time_evidence", "independently_supported_intervals", "qualified", "verified"))
     intervals = [dict(symbol=r["symbol"], identifier=r["identifier"], valid_from=r["valid_from"], valid_to=r["valid_to"])
                  for r in archive["records"] if r.get("valid_from") and r.get("valid_to")]
-    missing = ["SOURCE_ATTRIBUTION_NOT_INDEPENDENTLY_ESTABLISHED",
-               "PUBLISHER_AUTHENTICITY_NOT_ESTABLISHED", "EFFECTIVE_DATE_AUTHORITY_NOT_ESTABLISHED"]
+
+    # --- Phase 4A: publisher trust verification ---
+    # The trust_config comes exclusively from the caller (operator-controlled).
+    # The archive itself cannot supply or modify it.
+    trust_result = None
+    trust_summary: dict = {
+        "status": "NOT_ATTEMPTED",
+        "supported_verification_mechanisms": [],
+        "trust_policy_version": _TRUST_POLICY_VERSION,
+        "detail": "No trust_config supplied to assess_source_evidence.",
+    }
+    manifest_json = metadata.get("publisher_manifest_json")
+    if trust_config is not None and manifest_json is not None and integrity:
+        verifier = PublisherTrustVerifier(trust_config)
+        trust_result = verifier.verify(
+            manifest_json,
+            original_bytes,
+            verification_time=verification_time,
+            required_scope={"provider": metadata["provider"]},
+        )
+        trust_summary = {
+            "status": "VERIFIED" if trust_result.allowed else "REJECTED",
+            "supported_verification_mechanisms": ["Ed25519"] if trust_result.allowed else [],
+            "reason_code": trust_result.reason_code,
+            "trust_policy_version": trust_result.trust_policy_version,
+            "key_id": trust_result.key_id,
+            "publisher_id": trust_result.publisher_id,
+            "effective_from": trust_result.effective_from,
+            "effective_until": trust_result.effective_until,
+            "signed_artifact_digest": trust_result.signed_artifact_digest,
+            "signature_algorithm": trust_result.signature_algorithm,
+            "signed_publisher_time_claim": trust_result.signed_publisher_time_claim,
+            "integrity_note": trust_result.integrity_note,
+            "detail": trust_result.detail,
+        }
+    elif trust_config is not None and manifest_json is None:
+        trust_summary = {
+            "status": "NOT_ATTEMPTED",
+            "supported_verification_mechanisms": [],
+            "trust_policy_version": _TRUST_POLICY_VERSION,
+            "detail": "No publisher_manifest_json in archive metadata; verification not possible.",
+        }
+    elif trust_config is not None and not integrity:
+        trust_summary = {
+            "status": "NOT_ATTEMPTED",
+            "supported_verification_mechanisms": [],
+            "trust_policy_version": _TRUST_POLICY_VERSION,
+            "detail": "Content integrity check failed; trust verification skipped.",
+        }
+
+    publisher_trust_verified = trust_result is not None and trust_result.allowed
+
+    missing = []
     if not integrity:
-        missing.insert(0, "CONTENT_INTEGRITY_NOT_ESTABLISHED")
+        missing.append("CONTENT_INTEGRITY_NOT_ESTABLISHED")
     if declared_synthetic:
         missing.insert(0, "SYNTHETIC_DATA_IS_NOT_EXTERNAL_SOURCE_EVIDENCE")
+    if not publisher_trust_verified:
+        missing.append("SOURCE_ATTRIBUTION_NOT_INDEPENDENTLY_ESTABLISHED")
+        missing.append("PUBLISHER_AUTHENTICITY_NOT_ESTABLISHED")
+        missing.append("EFFECTIVE_DATE_AUTHORITY_NOT_ESTABLISHED")
     if archive["status"] != "ELIGIBLE_LOCAL_RESEARCH":
         missing.append("STRUCTURAL_VALIDITY_OR_DECLARED_COVERAGE_MISSING")
+
+    # Independently supported date intervals: only from a verified trust result.
+    independently_supported_intervals: list = []
+    if publisher_trust_verified and trust_result is not None:
+        independently_supported_intervals = [
+            dict(
+                effective_from=trust_result.effective_from,
+                effective_until=trust_result.effective_until,
+                key_id=trust_result.key_id,
+                publisher_id=trust_result.publisher_id,
+                authority="PUBLISHER_SIGNED_CLAIM",
+                note=(
+                    "Publisher-signed claim; not an independently timestamp-verified fact. "
+                    "Capture time, publication time and key validity are distinct."
+                ),
+            )
+        ]
+
+    historical_allowed = (publisher_trust_verified and integrity
+                          and not declared_synthetic
+                          and archive["status"] == "ELIGIBLE_LOCAL_RESEARCH")
+
     return {
         "policy_version": POLICY_VERSION,
         "archive_id": archive["archive_id"],
@@ -79,7 +176,11 @@ def assess_source_evidence(archive, original_bytes):
         "source_attribution": {"status": "UNKNOWN" if metadata["source_type"] == "LEGACY_UNKNOWN" else "USER_DECLARED",
                                "source_reference": metadata["source_reference"], "source_url": metadata["source_url"],
                                "archive_source_binding": "NOT_INDEPENDENTLY_ESTABLISHED"},
-        "publisher_authenticity": {"status": "NOT_ESTABLISHED", "supported_verification_mechanisms": []},
+        "publisher_authenticity": {
+            "status": "VERIFIED" if publisher_trust_verified else "NOT_ESTABLISHED",
+            "supported_verification_mechanisms": ["Ed25519"] if publisher_trust_verified else [],
+            "publisher_trust_verification": trust_summary,
+        },
         "capture_time": {"status": "USER_DECLARED" if metadata["captured_at"] else "UNKNOWN",
                          "timestamp": metadata["captured_at"]},
         "publication_time": {"status": "USER_DECLARED" if metadata["publisher_published_at"] else "UNKNOWN",
@@ -87,14 +188,23 @@ def assess_source_evidence(archive, original_bytes):
         "ingestion_time": {"status": "LOCALLY_RECORDED", "timestamp": archive["ingested_at"],
                            "is_capture_time_evidence": False},
         "effective_dates": {"status": "DECLARED_ONLY" if intervals else "UNKNOWN",
-                            "declared_intervals": intervals, "independently_supported_intervals": []},
+                            "declared_intervals": intervals,
+                            "independently_supported_intervals": independently_supported_intervals},
         "artifact_classification": "DECLARED_SYNTHETIC" if declared_synthetic else "EXTERNAL_ORIGIN_UNESTABLISHED",
         "submitted_qualification_claims": "PRESENT_UNVALIDATED" if claims_present else "NOT_SUPPLIED",
         "source_documentation": dict(SOURCE_DOCUMENTATION.get(metadata["provider"], {
             "references": [], "status": "UNSUPPORTED_SOURCE", "limitation": "No assessed source documentation."}),
             review_date=DOCUMENTATION_REVIEW_DATE, scope="DOCUMENTATION_ONLY_NOT_ARCHIVE_AUTHENTICATION"),
-        "historical_eligibility": {"allowed": False, "scope": "LIVE_HISTORICAL_REPLAY",
-                                   "reason_code": "HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT", "missing_evidence": missing},
+        "historical_eligibility": {
+            "allowed": historical_allowed,
+            "scope": "LIVE_HISTORICAL_REPLAY",
+            "reason_code": (
+                "PUBLISHER_TRUST_VERIFIED_SOURCE_QUALIFIED"
+                if historical_allowed
+                else "HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT"
+            ),
+            "missing_evidence": missing,
+        },
     }
 
 
