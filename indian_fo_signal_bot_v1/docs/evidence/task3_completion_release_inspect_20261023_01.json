@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "OFFLINE_RELEASE_CANDIDATE",
+  "files": 91,
+  "sha256": "af80797e8534ee0abfb80adb019cf59ef36e43fdd6fe649f11479308d02e3a96",
+  "manifest_sha256": "f69fa9033e95c6041866039589de8fc86675db0799d75d76fbeaad80de6da4b7",
+  "publisher_authentication": "NOT_ESTABLISHED",
+  "archive": "docs/evidence/task3_completion_release_20261023_01.zip",
+  "source_revision": "5c9f09536384dc4161714e189cbaf0b0eb8f6e4f",
+  "verification": "docs/evidence/master_task3_completion_20261023_01.json",
+  "verification_sha256": "20375a494f411c105b0103e90251e78b3fe9e556c1983367c2b3be408e045f15"
+}

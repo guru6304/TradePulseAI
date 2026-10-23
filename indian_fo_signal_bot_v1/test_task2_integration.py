@@ -64,6 +64,17 @@ class TestTask2Integration(unittest.TestCase):
             cfg.telegram_dry_run = False
             self.assertIn("SAFE_RUNTIME_FLAGS_REQUIRED", preflight(cfg)["blockers"])
 
+    def test_preflight_requires_exactly_one_verified_probe_instrument(self):
+        cfg = self.config()
+        cfg.dhan_feed_instruments = copy.deepcopy(cfg.equity_watchlist[:2])
+        with patch("socket.socket.connect", side_effect=AssertionError("No connection in preflight")):
+            result = preflight(cfg)
+        self.assertEqual(result["status"], "BLOCKED")
+        self.assertEqual(result["instrument_count"], 2)
+        self.assertIn("SMOKE_REQUIRES_EXACTLY_ONE_INSTRUMENT", result["blockers"])
+        self.assertFalse(result["live_requests"])
+        self.assertEqual(cfg.active_broker, "paper_sim")
+
     def test_explicit_stream_failure_never_uses_rest_or_simulation(self):
         cfg = self.config(active_broker="dhan")
         adapter = DhanHQAdapter(cfg)

@@ -322,6 +322,8 @@ mappings are supported initially; unknown mappings and derivatives are rejected.
 Index/ticker packets without trade volume are useful observations, not OHLCV bars.
 
 `python -B dhan_feed_control.py` performs local preflight without a socket. After
+Task 3's scope correction, this first-probe preflight itself requires exactly one
+canonical instrument; a multi-instrument list is blocked before connection. After
 it passes, the task-authorized minimal read-only probe is
 `python -B dhan_feed_control.py --smoke --seconds 15`, requiring exactly one
 instrument, dry-run Telegram and disabled scheduler. A short observation probe
@@ -375,3 +377,29 @@ re-run qualification with current revocation, validity and rights policy. Fixtur
 exercise mechanics only. Real studies remain blocked until real sources and
 rights pass these gates; historical OHLCV/OI alone cannot substitute executable
 option bid/ask/depth and prior-closing OI observations.
+
+## Task 3 continuation evidence and operator inputs
+
+Use the current full-proof command from the application directory:
+`.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage task3_completion_20261023_01`.
+That stage has been reserved for this executed run; use a new unique stage for
+later runs. Validate it with
+`.venv_phase4\Scripts\python.exe -B verify_offline.py --validate-evidence docs/evidence/master_task3_completion_20261023_01.json`.
+The old mismatched Task 2 manifest/log are preserved and are not current proof.
+
+The single current checklist is
+`docs/evidence/task3_completion_acceptance_20261023_01.json`. Its closeout and
+precise operator blocker messages distinguish software/evidence remediation from
+real historical and Dhan acceptance. A passing full offline run never clears
+missing publisher roots, rights, historical prices or Dhan account configuration.
+
+Store operator-provided original files and policy under the ignored application
+`.local/task3-history/` directory. No data, roots or approvals are supplied by the
+software. Source files belong under `source/`; independently reviewed trust and
+rights policy belong under `operator/`, separate from dataset-supplied fields.
+Use only approved public verification keys, never publisher private signing keys.
+Do not put credentials, licences, account data or original market datasets into
+chat, evidence logs or source ZIPs. The matching repository's Task 3 historical
+helper provides its exact input-file contract via `--help`; it reuses the existing
+qualification and frozen-study APIs and retains private inputs/results in the
+explicit operator-selected SQLite file. Missing files stay blocked.

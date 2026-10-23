@@ -1,0 +1,47 @@
+{
+  "integrity_status": "PASS_CURRENT_FULL_SOURCE_LOG_CHECKLIST_REPORT_AND_RELEASE_BINDINGS",
+  "TASK_3_STATUS": "BLOCKED_AWAITING_OPERATOR_INPUT",
+  "source_revision": "5c9f09536384dc4161714e189cbaf0b0eb8f6e4f",
+  "closeout_sha256": "56c56b30ba5efbb9d8499b962ef5f754d4e475d105d45673b2463a29e7a1c245",
+  "fresh_python_passed": 804,
+  "dashboard_passed": 11,
+  "compiled": 62,
+  "helper_tests_passed": 7,
+  "preserved_entry_evidence": 205,
+  "release": {
+    "status": "PASS",
+    "scope": "OFFLINE_RELEASE_CANDIDATE",
+    "files": 91,
+    "sha256": "af80797e8534ee0abfb80adb019cf59ef36e43fdd6fe649f11479308d02e3a96",
+    "manifest_sha256": "f69fa9033e95c6041866039589de8fc86675db0799d75d76fbeaad80de6da4b7",
+    "publisher_authentication": "NOT_ESTABLISHED"
+  },
+  "final_dhan_preflight": {
+    "command": [
+      "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+      "-B",
+      "dhan_feed_control.py"
+    ],
+    "exit_code": 1,
+    "result": {
+      "authentication": "NOT_TESTED",
+      "blockers": [
+        "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER",
+        "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"
+      ],
+      "instrument_count": 0,
+      "live_feed_accepted": false,
+      "live_requests": false,
+      "scope": "LOCAL_DHAN_FEED_CONFIGURATION_ONLY",
+      "status": "BLOCKED"
+    }
+  },
+  "tooling_diagnostics_sha256": "c8052b0e31594978a425d954166f4cbbe02316d21fb2c37e9cb1c9dfd9efcb3b",
+  "all_independent_actions_complete": true,
+  "live_probe_attempted": false,
+  "authentic_cash_study_executed": false,
+  "only_open_classifications": [
+    "OPERATOR_INPUT",
+    "DATA_RIGHTS"
+  ]
+}

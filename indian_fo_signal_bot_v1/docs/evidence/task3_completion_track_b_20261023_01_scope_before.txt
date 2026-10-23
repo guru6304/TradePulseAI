@@ -1,0 +1,18 @@
+test_preflight_requires_exactly_one_verified_probe_instrument (test_task2_integration.TestTask2Integration.test_preflight_requires_exactly_one_verified_probe_instrument) ... FAIL
+
+======================================================================
+FAIL: test_preflight_requires_exactly_one_verified_probe_instrument (test_task2_integration.TestTask2Integration.test_preflight_requires_exactly_one_verified_probe_instrument)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_task2_integration.py", line 72, in test_preflight_requires_exactly_one_verified_probe_instrument
+    self.assertEqual(result["status"], "BLOCKED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'PASS' != 'BLOCKED'
+- PASS
++ BLOCKED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.037s
+
+FAILED (failures=1)

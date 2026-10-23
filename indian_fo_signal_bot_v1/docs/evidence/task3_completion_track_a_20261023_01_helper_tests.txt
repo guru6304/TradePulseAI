@@ -1,0 +1,362 @@
+test_fixture_only_private_study_persists_actual_original_inputs_and_result (__main__.TestOperatorHelper.test_fixture_only_private_study_persists_actual_original_inputs_and_result) ... ERROR
+test_fixture_only_private_study_persists_actual_original_inputs_and_result (__main__.TestOperatorHelper.test_fixture_only_private_study_persists_actual_original_inputs_and_result) ... ERROR
+test_missing_rights_document_cannot_establish_scope (__main__.TestOperatorHelper.test_missing_rights_document_cannot_establish_scope) ... ERROR
+test_missing_rights_document_cannot_establish_scope (__main__.TestOperatorHelper.test_missing_rights_document_cannot_establish_scope) ... ERROR
+test_private_database_escape_is_rejected (__main__.TestOperatorHelper.test_private_database_escape_is_rejected) ... ERROR
+test_private_database_escape_is_rejected (__main__.TestOperatorHelper.test_private_database_escape_is_rejected) ... ERROR
+test_revoked_key_cannot_verify_sources (__main__.TestOperatorHelper.test_revoked_key_cannot_verify_sources) ... ERROR
+test_revoked_key_cannot_verify_sources (__main__.TestOperatorHelper.test_revoked_key_cannot_verify_sources) ... ERROR
+test_rights_document_escape_rejected_before_reading (__main__.TestOperatorHelper.test_rights_document_escape_rejected_before_reading) ... ERROR
+test_rights_document_escape_rejected_before_reading (__main__.TestOperatorHelper.test_rights_document_escape_rejected_before_reading) ... ERROR
+test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted (__main__.TestOperatorHelper.test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted) ... ERROR
+test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted (__main__.TestOperatorHelper.test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted) ... ERROR
+test_test_only_approved_shapes_validate_exact_identity_without_database (__main__.TestOperatorHelper.test_test_only_approved_shapes_validate_exact_identity_without_database) ... ERROR
+test_test_only_approved_shapes_validate_exact_identity_without_database (__main__.TestOperatorHelper.test_test_only_approved_shapes_validate_exact_identity_without_database) ... ERROR
+
+======================================================================
+ERROR: test_fixture_only_private_study_persists_actual_original_inputs_and_result (__main__.TestOperatorHelper.test_fixture_only_private_study_persists_actual_original_inputs_and_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_v14zkdlr\\source'
+
+======================================================================
+ERROR: test_fixture_only_private_study_persists_actual_original_inputs_and_result (__main__.TestOperatorHelper.test_fixture_only_private_study_persists_actual_original_inputs_and_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_v14zkdlr'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_v14zkdlr'
+
+======================================================================
+ERROR: test_missing_rights_document_cannot_establish_scope (__main__.TestOperatorHelper.test_missing_rights_document_cannot_establish_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_3736dtdo\\source'
+
+======================================================================
+ERROR: test_missing_rights_document_cannot_establish_scope (__main__.TestOperatorHelper.test_missing_rights_document_cannot_establish_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_3736dtdo'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_3736dtdo'
+
+======================================================================
+ERROR: test_private_database_escape_is_rejected (__main__.TestOperatorHelper.test_private_database_escape_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_0nn9ni__\\source'
+
+======================================================================
+ERROR: test_private_database_escape_is_rejected (__main__.TestOperatorHelper.test_private_database_escape_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_0nn9ni__'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_0nn9ni__'
+
+======================================================================
+ERROR: test_revoked_key_cannot_verify_sources (__main__.TestOperatorHelper.test_revoked_key_cannot_verify_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_bx5w_xte\\source'
+
+======================================================================
+ERROR: test_revoked_key_cannot_verify_sources (__main__.TestOperatorHelper.test_revoked_key_cannot_verify_sources)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_bx5w_xte'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_bx5w_xte'
+
+======================================================================
+ERROR: test_rights_document_escape_rejected_before_reading (__main__.TestOperatorHelper.test_rights_document_escape_rejected_before_reading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_babxblt5\\source'
+
+======================================================================
+ERROR: test_rights_document_escape_rejected_before_reading (__main__.TestOperatorHelper.test_rights_document_escape_rejected_before_reading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_babxblt5'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_babxblt5'
+
+======================================================================
+ERROR: test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted (__main__.TestOperatorHelper.test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_lq0ezka_\\source'
+
+======================================================================
+ERROR: test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted (__main__.TestOperatorHelper.test_signed_source_cannot_be_substituted_or_wrong_cash_identity_accepted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_lq0ezka_'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_lq0ezka_'
+
+======================================================================
+ERROR: test_test_only_approved_shapes_validate_exact_identity_without_database (__main__.TestOperatorHelper.test_test_only_approved_shapes_validate_exact_identity_without_database)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\task3_completion_track_a_20261023_01_helper_tests.py", line 36, in setUp
+    self.source.mkdir()
+    ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 1011, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_3ozitlrg\\source'
+
+======================================================================
+ERROR: test_test_only_approved_shapes_validate_exact_identity_without_database (__main__.TestOperatorHelper.test_test_only_approved_shapes_validate_exact_identity_without_database)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_3ozitlrg'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\TRADEPULSE_TEST_ONLY_HELPER_3ozitlrg'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.405s
+
+FAILED (errors=14)

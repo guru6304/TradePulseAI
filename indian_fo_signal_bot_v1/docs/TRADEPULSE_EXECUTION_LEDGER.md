@@ -10,7 +10,35 @@ The current Task 2 authorizes a minimal read-only Dhan feed probe only after
 offline tests and local preflight pass. Token refresh, orders, account mutation,
 Telegram delivery and scheduler activation are outside scope. Preserve existing work.
 
-## Current Task 2: historical qualification and Dhan feed
+## Current Task 3 continuation: remediation and real acceptance
+
+Entry HEAD `5c9f09536384dc4161714e189cbaf0b0eb8f6e4f`, clean working tree.
+Preserve all prior evidence, including the mismatched Task 2 Python log. Current
+full verification uses the documented unique stage `task3_completion_20261023_01`;
+the CLI accepts explicit unique lowercase labels rather than a predefined enum.
+The single acceptance checklist is
+`docs/evidence/task3_completion_acceptance_20261023_01.json`.
+
+`CODE_DEFECT:DHAN_FIRST_PROBE_PREFLIGHT` was reproduced and corrected: preflight
+now rejects multiple instruments before a socket can be opened. General feed
+configuration still permits its bounded library scope. All 33 focused feed and
+integration cases pass. Dhan credentials remain placeholders and its explicit
+instrument list remains empty; no real connection was attempted.
+
+Only genuine source/rights/account evidence can pass the remaining real-data
+gates. Do not start Task 4 or call Task 3 complete while those gates are blocked.
+The continuation report and blocker messages are retained in the repository under
+`docs/reports/TRADEPULSE_TASK3_CONTINUATION_AND_COMPLETION_REPORT.md` and the matching
+`docs/evidence/task3_completion_*` prefix. Final state and executed totals are
+recorded in that checklist and its bound closeout.
+Full current run: **804/804 Python PASS**, zero failures/errors/skips, 322.904
+seconds; **11/11 dashboard PASS**; **62 Python files compiled**; no unraisable
+exceptions. The existing validator accepts the exact new source/log receipt
+(exit 0). Historical log bytes remain untouched. Current Task 3 status is
+**BLOCKED_AWAITING_OPERATOR_INPUT** for authentic sources/rights and private Dhan
+credentials/scope; no real study or broker probe has run, and Task 4 has not begun.
+
+## Historical Task 2: historical qualification and Dhan feed
 
 Two explicitly requested worker tracks implemented historical qualification and
 Dhan streaming, coordinated through the existing canonical instrument/candle

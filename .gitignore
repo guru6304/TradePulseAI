@@ -28,3 +28,5 @@ __pycache__/
 .venv/
 .venv_phase4/
 env/
+# Operator-supplied historical originals, trust policy and rights stay private.
+/indian_fo_signal_bot_v1/.local/

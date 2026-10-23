@@ -1,0 +1,181 @@
+{
+  "schema_version": "tradepulse.task3.completion.track-b.v1",
+  "timestamp": "2026-10-23T06:13:00.020675+00:00",
+  "head": "5c9f09536384dc4161714e189cbaf0b0eb8f6e4f",
+  "scope": "CURRENT_LOCAL_OPERATOR_PREFLIGHT_AND_OFFLINE_SCOPE_DEFECT_REMEDIATION",
+  "runtime": {
+    "observed_at_utc": "2026-10-23T06:13:00.020675+00:00",
+    "head": "5c9f09536384dc4161714e189cbaf0b0eb8f6e4f",
+    "safety": {
+      "active_broker": "paper_sim",
+      "telegram_dry_run": true,
+      "enable_background_scheduler": false
+    },
+    "requested_provider": "dhan",
+    "credential_configuration_categories": {
+      "DHAN_CLIENT_ID": "PLACEHOLDER",
+      "DHAN_ACCESS_TOKEN": "PLACEHOLDER"
+    },
+    "instrument_count": 0,
+    "websocket_version": "15.0.1",
+    "configuration_source": "APPLICATION_MODULE_DOTENV_WITH_EXISTING_PROCESS_ENV_PRECEDENCE",
+    "source_hashes": {
+      "config.py": "8e37fe37d1aaab8a31189da9449693c958e218027626567f9b0185799c1b5a17",
+      "instrument_identity.py": "8601eb598fe4adf89c13df8cf1404c98a9623cf1e9def11185df78833fd9c343",
+      "dhan_feed.py": "aed6f7f2d1be387a2fa7dde6934620ba21a635b8712d4a884e6c3dce56430c97",
+      "dhan_feed_control.py": "0b44b0053dbdb8fb21023726077b468c509febf1131afe393a0c95bb2b8aa7f9",
+      "brokers.py": "7bf06d677230c3e93b6bf7d73bc7cec1152c052566656fdc04ff149f370218e1",
+      "scanner_engine.py": "ff6eef2479441afe3b2075fe524d2c10c1f4a145c6e4a961f1efbfb124547fdc",
+      "readiness_policy.py": "bb1603b6fde470f670002d80e1118c7659735e65d99fd1e9e4e789dfc6c22888",
+      "storage.py": "d62c43d23bdc4c3cbe714f393bf684aff4951f8807d6d10a91f666b701174d79",
+      "test_dhan_feed.py": "07fa7966458e8e9b1993d3478321567ee65389f322722dbedac4369d40724bee",
+      "test_task2_integration.py": "ffd4ae5ac8c6adb667db3e3aaec78318332fbb7b112174c8d057366b9eee259b",
+      "requirements.txt": "24cf4a711c6c749ebfb51140c0e179fc310473fe1be7b2f93cc2754043b587e2"
+    },
+    "changed_files_from_baseline": [
+      "dhan_feed_control.py",
+      "test_task2_integration.py"
+    ]
+  },
+  "preflight_command": ".venv_phase4\\Scripts\\python.exe -B dhan_feed_control.py",
+  "preflight_exit_code": 1,
+  "preflight_result": {
+    "authentication": "NOT_TESTED",
+    "blockers": [
+      "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER",
+      "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"
+    ],
+    "instrument_count": 0,
+    "live_feed_accepted": false,
+    "live_requests": false,
+    "scope": "LOCAL_DHAN_FEED_CONFIGURATION_ONLY",
+    "status": "BLOCKED"
+  },
+  "smoke_attempted": false,
+  "external_requests": false,
+  "observed_packet_types": [],
+  "real_instrument_observed": null,
+  "real_observations_retained": 0,
+  "live_candles_accepted": 0,
+  "acceptance": {
+    "DHAN_LOCAL_PREFLIGHT": "BLOCKED",
+    "DHAN_AUTHENTICATION": "NOT_ATTEMPTED",
+    "DHAN_SUBSCRIPTION": "NOT_ATTEMPTED",
+    "DHAN_REAL_OBSERVATIONS": "BLOCKED",
+    "DHAN_LIVE_CANDLE_ACCEPTANCE": "BLOCKED",
+    "DHAN_CLEAN_SHUTDOWN": "NOT_ATTEMPTED"
+  },
+  "offline_verification": {
+    "command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning -m unittest test_dhan_feed test_task2_integration -v",
+    "exit_code": 0,
+    "tests": 33,
+    "passed": 33,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "duration_seconds": 0.545,
+    "log": "docs/evidence/task3_completion_track_b_20261023_01_focused.txt",
+    "broker_contact": false,
+    "warning_findings": "No ResourceWarning/unraisable exception in captured output."
+  },
+  "source_changes": [
+    "dhan_feed_control.py",
+    "test_task2_integration.py"
+  ],
+  "resolved_blockers": [
+    {
+      "blocker_code": "CODE_DEFECT:DHAN_FIRST_PROBE_PREFLIGHT",
+      "classification": "CODE_DEFECT",
+      "severity": "MEDIUM",
+      "affected_track": "TRACK_B",
+      "affected_acceptance_gate": "TRACK_B_LOCAL_PREFLIGHT",
+      "status": "RESOLVED",
+      "observed_finding": "Preflight returned PASS for two valid instruments although the initial probe requires exactly one. Existing smoke guard already prevented actual subscription expansion.",
+      "evidence_paths": [
+        "docs/evidence/task3_completion_track_b_20261023_01_scope_before.txt",
+        "docs/evidence/task3_completion_track_b_20261023_01_focused.txt"
+      ],
+      "exact_failed_command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning -m unittest test_task2_integration.TestTask2Integration.test_preflight_requires_exactly_one_verified_probe_instrument -v",
+      "exit_code": 1,
+      "redacted_error": "AssertionError: 'PASS' != 'BLOCKED'",
+      "root_cause_confidence": "CONFIRMED_BY_FAILING_REGRESSION",
+      "required_input_or_correction": "Make local preflight enforce the same exactly-one initial-probe scope as the socket guard.",
+      "who_must_act": "AGENT",
+      "safe_resolution_steps": [
+        "Added an elif len(scope) != 1 branch to preflight, returning the existing SMOKE_REQUIRES_EXACTLY_ONE_INSTRUMENT code.",
+        "Added a socket-blocked regression covering two valid instruments, local no-network behavior and preserved paper selection.",
+        "Ran all focused Dhan feed and Task2 integration cases: 33 passed; the general feed/configuration library still permits its bounded configured universe."
+      ],
+      "verification_command_after_resolution": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning -m unittest test_dhan_feed test_task2_integration -v",
+      "expected_result_after_resolution": "33 focused cases pass; a two-instrument first-probe preflight is BLOCKED before network I/O.",
+      "related_blockers": [],
+      "timestamp": "2026-10-23T06:13:00.020675+00:00"
+    }
+  ],
+  "open_blockers": [
+    {
+      "blocker_code": "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER",
+      "classification": "OPERATOR_INPUT",
+      "severity": "HIGH",
+      "affected_track": "TRACK_B",
+      "affected_acceptance_gate": "TRACK_B_LOCAL_PREFLIGHT",
+      "status": "AWAITING_OPERATOR",
+      "observed_finding": "Actual application configuration classifies both DHAN_CLIENT_ID and DHAN_ACCESS_TOKEN as PLACEHOLDER; no values were emitted.",
+      "evidence_paths": [
+        "docs/evidence/task3_completion_track_b_20261023_01.json",
+        "docs/evidence/task3_completion_track_b_20261023_01_preflight.txt"
+      ],
+      "exact_failed_command": ".venv_phase4\\Scripts\\python.exe -B dhan_feed_control.py",
+      "exit_code": 1,
+      "redacted_error": "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER",
+      "root_cause_confidence": "CONFIRMED_BY_ACTUAL_LOCAL_PREFLIGHT_AND_CONFIG_PREDICATE",
+      "required_input_or_correction": "Valid Dhan-specific client ID and access token configured privately through the existing application environment process.",
+      "who_must_act": "OPERATOR",
+      "safe_resolution_steps": [
+        "Configure DHAN_CLIENT_ID and DHAN_ACCESS_TOKEN privately in indian_fo_signal_bot_v1/.env or the invoking process environment; the repository-root .env is not the default file used by config.py.",
+        "Use valid Dhan-issued account/API credentials; do not substitute Upstox/Angel values or paste any secret into chat.",
+        "Retain ACTIVE_BROKER=paper_sim, TELEGRAM_DRY_RUN=true and ENABLE_BACKGROUND_SCHEDULER=false.",
+        "Run the local preflight from the application directory. Only after all blockers clear and exactly one verified instrument is configured, run the already-authorized 15-second read-only probe."
+      ],
+      "verification_command_after_resolution": ".venv_phase4\\Scripts\\python.exe -B dhan_feed_control.py",
+      "expected_result_after_resolution": "This blocker disappears. Once the separate instrument blocker is resolved, preflight returns status PASS, instrument_count 1, live_requests false; authentication still requires the actual authorized probe.",
+      "related_blockers": [
+        "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"
+      ],
+      "timestamp": "2026-10-23T06:13:00.020675+00:00"
+    },
+    {
+      "blocker_code": "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED",
+      "classification": "OPERATOR_INPUT",
+      "severity": "HIGH",
+      "affected_track": "TRACK_B",
+      "affected_acceptance_gate": "TRACK_B_LOCAL_PREFLIGHT",
+      "status": "AWAITING_OPERATOR",
+      "observed_finding": "Actual application DHAN_FEED_INSTRUMENTS_JSON resolves to an empty list; instrument_count is 0, so no instrument has been selected or verified for this probe.",
+      "evidence_paths": [
+        "docs/evidence/task3_completion_track_b_20261023_01.json",
+        "docs/evidence/task3_completion_track_b_20261023_01_preflight.txt"
+      ],
+      "exact_failed_command": ".venv_phase4\\Scripts\\python.exe -B dhan_feed_control.py",
+      "exit_code": 1,
+      "redacted_error": "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED",
+      "root_cause_confidence": "CONFIRMED_BY_ACTUAL_LOCAL_PREFLIGHT_AND_SCOPE_COUNT",
+      "required_input_or_correction": "DHAN_FEED_INSTRUMENTS_JSON containing exactly one permitted canonical instrument metadata record whose symbol, provider identifier and exchange segment agree with the existing verified mapping policy.",
+      "who_must_act": "OPERATOR",
+      "safe_resolution_steps": [
+        "Select exactly one permitted instrument and verify its Dhan security identifier and exchange segment against the accepted mapping source.",
+        "Configure the one-record JSON list privately in indian_fo_signal_bot_v1/.env or the invoking process environment under DHAN_FEED_INSTRUMENTS_JSON.",
+        "Do not invent a security identifier, use an alias to bypass identity checks, or broaden the initial probe to multiple instruments.",
+        "Rerun local preflight; after credentials and safety checks also pass, use only the authorized --smoke --seconds 15 command."
+      ],
+      "verification_command_after_resolution": ".venv_phase4\\Scripts\\python.exe -B dhan_feed_control.py",
+      "expected_result_after_resolution": "This blocker disappears, instrument_count is exactly 1 and canonical mapping validation passes. With the separate credential blocker resolved, local preflight returns PASS without opening a socket.",
+      "related_blockers": [
+        "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER"
+      ],
+      "timestamp": "2026-10-23T06:13:00.020675+00:00"
+    }
+  ],
+  "prohibited_actions_performed": false,
+  "release_regeneration_owned_by_integrator": true
+}
