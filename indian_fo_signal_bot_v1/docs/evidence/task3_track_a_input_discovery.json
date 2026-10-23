@@ -1,0 +1,109 @@
+{
+  "scope": "WORKSPACE_NONPRIVATE_FILE_INVENTORY_AND_PUBLIC_EVIDENCE_SCHEMA_INSPECTION",
+  "workspace": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b",
+  "files_seen": 498,
+  "excluded_directories": [
+    ".git",
+    "indian_fo_signal_bot_v1/.venv_phase4",
+    "indian_fo_signal_bot_v1/__pycache__"
+  ],
+  "environment_file_values_read": false,
+  "operational_database_contents_read": false,
+  "standalone_data_files": [],
+  "operational_database_files": [],
+  "possible_rights_document_files": [],
+  "possible_public_key_files": [],
+  "inspected_public_json_receipts": 39,
+  "actual_source_schema_files": [],
+  "nonempty_operator_anchor_records_discovered": [],
+  "nonempty_operator_rights_grant_records_discovered": [],
+  "software_archive_member_inspection": [
+    {
+      "archive": "docs/evidence/master_release_candidate_001.zip",
+      "candidate_data_members": []
+    },
+    {
+      "archive": "docs/evidence/master_release_candidate_002.zip",
+      "candidate_data_members": []
+    },
+    {
+      "archive": "docs/evidence/phase4ab_release_001.zip",
+      "candidate_data_members": []
+    },
+    {
+      "archive": "docs/evidence/phase4ab_release_final.zip",
+      "candidate_data_members": []
+    },
+    {
+      "archive": "docs/evidence/task2_parallel_release.zip",
+      "candidate_data_members": []
+    }
+  ],
+  "scope_limitation": "Does not establish absence of private material outside this workspace or inspect excluded credentials.",
+  "eligible_cash_instruments": 0,
+  "qualifying_cash_candle_count": 0,
+  "qualifying_option_observation_count": 0,
+  "historical_cash_coverage_start": null,
+  "historical_cash_coverage_end": null,
+  "authentic_cash_study_executed": false,
+  "authentic_option_study_executed": false,
+  "retained_public_master_candidate": {
+    "path": "docs/evidence/angel_public_master_20261019.json.gz",
+    "provider": "angelone",
+    "captured_at_claim": "2026-10-19T03:17:46.930603+00:00",
+    "original_bytes": 36009485,
+    "compressed_bytes": 2332130,
+    "original_sha256": "d92f2b42a8a8cbad2928f00345925982ad3d699565778ed898b35feedc02f635",
+    "stored_sha256": "a315b1f5258f41a6c393f03cfd196b4a5d29ed777c09a3e2727c845a75cf7e46",
+    "existing_capture_receipt_hashes_match": true,
+    "input_record_count": 153621,
+    "provider_segments": {
+      "NSE": 10071,
+      "BSE": 13144,
+      "NFO": 38370,
+      "CDS": 10701,
+      "MCX": 16018,
+      "NCDEX": 1905,
+      "BFO": 40797,
+      "NCO": 22615
+    },
+    "observed_nse_cash_rows": 2728,
+    "observed_nfo_types": {
+      "OPTSTK": 31908,
+      "OPTIDX": 5791,
+      "FUTSTK": 653,
+      "FUTIDX": 18
+    },
+    "archive_status": "REJECTED",
+    "normalized_record_count": 0,
+    "archive_validation": {
+      "reason_code": "INVALID_NATIVE_MASTER",
+      "reason": "Native Angel master failed existing instrument validation."
+    },
+    "archive_id": "5a78847aec0c44ebffff9160a8c1fec4a63962db361d422bc3f1f7aa4895da8a",
+    "publisher_authenticity": "NOT_ESTABLISHED",
+    "historical_eligibility": {
+      "allowed": false,
+      "scope": "LIVE_HISTORICAL_REPLAY",
+      "reason_code": "HISTORICAL_SOURCE_EVIDENCE_INSUFFICIENT",
+      "missing_evidence": [
+        "SOURCE_ATTRIBUTION_NOT_INDEPENDENTLY_ESTABLISHED",
+        "PUBLISHER_AUTHENTICITY_NOT_ESTABLISHED",
+        "EFFECTIVE_DATE_AUTHORITY_NOT_ESTABLISHED",
+        "STRUCTURAL_VALIDITY_OR_DECLARED_COVERAGE_MISSING"
+      ]
+    },
+    "schema_version": null,
+    "effective_date_basis": "UNKNOWN",
+    "actual_price_observations": false,
+    "corporate_actions_or_adjustment_history_supplied": false,
+    "interpretation": "Retained unqualified instrument snapshot; hash matches local receipt only, not independently authenticated provider publication."
+  },
+  "missing_evidence": [
+    "ORIGINAL_HISTORICAL_CASH_OHLCV_AND_SIGNED_MANIFEST",
+    "INDEPENDENTLY_APPROVED_PUBLISHER_ED25519_ROOTS",
+    "ACTUAL_RIGHTS_DOCUMENT_AND_CURRENT_OPERATOR_APPROVAL_SCOPE",
+    "DATED_INSTRUMENT_MASTER_WITH_AUTHENTIC_EFFECTIVE_PERIOD",
+    "EXACT_OPTION_PREMIUM_BID_ASK_DEPTH_OI_AND_PRIOR_CLOSING_BASELINE"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "scope": "OFFLINE_AUTHORED_WIRE_FIXTURES_NO_BROKER_REQUESTS",
+  "command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning -m unittest test_dhan_feed -v",
+  "exit_code": 0,
+  "status": "PASS",
+  "head": "2ef6751a4f393507d13522a505d1070356114779",
+  "source_hashes": {
+    "dhan_feed.py": "bfab7daac8b0fc60758e221acba8d92a2125c3700cabb595440d734bf0919a3d",
+    "test_dhan_feed.py": "f75ec0ba5b4279e3aabdcfa9fcb90e078a17be53ccd9ea1ab3eba3d325b09572"
+  },
+  "compiled": 2,
+  "tests": 25,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "live_feed_acceptance": "NOT_RUN",
+  "protocol_sources": [
+    "https://dhanhq.co/docs/v2/live-market-feed/",
+    "https://dhanhq.co/docs/v2/annexure/",
+    "https://raw.githubusercontent.com/dhan-oss/DhanHQ-py/main/src/dhanhq/marketfeed.py",
+    "https://websockets.readthedocs.io/en/15.0.1/reference/sync/client.html"
+  ]
+}

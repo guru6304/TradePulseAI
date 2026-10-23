@@ -1,0 +1,19 @@
+âœ” signal cards never promote missing, unknown or conflicting provenance to LIVE (173.9783ms)
+âœ” selected inspector never promotes untrusted provenance to LIVE (18.9004ms)
+âœ” explicit source labels distinguish stored LIVE records from simulated records (3.6575ms)
+âœ” backend health failure clears a previously accepted header (3.7638ms)
+âœ” continuous feed status exposes stale and fixture observations with signals blocked (3.6802ms)
+âœ” a failed signals API request removes cached cards and inspector prices (2.7152ms)
+âœ” late successful health response cannot replace a newer unavailable state (2.1937ms)
+âœ” fixture scope overrides live-shaped source and acceptance flags (1.8975ms)
+âœ” risk-rejected stored candidates show rejection and exact source batch (4.2076ms)
+âœ” stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (4.2978ms)
+âœ” late stored report response cannot restore accounting after current health fails (2.308ms)
+â„¹ tests 11
+â„¹ suites 0
+â„¹ pass 11
+â„¹ fail 0
+â„¹ cancelled 0
+â„¹ skipped 0
+â„¹ todo 0
+â„¹ duration_ms 233.2174

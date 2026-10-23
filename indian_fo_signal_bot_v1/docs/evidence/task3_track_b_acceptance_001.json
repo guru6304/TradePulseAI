@@ -1,0 +1,76 @@
+{
+  "schema_version": "tradepulse.task3.dhan-acceptance.v1",
+  "observed_at_utc": "2026-10-23T04:46:40.635941+00:00",
+  "repository_head": "2ef6751a4f393507d13522a505d1070356114779",
+  "source_hashes": {
+    "config.py": "8e37fe37d1aaab8a31189da9449693c958e218027626567f9b0185799c1b5a17",
+    "instrument_identity.py": "8601eb598fe4adf89c13df8cf1404c98a9623cf1e9def11185df78833fd9c343",
+    "dhan_feed.py": "aed6f7f2d1be387a2fa7dde6934620ba21a635b8712d4a884e6c3dce56430c97",
+    "dhan_feed_control.py": "c9df8d21fb3c7d02754de5d585097999888e58b7cd1a718bc3feff744f199e73",
+    "brokers.py": "7bf06d677230c3e93b6bf7d73bc7cec1152c052566656fdc04ff149f370218e1",
+    "scanner_engine.py": "ff6eef2479441afe3b2075fe524d2c10c1f4a145c6e4a961f1efbfb124547fdc",
+    "readiness_policy.py": "bb1603b6fde470f670002d80e1118c7659735e65d99fd1e9e4e789dfc6c22888",
+    "storage.py": "d62c43d23bdc4c3cbe714f393bf684aff4951f8807d6d10a91f666b701174d79",
+    "test_dhan_feed.py": "07fa7966458e8e9b1993d3478321567ee65389f322722dbedac4369d40724bee",
+    "test_task2_integration.py": "f3f35275dcca9867994999533a48b6f8c3c56448f483fb9f276c892c5be197d0",
+    "requirements.txt": "24cf4a711c6c749ebfb51140c0e179fc310473fe1be7b2f93cc2754043b587e2"
+  },
+  "scope": "ACTUAL_LOCAL_CONFIGURATION_AND_OFFLINE_TESTS_ONLY",
+  "preflight_command": ".venv_phase4\\Scripts\\python.exe -B dhan_feed_control.py",
+  "preflight_exit_code": 1,
+  "preflight_result": {
+    "authentication": "NOT_TESTED",
+    "blockers": [
+      "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER",
+      "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"
+    ],
+    "instrument_count": 0,
+    "live_feed_accepted": false,
+    "live_requests": false,
+    "scope": "LOCAL_DHAN_FEED_CONFIGURATION_ONLY",
+    "status": "BLOCKED"
+  },
+  "local_runtime_safety": {
+    "active_broker": "paper_sim",
+    "telegram_dry_run": true,
+    "enable_background_scheduler": false
+  },
+  "configuration_source": "APPLICATION_MODULE_DOTENV_WITH_EXISTING_PROCESS_ENV_PRECEDENCE",
+  "requested_provider": "dhan",
+  "dhan_credentials_configured": false,
+  "verified_instrument_count": 0,
+  "websocket_version": "15.0.1",
+  "smoke_command_executed": false,
+  "network_attempted": false,
+  "broker_requests": false,
+  "actual_packets_observed": 0,
+  "live_candles_accepted": 0,
+  "acceptance": {
+    "DHAN_LOCAL_PREFLIGHT": "BLOCKED",
+    "DHAN_AUTHENTICATION": "NOT_ATTEMPTED",
+    "DHAN_SUBSCRIPTION": "NOT_ATTEMPTED",
+    "DHAN_REAL_OBSERVATIONS": "BLOCKED",
+    "DHAN_LIVE_CANDLE_ACCEPTANCE": "BLOCKED",
+    "DHAN_CLEAN_SHUTDOWN": "NOT_ATTEMPTED"
+  },
+  "stop_reason": "MISSING_DHAN_CREDENTIALS_AND_EMPTY_EXPLICIT_VERIFIED_INSTRUMENT_SCOPE",
+  "required_operator_actions": [
+    "Configure valid Dhan-specific credentials locally using application .env or process environment; never paste secrets into chat.",
+    "Configure DHAN_FEED_INSTRUMENTS_JSON locally with exactly one canonical verified instrument for the first probe.",
+    "Re-run local preflight while retaining paper_sim, Telegram dry-run and disabled scheduler; only then run the already-authorized 15-second read-only probe."
+  ],
+  "offline_verification": {
+    "command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning -m unittest test_dhan_feed test_task2_integration -v",
+    "exit_code": 0,
+    "executed": 32,
+    "passed": 32,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "duration_seconds": 0.263,
+    "warning_observations": "No ResourceWarning or unraisable exception reported",
+    "external_broker_contact": false
+  },
+  "source_changes_made": false,
+  "release_regenerated": false
+}

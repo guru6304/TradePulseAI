@@ -1,0 +1,33 @@
+{
+  "scope": "READ_ONLY_VALIDATION_OF_UNMODIFIED_PRIOR_MANIFEST",
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "verify_offline.py",
+    "--validate-evidence",
+    "docs/evidence/master_task2_parallel_verified.json"
+  ],
+  "exit_code": 1,
+  "stdout": "{\"status\": \"FAIL\", \"reason_code\": \"ValueError\"}",
+  "stderr": "",
+  "source_matches_prior": true,
+  "failure_reason": "EVIDENCE_LOG_INTEGRITY_FAILURE",
+  "log_bindings": {
+    "docs/evidence/master_task2_parallel_verified_python.txt": {
+      "recorded_sha256": "98a5442500c5d7c3cefa55ebdf3368a34c780c827dab92742b67ea70c7a1a327",
+      "current_sha256": "0c38d5bafe46335efa4fdb15e50749a3909ee983ce70ee62c10bb4513a8b782c",
+      "match": false
+    },
+    "docs/evidence/master_task2_parallel_verified_node.txt": {
+      "recorded_sha256": "8cd945416a3a75a127e75610dc3a3579c7f4afd0b56cd59ad3415bf1a761283c",
+      "current_sha256": "8cd945416a3a75a127e75610dc3a3579c7f4afd0b56cd59ad3415bf1a761283c",
+      "match": true
+    },
+    "docs/evidence/master_task2_parallel_verified_syntax.txt": {
+      "recorded_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "current_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    }
+  },
+  "prior_artifacts_modified": false
+}

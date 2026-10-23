@@ -1,0 +1,49 @@
+{
+  "schema_version": "tradepulse.track-a-focused-receipt.v1",
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "-m",
+    "unittest",
+    "test_historical_study",
+    "test_option_execution",
+    "test_phase4_acceptance",
+    "test_publisher_trust",
+    "-v"
+  ],
+  "scope": "LOCAL_OFFLINE_FIXTURES_NOT_REAL_DATA_RIGHTS_OR_PROVIDER_ACCEPTANCE",
+  "created_at": "2026-10-22T13:06:21.950878+00:00",
+  "exit_code": 0,
+  "tests_run": 49,
+  "duration_seconds": 26.971,
+  "passed": true,
+  "source_before": {
+    "historical_study.py": "5ef314d349a9f0be1146b9f64eee2798fd1331fd19f3eb3373d4dbe9e7996aa7",
+    "option_execution.py": "dd5fccfef2b7bd15c7e7bb1da252db2ed5c1ed4b1e6519a0e87e969e1ebc1a57",
+    "test_historical_study.py": "56ba6ae2bdb5d150a2b52f1253109a3a4b047002949c0f8a5182163ba69342e2",
+    "test_option_execution.py": "d4692768fee3d03796b733ff6c21f4aa8c7700196718c84a8dddb1d1f58769b5",
+    "test_phase4_acceptance.py": "343cfd2bb4a5dea1d97f3b37d266b216850521e9a0599f5616ea441350af5113",
+    "test_publisher_trust.py": "607d56aa69ed1c6733b6ede8e59255b40faec043cb970b92f3f3c8dbd27cfd36"
+  },
+  "source_after": {
+    "historical_study.py": "5ef314d349a9f0be1146b9f64eee2798fd1331fd19f3eb3373d4dbe9e7996aa7",
+    "option_execution.py": "dd5fccfef2b7bd15c7e7bb1da252db2ed5c1ed4b1e6519a0e87e969e1ebc1a57",
+    "test_historical_study.py": "56ba6ae2bdb5d150a2b52f1253109a3a4b047002949c0f8a5182163ba69342e2",
+    "test_option_execution.py": "d4692768fee3d03796b733ff6c21f4aa8c7700196718c84a8dddb1d1f58769b5",
+    "test_phase4_acceptance.py": "343cfd2bb4a5dea1d97f3b37d266b216850521e9a0599f5616ea441350af5113",
+    "test_publisher_trust.py": "607d56aa69ed1c6733b6ede8e59255b40faec043cb970b92f3f3c8dbd27cfd36"
+  },
+  "source_unchanged": true,
+  "log_path": "docs\\evidence\\task2_track_a_focused_runtime_bound.txt",
+  "log_sha256": "2b7d8beb2bc2258d3593c61014427db62f2045d3ce0a4941243b01a569b9468f",
+  "real_historical_study_status": "BLOCKED",
+  "authentic_source_verification": "NOT_PERFORMED",
+  "blockers": [
+    "APPROVED_PUBLISHER_ROOTS",
+    "INDEPENDENT_AUTHENTIC_PROVIDER_ARTIFACTS",
+    "RIGHTS_DOCUMENTS_AND_OPERATOR_REVIEW",
+    "EXECUTABLE_HISTORICAL_OPTION_BID_ASK_DEPTH_OI"
+  ]
+}

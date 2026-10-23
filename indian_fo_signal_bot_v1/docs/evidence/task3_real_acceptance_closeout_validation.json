@@ -1,0 +1,13 @@
+{
+  "integrity_status": "PASS_CURRENT_TASK3_RECEIPTS_SOURCE_AND_PRESERVATION",
+  "source_revision": "2ef6751a4f393507d13522a505d1070356114779",
+  "closeout_sha256": "ae19af7852f9e876cc6f947e6656c8af083b3cf4daa41af391acc47328b8ba23",
+  "fresh_python_passed": 150,
+  "dashboard_passed": 11,
+  "compiled": 62,
+  "prior_full_manifest_status": "FAIL_PYTHON_LOG_HASH_MISMATCH_PRESERVED",
+  "real_cash_study": "BLOCKED",
+  "real_dhan_feed": "BLOCKED",
+  "software_source_changed": false,
+  "release_regenerated": false
+}

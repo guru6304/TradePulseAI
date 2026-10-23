@@ -1,0 +1,1 @@
+{"authentication": "NOT_TESTED", "blockers": ["DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER", "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"], "instrument_count": 0, "live_feed_accepted": false, "live_requests": false, "scope": "LOCAL_DHAN_FEED_CONFIGURATION_ONLY", "status": "BLOCKED"}

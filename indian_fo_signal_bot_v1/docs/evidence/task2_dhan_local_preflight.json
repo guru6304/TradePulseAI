@@ -1,0 +1,20 @@
+{
+  "scope": "LOCAL_DHAN_CONFIGURATION_PREFLIGHT_NO_NETWORK",
+  "status": "BLOCKED",
+  "live_requests": false,
+  "authentication": "NOT_TESTED",
+  "live_feed_accepted": false,
+  "instrument_count": 0,
+  "blockers": [
+    "DHAN_SPECIFIC_CREDENTIALS_MISSING_OR_PLACEHOLDER",
+    "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"
+  ],
+  "recorded_at": "2026-10-22T13:04:02.368544+00:00",
+  "source_revision": "2ef6751a4f393507d13522a505d1070356114779",
+  "smoke_attempted": false,
+  "safe_runtime": {
+    "active_broker": "paper_sim",
+    "telegram_dry_run": true,
+    "scheduler_enabled": false
+  }
+}
