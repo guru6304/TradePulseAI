@@ -1,0 +1,19 @@
+{
+  "integrity_status": "PASS_CURRENT_CHECKLIST_REPORT_RECEIPTS_PRIOR_FULL_PROOF_AND_PRESERVATION",
+  "TASK_3_STATUS": "BLOCKED_AWAITING_OPERATOR_INPUT",
+  "source_revision": "93357342939815d1084691eba7c1b295b2d2117a",
+  "closeout_sha256": "5bdee4faa8d42cb445a9d831a3122221ba681e1a2f03c7e359e7ad6808b731cb",
+  "python_passed_reused": 804,
+  "dashboard_passed_reused": 11,
+  "compiled_reused": 62,
+  "no_large_suite_rerun": true,
+  "no_source_changes": true,
+  "no_configuration_changes_by_agent": true,
+  "prior_evidence_preserved": 234,
+  "dhan_credentials_present": true,
+  "instrument_count": 0,
+  "actual_active_broker": "dhan",
+  "paper_sim_safety_profile": "BLOCKED",
+  "live_probe_attempted": false,
+  "authentic_cash_study_executed": false
+}

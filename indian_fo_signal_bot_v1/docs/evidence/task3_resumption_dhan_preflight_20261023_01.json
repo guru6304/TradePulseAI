@@ -1,0 +1,30 @@
+{
+  "scope": "TASK3_RESUMPTION_ACTUAL_LOCAL_DHAN_PREFLIGHT",
+  "timestamp": "2026-10-23T08:54:54.096505+00:00",
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "dhan_feed_control.py"
+  ],
+  "exit_code": 1,
+  "result": {
+    "authentication": "NOT_TESTED",
+    "blockers": [
+      "EXPLICIT_VERIFIED_DHAN_INSTRUMENT_SCOPE_REQUIRED"
+    ],
+    "instrument_count": 0,
+    "live_feed_accepted": false,
+    "live_requests": false,
+    "scope": "LOCAL_DHAN_FEED_CONFIGURATION_ONLY",
+    "status": "BLOCKED"
+  },
+  "safety": {
+    "active_broker": "dhan",
+    "telegram_dry_run": true,
+    "enable_background_scheduler": false
+  },
+  "source_revision": "93357342939815d1084691eba7c1b295b2d2117a",
+  "dhan_credentials_configured": true,
+  "instrument_count": 0,
+  "smoke_attempted": false
+}

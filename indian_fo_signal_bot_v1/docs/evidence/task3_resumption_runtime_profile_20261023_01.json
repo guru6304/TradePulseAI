@@ -1,0 +1,18 @@
+{
+  "scope": "TASK3_REQUIRED_SAFE_RUNTIME_PROFILE_CHECK",
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-c",
+    "from config import BotConfig; import json,sys; c=BotConfig(); ok=c.active_broker=='paper_sim' and c.telegram_dry_run is True and c.enable_background_scheduler is False; print(json.dumps(dict(status='PASS' if ok else 'BLOCKED',active_broker=c.active_broker,telegram_dry_run=c.telegram_dry_run,enable_background_scheduler=c.enable_background_scheduler,live_requests=False))); sys.exit(0 if ok else 1)"
+  ],
+  "exit_code": 1,
+  "result": {
+    "status": "BLOCKED",
+    "active_broker": "dhan",
+    "telegram_dry_run": true,
+    "enable_background_scheduler": false,
+    "live_requests": false
+  },
+  "configuration_modified": false
+}

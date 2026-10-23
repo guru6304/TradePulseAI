@@ -1,0 +1,38 @@
+{
+  "helper_arguments_verified": true,
+  "helper_exit_code_reported": 2,
+  "source_unchanged": true,
+  "input_presence": {
+    "cash_observations.json": false,
+    "cash_manifest.json": false,
+    "instrument_master.json": false,
+    "master_manifest.json": false,
+    "study_plan.json": false,
+    "publisher_trust.json": false,
+    "rights_policy.json": false
+  },
+  "gate_states": {
+    "TRACK_A_SOURCE_AUTHENTICITY": "BLOCKED",
+    "TRACK_A_RIGHTS_APPROVAL": "BLOCKED",
+    "TRACK_A_CASH_STUDY": "BLOCKED",
+    "TRACK_A_OPTION_STUDY": "BLOCKED_SEPARATE_DATA_DEPENDENCY"
+  },
+  "blocker_codes": [
+    "HISTORICAL_CASH_DATA_MISSING",
+    "PUBLISHER_TRUST_ROOT_MISSING",
+    "PUBLISHER_AUTHENTICITY_UNVERIFIED",
+    "HISTORICAL_RIGHTS_DOCUMENT_MISSING",
+    "HISTORICAL_RESEARCH_SCOPE_UNAPPROVED",
+    "HISTORICAL_INSTRUMENT_MASTER_MISSING",
+    "OPTION_EXECUTION_DATA_MISSING"
+  ],
+  "active_broker": "dhan",
+  "paper_sim_required": true,
+  "initial_process_variable_presence": {
+    "ACTIVE_BROKER": false,
+    "DHAN_CLIENT_ID": false,
+    "DHAN_ACCESS_TOKEN": false,
+    "DHAN_FEED_INSTRUMENTS_JSON": false
+  },
+  "local_configuration_changed_by_agent": false
+}
