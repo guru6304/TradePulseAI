@@ -5,10 +5,52 @@
 Deliver a traceable, explainable Indian cash/F&O intelligence product: first prove
 offline end-to-end testing readiness, then implement independent production work.
 Only executed evidence passes a gate. Fixtures are not live acceptance. The current
-Phase 4A/4B request selects paper_sim, Telegram dry-run and disabled production scheduler; no live broker calls, live token
-refresh or real orders are authorized. Preserve existing tracked and untracked work.
+runtime selects paper_sim, Telegram dry-run and disabled production scheduler.
+The current Task 2 authorizes a minimal read-only Dhan feed probe only after
+offline tests and local preflight pass. Token refresh, orders, account mutation,
+Telegram delivery and scheduler activation are outside scope. Preserve existing work.
 
-## Current stage and next action
+## Current Task 2: historical qualification and Dhan feed
+
+Two explicitly requested worker tracks implemented historical qualification and
+Dhan streaming, coordinated through the existing canonical instrument/candle
+contracts. Entry baseline: HEAD `205803131d7e1a17d6b42ce976efe7dff30e475a`,
+existing source/log receipt verified against the entry files (758/10/56; not rerun).
+During work HEAD advanced externally to
+`2ef6751a4f393507d13522a505d1070356114779`; no agent performed a git mutation.
+All prior modifications, evidence and releases were preserved.
+
+Track A adds immutable SQLite originals, current operator-reviewed rights scope,
+current genuine publisher verification and frozen chronological walk-forward
+evaluation using the existing engine. Completed persisted option replays retain
+their complete original embedded source/manifest bytes. Real historical-study
+acceptance remains blocked without approved roots, rights and authentic sources.
+
+Track B implements documented v2 binary normalization, bounded subscriptions,
+volume-aware 1m/5m aggregation, durable source lineage, health, reconnect isolation
+and cleanup. Root integration adds explicit configuration, adapter attachment,
+guarded candle consumption and health/dashboard visibility. Configuration never
+starts a socket or changes provider. Fixture streams cannot supply LIVE scanner
+bars. Local preflight found missing/placeholder Dhan credentials and an empty
+instrument scope: no live probe was attempted.
+
+Verification and exact per-file changes are recorded in
+[the consolidated report](reports/TRADEPULSE_TASK2_PARALLEL_IMPLEMENTATION_REPORT.md).
+Machine evidence and the exact final ZIP/build/inspect records are retained at
+the [documented repository evidence location](RELEASE_EVIDENCE_LOCATION.md).
+Final canonical `verify_offline.py --stage task2_parallel_verified`: **803/803
+Python PASS**, zero failures/errors/skips, **11/11 dashboard PASS**, **62 compiled**,
+298.968 seconds, unchanged source and no unraisable errors. Validator exit 0.
+Focused Track A:49 PASS; Track B:26 PASS; shared integration:69 PASS. The receipt
+`docs/evidence/task2_parallel_closeout.json` binds those source hashes, preserved
+historical evidence and the exact new release candidate. No real source/study or
+live acceptance is established by these offline results.
+The fixed six product phases remain unchanged. Scores have not been recalculated;
+the former 64.25/37.00 estimates and 0/12 milestone result are historical.
+Next dependency: an operator-approved authentic provider source with documented
+rights and local account permissions, to exercise real historical/live gates.
+
+## Historical Phase 4A/4B checkpoint (preceding request)
 
 Master execution started 2026-10-21; continued 2026-10-22. Active stage:
 **Phase 4A/4B PASS - OFFLINE ENGINEERING**, with Phase 4 real-data qualification and Phase 7

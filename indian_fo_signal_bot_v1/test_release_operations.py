@@ -26,12 +26,22 @@ class TestReleaseBundle(unittest.TestCase):
                 self.assertIn("test_bot.py", names)
                 self.assertIn("test_cash_dashboard.js", names)
                 self.assertIn("docs/TRADEPULSE_OPERATIONS_RUNBOOK.md", names)
+                self.assertIn("docs/TRADEPULSE_EXECUTION_LEDGER.md", names)
+                self.assertIn("docs/RELEASE_EVIDENCE_LOCATION.md", names)
+                # README/runbook Markdown links must resolve inside the delivered ZIP.
+                import posixpath
+                import re
+                for doc in ("README.md", "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md"):
+                    for link in re.findall(r"\]\(([^)]+)\)", archive.read(doc).decode("utf-8-sig")):
+                        if "://" not in link and not link.startswith("#"):
+                            target = posixpath.normpath(posixpath.join(posixpath.dirname(doc), link.split("#")[0]))
+                            self.assertIn(target, names, (doc, link))
                 self.assertFalse(any(n == ".env" or n.endswith((".db", ".sqlite")) or "evidence/" in n for n in names))
                 extracted = Path(directory)/"extracted"
                 # This archive was generated above and scope-validated first.
                 archive.extractall(extracted)
             bootstrap = subprocess.run([sys.executable, "-B", "-c",
-                "import unittest,test_bot,publisher_trust,option_execution; assert publisher_trust._CRYPTO_AVAILABLE; from verify_offline import case_ids; "
+                "import unittest,test_bot,publisher_trust,option_execution,historical_study,dhan_feed,dhan_feed_control; assert publisher_trust._CRYPTO_AVAILABLE; from verify_offline import case_ids; "
                 "cases=list(case_ids(unittest.defaultTestLoader.loadTestsFromName('test_bot'))); "
                 "assert len(cases)==len(set(cases)) and len(cases)>0; "
                 "assert not any('FailedTest' in c for c in cases); print('BOOTSTRAP_OK')"],

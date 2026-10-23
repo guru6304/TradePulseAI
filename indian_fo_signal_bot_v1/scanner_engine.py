@@ -240,6 +240,13 @@ class IntradayBotEngine:
 
     def close(self) -> None:
         """Closes the underlying SQLitePersistenceStore connection deterministically."""
+        broker = getattr(self, "broker", None)
+        adapter = getattr(broker, "adapters", {}).get("dhan")
+        if adapter is not None and hasattr(adapter, "close"):
+            try:
+                adapter.close()
+            except Exception:
+                logger.error("Dhan feed shutdown requires inspection.")
         if self.store is not None:
             try:
                 self.store.close()
@@ -418,6 +425,10 @@ class IntradayBotEngine:
             }
 
         candle_fresh = self._freshness_status(str(self.config.active_broker).strip().lower(), now_dt)
+        stream = adapter.get_feed_status() if hasattr(adapter, "get_feed_status") else None
+        if getattr(adapter, "live_feed", None) is not None and not stream.get("live_signal_allowed", False):
+            state = "STREAM_UNAVAILABLE"
+            err_cat = "STREAM_" + str(stream.get("status", "UNAVAILABLE"))
         return {
             "active_broker": self.config.active_broker,
             "broker_name": adapter.name,
@@ -439,6 +450,7 @@ class IntradayBotEngine:
             "last_error": effective_err,
             "scrip_master": scrip_master_info,
             "option_apex": option_apex_info,
+            "stream": stream,
         }
 
     @staticmethod

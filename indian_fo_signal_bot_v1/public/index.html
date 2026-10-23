@@ -1160,6 +1160,7 @@
           ['Notification previews', JSON.stringify((health.operations || {}).notification_counts || {}) + ' (no real delivery)'],
           ['Broker Adapter', (broker.broker_name || '--') + ' [' + (broker.active_broker || '--') + ']'],
           ['Broker Connection State', (broker.connection_state || '--') + (broker.error_category && broker.error_category !== 'NONE' && broker.error_category !== 'SIMULATED' ? (' [' + broker.error_category + ']') : '')],
+          ['Continuous feed', broker.stream ? ((broker.stream.status || 'UNAVAILABLE') + (broker.stream.live_signal_allowed ? ' | completed data available' : ' | signals blocked')) : 'Not configured'],
           ['Live Connectivity Verified', broker.connectivity_verified ? 'YES (Verified @ ' + (broker.last_verified_at_ist || '--') + ' IST)' : 'NO (Not Live-Verified)'],
           ['Last Market-Data Time (IST)', (broker.last_market_data_at_ist || 'None') + (broker.last_quote_timestamp_ist ? (' | Quote Feed: ' + broker.last_quote_timestamp_ist + ' IST') : '')],
           ['Candle Freshness Status', candleFreshLabel],

@@ -58,12 +58,33 @@ class ReleasePackager:
         "notification_outbox.py",
         "publisher_trust.py",
         "option_execution.py",
+        "historical_study.py",
+        "dhan_feed.py",
+        "dhan_feed_control.py",
     ]
 
     REQUIRED_ASSETS = [
         "public/index.html",
         ".env.example",
         "requirements.txt",
+    ]
+
+    # Public handover documents linked by README/runbook. Evidence stays in the
+    # repository at the explicit location described in RELEASE_EVIDENCE_LOCATION.
+    PUBLIC_DOCUMENTS = [
+        "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md", "docs/TRADEPULSE_EXECUTION_LEDGER.md",
+        "docs/RELEASE_EVIDENCE_LOCATION.md", "docs/OFFICIAL_SOURCE_FEASIBILITY.md",
+        "docs/BROKER_RECOVERY_ENGINEERING_REPORT.md", "docs/TRADEPULSE_CAPABILITY_MATRIX.md",
+        "docs/TRADEPULSE_COMPLETION_ROADMAP.md", "docs/UPSTOX_CONFIGURATION_FIX_REPORT.md",
+        "docs/UPSTOX_READINESS_IMPLEMENTATION.md", "docs/UPSTOX_HTTP_ERROR_REPORT.md",
+        "docs/reports/TRADEPULSE_TASK3_FORENSIC_STABILITY_AND_READINESS_REPORT.md",
+        "docs/TRADEPULSE_PHASE5A_ENGINEERING_REPORT.md", "docs/TRADEPULSE_FO_CONTRACT_COVERAGE.md",
+        "docs/TRADEPULSE_HISTORICAL_PROVENANCE_DESIGN.md", "docs/TRADEPULSE_PAPER_PORTFOLIO_REPORT.md",
+        "docs/TRADEPULSE_PHASE4_ENGINEERING_REPORT.md", "docs/TRADEPULSE_MARKET_DATA_ACCEPTANCE_MATRIX.md",
+        "docs/PHASE_3B_REPORT.md", "docs/PHASE_3B_TEST_REPORT.md", "docs/PHASE_3B_STRATEGY_ELIGIBILITY.md",
+        "docs/PHASE_3B_BACKTEST_METHODOLOGY.md", "docs/PHASE_3A_IMPLEMENTATION_REPORT.md",
+        "docs/PHASE_2C_IMPLEMENTATION_REPORT.md",
+        "docs/reports/TRADEPULSE_TASK2_PARALLEL_IMPLEMENTATION_REPORT.md",
     ]
 
     def __init__(self, root_dir: Optional[str] = None):
@@ -146,7 +167,7 @@ class ReleasePackager:
     def _bundle_path_allowed(name):
         return (name in set(ReleasePackager.CORE_MODULES + ReleasePackager.REQUIRED_ASSETS)
                 or re.fullmatch(r"test_[a-z0-9_]+\.(py|js)", name) is not None
-                or name in ("README.md", "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md"))
+                or name == "README.md" or name in ReleasePackager.PUBLIC_DOCUMENTS)
 
     def build_bundle(self, destination):
         """Deterministic local candidate, including its offline verification tools.
@@ -157,7 +178,7 @@ class ReleasePackager:
         targets = set(self.CORE_MODULES + self.REQUIRED_ASSETS)
         targets.update(p.name for p in self.root.glob("test_*.py"))
         targets.update(p.name for p in self.root.glob("test_*.js"))
-        targets.add("docs/TRADEPULSE_OPERATIONS_RUNBOOK.md")
+        targets.update(self.PUBLIC_DOCUMENTS)
         if (self.root/"README.md").is_file():
             targets.add("README.md")
         contents = {}
@@ -200,8 +221,8 @@ class ReleasePackager:
                     raise ValueError()
                 manifest = json.loads(archive.read("RELEASE_MANIFEST.json"))
                 files = manifest["files"]
-                required = set(self.CORE_MODULES + self.REQUIRED_ASSETS + ["test_bot.py", "test_cash_dashboard.js",
-                                "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md"])
+                required = set(self.CORE_MODULES + self.REQUIRED_ASSETS + self.PUBLIC_DOCUMENTS +
+                               ["test_bot.py", "test_cash_dashboard.js"])
                 if (manifest.get("kind")!="OFFLINE_RELEASE_CANDIDATE" or manifest.get("live_acceptance") is not False
                         or not required.issubset(files) or set(names)!=set(files)|{"RELEASE_MANIFEST.json"}
                         or any(not self._bundle_path_allowed(name) for name in files)):

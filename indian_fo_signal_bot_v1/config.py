@@ -1,5 +1,6 @@
 import base64
 import binascii
+import json
 import math
 import os
 import re
@@ -128,6 +129,8 @@ class BotConfig:
     # DhanHQ API v2
     dhan_client_id: Optional[str] = None
     dhan_access_token: Optional[str] = None
+    # Explicit bounded streaming scope; configuring it never starts a connection.
+    dhan_feed_instruments: Optional[List[Dict[str, Any]]] = None
 
     # Upstox API v2
     upstox_api_key: Optional[str] = None
@@ -225,6 +228,11 @@ class BotConfig:
             self.dhan_client_id = os.getenv("DHAN_CLIENT_ID", "")
         if self.dhan_access_token is None:
             self.dhan_access_token = os.getenv("DHAN_ACCESS_TOKEN", "")
+        if self.dhan_feed_instruments is None:
+            try:
+                self.dhan_feed_instruments = json.loads(os.getenv("DHAN_FEED_INSTRUMENTS_JSON", "[]"))
+            except (ValueError, TypeError):
+                raise ConfigValidationError("DHAN_FEED_INSTRUMENTS_JSON must be a JSON instrument list.") from None
         if self.upstox_api_key is None:
             self.upstox_api_key = os.getenv("UPSTOX_API_KEY", "")
         if self.upstox_access_token is None:
@@ -298,6 +306,20 @@ class BotConfig:
             raise ConfigValidationError(
                 f"Invalid active_broker. Expected one of: {', '.join(valid_brokers)}."
             )
+
+        if not isinstance(self.dhan_feed_instruments, list) or len(self.dhan_feed_instruments) > 50:
+            raise ConfigValidationError("Dhan streaming requires an explicit list of at most 50 instruments.")
+        seen = set()
+        from instrument_identity import spot_identity, IdentityValidationError
+        for meta in self.dhan_feed_instruments:
+            try:
+                identity = spot_identity(meta, "dhan")
+            except (IdentityValidationError, TypeError, ValueError):
+                raise ConfigValidationError("Dhan streaming instrument mapping is unsupported or conflicting.") from None
+            key = (identity["exchange"], identity["identifier"])
+            if key in seen:
+                raise ConfigValidationError("Dhan streaming instruments must be unique.")
+            seen.add(key)
 
         if isinstance(self.account_capital_inr, bool) or not isinstance(self.account_capital_inr, (int, float)):
             raise ConfigValidationError("account_capital_inr must be a positive number.")
@@ -435,6 +457,7 @@ class BotConfig:
                 "upstox": self.is_broker_credentials_configured("upstox"),
                 "paper_sim": True,
             },
+            "dhan_feed_instrument_count": len(self.dhan_feed_instruments or []),
             "angel_scrip_master_configured": bool(scrip_path and os.path.isfile(scrip_path)),
             "angel_scrip_master_max_age_hours": float(self.angel_scrip_master_max_age_hours or 24.0),
             "angel_baseline_max_sessions_age": int(self.angel_baseline_max_sessions_age or 1),

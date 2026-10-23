@@ -251,9 +251,11 @@ observed `bid_open/high/low/close`, `ask_open/high/low/close`, `volume_units`, o
 `bid_size_units`/`ask_size_units` and `depth_observed_at` at bar start. No crossed
 spread, off-tick price, duplicate/order conflict, naive/future bar or ambiguous
 identity is accepted. The result retains original-byte digests and computed archive
-IDs. Retain the original request file separately: option input bytes are not yet
-stored as a durable dataset archive by this V1 engine; persisting a backtest stores
-its result/ledger/assumptions, not a replacement copy of the complete source input.
+IDs. Persisted completed option replays now retain the original embedded master,
+observation dataset, detached manifests and replay envelope through
+`HistoricalEvidenceArchive`. `input_evidence_id` identifies those exact bytes.
+Nonpersistent replay only computes the ID; it does not claim a durable receipt.
+Keep independent backups of the input files and SQLite evidence store.
 
 Each chain has exact `known_at` at a completed underlying bar end, exact expiry,
 paired ATM row, provider/mode scope, and the prior configured session's 15:30
@@ -293,3 +295,83 @@ For a fixture CLI run set the process DATABASE_URL to `:memory:` so it cannot op
 an operational database. `docs/evidence/phase4b_cli_verify.py` automates exactly
 that temporary, credential-free scenario. It is a fixture demonstration, not a
 publisher dataset or provider acceptance.
+
+## Historical qualification and Dhan streaming (Task 2)
+
+Current consolidated evidence and acceptance scopes are in
+[the implementation report](reports/TRADEPULSE_TASK2_PARALLEL_IMPLEMENTATION_REPORT.md).
+For source ZIP handover, retain the repository evidence directory described in
+[release evidence location](RELEASE_EVIDENCE_LOCATION.md); the public ledger and
+README-linked reports are now bundled. Prior release/evidence files are historical.
+
+Install `requirements.txt` in the isolated environment; it additionally pins
+`websockets==15.0.1`. The stream was implemented against the
+[official Dhan feed documentation](https://dhanhq.co/docs/v2/live-market-feed/),
+[annexure](https://dhanhq.co/docs/v2/annexure/) and
+[official SDK decoder](https://github.com/dhan-oss/DhanHQ-py/blob/main/src/dhanhq/marketfeed.py).
+It implements v2 binary ticker, quote, OI, previous-close, full five-level depth
+and disconnect packets. Unknown schemas fail closed. Depth has no documented
+independent exchange observation clock; receive time is retained without calling
+pending order quantities executed or aggressor-side volume.
+
+Configure Dhan credentials only in the local application environment. Set an
+explicit canonical list, for example the pinned RELIANCE mapping:
+`DHAN_FEED_INSTRUMENTS_JSON='[{"symbol":"RELIANCE","dhan_id":"2885"}]'`.
+The default is empty, maximum 50 instruments. Only pinned NSE cash and index-spot
+mappings are supported initially; unknown mappings and derivatives are rejected.
+Index/ticker packets without trade volume are useful observations, not OHLCV bars.
+
+`python -B dhan_feed_control.py` performs local preflight without a socket. After
+it passes, the task-authorized minimal read-only probe is
+`python -B dhan_feed_control.py --smoke --seconds 15`, requiring exactly one
+instrument, dry-run Telegram and disabled scheduler. A short observation probe
+does not establish complete-candle or operating acceptance. No order, profile,
+token-refresh or account mutation endpoint is used. Current local preflight is
+blocked by missing/placeholder Dhan credentials and an empty configured scope;
+no real connection was attempted in this task.
+
+For explicit service integration, construct `DhanLiveFeed(config, store)` and
+attach it to `engine.broker.adapters['dhan'].attach_live_feed(feed)`, then call
+`feed.start()` under the operator's configured Dhan runtime. Attaching does not
+start a socket. The selected provider remains unchanged; paper_sim continues to
+use simulation. An attached Dhan stream supplies the existing candle consumer;
+stream failure raises an error without REST or simulated fallback. Engine close
+stops its attached feed before closing SQLite. Health and the existing dashboard
+show stream state and blocked signals. Existing persisted live acceptance policy
+still applies independently.
+
+The feed retains per-connection packet hashes, source identity, timestamps,
+forming snapshots and 1m/5m candles in provider-separated SQLite tables. Completed
+5m rows pass the existing canonical assessor and enter existing scanner cash
+lineage when consumed. Duplicates do not add volume; zero-volume quote updates
+do not repeat last trade quantity. Missing initial cumulative-volume baseline,
+delta inconsistent with the observed last trade, delayed events, gaps, reconnects
+and unproven close boundaries invalidate affected bars. Reconnection resets all
+consumable buffers and subscriptions are restored. There is no REST backfill:
+start a new lineage and accumulate sufficient contiguous complete bars. The final
+session minute remains provisional without a later observed closing boundary.
+Fixture transport always stays FIXTURE and cannot serve accepted scanner bars.
+
+Historical operators can construct `OperatorRightsPolicy(grants, documents)`
+locally, where `documents` maps SHA256 to the actual reviewed rights-document
+bytes. Each grant binds `rights_reference`, `publisher_id`, `provider`,
+`document_sha256`, `artifact_sha256s`, `symbols`, `allowed_uses` containing
+`HISTORICAL_RESEARCH`, `revoked=false`, `effective_from/until`, `approved_at`,
+`review_due_at`, `approved_by` and `approval_reference`. This is an operator review
+record, not independent legal verification. Do not accept that policy from HTTP
+clients or dataset-supplied flags. No approved policy is supplied with the app.
+
+`run_frozen_study` in `historical_study.py` reuses the existing backtest engine,
+with explicit dated master ID and original signed cash observations (schema
+`tradepulse.cash-observations.v1`, containing `candles`), or the existing option
+request. Supply the engine's locally approved publisher trust configuration,
+`publisher_manifests`, current rights policy and a `walk_forward_plan` of sorted
+session dates. Plans freeze expanding training prefixes and disjoint future test
+windows, strategy/configuration/source hashes and original input evidence before
+evaluation; there is no optimizer or test-period tuning callback. `input_evidence_id`
+and `result_evidence_id` recover exact retained inputs and result bytes through
+`HistoricalEvidenceArchive(store).load(id)`. Loading bytes restores no authority:
+re-run qualification with current revocation, validity and rights policy. Fixtures
+exercise mechanics only. Real studies remain blocked until real sources and
+rights pass these gates; historical OHLCV/OI alone cannot substitute executable
+option bid/ask/depth and prior-closing OI observations.

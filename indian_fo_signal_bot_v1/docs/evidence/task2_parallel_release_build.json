@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "scope": "OFFLINE_RELEASE_CANDIDATE",
+  "files": 91,
+  "sha256": "4fe8e7adea4b2a256694fc44e3cd39e9d2e77471ac7ba9b212f57f37fdf2d5ec",
+  "manifest_sha256": "350fe3b8570f01b4457a5c8f81cd217527a476d5960e477473f4e8531a5820d7",
+  "publisher_authentication": "NOT_ESTABLISHED",
+  "archive": "docs/evidence/task2_parallel_release.zip",
+  "source_revision": "2ef6751a4f393507d13522a505d1070356114779",
+  "tested_source_revision": "2ef6751a4f393507d13522a505d1070356114779",
+  "verification": "docs/evidence/master_task2_parallel_verified.json",
+  "verification_sha256": "f8022524622896bdf30ae968839b46a6e7297a5c0ce66388592c6d4662f95480"
+}

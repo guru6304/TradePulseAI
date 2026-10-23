@@ -253,6 +253,9 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             operations["alerts"].append("STALE_PROVIDER_CANDLES")
         if broker_info.get("error_category") not in (None, "NONE", "SIMULATED"):
             operations["alerts"].append("PROVIDER_REQUIRES_ATTENTION")
+        stream = broker_info.get("stream")
+        if stream and stream.get("status") not in ("NOT_STARTED", "LIVE"):
+            operations["alerts"].append("STREAM_" + str(stream.get("status", "UNAVAILABLE")))
         overall_status = "ok" if (http_code == 200 and broker_info["connection_state"] != "INVALID_CONFIG"
                                   and not operations["alerts"]) else "degraded"
         from readiness_policy import live_acceptance

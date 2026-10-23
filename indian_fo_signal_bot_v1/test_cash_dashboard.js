@@ -49,7 +49,7 @@ function dashboard() {
   assert.ok(script, 'actual dashboard inline script must exist');
   const end = script.lastIndexOf('})();');
   assert.ok(end > 0, 'dashboard closure must exist');
-  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports };\n';
+  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports };\n';
   vm.runInContext(script.slice(0, end) + hooks + script.slice(end), context, { timeout: 1000 });
   return { ...context.hooks, node: id => document.getElementById(id) };
 }
@@ -120,6 +120,16 @@ test('backend health failure clears a previously accepted header', async () => {
   assert.equal(view.state.health, null);
   assert.equal(view.node('brokerStateBadge').textContent, 'OFFLINE');
   assert.equal(view.node('headerDataModeBadge').textContent, 'API DISCONNECTED');
+});
+
+test('continuous feed status exposes stale and fixture observations with signals blocked', () => {
+  const view = dashboard();
+  for (const status of ['STALE', 'FIXTURE', 'UNAVAILABLE']) {
+    view.renderSystemHealthTab({ broker: {stream: {status, live_signal_allowed: false}} }, {});
+    const text = view.node('healthDetailsContainer').textContent;
+    assert.ok(text.includes('Continuous feed'));
+    assert.ok(text.includes(status + ' | signals blocked'));
+  }
 });
 
 test('a failed signals API request removes cached cards and inspector prices', async () => {

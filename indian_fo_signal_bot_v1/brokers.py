@@ -2853,6 +2853,25 @@ class DhanHQAdapter(BaseBrokerAdapter):
         self.config = config
         self.clock = clock or (lambda: datetime.now(IST))
         self._last_oc_call = 0.0
+        self.live_feed = None
+
+    def attach_live_feed(self, feed):
+        """Opt-in streaming candle source; attaching never starts its transport."""
+        if self.live_feed is not None and self.live_feed is not feed:
+            raise BrokerDataError("Stop and detach the current Dhan feed before replacing it.")
+        self.live_feed = feed
+
+    def get_feed_status(self):
+        return (self.live_feed.status() if self.live_feed is not None else
+                dict(status="NOT_STARTED", provider="dhan", live_signal_allowed=False))
+
+    def detach_live_feed(self):
+        if self.live_feed is not None:
+            self.live_feed.stop()
+            self.live_feed = None
+
+    def close(self):
+        self.detach_live_feed()
 
     def _validate_credentials(self) -> None:
         if _is_placeholder_secret(self.config.dhan_client_id) or _is_placeholder_secret(self.config.dhan_access_token):
@@ -2877,6 +2896,16 @@ class DhanHQAdapter(BaseBrokerAdapter):
         interval_min: int = 5,
         pattern: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
+        if self.live_feed is not None:
+            # A failed/stale stream must never silently switch to REST or simulation.
+            try:
+                rows = self.live_feed.get_candles(symbol_meta, interval_min, now=self.clock())
+                return enforce_live_candle_batch(self, rows, symbol_meta, interval_min, "dhan")
+            except Exception as exc:
+                from dhan_feed import FeedError
+                if isinstance(exc, FeedError):
+                    raise BrokerDataError("Dhan stream unavailable: " + str(exc)) from None
+                raise
         self._validate_credentials()
         validated_meta = validate_symbol_meta(symbol_meta, "dhan")
         if not isinstance(interval_min, int) or isinstance(interval_min, bool) or interval_min not in self.SUPPORTED_INTERVALS:

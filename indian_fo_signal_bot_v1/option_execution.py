@@ -406,8 +406,15 @@ def run(engine, request, config, symbol, provider, mode, persist=False):
         data_acceptance_status=admission["reason_code"],implementation_status="IMPLEMENTED_OFFLINE_ENGINEERING",
         run_label="SIMULATED OPTION FIXTURE" if mode=="SIMULATED" else "SIGNED HISTORICAL INPUTS; EXECUTION/COSTS MODELED",
         created_at_ist=format_ist_timestamp(engine.clock()))
+    from historical_study import HistoricalEvidenceArchive, option_request_artifacts, evidence_identity
+    original_artifacts = option_request_artifacts(request)
+    input_metadata = dict(kind="OPTION_REPLAY_ORIGINAL_INPUTS", provider=provider,
+        symbol=symbol,data_mode=mode,master_archive_id=archive["archive_id"])
+    result["input_evidence_id"] = evidence_identity(original_artifacts,input_metadata)[0]
     if persist:
         if engine.store is None or unresolved:
             reject("COMPLETED_OPTION_RESULT_AND_STORE_REQUIRED_FOR_PERSISTENCE")
+        HistoricalEvidenceArchive(engine.store).retain(original_artifacts,input_metadata)
+        # Persistence is receipt state, not part of deterministic replay output.
         engine.store.save_backtest_run(result,trades)
     return result

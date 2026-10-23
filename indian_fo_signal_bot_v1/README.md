@@ -2,9 +2,30 @@
 
 Deterministic Python signal research, live-data diagnostic, historical data quality, and point-in-time backtesting system for **Indian Intraday Cash Equities (NSE)** and **Nifty 50 / Bank Nifty F&O**.
 
+Current work: historical qualification and a bounded DhanHQ WebSocket feed on the
+existing Python/SQLite/vanilla JavaScript stack. See the
+[consolidated implementation report](docs/reports/TRADEPULSE_TASK2_PARALLEL_IMPLEMENTATION_REPORT.md),
+[operations runbook](docs/TRADEPULSE_OPERATIONS_RUNBOOK.md), and
+[release evidence location](docs/RELEASE_EVIDENCE_LOCATION.md). Historical checkpoint
+counts below apply to their dated source revisions. Offline verification does not
+establish live broker acceptance, licensed historical studies or production readiness.
+
+Install pinned dependencies before running the canonical offline suite:
+
+```powershell
+python -m venv .venv_phase4
+.venv_phase4\Scripts\python.exe -m pip install -r requirements.txt
+.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage local_review
+.venv_phase4\Scripts\python.exe -B dhan_feed_control.py
+```
+
+The last command is local preflight only. Streaming requires an explicit canonical
+`DHAN_FEED_INSTRUMENTS_JSON` list and Dhan-specific local configuration; neither
+importing modules nor setting that list starts a socket or changes `paper_sim`.
+
 > **Important Scope & Safety Notice:**  
 > - TradePulse AI is strictly a **read-only market analytics, signal research, and historical backtesting system** — **NOT** an automated order execution system. All order placement (`/order/*`) and GTT mutation (`/gtt/*`) routes are blocked in code.  
-> - **Implementation Status:** Phase 3B.1B acceptance/readiness remediation. Offline results are recorded below; Python 3.14 HTTPError cleanup ResourceWarnings remain.
+> - **Implementation Status:** Historical milestones below are retained for context. The current report separates offline engineering, real-source studies, live-feed acceptance and production readiness.
 > - **Data Acceptance Status:** `BLOCKED_PHASE_2C_LIVE_ACCEPTANCE_NOT_COMPLETED` inside the offline sandbox environment. Synthetic fixture runs are explicitly labeled `SIMULATED/TEST MODE` (`SIMULATED_TEST_FIXTURE_NOT_LIVE_ACCEPTED`) and must never be represented as live-data acceptance or strategy profitability proof.
 
 ---
@@ -579,7 +600,7 @@ live connectivity or profitability.
 
 - [Phase 5A closeout and Phase 5B engineering evidence](docs/TRADEPULSE_PHASE5A_ENGINEERING_REPORT.md): current offline implementation, verification, safety gates and remaining work.
 - [F&O contract coverage](docs/TRADEPULSE_FO_CONTRACT_COVERAGE.md), [historical provenance design](docs/TRADEPULSE_HISTORICAL_PROVENANCE_DESIGN.md), and [durable paper portfolio](docs/TRADEPULSE_PAPER_PORTFOLIO_REPORT.md).
-- Current weighted audit estimates are **63.5% implementation / 35.5% verified readiness**; **0/12** full product milestones accepted. Explicit cash paper accounts have offline evidence; live broker acceptance and qualified F&O/history remain separate.
+- Last recorded Phase 4A/4B estimates are **64.25 implementation / 37.00 verified readiness**, **0/12** whole milestones accepted. This task does not recalculate scores; these are historical estimates. Live broker acceptance and qualified historical studies remain separate.
 
 - [Phase 4 engineering evidence](docs/TRADEPULSE_PHASE4_ENGINEERING_REPORT.md): fresh 429-test baseline, seven confirmed control fixes, final 461 passing offline tests and separately gated live acceptance.
 - [Market-data acceptance matrix](docs/TRADEPULSE_MARKET_DATA_ACCEPTANCE_MATRIX.md): separate provider, quote/candle, cash/index/F&O and historical-evidence scopes.

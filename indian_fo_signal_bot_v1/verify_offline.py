@@ -39,7 +39,7 @@ def digest(path):
 
 
 def source_snapshot(root=APP):
-    files = list(root.glob("*.py")) + list(root.glob("test_*.js")) + list((root/"public").rglob("*")) + [root/"requirements.txt"]
+    files = list(root.glob("*.py")) + list(root.glob("test_*.js")) + list((root/"public").rglob("*")) + [root/"requirements.txt", root/".env.example"]
     return {p.relative_to(root).as_posix(): digest(p) for p in sorted(files) if p.is_file()}
 
 
@@ -209,6 +209,11 @@ def main(argv=None):
         exit_code=0 if passed else 1, source_before=before, source_after=after, python=python, checks=checks,
         unraisable_errors=unraisable,
         logs={p.relative_to(APP).as_posix(): digest(p) for p in (logfile,node_log,prefix.with_name(prefix.name+"_syntax.txt"))})
+    try:
+        data["source_revision"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=APP,
+            text=True, stderr=subprocess.DEVNULL).strip()
+    except (OSError, subprocess.SubprocessError):
+        data["source_revision"] = None  # Extracted packages remain bound by source hashes.
     evidence.write_text(json.dumps(data, indent=2)+"\n", encoding="utf-8")
     print(json.dumps(dict(status=data["status"], tests=python["executed"], passed=python["passed"],
         failures=python["failures"], errors=python["errors"], skipped=python["skipped"], evidence=str(evidence))))

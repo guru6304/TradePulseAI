@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "scope": "CURRENT_SOURCE_LOGS_EXACT_FINAL_RELEASE_AND_PUBLIC_HANDOVER",
+  "source_revision": "2ef6751a4f393507d13522a505d1070356114779",
+  "python_passed": 803,
+  "node_passed": 11,
+  "compiled": 62,
+  "release_sha256": "4fe8e7adea4b2a256694fc44e3cd39e9d2e77471ac7ba9b212f57f37fdf2d5ec",
+  "manifest_sha256": "350fe3b8570f01b4457a5c8f81cd217527a476d5960e477473f4e8531a5820d7",
+  "release_files": 91,
+  "local_documentation_links_verified": 22,
+  "prior_evidence_unchanged": 159,
+  "closeout_sha256": "82823c0a9007da4bf539570c1ddaa766a2089651d0f780639137b858eea1845e",
+  "live_smoke_attempted": false,
+  "real_source_and_study_acceptance": "BLOCKED"
+}
