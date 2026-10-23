@@ -17,6 +17,7 @@ upstox_credentials*.json
 *.pfx
 # Temporary and cache files
 *.tmp
+historical_audit_logs.zip
 __pycache__/
 *.pyc
 *.pyo
