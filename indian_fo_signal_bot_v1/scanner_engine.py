@@ -1,4 +1,5 @@
 import logging
+import math
 import sys
 import threading
 import time
@@ -26,6 +27,8 @@ from strategies import (
     normalize_state_scope,
     validate_trade_signal,
     rank_signal_candidates,
+    evaluate_strategy_detailed,
+    signal_risk_reward,
 )
 from storage import (
     PersistenceError,
@@ -34,6 +37,7 @@ from storage import (
     is_closing_session_timestamp,
     is_nse_trading_day,
     resolve_effective_trading_session_date,
+    compute_signal_dedup_key,
 )
 from telegram_bot import TelegramSignalDispatcher
 
@@ -227,7 +231,20 @@ class IntradayBotEngine:
             self._candle_evidence[(provider, symbol)] = {"report": report, "candles": None}
             raise
 
-    def _require_current_scan_data(self, provider, now_dt=None):
+    def _require_current_scan_data(self, provider, now_dt=None, *, check_stream=True):
+        # Candle age alone cannot establish that an explicitly attached stream is
+        # still qualified. Recheck without fetching or falling back to REST.
+        adapter = self.broker.get_active_adapter()
+        if check_stream and getattr(adapter, "live_feed", None) is not None:
+            try:
+                stream = adapter.get_feed_status()
+                allowed = stream.get("live_signal_allowed") is True
+            except Exception:
+                allowed = False
+            if not allowed:
+                raise CandleFreshnessError(dict(status="STREAM_UNAVAILABLE", reason_code="STREAM_UNAVAILABLE",
+                    reason="Attached stream no longer permits scanner consumption.", provider=provider,
+                    is_fresh=False, live_signal_allowed=False))
         status = self._freshness_status(provider, now_dt if now_dt is not None else self._now_ist())
         if not status["live_signal_allowed"]:
             rejected = next(r for r in status["instruments"].values() if not r.get("live_signal_allowed"))
@@ -241,12 +258,12 @@ class IntradayBotEngine:
     def close(self) -> None:
         """Closes the underlying SQLitePersistenceStore connection deterministically."""
         broker = getattr(self, "broker", None)
-        adapter = getattr(broker, "adapters", {}).get("dhan")
-        if adapter is not None and hasattr(adapter, "close"):
-            try:
-                adapter.close()
-            except Exception:
-                logger.error("Dhan feed shutdown requires inspection.")
+        for adapter in getattr(broker, "adapters", {}).values():
+            if hasattr(adapter, "close"):
+                try:
+                    adapter.close()
+                except Exception:
+                    logger.error("Broker feed shutdown requires inspection.")
         if self.store is not None:
             try:
                 self.store.close()
@@ -465,6 +482,10 @@ class IntradayBotEngine:
                 completed = filter_completed_candles(candles, interval_min=5, now=now_val)
                 if not completed:
                     continue
+                current_day = parse_ist_timestamp(completed[-1]["timestamp"]).date()
+                first = next(row for row in completed if parse_ist_timestamp(row["timestamp"]).date() == current_day)
+                if parse_ist_timestamp(first["timestamp"]).time().replace(tzinfo=None) != dt_time(9, 15):
+                    continue  # A partial-session VWAP cannot supply breadth evidence.
                 vwaps = compute_session_vwap(completed)
                 last_close = float(completed[-1]["close"])
                 curr_vwap = float(vwaps[-1])
@@ -669,7 +690,7 @@ class IntradayBotEngine:
 
                 # Record latest candle timestamp from retrieved index/equity candles
                 if not is_simulated:
-                    self._require_current_scan_data(provider, now_dt=scan_now())
+                    self._require_current_scan_data(provider, now_dt=scan_now(), check_stream=not bool(recovery or recovery_clock))
                     now_val = scan_now()
                 sample_candles = index_candles_map.get("NIFTY") or next(iter(equity_candles_map.values()), [])
                 if sample_candles:
@@ -745,6 +766,51 @@ class IntradayBotEngine:
                 instrument_errors = retained.get("acquisition_errors", [])[:]
             all_candles_map = dict(index_candles_map, **equity_candles_map)
             market_breadth = self._compute_universe_breadth(all_candles_map, now_val=now_val)
+            strategy_evaluations, candidate_evaluations = [], []
+            ranking_policy = "QUALITY_THEN_TARGET1_REWARD_RISK_THEN_IDENTITY_V1"
+
+            def source_reference(symbol):
+                rows = filter_completed_candles(all_candles_map.get(symbol, []), interval_min=5, now=now_val)
+                batches = durable_work["snapshot"]["batches"] if durable_work else []
+                return dict(run_id=run_id, provider=provider,
+                    batch_ids=[b["batch_id"] for b in batches if b["content"]["identity"]["symbol"] == symbol],
+                    instrument_identity=dict(rows[-1].get("instrument_identity", {})) if rows else {},
+                    candle_timestamps=[r["timestamp"] for r in rows], candle_digest=digest(rows),
+                    source_authenticity="NOT_ESTABLISHED", data_mode=data_mode)
+
+            def evaluate(strategy_id, evaluator, **arguments):
+                symbol = arguments.get("symbol", arguments.get("index_symbol"))
+                candles = arguments.pop("candles")
+                signal, trace = evaluate_strategy_detailed(strategy_id, candles, evaluator=evaluator, **arguments)
+                trace.update(symbol=symbol, data_mode=data_mode, source_reference=source_reference(symbol))
+                strategy_evaluations.append(trace)
+                return signal
+
+            def candidate_record(signal, reason=None, rank=None):
+                signal.provider, signal.state_context, signal.interval_min = provider, state_context, 5
+                if not is_simulated and signal.segment == "NSE_EQUITY_INTRADAY":
+                    signal.instrument_identity = dict(equity_candles_map[signal.symbol][-1]["instrument_identity"])
+                numeric = signal_risk_reward(signal)
+                qualified = reason is None and numeric["allowed"]
+                def finite_level(value):
+                    return value if type(value) in (int, float) and math.isfinite(value) else None
+                return dict(schema_version="tradepulse.candidate-evaluation.v1",
+                    candidate_id=compute_signal_dedup_key(signal, broker_label),
+                    symbol=signal.symbol, strategy_id=signal.strategy_id,
+                    status="QUALIFIED" if qualified else "REJECTED", actionable=False,
+                    recommendation_status="CANDIDATE_ONLY", data_mode=data_mode,
+                    reason_codes=["QUALIFIED_EXISTING_RULES" if qualified else reason or numeric["reason_code"]],
+                    risk_reward=numeric, ranking=dict(rank=rank, qualified=qualified, policy=ranking_policy),
+                    source_reference=source_reference(signal.symbol),
+                    explanation=dict(rationale=signal.rationale, entry_condition=signal.rationale,
+                        entry_price=finite_level(signal.entry_price), stop_loss=finite_level(signal.stop_loss),
+                        invalidation_level=finite_level(signal.invalidation_level), target_1=finite_level(signal.target_1), target_2=finite_level(signal.target_2),
+                        setup_quality=finite_level(signal.quality_score), setup_quality_semantics="RULE_SCORE_NOT_WIN_PROBABILITY",
+                        score_breakdown=signal.score_breakdown,
+                        rule_evaluation=next((r for r in strategy_evaluations if r["symbol"] == signal.symbol
+                            and r["strategy_id"] == signal.strategy_id), None)),
+                    warnings=["LIQUIDITY_NOT_ESTABLISHED", "FILL_AND_SLIPPAGE_NOT_ESTABLISHED",
+                              "EMPIRICAL_PERFORMANCE_UNAVAILABLE", "NET_TARGET_RR_UNAVAILABLE"])
 
             # 1. Persist OI snapshots & Evaluate F&O Indices (Strictly NIFTY 50 and BANK NIFTY)
             for idx_sym, idx_meta in self.config.fo_indices.items():
@@ -823,7 +889,7 @@ class IntradayBotEngine:
                         reason_code="UNSUPPORTED_CONTRACT", error="Provider has no supported option-master/lot resolver; chain is analytical only."))
                 if oc is not None and (is_simulated or provider == "angelone"):
                     try:
-                        sig_oi = evaluate_option_apex_oi_shift(
+                        sig_oi = evaluate("strat_3_option_apex_oi", evaluate_option_apex_oi_shift,
                             index_symbol=idx_sym,
                             candles=candles,
                             option_chain=oc,
@@ -860,7 +926,7 @@ class IntradayBotEngine:
                                                   error="Live futures require an explicit futures master and contract candles."))
                     continue
                 try:
-                    s_ob = evaluate_order_block_fvg(
+                    s_ob = evaluate("strat_1_order_block", evaluate_order_block_fvg,
                         symbol=idx_sym,
                         candles=candles,
                         capital_inr=self.config.account_capital_inr,
@@ -879,13 +945,13 @@ class IntradayBotEngine:
                     logger.error("Order Block evaluation error on %s: %s", idx_sym, eval_exc)
                     instrument_errors.append({"symbol": idx_sym, "strategy": "strat_1_order_block", "error": str(eval_exc)})
 
-                for eval_fn in (
-                    evaluate_vwap_pullback,
-                    evaluate_orb_breakout,
-                    evaluate_supertrend_pullback,
+                for strategy_id, eval_fn in (
+                    ("strat_2_vwap_pullback", evaluate_vwap_pullback),
+                    ("strat_4_orb_filtered", evaluate_orb_breakout),
+                    ("strat_5_supertrend_pullback", evaluate_supertrend_pullback),
                 ):
                     try:
-                        s = eval_fn(
+                        s = evaluate(strategy_id, eval_fn,
                             symbol=idx_sym,
                             candles=candles,
                             capital_inr=self.config.account_capital_inr,
@@ -909,7 +975,7 @@ class IntradayBotEngine:
                 candles = equity_candles_map[sym]
 
                 try:
-                    s_ob = evaluate_order_block_fvg(
+                    s_ob = evaluate("strat_1_order_block", evaluate_order_block_fvg,
                         symbol=sym,
                         candles=candles,
                         capital_inr=self.config.account_capital_inr,
@@ -927,13 +993,13 @@ class IntradayBotEngine:
                     logger.error("Order Block evaluation error on %s: %s", sym, eval_exc)
                     instrument_errors.append({"symbol": sym, "strategy": "strat_1_order_block", "error": str(eval_exc)})
 
-                for eval_fn in (
-                    evaluate_vwap_pullback,
-                    evaluate_orb_breakout,
-                    evaluate_supertrend_pullback,
+                for strategy_id, eval_fn in (
+                    ("strat_2_vwap_pullback", evaluate_vwap_pullback),
+                    ("strat_4_orb_filtered", evaluate_orb_breakout),
+                    ("strat_5_supertrend_pullback", evaluate_supertrend_pullback),
                 ):
                     try:
-                        s = eval_fn(
+                        s = evaluate(strategy_id, eval_fn,
                             symbol=sym,
                             candles=candles,
                             capital_inr=self.config.account_capital_inr,
@@ -962,6 +1028,7 @@ class IntradayBotEngine:
                                        self.config.max_risk_per_trade_pct, side,
                                        instrument_type=instrument_type, lot_size=lot)
                 if not sizing["eligible"]:
+                    candidate_evaluations.append(candidate_record(sig, sizing["reason_code"]))
                     instrument_errors.append({"symbol": sig.symbol, "strategy": sig.strategy_id,
                                               "error": sizing["reason_code"]})
                     continue
@@ -971,11 +1038,18 @@ class IntradayBotEngine:
                 try:
                     validate_trade_signal(sig)
                 except ValueError:
+                    candidate_evaluations.append(candidate_record(sig, "INVALID_SIGNAL_LEVELS"))
                     instrument_errors.append(dict(symbol=sig.symbol, strategy=sig.strategy_id,
                         reason_code="INVALID_SIGNAL_LEVELS", error="Candidate levels or metadata failed validation."))
                     continue
+                if not signal_risk_reward(sig)["allowed"]:
+                    candidate_evaluations.append(candidate_record(sig, "UNSUPPORTED_NUMERIC_RISK_REWARD"))
+                    instrument_errors.append(dict(symbol=sig.symbol, strategy=sig.strategy_id,
+                        reason_code="UNSUPPORTED_NUMERIC_RISK_REWARD", error="Numeric risk/reward is unavailable."))
+                    continue
                 sized_signals.append(sig)
             signals = rank_signal_candidates(sized_signals)
+            candidate_evaluations.extend(candidate_record(sig, rank=rank) for rank, sig in enumerate(signals, 1))
 
             # 3. Persist Signals, Deduplicate & Dispatch New Signals to Telegram
             persisted_signals_count = 0
@@ -983,7 +1057,7 @@ class IntradayBotEngine:
 
             for sig in signals:
                 if not is_simulated:
-                    self._require_current_scan_data(provider, now_dt=scan_now())
+                    self._require_current_scan_data(provider, now_dt=scan_now(), check_stream=not bool(recovery or recovery_clock))
                 sig.provider = provider
                 sig.state_context = state_context
                 sig.interval_min = 5
@@ -1037,12 +1111,12 @@ class IntradayBotEngine:
                     telegram_dispatches.append(dict(ok=False, skipped=True, reason="delivery_not_recorded"))
                 else:
                     if not is_simulated:
-                        self._require_current_scan_data(provider, now_dt=scan_now())
+                        self._require_current_scan_data(provider, now_dt=scan_now(), check_stream=not bool(recovery or recovery_clock))
                     res = self.telegram.send_signal(sig, broker_name=broker_label)
                     telegram_dispatches.append(res)
 
             if not is_simulated:
-                self._require_current_scan_data(provider, now_dt=scan_now())
+                self._require_current_scan_data(provider, now_dt=scan_now(), check_stream=not bool(recovery or recovery_clock))
             if self.store is not None:
                 try:
                     for segment, zones in zone_states.items():
@@ -1121,7 +1195,7 @@ class IntradayBotEngine:
                 "data_mode": data_mode,
                 "market_breadth": market_breadth,
                 "total_signals": len(signals),
-                "ranking_policy": "QUALITY_THEN_TARGET1_REWARD_RISK_THEN_IDENTITY_V1",
+                "ranking_policy": ranking_policy,
                 "ranking_scope": "CANDIDATE_PRIORITY_ONLY_NO_CAPITAL_ALLOCATION",
                 "empty_reason": (None if signals else "NO_ELIGIBLE_SETUP_FOR_ACCEPTED_INPUT"),
                 "persisted_signals": persisted_signals_count,
@@ -1131,10 +1205,24 @@ class IntradayBotEngine:
                 "persistence_error": persistence_error,
                 "instrument_errors": instrument_errors,
                 "signals": [s.to_dict() for s in signals],
+                "strategy_evaluations": strategy_evaluations,
+                "candidate_evaluations": candidate_evaluations,
+                "evaluation_schema_version": "tradepulse.scan-evaluation.v1",
+                "actionable": False,
                 "telegram_dispatches": telegram_dispatches,
                 "candle_freshness": ({"status": "SIMULATED", "live_signal_allowed": False} if is_simulated
                                      else self._freshness_status(provider, scan_now())),
             }
+            if self.store is not None and persistence_status == "OK":
+                try:
+                    self.store.save_scan_evaluations(run_id, dict(schema_version="tradepulse.scan-evaluation.v1",
+                        run_id=run_id, strategy_evaluations=strategy_evaluations,
+                        candidate_evaluations=candidate_evaluations, data_mode=data_mode, actionable=False))
+                except (PersistenceError, PersistenceValidationError) as exc:
+                    self.last_persistence_status = summary["persistence_status"] = persistence_status = "ERROR"
+                    self.last_persistence_error = summary["persistence_error"] = persistence_error = type(exc).__name__
+                    if durable_work:
+                        raise
             if durable_work:
                 if persistence_status != "OK":
                     raise PersistenceError("LINEAGE_SCAN_RESULT_ROLLED_BACK")
@@ -1147,16 +1235,32 @@ class IntradayBotEngine:
                 summary["notification_intents"] = [self.store.enqueue_notification_preview(
                     run_id, sig, self.telegram, broker_label, summary["input_lineage"]["batch_ids"], now_dt)
                     for _, sig in deferred_dispatches]
+                if not recovery and not recovery_clock:
+                    self._require_current_scan_data(provider, now_dt=scan_now())
                 self.store.finish_cash_scan(run_id, summary)
+                if not recovery and not recovery_clock:
+                    self._require_current_scan_data(provider, now_dt=scan_now())
                 transaction, lineage_tx = lineage_tx, None
                 transaction.__exit__(None, None, None)
                 result_committed = True
                 logger.info("Committed scan %s with exact cash input linkage", run_id)
                 self.store._lineage_checkpoint("after_result_commit")
+                if not recovery and not recovery_clock:
+                    try:
+                        self._require_current_scan_data(provider, now_dt=scan_now())
+                    except CandleFreshnessError as exc:
+                        summary["candle_freshness"] = dict(exc.freshness, live_signal_allowed=False)
                 for segment, zones in zone_states.items():
                     self._zone_states[(provider, data_mode, segment)].update(zones)
                 for ordinal, (index, sig) in enumerate(deferred_dispatches):
-                    if recovery or recovery_clock or not self._freshness_status(provider, scan_now())["live_signal_allowed"]:
+                    delivery_allowed = not (recovery or recovery_clock)
+                    if delivery_allowed:
+                        try:
+                            self._require_current_scan_data(provider, now_dt=scan_now())
+                        except CandleFreshnessError as exc:
+                            delivery_allowed = False
+                            summary["candle_freshness"] = dict(exc.freshness, live_signal_allowed=False)
+                    if not delivery_allowed:
                         summary["telegram_dispatches"][index] = dict(ok=False, skipped=True, reason="recovery_or_stale_delivery_suppressed")
                     else:
                         try:

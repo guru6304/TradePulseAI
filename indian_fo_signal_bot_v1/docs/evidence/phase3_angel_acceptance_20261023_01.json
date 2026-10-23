@@ -1,0 +1,218 @@
+{
+  "schema_version": "tradepulse.phase3-angel-acceptance.v1",
+  "captured_at": "2026-10-23T11:31:25.880798+00:00",
+  "source_receipt": "docs/evidence/master_phase3_angel_20261023_02.json",
+  "live_probe": "docs/evidence/phase3_angel_probe_live_20261023_01.json",
+  "phase3_status": "BLOCKED_REAL_COMPLETED_MARKET_CANDLES",
+  "overall_task3_status": "BLOCKED_LIVE_AND_HISTORICAL_ACCEPTANCE",
+  "historical_study_status": "BLOCKED_SOURCE_RIGHTS_IDENTITY_COVERAGE",
+  "phase4_authorized": false,
+  "gates": [
+    {
+      "gate": "1_SOURCE_COMPILE_REGRESSION",
+      "status": "PASS",
+      "evidence": "Executed current strict suite and source/log validator"
+    },
+    {
+      "gate": "2_AUTHENTICATED_WEBSOCKET_SUBSCRIPTION",
+      "status": "PASS",
+      "evidence": "Genuine scoped binary SnapQuote proves connection/subscription; stale packet rejected"
+    },
+    {
+      "gate": "3_CURRENT_INSTRUMENT_MAPPING",
+      "status": "PASS",
+      "evidence": "Current original public master unique NSE RELIANCE-EQ token2885 agrees with canonical pin"
+    },
+    {
+      "gate": "4_FRESH_GENUINE_OBSERVATIONS",
+      "status": "BLOCKED",
+      "evidence": "Genuine stale packet retained; no accepted fresh event"
+    },
+    {
+      "gate": "5_COMPLETE_1M_AND_5M_CANDLES",
+      "status": "BLOCKED",
+      "evidence": "Zero accepted complete live candles"
+    },
+    {
+      "gate": "6_LIVE_COMPLETED_CANDLE_STORAGE_LINEAGE",
+      "status": "OFFLINE_PASS_LIVE_PENDING",
+      "evidence": "Raw rejected packet persisted; completed candle path has deterministic tests only"
+    },
+    {
+      "gate": "7_SCANNER_VALIDATED_LIVE_INPUT",
+      "status": "OFFLINE_PASS_LIVE_PENDING",
+      "evidence": "Canonical handoff tested; no genuine completed input available"
+    },
+    {
+      "gate": "8_FAILURE_NO_FALLBACK",
+      "status": "PASS",
+      "evidence": "Observed stale-packet rejection/close; offline REST/provider/fixture fallback denials"
+    },
+    {
+      "gate": "9_HEALTH_DASHBOARD",
+      "status": "OFFLINE_PASS_LIVE_PENDING",
+      "evidence": "Existing generic stream renderer/health tested; no interactive browser acceptance claimed"
+    },
+    {
+      "gate": "10_PAPER_SAFETY",
+      "status": "PASS",
+      "evidence": "Saved settings preserved; read-only isolated flow; dry-run/scheduler guards; no execution engine"
+    },
+    {
+      "gate": "11_CURRENT_EVIDENCE_RELEASE",
+      "status": "PASS",
+      "evidence": "Final source/log receipt and inspected candidate PASS; separate finalizer binds preservation and secret audit"
+    }
+  ],
+  "blockers": [
+    {
+      "code": "ANGEL_MARKET_OBSERVATIONS_INSUFFICIENT",
+      "affected_gate": "Phase3 gates4-7",
+      "what_happened": "After-market SnapQuote feed timestamp 2026-10-23T16:08:10+05:30 received 2026-10-23T16:52:55.357048+05:30 rejected as stale.",
+      "failed_command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning angel_feed_control.py --provider angelone --symbol RELIANCE --smoke --fetch-master --seconds 15 --history-session 2026-10-22 --stage live_20261023_01",
+      "exit_code": 1,
+      "sanitized_evidence": "docs/evidence/phase3_angel_probe_live_20261023_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Resume at an actually open configured NSE cash session. One up-to420-second RELIANCE read-only run is already authorized; do not ask again. Start near the final minute before a 5m boundary; keep paper execution/dry-run and scheduler false. No automatic scheduling or repeated runs authorized.",
+      "safe_resolution_procedure": "Resume at an actually open configured NSE cash session. One up-to420-second RELIANCE read-only run is already authorized; do not ask again. Start near the final minute before a 5m boundary; keep paper execution/dry-run and scheduler false. No automatic scheduling or repeated runs authorized.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning angel_feed_control.py --provider angelone --symbol RELIANCE --smoke --fetch-master --seconds 420 --extended-observation-authorized --stage market_open_authorized_01",
+      "expected_passing_result": "Fresh scoped events, complete valid1m/5m candles with durable raw-event links, guarded scanner handoff. Any missing trades/volume gaps must remain rejected."
+    },
+    {
+      "code": "ANGEL_CANDLE_ACCEPTANCE_INSUFFICIENT",
+      "affected_gate": "Phase3 completed-candle and real consumer gates",
+      "what_happened": "Accepted event count0; completed1m=0 and5m=0; scanner cannot consume this rejected packet.",
+      "failed_command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning angel_feed_control.py --provider angelone --symbol RELIANCE --smoke --fetch-master --seconds 15 --history-session 2026-10-22 --stage live_20261023_01",
+      "exit_code": 1,
+      "sanitized_evidence": "docs/evidence/phase3_angel_probe_live_20261023_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Use the same single authorized market-open run. Inspect event/volume continuity and both completed intervals before asserting acceptance; a connection or fixture cannot substitute.",
+      "safe_resolution_procedure": "Use the same single authorized market-open run. Inspect event/volume continuity and both completed intervals before asserting acceptance; a connection or fixture cannot substitute.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B -W error::ResourceWarning angel_feed_control.py --provider angelone --symbol RELIANCE --smoke --fetch-master --seconds 420 --extended-observation-authorized --stage market_open_authorized_01",
+      "expected_passing_result": "Both completed intervals pass chronology/session/freshness/volume/provenance; actual durable scanner input binding reviewed."
+    },
+    {
+      "code": "HISTORICAL_CASH_QUALIFIED_DATA_MISSING",
+      "affected_gate": "Separate historical cash qualification/study",
+      "what_happened": "73 original bars captured privately;15:15/15:20 missing. Qualified operator cash/study files absent.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Supply authentic complete, sufficiently broad chronological sessions and frozen training/test plan; retain originals and missing intervals without fabrication.",
+      "safe_resolution_procedure": "Supply authentic complete, sufficiently broad chronological sessions and frozen training/test plan; retain originals and missing intervals without fabrication.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Helper exits0 with source, rights, dated identity, coverage and cash-study-input checks PASS; no F&O acceptance implied."
+    },
+    {
+      "code": "PUBLISHER_TRUST_ROOT_MISSING",
+      "affected_gate": "Separate historical cash qualification/study",
+      "what_happened": "No independently approved publisher root supplied.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Provide independently approved public Ed25519 roots with current validity/revocation policy in the separate operator directory. Never generate a key and label it Angel authority.",
+      "safe_resolution_procedure": "Provide independently approved public Ed25519 roots with current validity/revocation policy in the separate operator directory. Never generate a key and label it Angel authority.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Helper exits0 with source, rights, dated identity, coverage and cash-study-input checks PASS; no F&O acceptance implied."
+    },
+    {
+      "code": "PUBLISHER_AUTHENTICITY_UNVERIFIED",
+      "affected_gate": "Separate historical cash qualification/study",
+      "what_happened": "HTTPS captures supply acquisition integrity, not detached publisher signatures.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Obtain genuinely qualifying publisher manifests for exact cash/master artifact hashes, or an explicitly reviewed legitimate policy alternative. Current default policy remains unchanged.",
+      "safe_resolution_procedure": "Obtain genuinely qualifying publisher manifests for exact cash/master artifact hashes, or an explicitly reviewed legitimate policy alternative. Current default policy remains unchanged.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Helper exits0 with source, rights, dated identity, coverage and cash-study-input checks PASS; no F&O acceptance implied."
+    },
+    {
+      "code": "HISTORICAL_RIGHTS_DOCUMENT_MISSING",
+      "affected_gate": "Separate historical cash qualification/study",
+      "what_happened": "No reviewed actual rights document retained in the operator policy contract.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Retain the applicable original licence/rights terms privately and bind its hash; free API access alone grants no research/redistribution approval.",
+      "safe_resolution_procedure": "Retain the applicable original licence/rights terms privately and bind its hash; free API access alone grants no research/redistribution approval.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Helper exits0 with source, rights, dated identity, coverage and cash-study-input checks PASS; no F&O acceptance implied."
+    },
+    {
+      "code": "HISTORICAL_RESEARCH_SCOPE_UNAPPROVED",
+      "affected_gate": "Separate historical cash qualification/study",
+      "what_happened": "No independent operator HISTORICAL_RESEARCH grant for the exact artifacts/symbols/time scope.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Provide a separately reviewed rights grant with reviewer/reference/current validity and exact document/artifact bindings.",
+      "safe_resolution_procedure": "Provide a separately reviewed rights grant with reviewer/reference/current validity and exact document/artifact bindings.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Helper exits0 with source, rights, dated identity, coverage and cash-study-input checks PASS; no F&O acceptance implied."
+    },
+    {
+      "code": "HISTORICAL_INSTRUMENT_MASTER_MISSING",
+      "affected_gate": "Separate historical cash qualification/study",
+      "what_happened": "Current master is byte-bound but no qualifying dated historical EQ master/manifest exists.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Supply authentic dated identity coverage for the requested historical sessions and qualifying manifests; do not assign historical authority to a current snapshot.",
+      "safe_resolution_procedure": "Supply authentic dated identity coverage for the requested historical sessions and qualifying manifests; do not assign historical authority to a current snapshot.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Helper exits0 with source, rights, dated identity, coverage and cash-study-input checks PASS; no F&O acceptance implied."
+    },
+    {
+      "code": "OPTION_EXECUTION_DATA_MISSING",
+      "affected_gate": "Separate historical Strategy3; not a live Phase3 dependency",
+      "what_happened": "No exact dated option contracts/premium executable bid-ask-depth and prior-close OI package supplied.",
+      "failed_command": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe -B docs\\evidence\\task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_01",
+      "exit_code": 2,
+      "sanitized_evidence": "docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json",
+      "actor": "OPERATOR",
+      "required_correction": "Provide the separately qualified option request and explicit local trust/rights policy. Reuse historical_study.run_frozen_study with option_request and the existing frozen cost/chronological plan; cash candles cannot clear this gate.",
+      "safe_resolution_procedure": "Provide the separately qualified option request and explicit local trust/rights policy. Reuse historical_study.run_frozen_study with option_request and the existing frozen cost/chronological plan; cash candles cannot clear this gate.",
+      "verification_command": ".venv_phase4\\Scripts\\python.exe -B docs/evidence/task3_completion_track_a_20261023_01_verify.py --check-inputs --input-root .local/task3-history/source --operator-policy .local/task3-history/operator --stage angel_operator_02",
+      "expected_passing_result": "Cash helper may pass but must retain BLOCKED_SEPARATE_DATA_DEPENDENCY for options. Real option acceptance additionally requires a qualifying retained run_frozen_study input/result evidence pair; no real option verification command is executable before that request/policy exists."
+    }
+  ],
+  "extended_market_open_authorization": {
+    "scope": "ONE_LATER_MARKET_OPEN_READ_ONLY_RELIANCE_OBSERVATION",
+    "operator_reply": "do which is better and most useful",
+    "question_scope": "One read-only observation of up to 7 minutes for RELIANCE at a later market-open session, with paper execution, Telegram dry-run and scheduler disabled",
+    "selected_action": "ONE_MARKET_OPEN_PROBE_MAXIMUM_420_SECONDS",
+    "instrument": "RELIANCE",
+    "provider": "angelone",
+    "paper_execution_only": true,
+    "telegram_dry_run": true,
+    "background_scheduler_enabled": false,
+    "automatic_scheduling_authorized": false,
+    "orders_authorized": false,
+    "extended_observation_performed": false,
+    "reason_not_performed_now": "Current authorized probe was after market hours and received a stale provider packet; wait for an actually open NSE cash session",
+    "repeat_permission_question_required_for_this_same_probe": false
+  },
+  "private_probe_count": 1,
+  "private_login_count": 1,
+  "history_request_count": 1,
+  "actual_probe_exit_code": 1,
+  "historical_input_check_logical_exit_code": 2,
+  "historical_input_check_powershell_wrapper_exit_code": 1,
+  "orders": 0,
+  "token_refresh": 0,
+  "telegram_sends": 0,
+  "scheduler_activations": 0,
+  "dhan_requests": 0,
+  "upstox_requests": 0,
+  "historical_studies_run": 0,
+  "preserved_historical_limitations": [
+    "Earlier Task2 Python log mismatch remains preserved historical evidence; current fresh receipt validates."
+  ]
+}

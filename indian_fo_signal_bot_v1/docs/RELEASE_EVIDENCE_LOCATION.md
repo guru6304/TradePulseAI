@@ -39,3 +39,18 @@ own fresh evidence. Package hashes establish byte integrity. Offline protocol
 fixtures, genuine test-key signatures and simulated studies do not establish an
 approved provider root, licensed data, broker authentication, historical strategy
 performance, live operational acceptance or production readiness.
+
+The Angel Phase 3 source change uses the fresh
+`master_phase3_angel_20261023_03.json` receipt and its exact named logs. The
+corresponding `phase3_angel_closeout_20261023_02.json` and validation receipt bind
+the new source candidate, acceptance matrix and bounded probe. Its dedicated ZIP
+is `phase3_angel_release_20261023_02.zip`. These files stay in the matching
+repository evidence directory, outside the source ZIP. The continuation receipt
+above describes an earlier source snapshot and is not current Angel proof.
+Private `.local/phase3-angel/` contains original master/history bytes and feed
+SQLite lineage; do not redistribute that area or either `.env` file.
+The `_01` full receipt binds the source that performed the actual 15-second
+bounded probe. `_02` additionally verifies the guarded extended-window option;
+no longer or second private probe was performed during this task.
+
+The current `_03` full receipt includes the final completed-candle/scanner diagnostic correction. `_01` and `_02` full receipts and the `_01` release/closeout remain preserved historical snapshots. Actual private probe evidence remains `phase3_angel_probe_live_20261023_01.json`.

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "scope": "OFFLINE_RELEASE_CANDIDATE",
+  "files": 97,
+  "sha256": "a64ba16ca0bd01fff8406804fe6c22d2928899dee17f427e0e7c8321ff9bf3a4",
+  "manifest_sha256": "b8c6668baff165c365d305ad75bf924ef6901d31d6066df6d3a1eff0dfbce1f3",
+  "publisher_authentication": "NOT_ESTABLISHED"
+}

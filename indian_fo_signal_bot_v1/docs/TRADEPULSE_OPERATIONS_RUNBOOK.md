@@ -403,3 +403,70 @@ chat, evidence logs or source ZIPs. The matching repository's Task 3 historical
 helper provides its exact input-file contract via `--help`; it reuses the existing
 qualification and frozen-study APIs and retains private inputs/results in the
 explicit operator-selected SQLite file. Missing files stay blocked.
+
+## Angel Phase 3 data ingestion, 2026-10-23
+
+Angel One is the selected live-data candidate for this task. Dhan and Upstox
+remain implemented but are not fallback providers. The existing broker adapters
+are read-only; selecting Angel data does not enable real orders. Execution stays
+in the existing paper portfolio. Do not enable the scheduler or Telegram sends.
+
+`angel_feed_control.py` defaults to local preflight. An explicit `--provider
+angelone` selects Angel only within this control; it leaves saved `.env` settings
+unchanged. Exactly one `--symbol` and a current original Angel master are required.
+The control cross-checks a unique NSE EQ record against the canonical identity,
+rejects conflicting tokens and bounds local-master age. `--fetch-master` downloads
+one original public master into the ignored `.local/phase3-angel/<stage>/` area.
+It does not subscribe to the whole master. Private originals and SQLite feed
+evidence must remain outside public evidence logs and release ZIPs.
+
+After validating current offline evidence and safe local credentials, a newly
+authorized 15-second read-only probe can use this command from the app directory:
+
+```powershell
+.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning angel_feed_control.py --provider angelone --symbol RELIANCE --smoke --fetch-master --seconds 15 --stage operator_unique_01
+```
+
+Use a fresh stage each time. Authentication uses the existing login once; no
+automatic refresh or other-provider fallback is allowed. No normal scanner engine
+or production scheduler starts. `--history-session YYYY-MM-DD` optionally makes
+one additional historical request for that fully completed session after stopping
+the socket. It retains original response bytes and separate normalized candidate
+bars; it grants neither publisher trust nor research rights. There are no retries
+or automatic date-range extensions. A short probe never mints Phase 3 acceptance.
+
+The production `AngelLiveFeed` lifecycle is explicit: construct with the validated
+adapter descriptor and credentials, `adapter.attach_live_feed(feed)` (inert), then
+explicitly call `feed.start()` or `connect()`/`poll_once()`. Stop/detach it before
+closing its shared SQLite store. `engine.close()` also stops attached Angel feeds.
+Connection, observations and completed-candle readiness are distinct status fields.
+Health/dashboard reuse the existing stream status and block unavailable feeds.
+
+Only SnapQuote observations with a resolved trade clock and auditable cumulative
+volume may form candles. LTP/Quote observations and pending bid/ask quantities
+cannot establish executed volume. Supported depth is five levels; mode 4 is
+rejected. Sampled trades, unresolved clocks, stale/gapped observations, forming
+bars and injected transports cannot qualify as accepted LIVE scanner input.
+Missing observations are not reconstructed. Raw events, rejected packets and
+completed 1m/5m bars retain hashes and connection/event links through SQLite and
+the existing cash scan snapshots. Hashes establish integrity, not publisher rights.
+
+Current source/log verification is retained separately in
+`docs/evidence/master_phase3_angel_20261023_03.json`; validate it with
+`verify_offline.py --validate-evidence docs/evidence/master_phase3_angel_20261023_03.json`.
+The current acceptance checklist, closeout and report use the `phase3_angel_`
+prefix in the matching repository. Earlier Task 2/3 receipts remain historical.
+Live Phase 3 and historical-study acceptance are separate gates. Phase 4 may
+begin only after all mandatory live Phase 3 gates pass, per the fixed roadmap.
+
+The operator has authorized one later market-open RELIANCE observation of up to
+seven minutes, with these same safeguards (2026-10-23 conversation). This
+authorization does not activate a scheduler or start a background probe. At the
+next verified open NSE cash session, an explicit command can use
+`--seconds 420 --extended-observation-authorized` with a fresh stage. This flag
+is never automatic; the default remains 15 seconds and an unapproved duration
+over 30 seconds fails before I/O. Start near the last minute before a five-minute
+boundary to give a complete aligned five-minute candle time to close. Missing
+trades or volume gaps may still block a candle; time alone grants no acceptance.
+
+Current Angel handover uses `phase3_angel_acceptance_20261023_02.json`, `phase3_angel_closeout_validation_20261023_02.json` and `phase3_angel_release_20261023_02.zip`. Earlier `_01` closeouts/releases are preserved historical snapshots. The current detailed repository report is `docs/reports/phase3_angel_completion_20261023_02.md`.

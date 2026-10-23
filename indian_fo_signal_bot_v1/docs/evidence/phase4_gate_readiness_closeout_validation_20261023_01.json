@@ -1,0 +1,22 @@
+{
+  "status": "PASS_READ_ONLY_AUDIT_INTEGRITY",
+  "verdict": "PHASE_4_NOT_STARTED_PHASE_3_GATE",
+  "audit_receipt_sha256": "c096d62f51beae20d6bda291ae9f9641bf904982f628782c3f0d65745f8500ea",
+  "source_unchanged": true,
+  "prior_documents_unchanged": true,
+  "configuration_files_unchanged": true,
+  "new_artifact_hashes_verified": 8,
+  "release_sha256": "372733aa26a90172a3fda3b5beb6cf1e22901e7c5be5073a06e6cf24b9e95e61",
+  "release_files": 97,
+  "provider_requests_in_audit": 0,
+  "production_changes_in_audit": 0,
+  "new_test_suite_run": false,
+  "verification_command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs/evidence/phase4_gate_readiness_audit_20261023_01.py",
+    "--validate-audit"
+  ]
+}

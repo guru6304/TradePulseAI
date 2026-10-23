@@ -1,0 +1,156 @@
+{
+  "verdict": "PHASE_4_IMPLEMENTATION_ACCEPTED",
+  "scope": "OFFLINE_ENGINEERING_ONLY",
+  "gates": {
+    "A": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Scanner integration",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_valid_fixture_uses_actual_scanner_and_excludes_forming_tail_from_lineage",
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_invalid_candle_inputs_never_reach_actual_strategy_or_outputs"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "B": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Strategy integration",
+      "executed_test_ids": [
+        "test_phase4_explanations.TestPhase4StrategyExplanations.test_all_five_bidirectional_actual_signals_match_direct_evaluation",
+        "test_bot.TestIndianFOSignalBotPhase1C.test_p1c_backward_compatibility_and_scanner_bidirectional_dispatch"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "C": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Warm-up integrity",
+      "executed_test_ids": [
+        "test_phase4_feed_history.TestPhase4FeedHistory.test_stream_capacity_must_cover_existing_two_hundred_bar_requirement",
+        "test_phase4_feed_history.TestPhase4FeedHistory.test_three_session_packets_pass_200_bar_warmup_but_lack_session_opening_coverage",
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_fully_warmed_supertrend_reaches_actual_scanner_without_relaxing_lookback"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "D": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Candidate generation",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_detected_setup_with_invalid_target_is_preserved_as_rejected_not_ranked"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "E": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Explanations",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_real_scanner_candidate_has_numeric_risk_rank_and_supported_rule_explanations"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "F": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Ranking",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_ranking_all_permutations_and_exact_identity_ties_are_reproducible"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "G": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Risk/reward",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_attractive_quality_cannot_admit_invalid_risk_geometry"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "H": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Persistence and output",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_existing_api_history_and_scan_routes_expose_same_reconciled_candidate",
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_explanation_persistence_and_idempotent_retry_keep_same_source_and_candidate"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "I": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Compatibility",
+      "executed_test_ids": [
+        "test_bot.TestIndianFOSignalBotPhase1C.test_p1c_backward_compatibility_and_scanner_bidirectional_dispatch"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "J": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Safety",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_shutdown_stops_attached_fixture_and_preserves_safe_configuration",
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_disconnect_after_actual_evaluation_blocks_commit_and_notification"
+      ],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    },
+    "K": {
+      "status": "PASS_OFFLINE_ENGINEERING",
+      "requirement": "Verification",
+      "executed_test_ids": [],
+      "strict_receipt": "docs/evidence/master_phase4_implementation_20261023_02.json"
+    }
+  },
+  "strict_verification": {
+    "receipt": "docs/evidence/master_phase4_implementation_20261023_02.json",
+    "sha256": "26c2280b96edba16ca82380bea657c7e730964496b2c08303467025783e9ba5b",
+    "python": 924,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "unraisable": [],
+    "checks": [
+      {
+        "command": [
+          "node",
+          "test_cash_dashboard.js"
+        ],
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "started_at": "2026-10-23T17:37:35.358841+00:00",
+        "completed_at": "2026-10-23T17:37:35.721916+00:00",
+        "exit_code": 0,
+        "status": "PASS",
+        "log": "docs/evidence/master_phase4_implementation_20261023_02_node.txt",
+        "executed": 14,
+        "passed": 14,
+        "failures": 0,
+        "skipped": 0
+      },
+      {
+        "command": [
+          "node",
+          "--check",
+          "test_cash_dashboard.js"
+        ],
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "started_at": "2026-10-23T17:37:35.748046+00:00",
+        "completed_at": "2026-10-23T17:37:35.847089+00:00",
+        "exit_code": 0,
+        "status": "PASS",
+        "log": "docs/evidence/master_phase4_implementation_20261023_02_syntax.txt"
+      },
+      {
+        "command": "py_compile.compile(root *.py, doraise=True)",
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "exit_code": 0,
+        "status": "PASS",
+        "compiled_files": 72
+      }
+    ],
+    "phase4_modules": {
+      "test_phase4_explanations": 22,
+      "test_phase4_recommendations": 20,
+      "test_phase4_feed_history": 8,
+      "test_phase4_evaluation_storage": 12
+    }
+  },
+  "external_provider_requests": 0,
+  "orders": 0,
+  "external_messages": 0,
+  "operational_acceptance": false,
+  "profitability_claim": false
+}

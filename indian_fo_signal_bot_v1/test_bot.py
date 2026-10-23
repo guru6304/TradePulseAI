@@ -10339,7 +10339,10 @@ def load_tests(loader, tests, pattern):
                        "test_contract_universe", "test_historical_pagination", "test_notification_outbox", "test_local_api_security",
                        "test_release_operations", "test_paper_sessions", "test_publisher_trust",
                        "test_phase4_acceptance", "test_option_execution", "test_historical_study",
-                       "test_dhan_feed", "test_task2_integration"):
+                       "test_dhan_feed", "test_task2_integration", "test_angel_feed",
+                       "test_angel_history_capture", "test_phase3_angel_integration",
+                       "test_phase4_explanations", "test_phase4_recommendations", "test_phase4_feed_history",
+                       "test_phase4_evaluation_storage"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

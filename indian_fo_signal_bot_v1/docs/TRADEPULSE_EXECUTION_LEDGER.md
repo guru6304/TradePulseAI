@@ -583,3 +583,47 @@ scheduler activation, real orders or deployment occurred. Only software dependen
 were downloaded from official PyPI. The current safety selection is paper_sim,
 telegram_dry_run=true, enable_background_scheduler=false. HEAD remains
 `205803131d7e1a17d6b42ce976efe7dff30e475a`; existing user changes are preserved.
+
+## Angel Phase3 continuation, 2026-10-23
+
+Current inspected HEAD is `4eb7330bf074d9b07733fade6d7a8e08c200fa0b`.
+The only initial user worktree addition was `tradepulse_phase1d.db`; that database,
+both `.env` files and previous evidence/reports/releases are preserved. No Git
+commit, reset, merge or cleanup was performed by this task.
+
+Added explicit Angel WebSocket2.0 ingestion, one-current-cash-master mapping,
+strict packet/session/volume checks, complete1m/5m construction, raw/rejection
+SQLite lineage, inert broker attachment and deterministic shutdown. Existing
+cash scan snapshots now preserve stream event/baseline/connection/master links.
+Read-only historical acquisition retains original bytes privately and separate
+unaccepted candidates. Existing strategies and source/rights gates are unchanged.
+
+`master_phase3_angel_20261023_01.json` records860/860Python,11/11Node and68compiled
+files before the actual bounded probe. The final guarded extended-window change
+has fresh `master_phase3_angel_20261023_02.json`: **861/861Python PASS**, zero
+failures/errors/skips, **11/11Node PASS**, **68compiled files**, identical
+before/after source hashes and exact logs. The latter is current offline proof.
+
+One real read-only Angel flow downloaded the public master, verified RELIANCE-EQ
+NSE token2885, logged in once(HTTP200), subscribed to one SnapQuote stream and
+received one genuine stale packet. Provider feed time16:08:10IST, local receive
+16:52:55IST. The feed rejected/persisted it and closed; accepted fresh events and
+complete live candles remain zero. The observation stopped early within the15s
+cap. It made one historical POST for2026-10-22 after stopping the socket: HTTP200,
+73five-minute bars,15:15/15:20missing. This fresh success does not explain the
+earlier reported403; the reported74-bar response remains unbound to a retained
+original. No historical research acceptance or study result is claimed.
+
+Current machine checklist/closeout use the `phase3_angel_` prefix. Phase3 remains
+blocked by real fresh completed candles and real consumer acceptance; overall
+Task3 additionally requires historical source, rights, identity and coverage.
+Phase4 is not authorized to begin. Scores were not recalculated.
+
+Saved provider remains paper_sim. Angel was explicitly selected inside the
+isolated control, with paper-only execution, Telegram dry-run and scheduler false.
+No real order, profile mutation, token refresh, Telegram send, scheduler start,
+Dhan/Upstox request or paid subscription occurred. One later market-open RELIANCE
+observation of up to420seconds is authorized; it has not run, and no automatic
+background scheduling was created.
+
+Final Angel diagnostic review: `master_phase3_angel_20261023_03.json` supersedes current-source proof with **862/862 Python tests PASS**,11/11Node and68 compiled files. Valid complete-candle readiness is reported separately from scanner acceptance. Current closeout/release use `_02`; all earlier actual receipts/releases remain unchanged. No extra private broker call, longer observation or scheduling occurred.

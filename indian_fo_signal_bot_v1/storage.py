@@ -378,6 +378,10 @@ class SQLitePersistenceStore:
                     conn.execute(
                         "CREATE INDEX IF NOT EXISTS idx_scan_runs_started ON scan_runs(started_at_ist DESC, id DESC);"
                     )
+                    conn.execute("""CREATE TABLE IF NOT EXISTS scan_evaluations (
+                        run_id TEXT PRIMARY KEY REFERENCES scan_runs(run_id),
+                        payload_json TEXT NOT NULL, payload_sha256 TEXT NOT NULL
+                    )""")
 
                     conn.execute(
                         """
@@ -3070,6 +3074,38 @@ class SQLitePersistenceStore:
             finally:
                 self._close_if_file(conn)
 
+    def save_scan_evaluations(self, run_id, payload):
+        """Save one immutable, bounded explanation within the caller's scan transaction."""
+        from candle_lineage import encoded, digest, validate_scan_evaluations
+        with self._db_lock:
+            conn = self._get_connection()
+            try:
+                with conn:
+                    body, checksum = encoded(payload), digest(payload)
+                    validate_scan_evaluations(conn, run_id, payload)
+                    existing = self.load_scan_evaluations(run_id, connection=conn)
+                    if existing is not None:
+                        if encoded(existing) != body:
+                            raise PersistenceValidationError("SCAN_EVALUATION_CONFLICT")
+                        return checksum
+                    conn.execute("INSERT INTO scan_evaluations VALUES (?,?,?)", (run_id, body, checksum))
+                    return checksum
+            except (PersistenceValidationError, PersistenceError):
+                raise
+            except (TypeError, ValueError) as exc:
+                raise PersistenceValidationError("SCAN_EVALUATION_INVALID_JSON") from exc
+            except sqlite3.Error as exc:
+                raise PersistenceError("SCAN_EVALUATION_STORAGE_FAILURE") from exc
+            finally:
+                self._close_if_file(conn)
+
+    def load_scan_evaluations(self, run_id, connection=None):
+        from candle_lineage import load_scan_evaluations
+        if connection is not None:
+            return load_scan_evaluations(connection, run_id)
+        with self.lineage_read() as conn:
+            return load_scan_evaluations(conn, run_id)
+
     def query_scan_runs(
         self,
         limit: int = 20,
@@ -3122,6 +3158,7 @@ class SQLitePersistenceStore:
                         "market_breadth": json.loads(r["market_breadth_json"]) if r["market_breadth_json"] else None,
                         "error_type": r["error_type"],
                         "error_message": r["error_message"],
+                        "evaluation": self.load_scan_evaluations(r["run_id"], connection=conn),
                     })
                 return {
                     "total_count": int(total_count),

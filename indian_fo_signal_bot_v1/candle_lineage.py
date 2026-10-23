@@ -25,7 +25,9 @@ IDENTITY_KEYS = ("provider", "symbol", "identifier", "exchange", "segment", "ins
                  "is_index", "source", "source_revision", "historical_validity", "response_binding", "master_record")
 BAR_KEYS = ("timestamp", "open", "high", "low", "close", "volume", "is_complete", "is_simulated",
             "data_mode", "timestamp_timezone", "interval_min", "instrument_identity", "provider",
-            "component_count", "expected_components", "traded_quantity")
+            "component_count", "expected_components", "traded_quantity", "source",
+            "source_event_ids", "volume_baseline_event_id", "connection_id", "current_master_sha256",
+            "candle_semantics", "source_observation_at", "received_at", "source_authenticity")
 
 
 def encoded(value):
@@ -37,6 +39,90 @@ def encoded(value):
 
 def digest(value):
     return hashlib.sha256(encoded(value).encode("utf-8")).hexdigest()
+
+
+def validate_scan_evaluations(conn, run_id, payload):
+    """Validate local explanation scope without conferring market-data authority."""
+    from storage import PersistenceValidationError
+    def invalid():
+        raise PersistenceValidationError("SCAN_EVALUATION_SCOPE_INVALID")
+    if (not isinstance(run_id, str) or not run_id or len(run_id) > 160
+            or not isinstance(payload, dict) or payload.get("run_id") != run_id
+            or payload.get("schema_version") != "tradepulse.scan-evaluation.v1"
+            or payload.get("actionable") is not False
+            or not isinstance(payload.get("strategy_evaluations"), list)
+            or not isinstance(payload.get("candidate_evaluations"), list)):
+        invalid()
+    scan = conn.execute("SELECT data_mode FROM scan_runs WHERE run_id=?", (run_id,)).fetchone()
+    if not scan or payload.get("data_mode") != scan["data_mode"]:
+        invalid()
+    allowed_batches = {row[0] for row in conn.execute(
+        "SELECT batch_id FROM cash_candle_scan_inputs WHERE run_id=?", (run_id,))}
+    def references(value):
+        if isinstance(value, dict):
+            if "source_reference" in value:
+                ref = value["source_reference"]
+                if (not isinstance(ref, dict) or ("run_id" in ref and ref["run_id"] != run_id)
+                        or ("batch_ids" in ref and (not isinstance(ref["batch_ids"], list)
+                            or any(not isinstance(b, str) or b not in allowed_batches for b in ref["batch_ids"])))):
+                    invalid()
+            for child in value.values():
+                references(child)
+        elif isinstance(value, list):
+            for child in value:
+                references(child)
+    seen = set()
+    for candidate in payload["candidate_evaluations"]:
+        if not isinstance(candidate, dict):
+            invalid()
+        key = candidate.get("candidate_id")
+        if not isinstance(key, str) or not key or key in seen or candidate.get("actionable") is not False:
+            invalid()
+        seen.add(key)
+    if any(not isinstance(row, dict) for row in payload["strategy_evaluations"]):
+        invalid()
+    references(payload)
+
+
+def load_scan_evaluations(conn, run_id):
+    from storage import PersistenceValidationError
+    row = conn.execute("SELECT payload_json,payload_sha256 FROM scan_evaluations WHERE run_id=?", (run_id,)).fetchone()
+    durable = conn.execute("SELECT result_json,result_digest FROM cash_candle_scans "
+                           "WHERE run_id=? AND status='COMMITTED'", (run_id,)).fetchone()
+    try:
+        result = json.loads(durable["result_json"]) if durable else None
+        if durable and (not isinstance(result, dict) or digest(result) != durable["result_digest"]
+                        or result.get("run_id") != run_id):
+            raise ValueError("committed result checksum mismatch")
+        if row is None:
+            if result and any(field in result for field in ("strategy_evaluations", "candidate_evaluations")):
+                raise ValueError("committed evaluation missing")
+            return None
+        payload = json.loads(row["payload_json"])
+        if digest(payload) != row["payload_sha256"]:
+            raise ValueError("checksum mismatch")
+        validate_scan_evaluations(conn, run_id, payload)
+        if durable:
+            if (result.get("actionable") is not False
+                    or result.get("data_mode") != payload.get("data_mode")
+                    or any(result.get(field) != payload[field]
+                           for field in ("strategy_evaluations", "candidate_evaluations"))):
+                raise ValueError("committed evaluation mismatch")
+    except (TypeError, ValueError, RecursionError) as exc:
+        raise PersistenceValidationError("SCAN_EVALUATION_INTEGRITY_FAILURE") from exc
+    return payload
+
+
+def _check_evaluation_outcome(conn, run_id, result):
+    from storage import PersistenceValidationError
+    payload = load_scan_evaluations(conn, run_id)
+    fields = ("strategy_evaluations", "candidate_evaluations")
+    if payload is None and not any(field in result for field in fields):
+        return  # Legacy committed results predate persisted explanations.
+    if (payload is None or result.get("actionable") is not False
+            or any(result.get(field) != payload[field] for field in fields)
+            or result.get("data_mode") != payload.get("data_mode")):
+        raise PersistenceValidationError("SCAN_EVALUATION_OUTCOME_INTEGRITY_FAILURE")
 
 
 def runtime_profile(config):
@@ -276,6 +362,7 @@ def _check_committed_outcome(conn, run_id, snapshot, result):
                 ("status", "scan_status"), ("total_signals", "total_signals"),
                 ("persisted_signals", "persisted_signals"), ("duplicate_signals", "duplicate_signals")))):
         raise PersistenceValidationError("LINEAGE_SCAN_OUTCOME_INTEGRITY_FAILURE")
+    _check_evaluation_outcome(conn, run_id, result)
     by_symbol = {b["content"]["identity"]["symbol"]: b["batch_id"] for b in snapshot["batches"]}
     expected = set()
     for sig in result["signals"]:
@@ -327,6 +414,7 @@ def finish(store, run_id, summary):
     scan = conn.execute("SELECT status FROM scan_runs WHERE run_id=?", (run_id,)).fetchone()
     if not scan or scan[0] != summary["scan_status"]:
         raise PersistenceError("LINEAGE_PERSISTED_SCAN_OUTCOME_REQUIRED")
+    _check_evaluation_outcome(conn, run_id, summary)
     body = encoded(summary)
     conn.execute("UPDATE cash_candle_scans SET status='COMMITTED',result_json=?,result_digest=? WHERE run_id=?",
                  (body, digest(summary), run_id))
@@ -351,12 +439,14 @@ def annotate_signals(store, items, account_id=None):
     """Reconcile archived candidates before exposing their lineage or paper state."""
     from storage import PersistenceValidationError
     cache = {}
+    evaluations = {}
     with store.lineage_read() as conn:
         for item in items:
             run_id = item["scan_run_id"]
             if run_id not in cache:
                 exists = conn.execute("SELECT 1 FROM cash_candle_scans WHERE run_id=?", (run_id,)).fetchone()
                 cache[run_id] = load(store, run_id, connection=conn) if exists else None
+                evaluations[run_id] = store.load_scan_evaluations(run_id, connection=conn)
             work = cache[run_id]
             if work:
                 item["lineage"] = public_summary(work)
@@ -366,6 +456,10 @@ def annotate_signals(store, items, account_id=None):
             else:
                 item["lineage"] = dict(status="NOT_RETAINED", run_id=run_id, batch_ids=[])
             item["actionable"] = False  # Stored candidates never authorize real execution.
+            evaluation = evaluations[run_id]
+            item["candidate_evaluation"] = next((copy.deepcopy(candidate)
+                for candidate in evaluation["candidate_evaluations"]
+                if candidate["candidate_id"] == item["dedup_key"]), None) if evaluation else None
             item["recommendation_status"] = "CANDIDATE_ONLY"
             if account_id:
                 row = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND signal_key=?",

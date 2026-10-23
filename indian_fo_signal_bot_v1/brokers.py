@@ -571,6 +571,7 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         self._last_totp_code = None
         self.session_recovery_enabled = True  # Narrow acceptance commands explicitly disable retry/login recovery.
         self.last_http_status = None
+        self.live_feed = None  # Explicit opt-in; construction never opens a stream.
 
         # Scrip Master registries, metadata & prior OI baselines for NFO Option Chain assembly
         self._scrip_master_equities: Dict[str, Dict[str, Any]] = {}
@@ -596,6 +597,26 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         self._init_scrip_master_from_config()
         if self.persistence_store is not None:
             self.restore_all_baselines_from_store()
+
+    def attach_live_feed(self, feed):
+        """Select a single Angel streaming source without starting its transport."""
+        if feed.status().get("provider") != "angelone":
+            raise BrokerDataError("Angel stream provider mismatch.")
+        if self.live_feed is not None and self.live_feed is not feed:
+            raise BrokerDataError("Stop and detach the current Angel feed before replacing it.")
+        self.live_feed = feed
+
+    def get_feed_status(self):
+        return (self.live_feed.status() if self.live_feed is not None else
+                dict(status="NOT_STARTED", provider="angelone", live_signal_allowed=False))
+
+    def detach_live_feed(self):
+        if self.live_feed is not None:
+            self.live_feed.stop()
+            self.live_feed = None
+
+    def close(self):
+        self.detach_live_feed()
 
     def _init_scrip_master_from_config(self) -> None:
         scrip_path = str(getattr(self.config, "angel_scrip_master_path", "") or "").strip()
@@ -817,6 +838,7 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         self._respect_rate_limit()
         try:
             with urllib.request.urlopen(req, timeout=timeout_sec) as resp:
+                self.last_http_status = getattr(resp, "status", None)
                 raw_bytes = self._read_response_bytes(resp)
         except urllib.error.HTTPError as http_exc:
             code = http_exc.code
@@ -1853,6 +1875,14 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
         max_staleness_minutes: Optional[int] = None,
     ) -> List[Dict[str, Any]]:
         resolved_meta = self.resolve_instrument(symbol_meta)
+        if self.live_feed is not None:
+            # Explicit streaming mode never falls back to REST after failure.
+            try:
+                rows = self.live_feed.get_candles(resolved_meta, interval_min, now=self.clock())
+            except Exception:
+                raise BrokerDataError("Angel stream unavailable; inspect sanitized feed status.") from None
+            return enforce_live_candle_batch(self, rows, resolved_meta, interval_min, "angelone",
+                                            max_staleness_minutes=max_staleness_minutes)
         if not isinstance(interval_min, int) or isinstance(interval_min, bool) or interval_min not in self.SUPPORTED_INTERVALS:
             raise BrokerDataError(
                 f"Unsupported Angel One candle interval '{interval_min}'. "

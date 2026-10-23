@@ -1,0 +1,8 @@
+[2026-10-23 22:56:18,110] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_a544cd0d via Angel One SmartAPI (mode=LIVE)
+[2026-10-23 22:56:18,157] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_a544cd0d in 64.05ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-23 22:56:18,168] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_a544cd0d with exact cash input linkage
+[2026-10-23 22:56:18,190] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_1b632876 via Angel One SmartAPI (mode=LIVE)
+[2026-10-23 22:56:18,238] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_19880446 via Angel One SmartAPI (mode=LIVE)
+[2026-10-23 22:56:18,258] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_19880446 in 19.84ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-23 22:56:18,260] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_19880446 with exact cash input linkage
+Executed qualified, repeated, route-reconciled and insufficient-warmup examples.

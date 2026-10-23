@@ -1,0 +1,13 @@
+{
+  "scope": "LOCAL_ANGEL_FEED_PREFLIGHT",
+  "status": "BLOCKED",
+  "live_requests": false,
+  "provider": "angelone",
+  "execution_mode": "PAPER_ONLY",
+  "instrument_count": 1,
+  "authentication": "NOT_TESTED",
+  "live_feed_accepted": false,
+  "blockers": [
+    "ANGEL_INSTRUMENT_IDENTITY_UNVERIFIED"
+  ]
+}

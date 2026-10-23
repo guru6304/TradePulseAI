@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "previous_wrapper_command_exit_code": 1,
+  "previous_archive_build_operation": "PASS",
+  "previous_build_receipt_wrapper_exit_code": "INCORRECT_NOT_USED_AS_COMMAND_SUCCESS_PROOF",
+  "previous_build_receipt": "docs/evidence/phase4_implementation_release_build_20261023_01.json",
+  "reason": "Initial private-value scan matched one exact template placeholder in .env.example; not a real credential.",
+  "correction": "Exclude only same-key, identical template values carrying an explicit placeholder marker.",
+  "exact_template_placeholders_excluded": 1,
+  "corrected_scan": "PASS",
+  "archive_unchanged": true,
+  "release_sha256": "21d28235af75db57a6f12febb235f2ce0fe68c27de34575fb867d36f5dc72add",
+  "recorded_at": "2026-10-23T17:29:16.012100+00:00",
+  "current_command_exit_code": 0
+}

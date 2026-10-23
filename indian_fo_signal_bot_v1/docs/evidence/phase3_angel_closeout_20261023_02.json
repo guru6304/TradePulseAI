@@ -1,0 +1,60 @@
+{
+  "head": "4eb7330bf074d9b07733fade6d7a8e08c200fa0b",
+  "repository": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+  "working_tree": " M brokers.py\n M candle_lineage.py\n M docs/RELEASE_EVIDENCE_LOCATION.md\n M docs/TRADEPULSE_EXECUTION_LEDGER.md\n M docs/TRADEPULSE_OPERATIONS_RUNBOOK.md\n M release_management.py\n M scanner_engine.py\n M test_bot.py\n?? angel_feed.py\n?? angel_feed_control.py\n?? angel_history_capture.py\n?? docs/evidence/master_phase3_angel_20261023_01.json\n?? docs/evidence/master_phase3_angel_20261023_01_node.txt\n?? docs/evidence/master_phase3_angel_20261023_01_python.txt\n?? docs/evidence/master_phase3_angel_20261023_01_syntax.txt\n?? docs/evidence/master_phase3_angel_20261023_02.json\n?? docs/evidence/master_phase3_angel_20261023_02_node.txt\n?? docs/evidence/master_phase3_angel_20261023_02_python.txt\n?? docs/evidence/master_phase3_angel_20261023_02_syntax.txt\n?? docs/evidence/master_phase3_angel_20261023_03.json\n?? docs/evidence/master_phase3_angel_20261023_03_node.txt\n?? docs/evidence/master_phase3_angel_20261023_03_python.txt\n?? docs/evidence/master_phase3_angel_20261023_03_syntax.txt\n?? docs/evidence/phase3_angel_acceptance_20261023_01.json\n?? docs/evidence/phase3_angel_acceptance_20261023_02.json\n?? docs/evidence/phase3_angel_baseline_20261023_01.json\n?? docs/evidence/phase3_angel_baseline_20261023_01.py\n?? docs/evidence/phase3_angel_closeout_20261023_01.json\n?? docs/evidence/phase3_angel_closeout_20261023_01.py\n?? docs/evidence/phase3_angel_closeout_20261023_02.py\n?? docs/evidence/phase3_angel_closeout_validation_20261023_01.json\n?? docs/evidence/phase3_angel_history_focused_20261023_01.json\n?? docs/evidence/phase3_angel_history_focused_20261023_01.txt\n?? docs/evidence/phase3_angel_history_source_review_20261023_01.json\n?? docs/evidence/phase3_angel_history_source_review_20261023_01.py\n?? docs/evidence/phase3_angel_history_verify_20261023_01.py\n?? docs/evidence/phase3_angel_integrity_20261023_01.py\n?? docs/evidence/phase3_angel_integrity_20261023_02.py\n?? docs/evidence/phase3_angel_observation_authorization_20261023_01.json\n?? docs/evidence/phase3_angel_operator_blockers_20261023_01.md\n?? docs/evidence/phase3_angel_operator_blockers_20261023_02.md\n?? docs/evidence/phase3_angel_probe_live_20261023_01.json\n?? docs/evidence/phase3_angel_probe_local_preflight_20261023_01.json\n?? docs/evidence/phase3_angel_release_20261023_01.zip\n?? docs/evidence/phase3_angel_release_20261023_02.zip\n?? docs/evidence/phase3_angel_release_build_20261023_01.json\n?? docs/evidence/phase3_angel_release_inspect_20261023_01.json\n?? docs/evidence/phase3_angel_render_final_20261023_02.py\n?? docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01.json\n?? docs/evidence/task3_completion_track_a_20261023_01_angel_operator_01_blockers.md\n?? docs/reports/phase3_angel_completion_20261023_01.md\n?? docs/reports/phase3_angel_completion_20261023_02.md\n?? docs/reports/phase3_angel_history_20261023_01.md\n?? test_angel_feed.py\n?? test_angel_history_capture.py\n?? test_phase3_angel_integration.py\n?? tradepulse_phase1d.db\n",
+  "current_source_receipt": "docs/evidence/master_phase3_angel_20261023_03.json",
+  "python": 862,
+  "checks": [
+    {
+      "command": [
+        "node",
+        "test_cash_dashboard.js"
+      ],
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "started_at": "2026-10-23T11:43:14.625699+00:00",
+      "completed_at": "2026-10-23T11:43:14.845112+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/evidence/master_phase3_angel_20261023_03_node.txt",
+      "executed": 11,
+      "passed": 11,
+      "failures": 0,
+      "skipped": 0
+    },
+    {
+      "command": [
+        "node",
+        "--check",
+        "test_cash_dashboard.js"
+      ],
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "started_at": "2026-10-23T11:43:14.870048+00:00",
+      "completed_at": "2026-10-23T11:43:14.947088+00:00",
+      "exit_code": 0,
+      "status": "PASS",
+      "log": "docs/evidence/master_phase3_angel_20261023_03_syntax.txt"
+    },
+    {
+      "command": "py_compile.compile(root *.py, doraise=True)",
+      "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+      "exit_code": 0,
+      "status": "PASS",
+      "compiled_files": 68
+    }
+  ],
+  "phase3_status": "BLOCKED_REAL_COMPLETED_MARKET_CANDLES",
+  "overall_task3_status": "BLOCKED_LIVE_AND_HISTORICAL_ACCEPTANCE",
+  "phase4_authorized": false,
+  "source_and_logs_validated": true,
+  "probe": "phase3_angel_probe_live_20261023_01.json",
+  "probe_sha256": "3aff6ac4d42aeffb399c95fb4795c76a9e04bf1f89303ed4c2c1ff9e353fb224",
+  "preserved_user_changes": [
+    "Both .env files",
+    "Untracked original tradepulse_phase1d.db",
+    "All prior evidence/reports/releases"
+  ],
+  "acceptance": "phase3_angel_acceptance_20261023_02.json",
+  "release": "phase3_angel_release_20261023_02.zip",
+  "final_integrity_receipt": "phase3_angel_closeout_validation_20261023_02.json",
+  "scores_recalculated": false
+}

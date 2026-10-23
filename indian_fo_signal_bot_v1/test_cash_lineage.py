@@ -392,7 +392,16 @@ class TestCashScannerRecovery(unittest.TestCase):
             with self.subTest(sql=sql):
                 engine = self.engine("tamper"+str(number)+".sqlite")
                 result = engine.run_single_scan()
+                if sql == "DELETE FROM scan_runs":
+                    # The additive evaluation FK rejects loss at the write boundary.
+                    # Also exercise read reconciliation after deliberate removal of
+                    # both dependent metadata rows by a privileged corruptor.
+                    import sqlite3
+                    with self.assertRaises(sqlite3.IntegrityError), engine.store.paper_transaction() as conn:
+                        conn.execute(sql)
                 with engine.store.paper_transaction() as conn:
+                    if sql == "DELETE FROM scan_runs":
+                        conn.execute("DELETE FROM scan_evaluations")
                     conn.execute(sql)
                 with patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(PersistenceValidationError):
                     engine.resume_cash_scan(result["run_id"])

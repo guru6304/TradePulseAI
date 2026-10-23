@@ -383,6 +383,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             status_filter = _get_str_param(query_params, "status")
             res = self.engine.store.query_scan_runs(limit=limit, offset=offset, status=status_filter)
             return 200, {"status": "ok", **res}
+        except PersistenceValidationError:
+            return 503, {"status": "RECONCILIATION_REQUIRED", "message": "Stored scan evaluation requires inspection."}
         except ValueError as exc:
             return 400, {
                 "status": "error",

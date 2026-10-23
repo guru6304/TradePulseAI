@@ -49,7 +49,7 @@ function dashboard() {
   assert.ok(script, 'actual dashboard inline script must exist');
   const end = script.lastIndexOf('})();');
   assert.ok(end > 0, 'dashboard closure must exist');
-  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports };\n';
+  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports, renderScanRunsTable };\n';
   vm.runInContext(script.slice(0, end) + hooks + script.slice(end), context, { timeout: 1000 });
   return { ...context.hooks, node: id => document.getElementById(id) };
 }
@@ -69,6 +69,54 @@ function renderSignal(view, record) {
   view.state.signalsTotal = 1;
   view.renderSignalCards();
 }
+
+test('candidate cards and inspector use supported numeric gross RR and visited rule explanations', () => {
+  const view = dashboard();
+  const record = storedSignal({risk_reward: '1:999', candidate_evaluation: {
+    actionable: false, risk_reward: {allowed: true, target1_ratio: 2.125, target2_ratio: 3.25},
+    explanation: {rule_evaluation: {summary: 'Existing setup detected', rule_checks: [
+      {rule_id: 'volume.surge', status: 'PASS', reason: 'Volume requirement met'}]}},
+    warnings: ['LIQUIDITY_NOT_ESTABLISHED', 'EMPIRICAL_PERFORMANCE_UNAVAILABLE']
+  }});
+  renderSignal(view, record);
+  const cards = view.node('signalCardsContainer').textContent;
+  assert.match(cards, /Gross R:R T1 2.13 \/ T2 3.25/);
+  assert.match(cards, /Net R:R unavailable/);
+  assert.ok(!cards.includes('1:999'));
+  view.renderSelectedSignalInspector(record);
+  assert.match(view.node('detailRationale').textContent, /volume.surge: PASS/);
+  assert.match(view.node('detailRationale').textContent, /LIQUIDITY_NOT_ESTABLISHED/);
+});
+
+test('empty scan renders warm-up and rejected-rule reasons from retained evaluation', () => {
+  const view = dashboard();
+  view.state.scans = [{status: 'COMPLETED_EMPTY', total_signals: 0, evaluation: {
+    strategy_evaluations: [{symbol: 'RELIANCE', strategy_id: 'strat_5_supertrend_pullback',
+      status: 'UNAVAILABLE', warmup: {observed: 199, required: 200},
+      reason_codes: ['INSUFFICIENT_COMPLETED_CANDLES']},
+    {symbol: 'RELIANCE', strategy_id: 'strat_4_orb_filtered', status: 'REJECTED',
+      reason_codes: ['CLOSE_NOT_ABOVE_RANGE']}]
+  }}];
+  view.renderScanRunsTable();
+  const text = view.node('scanRunsTableBody').textContent;
+  assert.match(text, /199\/200 bars/);
+  assert.match(text, /UNAVAILABLE/);
+  assert.match(text, /CLOSE_NOT_ABOVE_RANGE/);
+});
+
+test('scan history exposes downstream risk rejection when a detected setup has no stored signal', () => {
+  const view = dashboard();
+  view.state.scans = [{status: 'COMPLETED_EMPTY', total_signals: 0, evaluation: {
+    strategy_evaluations: [{symbol: 'RELIANCE', strategy_id: 'strat_1_order_block',
+      status: 'DETECTED', reason_codes: ['SETUP_DETECTED']}],
+    candidate_evaluations: [{symbol: 'RELIANCE', strategy_id: 'strat_1_order_block',
+      status: 'REJECTED', actionable: false, reason_codes: ['INVALID_SIGNAL_LEVELS']}]
+  }}];
+  view.renderScanRunsTable();
+  const text = view.node('scanRunsTableBody').textContent;
+  assert.match(text, /Candidate REJECTED INVALID_SIGNAL_LEVELS/);
+  assert.match(text, /COMPLETED_EMPTY/);
+});
 
 const untrusted = [
   { data_mode: 'UNKNOWN' },

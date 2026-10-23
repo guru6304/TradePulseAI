@@ -1,0 +1,22 @@
+✔ candidate cards and inspector use supported numeric gross RR and visited rule explanations (61.2926ms)
+✔ empty scan renders warm-up and rejected-rule reasons from retained evaluation (9.1215ms)
+✔ scan history exposes downstream risk rejection when a detected setup has no stored signal (7.4572ms)
+✔ signal cards never promote missing, unknown or conflicting provenance to LIVE (31.0793ms)
+✔ selected inspector never promotes untrusted provenance to LIVE (24.9747ms)
+✔ explicit source labels distinguish stored LIVE records from simulated records (4.313ms)
+✔ backend health failure clears a previously accepted header (2.9129ms)
+✔ continuous feed status exposes stale and fixture observations with signals blocked (3.5954ms)
+✔ a failed signals API request removes cached cards and inspector prices (3.5776ms)
+✔ late successful health response cannot replace a newer unavailable state (3.3338ms)
+✔ fixture scope overrides live-shaped source and acceptance flags (5.8436ms)
+✔ risk-rejected stored candidates show rejection and exact source batch (10.5838ms)
+✔ stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (12.2673ms)
+✔ late stored report response cannot restore accounting after current health fails (6.3418ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 224.1112

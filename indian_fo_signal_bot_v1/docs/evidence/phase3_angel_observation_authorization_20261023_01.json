@@ -1,0 +1,16 @@
+{
+  "scope": "ONE_LATER_MARKET_OPEN_READ_ONLY_RELIANCE_OBSERVATION",
+  "operator_reply": "do which is better and most useful",
+  "question_scope": "One read-only observation of up to 7 minutes for RELIANCE at a later market-open session, with paper execution, Telegram dry-run and scheduler disabled",
+  "selected_action": "ONE_MARKET_OPEN_PROBE_MAXIMUM_420_SECONDS",
+  "instrument": "RELIANCE",
+  "provider": "angelone",
+  "paper_execution_only": true,
+  "telegram_dry_run": true,
+  "background_scheduler_enabled": false,
+  "automatic_scheduling_authorized": false,
+  "orders_authorized": false,
+  "extended_observation_performed": false,
+  "reason_not_performed_now": "Current authorized probe was after market hours and received a stale provider packet; wait for an actually open NSE cash session",
+  "repeat_permission_question_required_for_this_same_probe": false
+}

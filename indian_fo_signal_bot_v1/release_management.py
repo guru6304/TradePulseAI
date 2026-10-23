@@ -61,6 +61,9 @@ class ReleasePackager:
         "historical_study.py",
         "dhan_feed.py",
         "dhan_feed_control.py",
+        "angel_feed.py",
+        "angel_feed_control.py",
+        "angel_history_capture.py",
     ]
 
     REQUIRED_ASSETS = [
@@ -72,6 +75,7 @@ class ReleasePackager:
     # Public handover documents linked by README/runbook. Evidence stays in the
     # repository at the explicit location described in RELEASE_EVIDENCE_LOCATION.
     PUBLIC_DOCUMENTS = [
+        "docs/TRADEPULSE_PHASE4_IMPLEMENTATION_20261023.md",
         "docs/TRADEPULSE_OPERATIONS_RUNBOOK.md", "docs/TRADEPULSE_EXECUTION_LEDGER.md",
         "docs/RELEASE_EVIDENCE_LOCATION.md", "docs/OFFICIAL_SOURCE_FEASIBILITY.md",
         "docs/BROKER_RECOVERY_ENGINEERING_REPORT.md", "docs/TRADEPULSE_CAPABILITY_MATRIX.md",

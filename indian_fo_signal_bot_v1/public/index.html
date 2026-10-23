@@ -1317,6 +1317,33 @@
         return { label: label, className: 'px-1.5 py-0.5 rounded text-[10px] font-bold border mono ' + palette };
       }
 
+      function signalRiskRewardText(signal) {
+        const risk = (signal.candidate_evaluation || {}).risk_reward || {};
+        if (risk.allowed === true && Number.isFinite(risk.target1_ratio) && Number.isFinite(risk.target2_ratio)) {
+          return 'Gross R:R T1 ' + risk.target1_ratio.toFixed(2) + ' / T2 ' + risk.target2_ratio.toFixed(2) +
+            ' | Net R:R unavailable';
+        }
+        return 'Nominal R:R ' + (signal.risk_reward || '--') + ' | Numeric R:R unavailable';
+      }
+
+      function scanEvaluationText(scan) {
+        const rows = (scan.evaluation || {}).strategy_evaluations || [];
+        const candidates = (scan.evaluation || {}).candidate_evaluations || [];
+        if (!rows.length && !candidates.length) return 'Evaluation details unavailable';
+        const reasons = rows.map(function(row) {
+          const warmup = row.warmup || {};
+          const count = warmup.observed !== null && warmup.observed !== undefined ?
+            ' (' + warmup.observed + '/' + warmup.required + ' bars)' : '';
+          return row.symbol + ' ' + row.strategy_id + ': ' + row.status + count + ' ' +
+            (row.reason_codes || []).join(', ');
+        });
+        candidates.forEach(function(candidate) {
+          reasons.push(candidate.symbol + ' ' + candidate.strategy_id + ': Candidate ' + candidate.status +
+            ' ' + (candidate.reason_codes || []).join(', '));
+        });
+        return reasons.join(' | ');
+      }
+
       function renderSignalCards() {
         const container = document.getElementById('signalCardsContainer');
         const badge = document.getElementById('signalCountBadge');
@@ -1411,7 +1438,7 @@
           // Second row: Strategy name + Position Type + Qty
           const midRow = el('div', 'mt-1.5 flex flex-wrap items-center justify-between gap-2 text-xs');
           midRow.appendChild(el('span', 'text-slate-300 font-medium', (s.strategy_name || s.strategy_id || '--') + ' • ' + (s.position_type || '--')));
-          midRow.appendChild(el('span', 'mono text-slate-400', 'Qty: ' + previewQty + ' | R:R ' + (s.risk_reward || '--')));
+          midRow.appendChild(el('span', 'mono text-slate-400', 'Qty: ' + previewQty + ' | ' + signalRiskRewardText(s)));
           card.appendChild(midRow);
           const decision = s.paper_decision || {};
           card.appendChild(el('div', 'mt-1 text-xs text-amber-200 mono',
@@ -1504,7 +1531,7 @@
 
         document.getElementById('detailStrategySubtitle').textContent =
           (sig.strategy_name || sig.strategy_id || '--') + ' • ' + (sig.segment || '--') + ' • ' + (sig.position_type || '--');
-        document.getElementById('detailRrrBadge').textContent = 'R:R ' + (sig.risk_reward || '--') + ' • Quality ' + qScore + '/100';
+        document.getElementById('detailRrrBadge').textContent = signalRiskRewardText(sig) + ' • Quality ' + qScore + '/100';
 
         document.getElementById('detailEntryPrice').textContent = formatInr(sig.entry_price);
         document.getElementById('detailEntryZone').textContent =
@@ -1548,7 +1575,14 @@
         document.getElementById('detailRationale').textContent = (sig.rationale || 'No rationale text provided.') +
           ' | ' + (sig.recommendation_status || 'CANDIDATE_ONLY') + ' | ' +
           ((sig.paper_decision || {}).reason_code || 'Paper eligibility not evaluated') +
-          ' | Input batches: ' + ((sig.lineage || {}).batch_ids || []).join(', ');
+          ' | Input batches: ' + ((sig.lineage || {}).batch_ids || []).join(', ') +
+          ' | Rules: ' + (((((sig.candidate_evaluation || {}).explanation || {}).rule_evaluation || {}).summary) || 'Evaluation unavailable');
+        const evaluation = ((sig.candidate_evaluation || {}).explanation || {}).rule_evaluation || {};
+        document.getElementById('detailRationale').textContent +=
+          ' | Checks: ' + (evaluation.rule_checks || []).map(function(rule) {
+            return rule.rule_id + ': ' + rule.status + ' (' + rule.reason + ')';
+          }).join('; ') +
+          ' | ' + ((sig.candidate_evaluation || {}).warnings || ['Evaluation details unavailable']).join(', ');
 
         // Plot verified signal price levels on #signalPriceChart
         const ctx = document.getElementById('signalPriceChart').getContext('2d');
@@ -2028,7 +2062,7 @@
             el(
               'td',
               'py-2 px-2 text-[11px] font-sans ' + (r.error_message ? 'text-rose-300' : 'text-slate-400'),
-              r.error_message ? ((r.error_type || 'Error') + ': ' + r.error_message) : 'OK'
+              r.error_message ? ((r.error_type || 'Error') + ': ' + r.error_message) : scanEvaluationText(r)
             )
           );
           tbody.appendChild(tr);

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "scope": "OFFLINE_RELEASE_CANDIDATE",
+  "files": 102,
+  "sha256": "4e32d72553ab7b3572ffc115ca845f15e65971181958fc87e6bd02f5c0829aa2",
+  "manifest_sha256": "e6fa4f097060c82bfe048ca5d8aa609b7d2e7aa669bcd83a31c4eea2f26ee122",
+  "publisher_authentication": "NOT_ESTABLISHED",
+  "exact_current_files": true,
+  "private_paths_excluded": true,
+  "configured_credential_scan": "PASS",
+  "exact_template_placeholders_excluded": 1,
+  "recorded_at": "2026-10-23T17:39:39.346475+00:00",
+  "exit_code": 0
+}

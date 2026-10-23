@@ -1,5 +1,6 @@
 import math
 import json
+import inspect
 from decimal import Decimal, InvalidOperation, ROUND_CEILING, ROUND_FLOOR
 from dataclasses import dataclass, asdict, field
 from datetime import datetime, date, time as dt_time, timedelta, timezone
@@ -141,6 +142,151 @@ def rank_signal_candidates(signals: List[TradeSignal]) -> List[TradeSignal]:
                 signal.position_type, signal.timestamp, signal.instrument_label,
                 json.dumps(signal.to_dict(), sort_keys=True, allow_nan=False))
     return sorted(signals, key=key)
+
+
+STRATEGY_EVALUATION_SCHEMA = "tradepulse.strategy-evaluation.v1"
+STRATEGY_WARMUP_BARS = {"strat_1_order_block": 30, "strat_2_vwap_pullback": 35,
+    "strat_3_option_apex_oi": 1, "strat_4_orb_filtered": 30, "strat_5_supertrend_pullback": 200}
+
+
+def _evaluation_value(value):
+    """Only supported JSON measurements; never retain arbitrary objects/errors."""
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+    if value is None or isinstance(value, (str, bool, int, float)):
+        return value
+    if isinstance(value, (list, tuple)):
+        return [_evaluation_value(item) for item in value]
+    return None
+
+
+def _evaluation_check(trace, rule_id, passed, reason, *, unavailable=False, **measurements):
+    """Record the predicate actually visited; leave its Boolean result unchanged."""
+    result = bool(passed)
+    if trace is not None:
+        trace.setdefault("rule_checks", []).append(dict(rule_id=rule_id,
+            status="PASS" if result else "UNAVAILABLE" if unavailable else "FAIL",
+            reason="CONDITION_MET" if result else reason,
+            measurements={name: _evaluation_value(value) for name, value in measurements.items()}))
+    return result
+
+
+def _evaluation_warmup(trace, completed, required):
+    if trace is not None:
+        trace["warmup"] = dict(required=required, observed=len(completed), interval_min=5)
+        _evaluation_check(trace, "data.completed_ohlcv", True, "INVALID_CANDLE_DATA")
+    return _evaluation_check(trace, "data.warmup", len(completed) >= required,
+        "INSUFFICIENT_COMPLETED_CANDLES", unavailable=True, required=required, observed=len(completed))
+
+
+def _evaluation_session_start(trace, completed):
+    """Session VWAP requires the actual opening bar, even with a long ring."""
+    current_day = parse_ist_timestamp(completed[-1]["timestamp"]).date()
+    first = next(row for row in completed if parse_ist_timestamp(row["timestamp"]).date() == current_day)
+    first_dt = parse_ist_timestamp(first["timestamp"])
+    return _evaluation_check(trace, "session.vwap_start", first_dt.time() == NSE_OPEN_TIME,
+        "SESSION_START_COVERAGE_MISSING", unavailable=True,
+        observed_first_timestamp=first["timestamp"], required_open_time="09:15:00")
+
+
+def signal_risk_reward(signal):
+    """Gross level geometry in INR; estimated charges are not observed fills.
+
+    The supplied charge estimate prices the modeled stop, not both target exits.
+    Net target RR stays unavailable without target-specific costs/slippage.
+    """
+    result = dict(schema_version="tradepulse.signal-risk-reward.v1", allowed=False,
+        status="UNAVAILABLE", reason_code="INVALID_SIGNAL_GEOMETRY", price_unit="INR",
+        risk_per_unit=None, raw_stop_distance=None, reward_t1_per_unit=None, reward_t2_per_unit=None,
+        target1_ratio=None, target2_ratio=None, gross_t1_rr=None, gross_t2_rr=None,
+        estimated_net_rr=dict(status="UNAVAILABLE", reason_code="TARGET_EXIT_COSTS_AND_SLIPPAGE_NOT_PROVIDED"),
+        liquidity_status="NOT_ESTABLISHED", fill_status="LEVELS_ONLY_NOT_EXECUTED")
+    try:
+        validate_trade_signal(signal)
+        risk = abs(signal.entry_price - signal.stop_loss)
+        rewards = [abs(target - signal.entry_price) for target in (signal.target_1, signal.target_2)]
+        ratios = [reward / risk for reward in rewards]
+        if not all(math.isfinite(value) and value > 0 for value in [risk, *rewards, *ratios]):
+            return result
+        result.update(allowed=True, status="SUPPORTED_GROSS_GEOMETRY", reason_code="VALID_SIGNAL_LEVELS",
+            risk_per_unit=risk, raw_stop_distance=risk,
+            reward_t1_per_unit=rewards[0], reward_t2_per_unit=rewards[1],
+            target1_ratio=ratios[0], target2_ratio=ratios[1],
+            gross_t1_rr=ratios[0], gross_t2_rr=ratios[1],
+            estimated_charges_inr=signal.est_charges_inr,
+            estimated_charges_per_unit=round(signal.est_charges_inr / signal.position_qty, 8),
+            nominal_strategy_rr_label=signal.risk_reward,
+            ratio_basis="ABSOLUTE_TARGET_DISTANCE_DIVIDED_BY_ACTUAL_ENTRY_STOP_DISTANCE",
+            estimated_charge_scope="MODELED_CHARGES_ONLY_NOT_TARGET_EXIT_COSTS_OR_OBSERVED_FEES")
+    except (ValueError, TypeError, AttributeError, ArithmeticError):
+        pass
+    return result
+
+
+def _trace_supported(evaluator):
+    # Mock side effects/wraps retain the real callable's signature. Never retry an
+    # evaluator after TypeError: that could duplicate mitigation side effects.
+    target = getattr(evaluator, "side_effect", None)
+    if not callable(target):
+        target = getattr(evaluator, "_mock_wraps", None) or evaluator
+    try:
+        params = inspect.signature(target).parameters
+        return "evaluation_trace" in params or any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values())
+    except (TypeError, ValueError):
+        return False
+
+
+def evaluate_strategy_detailed(strategy_id, candles, *, evaluator=None, **kwargs):
+    """Run one existing evaluator once, returning its candidate and actual trace.
+
+    Existing direct evaluator returns/exceptions remain unchanged. This boundary
+    turns invalid input into an unavailable diagnostic without echoing exception
+    strings. Caller-supplied evaluators preserve scanner mock/override behavior.
+    Short-circuited checks are not reported as evaluated failures.
+    """
+    names = {"strat_1_order_block": "evaluate_order_block_fvg", "strat_2_vwap_pullback": "evaluate_vwap_pullback",
+        "strat_3_option_apex_oi": "evaluate_option_apex_oi_shift", "strat_4_orb_filtered": "evaluate_orb_breakout",
+        "strat_5_supertrend_pullback": "evaluate_supertrend_pullback"}
+    trace = dict(schema_version=STRATEGY_EVALUATION_SCHEMA, strategy_id=strategy_id, status="UNAVAILABLE",
+        reason_codes=[], rule_checks=[], warmup=dict(required=STRATEGY_WARMUP_BARS.get(strategy_id), observed=None, interval_min=5),
+        summary="", trace_scope="ACTUAL_VISITED_EVALUATOR_CHECKS_SHORT_CIRCUIT_PRESERVED")
+    if strategy_id not in names:
+        trace.update(reason_codes=["UNSUPPORTED_STRATEGY"], summary="Strategy is not implemented by the existing evaluators.")
+        return None, trace
+    fn = evaluator if evaluator is not None else globals()[names[strategy_id]]
+    call = dict(kwargs)
+    call.pop("evaluation_trace", None)
+    symbol = call.pop("symbol", None)
+    index_symbol = call.pop("index_symbol", None)
+    call["index_symbol" if strategy_id == "strat_3_option_apex_oi" else "symbol"] = index_symbol if index_symbol is not None else symbol
+    if not isinstance(index_symbol if index_symbol is not None else symbol, str) or not (index_symbol if index_symbol is not None else symbol).strip():
+        _evaluation_check(trace, "data.symbol", False, "STRATEGY_SYMBOL_REQUIRED", unavailable=True)
+        trace.update(reason_codes=["STRATEGY_SYMBOL_REQUIRED"], summary="A strategy symbol is required.")
+        return None, trace
+    call["candles"] = candles
+    if strategy_id == "strat_3_option_apex_oi":
+        call.setdefault("option_chain", None)
+    if _trace_supported(fn):
+        call["evaluation_trace"] = trace
+    try:
+        signal = fn(**call)
+    except (ValueError, TypeError, KeyError, ArithmeticError) as exc:
+        _evaluation_check(trace, "data.evaluation_input", False, "INVALID_EVALUATION_INPUT", unavailable=True)
+        trace.update(reason_codes=["INVALID_EVALUATION_INPUT"], error_type=type(exc).__name__,
+            summary="Required candle, chain, or evaluation inputs failed validation; no candidate is available.")
+        return None, trace
+    if not trace["rule_checks"]:
+        _evaluation_check(trace, "evaluator.trace", False, "CALLABLE_DIAGNOSTICS_UNAVAILABLE", unavailable=True)
+    if signal is not None:
+        trace.update(status="DETECTED", reason_codes=["SETUP_DETECTED"],
+            summary="Existing strategy detected a setup; source, risk and downstream actionability gates remain separate.")
+    else:
+        failed = [row["reason"] for row in trace["rule_checks"] if row["status"] != "PASS"]
+        unavailable = any(row["status"] == "UNAVAILABLE" for row in trace["rule_checks"])
+        trace.update(status="UNAVAILABLE" if unavailable else "REJECTED",
+            reason_codes=list(dict.fromkeys(failed)) or ["NO_ELIGIBLE_SETUP"],
+            summary="Required strategy inputs are unavailable." if unavailable else "No setup met the existing evaluated strategy conditions.")
+    return signal, trace
 
 
 def signal_state_identity(sig: Any, broker_name: str = "") -> Tuple[str, Tuple[str, str, str]]:
@@ -920,15 +1066,19 @@ def evaluate_order_block_fvg(
     mitigated_zones: Optional[Set[str]] = None,
     lot_size: Optional[int] = None,
     execution_costs=None,
+    evaluation_trace=None,
 ) -> Optional[TradeSignal]:
     completed = filter_completed_candles(candles, interval_min=5, now=now)
-    if len(completed) < 30:
+    if not _evaluation_warmup(evaluation_trace, completed, 30):
         return None
     atrs = compute_atr(completed, 10)
     vwaps = compute_session_vwap(completed)
     recent = completed[-15:]
     last = recent[-1]
-    if not is_within_nse_session(last["timestamp"]):
+    if not _evaluation_check(evaluation_trace, "session.nse", is_within_nse_session(last["timestamp"]),
+            "OUTSIDE_NSE_SESSION", unavailable=True):
+        return None
+    if not _evaluation_session_start(evaluation_trace, completed):
         return None
     curr_atr = max(0.05, atrs[-1])
     curr_vwap = vwaps[-1]
@@ -952,7 +1102,10 @@ def evaluate_order_block_fvg(
         displacement_bull = imp_2["close"] - ob_bar["open"]
         fvg_bull = imp_2["low"] > zone_high
 
-        if is_red and bos_bull and (fvg_bull or displacement_bull >= 1.5 * curr_atr):
+        if (_evaluation_check(evaluation_trace, "ob.bull.origin", is_red, "BULL_BLOCK_NOT_RED", candidate_timestamp=ob_bar["timestamp"])
+                and _evaluation_check(evaluation_trace, "ob.bull.bos", bos_bull, "BULL_BREAK_OF_STRUCTURE_MISSING")
+                and _evaluation_check(evaluation_trace, "ob.bull.displacement", fvg_bull or displacement_bull >= 1.5 * curr_atr,
+                    "BULL_FVG_OR_DISPLACEMENT_MISSING", fvg=fvg_bull, displacement=displacement_bull, required_displacement=1.5 * curr_atr)):
             bull_zone_key = f"{symbol}:OB:BULL:{ob_bar['timestamp']}"
             invalidated_bull = any(b["close"] < zone_low for b in subsequent)
             prior_mitigated_bull = any(b["low"] <= zone_high * 1.0015 for b in prior_post_impulse)
@@ -968,7 +1121,9 @@ def evaluate_order_block_fvg(
                 and last["close"] >= zone_low
             )
 
-            if not invalidated_bull and not already_used_bull and retested_bull:
+            if (_evaluation_check(evaluation_trace, "ob.bull.validity", not invalidated_bull, "BULL_BLOCK_INVALIDATED", zone_low=zone_low)
+                    and _evaluation_check(evaluation_trace, "ob.bull.first_retest", not already_used_bull, "BULL_BLOCK_ALREADY_MITIGATED")
+                    and _evaluation_check(evaluation_trace, "ob.bull.retest", retested_bull, "BULL_RETEST_NOT_HELD")):
                 entry = round(last["close"], 2)
                 sl = round(zone_low - 0.25 * curr_atr, 2)
                 risk_per_share = max(0.5, entry - sl)
@@ -978,7 +1133,7 @@ def evaluate_order_block_fvg(
                                        instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                        lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                            lambda q: execution_costs(entry, sl, q, "LONG")))
-                if not sizing["eligible"]:
+                if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
                     return None
                 if mitigated_zones is not None:
                     mitigated_zones.add(bull_zone_key)
@@ -1030,7 +1185,10 @@ def evaluate_order_block_fvg(
         displacement_bear = ob_bar["open"] - imp_2["close"]
         fvg_bear = imp_2["high"] < zone_low
 
-        if is_green and bos_bear and (fvg_bear or displacement_bear >= 1.5 * curr_atr):
+        if (_evaluation_check(evaluation_trace, "ob.bear.origin", is_green, "BEAR_BLOCK_NOT_GREEN", candidate_timestamp=ob_bar["timestamp"])
+                and _evaluation_check(evaluation_trace, "ob.bear.bos", bos_bear, "BEAR_BREAK_OF_STRUCTURE_MISSING")
+                and _evaluation_check(evaluation_trace, "ob.bear.displacement", fvg_bear or displacement_bear >= 1.5 * curr_atr,
+                    "BEAR_FVG_OR_DISPLACEMENT_MISSING", fvg=fvg_bear, displacement=displacement_bear, required_displacement=1.5 * curr_atr)):
             bear_zone_key = f"{symbol}:OB:BEAR:{ob_bar['timestamp']}"
             invalidated_bear = any(b["close"] > zone_high for b in subsequent)
             prior_mitigated_bear = any(b["high"] >= zone_low * 0.9985 for b in prior_post_impulse)
@@ -1046,7 +1204,9 @@ def evaluate_order_block_fvg(
                 and last["close"] <= zone_high
             )
 
-            if not invalidated_bear and not already_used_bear and retested_bear:
+            if (_evaluation_check(evaluation_trace, "ob.bear.validity", not invalidated_bear, "BEAR_BLOCK_INVALIDATED", zone_high=zone_high)
+                    and _evaluation_check(evaluation_trace, "ob.bear.first_retest", not already_used_bear, "BEAR_BLOCK_ALREADY_MITIGATED")
+                    and _evaluation_check(evaluation_trace, "ob.bear.retest", retested_bear, "BEAR_RETEST_NOT_HELD")):
                 entry = round(last["close"], 2)
                 sl = round(zone_high + 0.25 * curr_atr, 2)
                 risk_per_share = max(0.5, sl - entry)
@@ -1056,7 +1216,7 @@ def evaluate_order_block_fvg(
                                        instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                        lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                            lambda q: execution_costs(entry, sl, q, "SHORT")))
-                if not sizing["eligible"]:
+                if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
                     return None
                 if mitigated_zones is not None:
                     mitigated_zones.add(bear_zone_key)
@@ -1116,12 +1276,15 @@ def evaluate_vwap_pullback(
     market_breadth: Optional[Dict[str, Any]] = None,
     lot_size: Optional[int] = None,
     execution_costs=None,
+    evaluation_trace=None,
 ) -> Optional[TradeSignal]:
     completed = filter_completed_candles(candles, interval_min=5, now=now)
-    if len(completed) < 35:
+    if not _evaluation_warmup(evaluation_trace, completed, 35):
         return None
     last = completed[-1]
-    if not is_within_nse_session(last["timestamp"]):
+    if not _evaluation_check(evaluation_trace, "session.nse", is_within_nse_session(last["timestamp"]), "OUTSIDE_NSE_SESSION", unavailable=True):
+        return None
+    if not _evaluation_session_start(evaluation_trace, completed):
         return None
 
     closes = [c["close"] for c in completed]
@@ -1135,7 +1298,7 @@ def evaluate_vwap_pullback(
     curr_rsi = rsis[-1]
     curr_atr = max(0.05, atrs[-1])
     avg_vol_20 = sum(c["volume"] for c in completed[-21:-1]) / 20.0
-    if avg_vol_20 <= 0:
+    if not _evaluation_check(evaluation_trace, "volume.baseline", avg_vol_20 > 0, "POSITIVE_BASELINE_VOLUME_REQUIRED", unavailable=True, baseline_volume=avg_vol_20):
         return None
 
     rvol = last["volume"] / avg_vol_20
@@ -1150,7 +1313,10 @@ def evaluate_vwap_pullback(
     )
     rsi_bull_ok = 48.0 <= curr_rsi <= 72.0
 
-    if touched_vwap_bull and bullish_reclaim and vol_surge and rsi_bull_ok:
+    if (_evaluation_check(evaluation_trace, "vwap.bull.touch", touched_vwap_bull, "BULL_VWAP_TOUCH_MISSING", low=last["low"], threshold=curr_vwap * 1.0025)
+            and _evaluation_check(evaluation_trace, "vwap.bull.reclaim", bullish_reclaim, "BULL_VWAP_EMA_RECLAIM_MISSING", close=last["close"], vwap=curr_vwap, ema20=curr_ema)
+            and _evaluation_check(evaluation_trace, "volume.surge", vol_surge, "VOLUME_SURGE_BELOW_1_4", rvol=rvol, threshold=1.4)
+            and _evaluation_check(evaluation_trace, "rsi.bull", rsi_bull_ok, "RSI_OUTSIDE_BULL_48_72", rsi14=curr_rsi, minimum=48.0, maximum=72.0)):
         entry = round(last["close"], 2)
         sl = round(min(last["low"], curr_vwap) - 0.35 * curr_atr, 2)
         risk_per_share = max(0.5, entry - sl)
@@ -1160,7 +1326,7 @@ def evaluate_vwap_pullback(
                                instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(entry, sl, q, "LONG")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         est_charges = sizing["estimated_charges_inr"]
@@ -1211,7 +1377,10 @@ def evaluate_vwap_pullback(
     )
     rsi_bear_ok = 28.0 <= curr_rsi <= 52.0
 
-    if tested_vwap_bear and bearish_rejection and vol_surge and rsi_bear_ok:
+    if (_evaluation_check(evaluation_trace, "vwap.bear.touch", tested_vwap_bear, "BEAR_VWAP_TOUCH_MISSING", high=last["high"], threshold=curr_vwap * 0.9975)
+            and _evaluation_check(evaluation_trace, "vwap.bear.rejection", bearish_rejection, "BEAR_VWAP_EMA_REJECTION_MISSING", close=last["close"], vwap=curr_vwap, ema20=curr_ema)
+            and _evaluation_check(evaluation_trace, "volume.surge", vol_surge, "VOLUME_SURGE_BELOW_1_4", rvol=rvol, threshold=1.4)
+            and _evaluation_check(evaluation_trace, "rsi.bear", rsi_bear_ok, "RSI_OUTSIDE_BEAR_28_52", rsi14=curr_rsi, minimum=28.0, maximum=52.0)):
         entry = round(last["close"], 2)
         sl = round(max(last["high"], curr_vwap) + 0.35 * curr_atr, 2)
         risk_per_share = max(0.5, sl - entry)
@@ -1221,7 +1390,7 @@ def evaluate_vwap_pullback(
                                instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(entry, sl, q, "SHORT")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         est_charges = sizing["estimated_charges_inr"]
@@ -1279,20 +1448,30 @@ def evaluate_option_apex_oi_shift(
     now: Optional[Any] = None,
     market_breadth: Optional[Dict[str, Any]] = None,
     execution_costs=None,
+    evaluation_trace=None,
 ) -> Optional[TradeSignal]:
-    if index_symbol not in ("NIFTY", "BANKNIFTY") or not candles or option_chain is None or option_chain == {}:
+    if not _evaluation_check(evaluation_trace, "option.index", index_symbol in ("NIFTY", "BANKNIFTY"), "UNSUPPORTED_OPTION_INDEX", unavailable=True):
+        return None
+    if not _evaluation_check(evaluation_trace, "option.candles", bool(candles), "OPTION_UNDERLYING_CANDLES_REQUIRED", unavailable=True):
+        _evaluation_warmup(evaluation_trace, [], 1)
+        return None
+    if not _evaluation_check(evaluation_trace, "option.chain", option_chain is not None and option_chain != {}, "OPTION_CHAIN_REQUIRED", unavailable=True):
         return None
     completed = filter_completed_candles(candles, interval_min=5, now=now)
-    if not completed:
+    if not _evaluation_warmup(evaluation_trace, completed, 1):
         return None
     last = completed[-1]
-    if not is_within_nse_session(last["timestamp"]):
+    if not _evaluation_check(evaluation_trace, "session.nse", is_within_nse_session(last["timestamp"]), "OUTSIDE_NSE_SESSION", unavailable=True):
+        return None
+    if not _evaluation_session_start(evaluation_trace, completed):
         return None
 
     try:
         atm, pcr, atm_row = validate_option_chain_for_strategy(option_chain)
     except LookupError:
+        _evaluation_check(evaluation_trace, "option.atm", False, "ATM_STRIKE_ROW_MISSING", unavailable=True)
         return None
+    _evaluation_check(evaluation_trace, "option.atm", True, "ATM_STRIKE_ROW_MISSING", atm_strike=atm, pcr=pcr)
 
     vwaps = compute_session_vwap(completed)
     atrs = compute_atr(completed, 10)
@@ -1307,7 +1486,10 @@ def evaluate_option_apex_oi_shift(
     pe_oi_chg = atm_row["pe_oi_change"]
 
     # 1. Bullish Option Apex: ATM Call unwinding (< 0) + ATM Put writing (> 0) + PCR >= 1.10 + Spot >= VWAP * 0.998
-    if ce_oi_chg < 0 and pe_oi_chg > 0 and pcr >= 1.10 and last["close"] >= curr_vwap * 0.998:
+    if (_evaluation_check(evaluation_trace, "oi.bull.call_unwinding", ce_oi_chg < 0, "CALL_UNWINDING_REQUIRED", ce_oi_change=ce_oi_chg)
+            and _evaluation_check(evaluation_trace, "oi.bull.put_writing", pe_oi_chg > 0, "PUT_WRITING_REQUIRED", pe_oi_change=pe_oi_chg)
+            and _evaluation_check(evaluation_trace, "pcr.bull", pcr >= 1.10, "PCR_BELOW_1_10", pcr=pcr, threshold=1.10)
+            and _evaluation_check(evaluation_trace, "vwap.bull.spot", last["close"] >= curr_vwap * 0.998, "SPOT_BELOW_BULL_VWAP_THRESHOLD", close=last["close"], threshold=curr_vwap * 0.998)):
         opt_premium = round(float(atm_row["ce_ltp"]), 2)
         sl_premium = round(opt_premium * 0.78, 2)
         risk_per_unit = max(1.0, opt_premium - sl_premium)
@@ -1317,7 +1499,7 @@ def evaluate_option_apex_oi_shift(
                                instrument_type="OPTIDX", lot_size=lot_size,
                                cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(opt_premium, sl_premium, q, "LONG")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         lots = qty // lot_size
@@ -1364,7 +1546,10 @@ def evaluate_option_apex_oi_shift(
         )
 
     # 2. Bearish Option Apex: ATM Put unwinding (< 0) + ATM Call writing (> 0) + PCR <= 0.85 + Spot <= VWAP * 1.002
-    if pe_oi_chg < 0 and ce_oi_chg > 0 and pcr <= 0.85 and last["close"] <= curr_vwap * 1.002:
+    if (_evaluation_check(evaluation_trace, "oi.bear.put_unwinding", pe_oi_chg < 0, "PUT_UNWINDING_REQUIRED", pe_oi_change=pe_oi_chg)
+            and _evaluation_check(evaluation_trace, "oi.bear.call_writing", ce_oi_chg > 0, "CALL_WRITING_REQUIRED", ce_oi_change=ce_oi_chg)
+            and _evaluation_check(evaluation_trace, "pcr.bear", pcr <= 0.85, "PCR_ABOVE_0_85", pcr=pcr, threshold=0.85)
+            and _evaluation_check(evaluation_trace, "vwap.bear.spot", last["close"] <= curr_vwap * 1.002, "SPOT_ABOVE_BEAR_VWAP_THRESHOLD", close=last["close"], threshold=curr_vwap * 1.002)):
         opt_premium = round(float(atm_row["pe_ltp"]), 2)
         sl_premium = round(opt_premium * 0.78, 2)
         risk_per_unit = max(1.0, opt_premium - sl_premium)
@@ -1374,7 +1559,7 @@ def evaluate_option_apex_oi_shift(
                                instrument_type="OPTIDX", lot_size=lot_size,
                                cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(opt_premium, sl_premium, q, "LONG")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         lots = qty // lot_size
@@ -1436,22 +1621,24 @@ def evaluate_orb_breakout(
     market_breadth: Optional[Dict[str, Any]] = None,
     lot_size: Optional[int] = None,
     execution_costs=None,
+    evaluation_trace=None,
 ) -> Optional[TradeSignal]:
     completed = filter_completed_candles(candles, interval_min=5, now=now)
-    if len(completed) < 30:
+    if not _evaluation_warmup(evaluation_trace, completed, 30):
         return None
     last = completed[-1]
     last_dt = parse_ist_timestamp(last["timestamp"])
-    if not is_within_nse_session(last_dt):
+    if not _evaluation_check(evaluation_trace, "session.nse", is_within_nse_session(last_dt), "OUTSIDE_NSE_SESSION", unavailable=True):
         return None
     curr_day = last_dt.strftime("%Y-%m-%d")
     day_candles = [c for c in completed if parse_ist_timestamp(c["timestamp"]).strftime("%Y-%m-%d") == curr_day]
-    if len(day_candles) < 4:
+    if not _evaluation_check(evaluation_trace, "orb.session_bars", len(day_candles) >= 4, "ORB_CURRENT_SESSION_BARS_REQUIRED", unavailable=True, observed=len(day_candles), required=4):
         return None
 
     orb_bars = day_candles[:3]
-    if [parse_ist_timestamp(bar["timestamp"]).time() for bar in orb_bars] != [
-            dt_time(9, 15), dt_time(9, 20), dt_time(9, 25)]:
+    if not _evaluation_check(evaluation_trace, "orb.opening_bars", [parse_ist_timestamp(bar["timestamp"]).time() for bar in orb_bars] == [
+            dt_time(9, 15), dt_time(9, 20), dt_time(9, 25)], "ORB_OPENING_RANGE_BARS_MISSING", unavailable=True,
+            observed_times=[parse_ist_timestamp(bar["timestamp"]).strftime("%H:%M:%S") for bar in orb_bars]):
         return None
     orb_high = max(b["high"] for b in orb_bars)
     orb_low = min(b["low"] for b in orb_bars)
@@ -1463,7 +1650,7 @@ def evaluate_orb_breakout(
     curr_atr = max(0.05, atrs[-1])
     curr_vwap = vwaps[-1]
     avg_vol_20 = sum(c["volume"] for c in completed[-21:-1]) / 20.0
-    if avg_vol_20 <= 0:
+    if not _evaluation_check(evaluation_trace, "volume.baseline", avg_vol_20 > 0, "POSITIVE_BASELINE_VOLUME_REQUIRED", unavailable=True, baseline_volume=avg_vol_20):
         return None
 
     prev = completed[-2]
@@ -1471,11 +1658,11 @@ def evaluate_orb_breakout(
 
     # 1. Bullish Opening Range Breakout
     if (
-        prev["close"] <= orb_high
-        and last["close"] > orb_high
-        and last["close"] > curr_vwap
-        and rsis[-1] >= 55.0
-        and rvol >= 1.6
+        _evaluation_check(evaluation_trace, "orb.bull.prior", prev["close"] <= orb_high, "PRIOR_CLOSE_ALREADY_ABOVE_ORB", close=prev["close"], threshold=orb_high)
+        and _evaluation_check(evaluation_trace, "orb.bull.breakout", last["close"] > orb_high, "ORB_HIGH_BREAKOUT_MISSING", close=last["close"], threshold=orb_high)
+        and _evaluation_check(evaluation_trace, "vwap.bull", last["close"] > curr_vwap, "CLOSE_NOT_ABOVE_VWAP", close=last["close"], threshold=curr_vwap)
+        and _evaluation_check(evaluation_trace, "rsi.bull", rsis[-1] >= 55.0, "RSI_BELOW_55", rsi14=rsis[-1], threshold=55.0)
+        and _evaluation_check(evaluation_trace, "volume.surge", rvol >= 1.6, "VOLUME_SURGE_BELOW_1_6", rvol=rvol, threshold=1.6)
     ):
         entry = round(last["close"], 2)
         sl = round(max(orb_low, last["low"] - (orb_high - orb_low) * 0.25), 2)
@@ -1486,7 +1673,7 @@ def evaluate_orb_breakout(
                                instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(entry, sl, q, "LONG")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         est_charges = sizing["estimated_charges_inr"]
@@ -1530,11 +1717,11 @@ def evaluate_orb_breakout(
 
     # 2. Bearish Opening Range Breakdown
     if (
-        prev["close"] >= orb_low
-        and last["close"] < orb_low
-        and last["close"] < curr_vwap
-        and rsis[-1] <= 45.0
-        and rvol >= 1.6
+        _evaluation_check(evaluation_trace, "orb.bear.prior", prev["close"] >= orb_low, "PRIOR_CLOSE_ALREADY_BELOW_ORB", close=prev["close"], threshold=orb_low)
+        and _evaluation_check(evaluation_trace, "orb.bear.breakdown", last["close"] < orb_low, "ORB_LOW_BREAKDOWN_MISSING", close=last["close"], threshold=orb_low)
+        and _evaluation_check(evaluation_trace, "vwap.bear", last["close"] < curr_vwap, "CLOSE_NOT_BELOW_VWAP", close=last["close"], threshold=curr_vwap)
+        and _evaluation_check(evaluation_trace, "rsi.bear", rsis[-1] <= 45.0, "RSI_ABOVE_45", rsi14=rsis[-1], threshold=45.0)
+        and _evaluation_check(evaluation_trace, "volume.surge", rvol >= 1.6, "VOLUME_SURGE_BELOW_1_6", rvol=rvol, threshold=1.6)
     ):
         entry = round(last["close"], 2)
         sl = round(min(orb_high, last["high"] + (orb_high - orb_low) * 0.25), 2)
@@ -1545,7 +1732,7 @@ def evaluate_orb_breakout(
                                instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(entry, sl, q, "SHORT")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         est_charges = sizing["estimated_charges_inr"]
@@ -1603,17 +1790,20 @@ def evaluate_supertrend_pullback(
     market_breadth: Optional[Dict[str, Any]] = None,
     lot_size: Optional[int] = None,
     execution_costs=None,
+    evaluation_trace=None,
 ) -> Optional[TradeSignal]:
     completed = filter_completed_candles(candles, interval_min=5, now=now)
-    if len(completed) < 200:
+    if not _evaluation_warmup(evaluation_trace, completed, 200):
         return None
     last = completed[-1]
     last_dt = parse_ist_timestamp(last["timestamp"])
-    if not is_within_nse_session(last_dt):
+    if not _evaluation_check(evaluation_trace, "session.nse", is_within_nse_session(last_dt), "OUTSIDE_NSE_SESSION", unavailable=True):
+        return None
+    if not _evaluation_session_start(evaluation_trace, completed):
         return None
     hhmm = last_dt.strftime("%H:%M")
 
-    if "09:15" <= hhmm < "09:45" or "11:30" <= hhmm <= "13:30":
+    if not _evaluation_check(evaluation_trace, "session.strategy_window", not ("09:15" <= hhmm < "09:45" or "11:30" <= hhmm <= "13:30"), "SUPERTREND_EXCLUDED_SESSION_WINDOW", current_time=hhmm):
         return None
 
     closes = [c["close"] for c in completed]
@@ -1622,7 +1812,7 @@ def evaluate_supertrend_pullback(
     st_line, st_dir = compute_supertrend(completed, period=10, multiplier=3.0)
     atrs = compute_atr(completed, 10)
     avg_vol_20 = sum(c["volume"] for c in completed[-21:-1]) / 20.0
-    if avg_vol_20 <= 0:
+    if not _evaluation_check(evaluation_trace, "volume.baseline", avg_vol_20 > 0, "POSITIVE_BASELINE_VOLUME_REQUIRED", unavailable=True, baseline_volume=avg_vol_20):
         return None
 
     curr_st = st_line[-1]
@@ -1636,14 +1826,14 @@ def evaluate_supertrend_pullback(
     # avoiding raw 1-bar Supertrend flip whipsaws.
     near_st_or_vwap_bull = (last["low"] <= curr_st * 1.004) or (last["low"] <= curr_vwap * 1.003)
     if (
-        st_dir[-1] == 1
-        and st_dir[-2] == 1
-        and last["close"] > curr_ema200
-        and completed[-2]["close"] > ema200[-2]
-        and last["close"] > curr_vwap
-        and near_st_or_vwap_bull
-        and last["close"] > last["open"]
-        and last["volume"] >= 1.3 * avg_vol_20
+        _evaluation_check(evaluation_trace, "st.bull.direction", st_dir[-1] == 1, "SUPERTREND_NOT_BULLISH", observed=st_dir[-1])
+        and _evaluation_check(evaluation_trace, "st.bull.established", st_dir[-2] == 1, "SUPERTREND_BULL_TREND_NOT_ESTABLISHED", observed=st_dir[-2])
+        and _evaluation_check(evaluation_trace, "ema.bull.current", last["close"] > curr_ema200, "CLOSE_NOT_ABOVE_EMA200", close=last["close"], threshold=curr_ema200)
+        and _evaluation_check(evaluation_trace, "ema.bull.prior", completed[-2]["close"] > ema200[-2], "PRIOR_CLOSE_NOT_ABOVE_EMA200", close=completed[-2]["close"], threshold=ema200[-2])
+        and _evaluation_check(evaluation_trace, "vwap.bull", last["close"] > curr_vwap, "CLOSE_NOT_ABOVE_VWAP", close=last["close"], threshold=curr_vwap)
+        and _evaluation_check(evaluation_trace, "st.bull.pullback", near_st_or_vwap_bull, "BULL_SUPERTREND_OR_VWAP_PULLBACK_MISSING", low=last["low"], supertrend_threshold=curr_st * 1.004, vwap_threshold=curr_vwap * 1.003)
+        and _evaluation_check(evaluation_trace, "st.bull.candle", last["close"] > last["open"], "BULLISH_CONFIRMATION_CANDLE_REQUIRED", close=last["close"], open=last["open"])
+        and _evaluation_check(evaluation_trace, "volume.surge", last["volume"] >= 1.3 * avg_vol_20, "VOLUME_SURGE_BELOW_1_3", rvol=rvol, threshold=1.3)
     ):
         entry = round(last["close"], 2)
         sl = round(min(curr_st, last["low"]) - 0.25 * curr_atr, 2)
@@ -1654,7 +1844,7 @@ def evaluate_supertrend_pullback(
                                instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(entry, sl, q, "LONG")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         est_charges = sizing["estimated_charges_inr"]
@@ -1701,14 +1891,14 @@ def evaluate_supertrend_pullback(
     # and prior bar below 200 EMA (`completed[-2]["close"] < ema200[-2]`), preventing raw 1-bar flip whipsaws.
     near_st_or_vwap_bear = (last["high"] >= curr_st * 0.996) or (last["high"] >= curr_vwap * 0.997)
     if (
-        st_dir[-1] == -1
-        and st_dir[-2] == -1
-        and last["close"] < curr_ema200
-        and completed[-2]["close"] < ema200[-2]
-        and last["close"] < curr_vwap
-        and near_st_or_vwap_bear
-        and last["close"] < last["open"]
-        and last["volume"] >= 1.3 * avg_vol_20
+        _evaluation_check(evaluation_trace, "st.bear.direction", st_dir[-1] == -1, "SUPERTREND_NOT_BEARISH", observed=st_dir[-1])
+        and _evaluation_check(evaluation_trace, "st.bear.established", st_dir[-2] == -1, "SUPERTREND_BEAR_TREND_NOT_ESTABLISHED", observed=st_dir[-2])
+        and _evaluation_check(evaluation_trace, "ema.bear.current", last["close"] < curr_ema200, "CLOSE_NOT_BELOW_EMA200", close=last["close"], threshold=curr_ema200)
+        and _evaluation_check(evaluation_trace, "ema.bear.prior", completed[-2]["close"] < ema200[-2], "PRIOR_CLOSE_NOT_BELOW_EMA200", close=completed[-2]["close"], threshold=ema200[-2])
+        and _evaluation_check(evaluation_trace, "vwap.bear", last["close"] < curr_vwap, "CLOSE_NOT_BELOW_VWAP", close=last["close"], threshold=curr_vwap)
+        and _evaluation_check(evaluation_trace, "st.bear.pullback", near_st_or_vwap_bear, "BEAR_SUPERTREND_OR_VWAP_PULLBACK_MISSING", high=last["high"], supertrend_threshold=curr_st * 0.996, vwap_threshold=curr_vwap * 0.997)
+        and _evaluation_check(evaluation_trace, "st.bear.candle", last["close"] < last["open"], "BEARISH_CONFIRMATION_CANDLE_REQUIRED", close=last["close"], open=last["open"])
+        and _evaluation_check(evaluation_trace, "volume.surge", last["volume"] >= 1.3 * avg_vol_20, "VOLUME_SURGE_BELOW_1_3", rvol=rvol, threshold=1.3)
     ):
         entry = round(last["close"], 2)
         sl = round(max(curr_st, last["high"]) + 0.25 * curr_atr, 2)
@@ -1719,7 +1909,7 @@ def evaluate_supertrend_pullback(
                                instrument_type="EQ" if segment == "NSE_EQUITY_INTRADAY" else "FUTIDX",
                                lot_size=lot_size, cost_estimator=(None if execution_costs is None else
                                    lambda q: execution_costs(entry, sl, q, "SHORT")))
-        if not sizing["eligible"]:
+        if not _evaluation_check(evaluation_trace, "risk.position_size", sizing["eligible"], sizing["reason_code"]):
             return None
         qty = sizing["quantity"]
         est_charges = sizing["estimated_charges_inr"]
