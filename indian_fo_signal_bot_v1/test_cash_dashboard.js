@@ -436,6 +436,42 @@ test('notification view distinguishes local preview acknowledgement, retry and s
   assert.ok(!text.includes('DELIVERED'));
 });
 
+test('phase 6 paper ledger report renders open positions, closed positions, fees, and equity with simulation disclaimer', () => {
+  const view = dashboard();
+  view.renderStoredReports([{
+    label: 'Paper ledger',
+    data: {
+      reconciliation: {status: 'OK'},
+      accounting: {
+        open_positions: 2,
+        closed_positions: 3,
+        equity_inr: 205000.5,
+        fees_paid_inr: 45.25
+      }
+    }
+  }], 'phase6-account');
+  const text = view.node('storedReportsContainer').textContent;
+  assert.match(text, /LOCAL STORED EVIDENCE\. Paper fills and research execution are simulations/);
+  assert.match(text, /Reconciliation OK \| Open 2 \| Closed 3/);
+  assert.match(text, /Equity ₹2,05,000\.50/);
+  assert.match(text, /Fees ₹45\.25/);
+});
+
+test('phase 6 EOD statement renders reconciled statement hash or unresolved status truthfully', () => {
+  const view = dashboard();
+  view.renderStoredReports([{
+    label: 'EOD statement',
+    data: {
+      status: 'OK',
+      eod_status: 'RECONCILED',
+      session_date: '2026-10-16',
+      statement_sha256: 'abc123def4567890fedcba0987654321'
+    }
+  }], 'phase6-account');
+  const text = view.node('storedReportsContainer').textContent;
+  assert.match(text, /OK \| RECONCILED \| 2026-10-16 \| Statement abc123def4567890fedcba0987654321/);
+});
+
 if (workflowFlag !== -1) {
   test('actual HTTP workflow payload renders matching source, timestamp, prices and paper decision', () => {
     const payload = JSON.parse(fs.readFileSync(process.argv[workflowFlag+1], 'utf8'));

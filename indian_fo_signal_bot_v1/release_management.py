@@ -92,6 +92,14 @@ class ReleasePackager:
         "docs/PHASE_3B_BACKTEST_METHODOLOGY.md", "docs/PHASE_3A_IMPLEMENTATION_REPORT.md",
         "docs/PHASE_2C_IMPLEMENTATION_REPORT.md",
         "docs/reports/TRADEPULSE_TASK2_PARALLEL_IMPLEMENTATION_REPORT.md",
+        "docs/reports/phase6_requirement_audit_20261024_01.md",
+        "docs/reports/phase6_architecture_and_lifecycle_findings_20261024_01.md",
+        "docs/reports/phase6_gap_and_defect_register_20261024_01.md",
+        "docs/reports/phase6_paper_lifecycle_risk_acceptance_20261024_01.md",
+        "docs/reports/phase6_performance_validity_report_20261024_01.md",
+        "docs/reports/phase6_dashboard_eod_recovery_report_20261024_01.md",
+        "docs/reports/phase6_independent_review_20261024_01.md",
+        "docs/reports/phase6_final_six_phase_summary_20261024_01.md",
     ]
 
     def __init__(self, root_dir: Optional[str] = None):

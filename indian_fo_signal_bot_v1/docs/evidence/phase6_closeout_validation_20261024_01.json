@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "stage": "phase6_20261024_01",
+  "closeout_sha256": "56fc01378ab8ecbd5e5d5780a6853754e75eaef9fdd7fceb46d37aa210e11c03",
+  "release_archive_sha256": "ac0839aaf327f7e4fea1fc927b6e46ee886bf327a982ab9847a02239c2600296",
+  "canonical_evidence_sha256": "661af448fa9b1a9086dabd7dafbd17d6cef8f436f91db7e64622ef85719eb4f6",
+  "tests_verified": 1040,
+  "archive_files_verified": 122,
+  "verdict": "PHASE_6_OFFLINE_ACCEPTED"
+}

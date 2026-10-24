@@ -1,0 +1,82 @@
+{
+  "kind": "PHASE_6_CLOSEOUT_RECORD",
+  "stage": "phase6_20261024_01",
+  "started_at": "2026-10-24T06:23:58.441359+00:00",
+  "completed_at": "2026-10-24T06:23:58.528729+00:00",
+  "status": "ACCEPTED",
+  "preservation": {
+    "prior_milestones_preserved": true,
+    "operational_database": "PRESERVED_UNMUTATED_409600_BYTES",
+    "phase6_reports_count": 8,
+    "source_files_count": 88,
+    "safety_defaults": {
+      "ACTIVE_BROKER": "paper_sim",
+      "TELEGRAM_DRY_RUN": true,
+      "ENABLE_BACKGROUND_SCHEDULER": false
+    }
+  },
+  "canonical_verification": {
+    "proof_path": "docs/evidence/master_phase6_20261024_01.json",
+    "sha256": "661af448fa9b1a9086dabd7dafbd17d6cef8f436f91db7e64622ef85719eb4f6",
+    "status": "PASS",
+    "tests_executed": 1040,
+    "tests_passed": 1040,
+    "phase6_cases": {
+      "test_phase6_paper_lifecycle": 7,
+      "test_phase6_risk_recovery": 9,
+      "test_phase6_performance_validity": 5
+    },
+    "checks": [
+      {
+        "command": [
+          "node",
+          "test_cash_dashboard.js"
+        ],
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "started_at": "2026-10-24T06:22:22.298412+00:00",
+        "completed_at": "2026-10-24T06:22:22.719765+00:00",
+        "exit_code": 0,
+        "status": "PASS",
+        "log": "docs/evidence/master_phase6_20261024_01_node.txt",
+        "executed": 24,
+        "passed": 24,
+        "failures": 0,
+        "skipped": 0
+      },
+      {
+        "command": [
+          "node",
+          "--check",
+          "test_cash_dashboard.js"
+        ],
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "started_at": "2026-10-24T06:22:22.738524+00:00",
+        "completed_at": "2026-10-24T06:22:22.815694+00:00",
+        "exit_code": 0,
+        "status": "PASS",
+        "log": "docs/evidence/master_phase6_20261024_01_syntax.txt"
+      },
+      {
+        "command": "py_compile.compile(root *.py, doraise=True)",
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "exit_code": 0,
+        "status": "PASS",
+        "compiled_files": 83
+      }
+    ]
+  },
+  "release_bundle": {
+    "status": "PASS",
+    "scope": "OFFLINE_RELEASE_CANDIDATE",
+    "files": 122,
+    "sha256": "ac0839aaf327f7e4fea1fc927b6e46ee886bf327a982ab9847a02239c2600296",
+    "manifest_sha256": "8756a4a424673875b2279d2b8a9824e9917c7f9004161b6d6ade59c58f50e3d9",
+    "publisher_authentication": "NOT_ESTABLISHED"
+  },
+  "four_part_verdict": {
+    "offline_software_engineering": "ACCEPTED",
+    "paper_lifecycle_and_accounting": "ACCEPTED",
+    "empirical_strategy_performance": "BLOCKED_BY_EXTERNAL_DEPENDENCY",
+    "release_readiness": "ACCEPTED"
+  }
+}

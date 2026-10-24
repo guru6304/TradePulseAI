@@ -1,0 +1,32 @@
+✔ candidate cards and inspector use supported numeric gross RR and visited rule explanations (45.6368ms)
+✔ empty scan renders warm-up and rejected-rule reasons from retained evaluation (3.279ms)
+✔ scan history exposes downstream risk rejection when a detected setup has no stored signal (2.9874ms)
+✔ signal cards never promote missing, unknown or conflicting provenance to LIVE (27.5976ms)
+✔ selected inspector never promotes untrusted provenance to LIVE (33.634ms)
+✔ explicit source labels distinguish stored LIVE records from simulated records (5.1426ms)
+✔ backend health failure clears a previously accepted header (3.5651ms)
+✔ continuous feed status exposes stale and fixture observations with signals blocked (5.0632ms)
+✔ a failed signals API request removes cached cards and inspector prices (5.1167ms)
+✔ late successful health response cannot replace a newer unavailable state (4.0644ms)
+✔ fixture scope overrides live-shaped source and acceptance flags (3.2283ms)
+✔ risk-rejected stored candidates show rejection and exact source batch (3.3579ms)
+✔ stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (3.7049ms)
+✔ late stored report response cannot restore accounting after current health fails (3.0259ms)
+✔ actual inspector renders source identity, times, safe links and local qualification without HTML injection (5.6535ms)
+✔ source hyperlinks reject executable, credentialed and local addresses without hiding the qualified facts (68.9325ms)
+✔ missing and failed context never inherit neutral or previously qualified facts (8.8643ms)
+✔ warning records expose stale, unverified, retracted and conflicting source state without changing candidate risk (4.9271ms)
+✔ inconsistent qualified context and exact instrument or candidate mismatches withhold facts (21.8675ms)
+✔ current-information context remains labeled as a later informational update to a stored decision (3.0336ms)
+✔ scan-only rejected candidates expose retained context and suppression even with no stored signal (4.0479ms)
+✔ notification view distinguishes local preview acknowledgement, retry and suppressed context without delivery claims (2.7832ms)
+✔ phase 6 paper ledger report renders open positions, closed positions, fees, and equity with simulation disclaimer (3.7924ms)
+✔ phase 6 EOD statement renders reconciled statement hash or unresolved status truthfully (2.7295ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 302.8288
