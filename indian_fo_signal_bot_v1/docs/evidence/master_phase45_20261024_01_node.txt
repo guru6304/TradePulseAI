@@ -1,0 +1,30 @@
+✔ candidate cards and inspector use supported numeric gross RR and visited rule explanations (36.4728ms)
+✔ empty scan renders warm-up and rejected-rule reasons from retained evaluation (3.3061ms)
+✔ scan history exposes downstream risk rejection when a detected setup has no stored signal (3.4106ms)
+✔ signal cards never promote missing, unknown or conflicting provenance to LIVE (44.2678ms)
+✔ selected inspector never promotes untrusted provenance to LIVE (38.0836ms)
+✔ explicit source labels distinguish stored LIVE records from simulated records (10.0072ms)
+✔ backend health failure clears a previously accepted header (4.6159ms)
+✔ continuous feed status exposes stale and fixture observations with signals blocked (5.4121ms)
+✔ a failed signals API request removes cached cards and inspector prices (8.2267ms)
+✔ late successful health response cannot replace a newer unavailable state (3.5748ms)
+✔ fixture scope overrides live-shaped source and acceptance flags (7.1956ms)
+✔ risk-rejected stored candidates show rejection and exact source batch (114.8503ms)
+✔ stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (83.8991ms)
+✔ late stored report response cannot restore accounting after current health fails (158.7801ms)
+✔ actual inspector renders source identity, times, safe links and local qualification without HTML injection (97.0346ms)
+✔ source hyperlinks reject executable, credentialed and local addresses without hiding the qualified facts (62.2839ms)
+✔ missing and failed context never inherit neutral or previously qualified facts (7.8155ms)
+✔ warning records expose stale, unverified, retracted and conflicting source state without changing candidate risk (12.0877ms)
+✔ inconsistent qualified context and exact instrument or candidate mismatches withhold facts (704.6252ms)
+✔ current-information context remains labeled as a later informational update to a stored decision (83.7635ms)
+✔ scan-only rejected candidates expose retained context and suppression even with no stored signal (18.9986ms)
+✔ notification view distinguishes local preview acknowledgement, retry and suppressed context without delivery claims (53.9398ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1586.5305

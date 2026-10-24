@@ -1,0 +1,14 @@
+{
+  "status": "FAIL",
+  "exit_code": 1,
+  "scope": "CLOSEOUT_VALIDATOR_HISTORY_POLICY",
+  "failure": "Validator incorrectly required zero unraisables in a retained failed sandbox run",
+  "failed_receipt": "docs/evidence/phase45_alerts_repair_verification_02.json",
+  "failed_receipt_sha256": "fa482a2976a8f6f5fa2a91fced57f20e29847a403ddbcb219cfc7caeb13dbdfb",
+  "retained_status": "FAIL",
+  "retained_unraisable_count": 60,
+  "log_hash_matches": true,
+  "helper_sha256": "5c914df0bd179bc37735f2c1b3ea87ce1abcdbf290a114519a3a6d451acd6c6c",
+  "final_strict_unraisable_errors": [],
+  "recorded_at": "2026-10-24T04:54:55.963769+00:00"
+}

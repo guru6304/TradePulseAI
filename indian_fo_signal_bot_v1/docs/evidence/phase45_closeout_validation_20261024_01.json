@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "recorded_at": "2026-10-24T04:55:14.303769+00:00",
+  "closeout_sha256": "adb0f6b582fcb16ae4f3c200a4ee5a5006b53fdff0e5eff3c10439f0483a0071",
+  "source_files": 85,
+  "prior_documents_checked": 407,
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs\\evidence\\phase45_closeout_20261024_01.py",
+    "--validate"
+  ],
+  "exit_code": 0
+}

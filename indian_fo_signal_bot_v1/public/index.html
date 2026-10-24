@@ -324,6 +324,7 @@
                 <span id="detailTimestampAndBroker" class="mono text-slate-300">--</span>
               </div>
               <p id="detailRationale" class="text-slate-300 pt-1.5 border-t border-slate-800/80 leading-relaxed"></p>
+              <div id="detailContext" class="text-slate-300 pt-2 border-t border-slate-800/80 space-y-1">Context unavailable until a stored candidate is selected.</div>
             </div>
           </div>
         </div>
@@ -1050,6 +1051,13 @@
               ' | ' + (data.session_date || '--') + ' | Statement ' + (data.statement_sha256 || 'unavailable');
           } else if (result.label === 'Notification previews') {
             text += 'LOCAL PREVIEW ONLY; real delivery disabled | ' + JSON.stringify(data.counts || {});
+            text += ' | ' + (data.items || []).map(function(item) {
+              return (item.kind || 'CANDIDATE_PREVIEW') + ' ' + (item.delivery_state || item.status || 'UNAVAILABLE') +
+                ' | Candidate ' + (item.candidate_id || 'unavailable') + ' | Snapshot ' + (item.context_snapshot_id || 'not applicable');
+            }).join('; ');
+            text += ' | ' + (data.context_alert_decisions || []).map(function(decision) {
+              return 'Context alert ' + decision.status + ': ' + decision.reason_code;
+            }).join('; ');
           } else {
             text += 'Retained ' + (data.total_count ?? '--') + ' | ' + (data.items || []).map(function(run) {
               return [run.run_id, run.data_mode || 'UNQUALIFIED', run.strategy_id, run.symbol].join(' / ');
@@ -1341,7 +1349,102 @@
           reasons.push(candidate.symbol + ' ' + candidate.strategy_id + ': Candidate ' + candidate.status +
             ' ' + (candidate.reason_codes || []).join(', '));
         });
+        const context = scan.context;
+        if (context && Array.isArray(context.candidate_contexts)) {
+          reasons.push('Context ' + (context.evaluation_mode || 'DECISION_TIME') + ' @ ' + (context.as_of || 'unavailable') + ': ' +
+            context.candidate_contexts.map(function(row) { return row.status + ' ' + (row.reason_codes || []).join(', '); }).join('; '));
+        } else reasons.push('Context unavailable; no neutral assessment');
         return reasons.join(' | ');
+      }
+
+      function safeContextSourceUrl(value) {
+        if (typeof value !== 'string' || value.length > 2048 || !/^https:\/\//i.test(value) ||
+            /[\\\s\u0000-\u001f\u007f-\uffff]/.test(value)) return null;
+        try {
+          const parsed = new URL(value);
+          const host = parsed.hostname.toLowerCase();
+          if (parsed.protocol !== 'https:' || parsed.username || parsed.password ||
+              (parsed.port && parsed.port !== '443') || !host.includes('.') || host.endsWith('.') ||
+              host === 'localhost' || host.endsWith('.localhost') || host.endsWith('.local') ||
+              !/^[a-z0-9.-]+$/.test(host) || /^[0-9.]+$/.test(host) ||
+              host.split('.').some(function(label) { return !label || label.startsWith('-') || label.endsWith('-'); })) return null;
+          return parsed.href;
+        } catch (_) { return null; }
+      }
+
+      function renderCandidateContext(container, context, metadata, candidate, decision) {
+        clearChildren(container);
+        const meta = metadata || context || {};
+        const states = ['QUALIFIED', 'WARNING_ONLY', 'UNAVAILABLE', 'MISSING'];
+        if (!context || !states.includes(context.status) || context.actionable !== false || context.affects_ranking !== false) {
+          container.appendChild(el('div', 'text-amber-200', 'Context UNAVAILABLE; no neutral assessment or change to candidate eligibility.'));
+          return;
+        }
+        if (candidate && context.candidate_id !== candidate.candidate_id) {
+          container.appendChild(el('div', 'text-rose-300', 'Context UNAVAILABLE: candidate identity conflict.'));
+          return;
+        }
+        const records = Array.isArray(context.records) ? context.records : [];
+        const expected = ((candidate || {}).source_reference || {}).instrument_identity;
+        const identityFields = ['provider','symbol','identifier','exchange','segment','instrument_type','is_index','source','source_revision'];
+        if (context.status === 'QUALIFIED' && (!records.length || records.some(function(record) {
+          const verification = record.verification || {};
+          const actual = record.instrument_identity || {};
+          return verification.allowed !== true || verification.status !== 'QUALIFIED_UNDER_LOCAL_POLICY' ||
+            (record.freshness || {}).status !== 'FRESH' || record.retracted || record.conflict || !expected ||
+            identityFields.some(function(key) { return actual[key] !== expected[key]; });
+        }))) {
+          container.appendChild(el('div', 'text-rose-300', 'Context UNAVAILABLE: inconsistent source qualification or instrument mapping.'));
+          return;
+        }
+        container.appendChild(el('div', 'font-semibold', 'Context ' + context.status + ' | ' + (context.reason_codes || []).join(', ')));
+        container.appendChild(el('div', 'mono text-[10px]', (meta.evaluation_mode || 'DECISION_TIME') + ' | As of ' +
+          (meta.as_of || 'unavailable') + ' | Original decision ' + (meta.decision_at || 'unavailable')));
+        container.appendChild(el('div', 'text-amber-200',
+          meta.evaluation_mode === 'CURRENT_INFORMATION' ?
+          'Current information for a stored candidate; no current recommendation. Original strategy and rank unchanged.' :
+          'Informational context only. Missing context is not neutral; strategy, rank and actionability remain unchanged.'));
+        if (decision) container.appendChild(el('div', 'mono', 'Context alert ' + decision.status + ': ' + decision.reason_code + ' | no real delivery'));
+        if (!records.length) {
+          container.appendChild(el('div', 'text-slate-400', 'No context record available for this identity and time.'));
+          return;
+        }
+        records.slice(0, 8).forEach(function(record) {
+          const actual = record.instrument_identity || {};
+          if (!expected || identityFields.some(function(key) { return actual[key] !== expected[key]; })) {
+            container.appendChild(el('div', 'text-rose-300', 'Context record withheld: canonical instrument mapping unavailable or conflicting.'));
+            return;
+          }
+          const block = el('div', 'p-2 border border-slate-700 rounded space-y-1');
+          const verification = record.verification || {};
+          const verified = verification.allowed === true && verification.status === 'QUALIFIED_UNDER_LOCAL_POLICY';
+          block.appendChild(el('div', 'font-semibold', record.title || 'Title unavailable'));
+          block.appendChild(el('div', '', record.summary || 'Source summary unavailable'));
+          block.appendChild(el('div', 'mono text-[10px]',
+            (record.source_name || record.source_id || 'Source unavailable') + ' | ' +
+            (verified ? 'QUALIFIED UNDER LOCAL POLICY; independent authority/rights not established' : 'UNVERIFIED / WARNING ONLY') +
+            ' | Freshness ' + ((record.freshness || {}).status || 'UNAVAILABLE') +
+            ' | Retracted ' + (record.retracted === true ? 'YES' : 'NO') +
+            ' | Conflict ' + (record.conflict === true ? 'YES' : 'NO') +
+            ' | Correction ' + (record.correction ? 'YES' : 'NO') +
+            ' | ' + (record.reason_codes || []).join(', ')));
+          block.appendChild(el('div', 'mono text-[10px]', 'Published: ' + (record.published_at || 'unavailable') +
+            ' | Event: ' + (record.event_at || 'unavailable') + ' | Collected: ' + (record.collected_at || 'unavailable')));
+          block.appendChild(el('div', 'mono text-[10px]', 'Record ' + (record.record_id || 'unavailable') +
+            ' | Original ' + (record.original_ref || 'unavailable')));
+          if (record.interpretation && record.interpretation.text) block.appendChild(el('div', 'text-amber-200',
+            'Source-supplied interpretation (unvalidated): ' + record.interpretation.text + ' | Rule ' + (record.interpretation.rule_id || 'unavailable')));
+          const url = safeContextSourceUrl(record.source_url);
+          if (url) {
+            const link = el('a', 'text-cyan-300 underline', 'Source record');
+            link.href = url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            block.appendChild(link);
+          } else block.appendChild(el('div', 'text-amber-200', 'Source link unavailable or unsafe.'));
+          container.appendChild(block);
+        });
+        if (records.length > 8) container.appendChild(el('div', '', 'Showing 8 of ' + records.length + ' retained records.'));
       }
 
       function renderSignalCards() {
@@ -1444,6 +1547,11 @@
           card.appendChild(el('div', 'mt-1 text-xs text-amber-200 mono',
             'Stored candidate | ' + (s.recommendation_status || 'CANDIDATE_ONLY') +
             ' | ' + (decision.reason_code || 'Paper eligibility not evaluated')));
+          const context = s.context;
+          card.appendChild(el('div', 'mt-1 text-xs text-slate-300 mono', context && context.actionable === false &&
+            context.affects_ranking === false && ['QUALIFIED', 'WARNING_ONLY', 'UNAVAILABLE', 'MISSING'].includes(context.status) ?
+            'Context ' + context.status + ' | ' + (context.reason_codes || []).join(', ') + ' | informational only' :
+            'Context UNAVAILABLE; no neutral assessment'));
           if (s.lineage && s.lineage.batch_ids && s.lineage.batch_ids.length) {
             card.appendChild(el('div', 'mt-1 text-xs text-slate-400 mono',
               'Input batch: ' + s.lineage.batch_ids.join(', ') + ' | Scan: ' + s.scan_run_id));
@@ -1506,6 +1614,7 @@
         document.getElementById('detailRiskAndCharges').textContent = '--';
         document.getElementById('detailTimestampAndBroker').textContent = '--';
         document.getElementById('detailRationale').textContent = 'No signal selected.';
+        document.getElementById('detailContext').textContent = 'Context unavailable: no stored candidate selected.';
         if (priceChartInstance) {
           priceChartInstance.destroy();
           priceChartInstance = null;
@@ -1583,6 +1692,8 @@
             return rule.rule_id + ': ' + rule.status + ' (' + rule.reason + ')';
           }).join('; ') +
           ' | ' + ((sig.candidate_evaluation || {}).warnings || ['Evaluation details unavailable']).join(', ');
+        renderCandidateContext(document.getElementById('detailContext'), sig.context,
+          sig.context_metadata || sig.context, sig.candidate_evaluation, sig.context_alert_decision);
 
         // Plot verified signal price levels on #signalPriceChart
         const ctx = document.getElementById('signalPriceChart').getContext('2d');
@@ -2058,13 +2169,22 @@
           );
           tr.appendChild(el('td', 'py-2 px-2 text-slate-300', String(r.oi_snapshots_saved ?? 0)));
           tr.appendChild(el('td', 'py-2 px-2 text-slate-300', '[' + (r.data_mode || '--') + '] ' + (r.broker || '--')));
-          tr.appendChild(
-            el(
-              'td',
-              'py-2 px-2 text-[11px] font-sans ' + (r.error_message ? 'text-rose-300' : 'text-slate-400'),
-              r.error_message ? ((r.error_type || 'Error') + ': ' + r.error_message) : scanEvaluationText(r)
-            )
-          );
+          const details = el('td', 'py-2 px-2 text-[11px] font-sans ' +
+            (r.error_message ? 'text-rose-300' : 'text-slate-400'),
+            r.error_message ? ((r.error_type || 'Error') + ': ' + r.error_message) : scanEvaluationText(r));
+          if (!r.error_message && r.context && Array.isArray(r.context.candidate_contexts)) {
+            const candidates = (r.evaluation || {}).candidate_evaluations || [];
+            r.context.candidate_contexts.slice(0, 5).forEach(function(context) {
+              const candidate = candidates.find(function(item) { return item.candidate_id === context.candidate_id; });
+              const decision = (r.context_alert_decisions || []).find(function(item) {
+                return item.candidate_id === context.candidate_id && item.snapshot_id === r.context.snapshot_id;
+              });
+              const block = el('div', 'mt-2');
+              renderCandidateContext(block, context, r.context, candidate, decision);
+              details.appendChild(block);
+            });
+          }
+          tr.appendChild(details);
           tbody.appendChild(tr);
         });
       }

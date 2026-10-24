@@ -401,6 +401,9 @@ class TestCashScannerRecovery(unittest.TestCase):
                         conn.execute(sql)
                 with engine.store.paper_transaction() as conn:
                     if sql == "DELETE FROM scan_runs":
+                        conn.execute("DELETE FROM context_alert_decisions")
+                        conn.execute("DELETE FROM scan_context_sources")
+                        conn.execute("DELETE FROM scan_context_snapshots")
                         conn.execute("DELETE FROM scan_evaluations")
                     conn.execute(sql)
                 with patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(PersistenceValidationError):

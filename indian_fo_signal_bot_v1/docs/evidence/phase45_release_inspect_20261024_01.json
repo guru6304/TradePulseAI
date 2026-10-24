@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "recorded_at": "2026-10-24T03:59:17.509090+00:00",
+  "release": {
+    "status": "PASS",
+    "scope": "OFFLINE_RELEASE_CANDIDATE",
+    "files": 111,
+    "sha256": "6646949db0219f8921700b2cf4aae0d51667538491e1f9e06f01294f32517d1e",
+    "manifest_sha256": "5edfb0ef24f30ea0df6d60495fc8d06f112a9994825b964dc472d9eeebeafb8c",
+    "publisher_authentication": "NOT_ESTABLISHED",
+    "exact_current_files": true,
+    "private_files_excluded": true,
+    "configured_credential_scan": "PASS",
+    "exact_template_placeholders_excluded": 1
+  },
+  "strict_sha256": "a74a635868dc79f1ea1b2c6fdd713a6fe9021c07b7717606387e20a932ccd90e",
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs\\evidence\\phase45_closeout_20261024_01.py",
+    "--build-release"
+  ],
+  "exit_code": 0
+}

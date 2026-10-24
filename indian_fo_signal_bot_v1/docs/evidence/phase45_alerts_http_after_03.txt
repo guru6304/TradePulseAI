@@ -1,0 +1,20 @@
+test_corrupt_context_cannot_be_served_by_real_history_routes (test_context_http.TestContextHTTP.test_corrupt_context_cannot_be_served_by_real_history_routes) ... [2026-10-24 00:05:32,614] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_233cf60c via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 00:05:32,697] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_233cf60c in 105.89ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 00:05:32,713] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_233cf60c with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_duplicate_content_length_is_rejected_before_body_read (test_context_http.TestContextHTTP.test_duplicate_content_length_is_rejected_before_body_read) ... ok
+test_duplicate_json_nonfinite_and_invalid_structures_are_rejected (test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected) ... ok
+test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) ... ok
+test_no_request_can_supply_trust_mapping_or_intake_time (test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time) ... ok
+test_oversize_transfer_encoding_and_missing_length_are_rejected (test_context_http.TestContextHTTP.test_oversize_transfer_encoding_and_missing_length_are_rejected) ... ok
+test_real_import_scan_enrich_and_read_routes_agree_without_sends (test_context_http.TestContextHTTP.test_real_import_scan_enrich_and_read_routes_agree_without_sends) ... [2026-10-24 00:05:36,505] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_bdf17d59 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 00:05:36,626] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_bdf17d59 in 123.23ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 00:05:36,643] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_bdf17d59 with exact cash input linkage
+ok
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.674s
+
+OK

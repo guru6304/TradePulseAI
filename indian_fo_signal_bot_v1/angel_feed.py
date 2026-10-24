@@ -488,8 +488,27 @@ class AngelLiveFeed:
         from brokers import candle_session_context,is_nse_trading_day
         _,start,end,_,_=candle_session_context(ts,self.config.configured_holidays,
             self.config.session_start_ist,self.config.session_end_ist)
-        if not is_nse_trading_day(ts.date(),self.config.configured_holidays) or not start<=ts.time()<end:
+        if not is_nse_trading_day(ts.date(),self.config.configured_holidays):
             return  # Preserve genuine closed-session observations; no new completed bars.
+        if ts.time()<start:
+            # Retain only an actually observed, raw-persisted near-opening SNAP
+            # volume. It is a baseline, never an opening candle or invented zero.
+            # The first session trade still passes the unchanged delta/quantity,
+            # chronological and <=30-second continuity checks below.
+            opened=datetime.combine(ts.date(),start,IST)
+            if (opened-ts).total_seconds()<=30:
+                prior=self.previous
+                if prior and prior["time"].date()==ts.date():
+                    if ts<prior["time"]:
+                        raise FeedError("OUT_OF_ORDER_TRADE_TIMESTAMP")
+                    if event["cumulative_volume"]<prior["volume"]:
+                        raise FeedError("CUMULATIVE_VOLUME_RESET")
+                    if event["cumulative_volume"]==prior["volume"] and event["ltp"]!=prior["price"]:
+                        raise FeedError("PRICE_CHANGED_WITHOUT_TRADE_VOLUME")
+                self.previous=dict(time=ts,volume=event["cumulative_volume"],price=event["ltp"],event_id=event["event_id"])
+            return
+        if ts.time()>=end:
+            return
         previous=self.previous
         if previous and ts<previous["time"]:
             raise FeedError("OUT_OF_ORDER_TRADE_TIMESTAMP")

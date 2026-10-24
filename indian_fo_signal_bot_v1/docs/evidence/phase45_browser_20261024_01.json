@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "name": "actual_memory_candidate_and_qualified_signed_fixture",
+      "passed": true
+    }
+  ],
+  "chrome_exit_code": 21,
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "docs\\evidence\\phase45_browser_verify_20261024_01.py",
+    "--stage",
+    "01"
+  ],
+  "duration_seconds": 1.86,
+  "error_code": "[WinError 5] Access is denied: 'C:\\\\Users\\\\HP\\\\AppData\\\\Local\\\\Temp\\\\tradepulse-browser-fixture-6bv3meno'",
+  "error_type": "PermissionError",
+  "exit_code": 1,
+  "fixture_scope": "OFFLINE_AUTHORED_MEMORY_ONLY",
+  "helper_sha256": "53f179c6b3951eda66daf902ce3069759452db4c9d1733867fd9b83d31da6d8e",
+  "html_fixture_preparation": {
+    "chart_stub": true,
+    "external_links_omitted": 3,
+    "external_scripts_omitted": 2,
+    "inline_renderer_implementations_changed": false,
+    "tailwind_stub": true,
+    "test_hooks_added": true
+  },
+  "limitations": [
+    "CDN/CSS dependencies omitted",
+    "Chart rendering stubbed",
+    "No full visual/browser compatibility claim",
+    "No genuine source authority/rights or LIVE acceptance",
+    "No provider/network/message/order requests"
+  ],
+  "log_file": "phase45_browser_20261024_01.txt",
+  "log_sha256": "318a4304a2c25acb5c0749e2d0076a24555fdb19dd9fceaff4d6545f2cd15920",
+  "schema_version": "tradepulse.actual-browser-check.v1",
+  "server_thread_stopped": true,
+  "source_after": {
+    "context_data.py": "f655e4ad3199db207ff5288934ef98cf86551172e723d8cb150f155e2f904521",
+    "context_workflow.py": "4f56dfd189be45c3243a4300dbffd452cadf84a8052715eae9fd3ff5ed79d104",
+    "notification_outbox.py": "7d5e14433f6cb6fa030d0a671c66f8f951d0b733c86fc8f369b102bdccf1f7d2",
+    "public/index.html": "8e504f1c59a5afcfb77dd375c81ef26317b986e1c63a24211670a1e86d29d8ba",
+    "scanner_engine.py": "38f7c8442ca9dae3b40f7403f3c4d9bf77575ffc67ab5abe51983af374a8f032",
+    "server.py": "6ec0698acff218192791356a64aa5a3c843c679b11e1e6ca0c7b6aacb4f28200",
+    "telegram_bot.py": "a360a03e6d70636ee0a274b9e0e35af83f9101344912c58fb725828fa3f9c81c",
+    "test_phase45_integration.py": "8612a2bfd8a89dfd311d03cc28bc54b19e2191826b9e02eacbd9a876f1bc7292"
+  },
+  "source_before": {
+    "context_data.py": "f655e4ad3199db207ff5288934ef98cf86551172e723d8cb150f155e2f904521",
+    "context_workflow.py": "4f56dfd189be45c3243a4300dbffd452cadf84a8052715eae9fd3ff5ed79d104",
+    "notification_outbox.py": "7d5e14433f6cb6fa030d0a671c66f8f951d0b733c86fc8f369b102bdccf1f7d2",
+    "public/index.html": "8e504f1c59a5afcfb77dd375c81ef26317b986e1c63a24211670a1e86d29d8ba",
+    "scanner_engine.py": "38f7c8442ca9dae3b40f7403f3c4d9bf77575ffc67ab5abe51983af374a8f032",
+    "server.py": "6ec0698acff218192791356a64aa5a3c843c679b11e1e6ca0c7b6aacb4f28200",
+    "telegram_bot.py": "a360a03e6d70636ee0a274b9e0e35af83f9101344912c58fb725828fa3f9c81c",
+    "test_phase45_integration.py": "8612a2bfd8a89dfd311d03cc28bc54b19e2191826b9e02eacbd9a876f1bc7292"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-23T18:37:40.194708+00:00",
+  "status": "FAILED"
+}

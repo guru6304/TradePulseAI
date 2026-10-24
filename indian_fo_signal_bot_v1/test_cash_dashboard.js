@@ -9,7 +9,9 @@ const test = require('node:test');
 const vm = require('node:vm');
 
 class Element {
-  constructor() {
+  constructor(tagName = 'div') {
+    this.tagName = tagName.toUpperCase();
+    this.attributes = {};
     this.children = [];
     this._text = '';
     this.value = '';
@@ -18,10 +20,12 @@ class Element {
   }
   set textContent(value) { this._text = String(value); this.children = []; }
   get textContent() { return this._text + this.children.map(child => child.textContent).join(' '); }
+  set innerHTML(_) { throw new Error('Renderer must use textContent for source text'); }
   get firstChild() { return this.children[0]; }
   appendChild(child) { this.children.push(child); return child; }
   removeChild(child) { this.children.splice(this.children.indexOf(child), 1); }
-  setAttribute() {}
+  setAttribute(name, value) { this.attributes[name] = String(value); }
+  getAttribute(name) { return this.attributes[name]; }
   addEventListener() {}
   getContext() { return {}; }
 }
@@ -33,14 +37,14 @@ function dashboard() {
       if (!nodes.has(id)) nodes.set(id, new Element());
       return nodes.get(id);
     },
-    createElement() { return new Element(); }
+    createElement(tagName) { return new Element(tagName); }
   };
   const context = vm.createContext({
     document,
     window: { location: { protocol: 'http:', port: '8080', pathname: '/', origin: 'http://127.0.0.1:8080' }, addEventListener() {} },
     localStorage: { getItem() { return null; } },
     Chart: function() { this.destroy = function() {}; },
-    URLSearchParams,
+    URLSearchParams, URL,
     fetch() { throw new Error('External transport forbidden in renderer test'); }
   });
   const html = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
@@ -262,6 +266,174 @@ test('late stored report response cannot restore accounting after current health
   await pending;
   const text = view.node('storedReportsContainer').textContent;
   assert.ok(text.includes('unavailable') && !text.includes('99,999'));
+});
+
+function contextSignal(overrides = {}) {
+  const identity = {provider: 'angelone', symbol: 'RELIANCE', identifier: '2885', exchange: 'NSE',
+    segment: 'NSE_EQ', instrument_type: 'EQ', is_index: false, source: 'pinned-master', source_revision: 'fixture-v1'};
+  return storedSignal({candidate_evaluation: {candidate_id: 'candidate-context-1', status: 'QUALIFIED', actionable: false,
+    source_reference: {instrument_identity: identity}},
+  context: {candidate_id: 'candidate-context-1', status: 'QUALIFIED', reason_codes: ['CONTEXT_QUALIFIED'],
+    actionable: false, affects_ranking: false, evaluation_mode: 'DECISION_TIME',
+    as_of: '2026-10-16T10:30:00+05:30', decision_at: '2026-10-16T10:30:00+05:30', snapshot_id: 'snapshot-1',
+    records: [{record_id: 'record-1', content_id: 'content-1', title: '<script>source text</script>',
+      summary: 'Authored offline fixture summary', source_id: 'fixture-issuer', source_name: 'Authored issuer fixture',
+      source_url: 'https://issuer.example/notice/123', original_ref: 'source-original-123',
+      published_at: '2026-10-16T09:40:00+05:30', event_at: '2026-10-16T09:45:00+05:30',
+      collected_at: '2026-10-16T10:00:00+05:30', instrument_identity: {...identity},
+      verification: {allowed: true, status: 'QUALIFIED_UNDER_LOCAL_POLICY'}, freshness: {status: 'FRESH'},
+      reason_codes: [], retracted: false, conflict: false, correction: false,
+      interpretation: {text: 'Source supplied interpretation', rule_id: 'source-rule-1'}}]}, ...overrides});
+}
+
+function descendants(node) {
+  return [node, ...node.children.flatMap(descendants)];
+}
+
+test('actual inspector renders source identity, times, safe links and local qualification without HTML injection', () => {
+  const view = dashboard();
+  const signal = contextSignal();
+  renderSignal(view, signal);
+  const content = view.node('detailContext');
+  assert.match(content.textContent, /Context QUALIFIED/);
+  assert.match(content.textContent, /Original decision 2026-10-16T10:30:00/);
+  assert.match(content.textContent, /Published: 2026-10-16T09:40:00/);
+  assert.match(content.textContent, /Event: 2026-10-16T09:45:00/);
+  assert.match(content.textContent, /Collected: 2026-10-16T10:00:00/);
+  assert.match(content.textContent, /independent authority\/rights not established/);
+  assert.match(content.textContent, /Source-supplied interpretation \(unvalidated\)/);
+  assert.match(content.textContent, /<script>source text<\/script>/);
+  assert.equal(descendants(content).filter(node => node.tagName === 'SCRIPT').length, 0);
+  const links = descendants(content).filter(node => node.tagName === 'A');
+  assert.equal(links.length, 1);
+  assert.equal(links[0].href, 'https://issuer.example/notice/123');
+  assert.equal(links[0].rel, 'noopener noreferrer');
+  assert.match(view.node('signalCardsContainer').textContent, /Context QUALIFIED/);
+});
+
+test('source hyperlinks reject executable, credentialed and local addresses without hiding the qualified facts', () => {
+  for (const source_url of ['javascript:alert(1)', 'data:text/html,unsafe', 'file:///private', '//issuer.example/a',
+    'http://issuer.example/a', 'https://user:password@issuer.example/a', 'https://127.0.0.1/a',
+    'https://10.0.0.1/a', 'https://169.254.169.254/a', 'https://localhost/a', 'https://host.local/a',
+    'https://[::1]/a', 'https://2130706433/a', 'https://issuer.example.:443/a', 'https://issuer.example:9443/a',
+    'https://issuer.example/\\unsafe', 'https://issuer.example/\nunsafe']) {
+    const view = dashboard();
+    const signal = contextSignal();
+    signal.context.records[0].source_url = source_url;
+    view.renderSelectedSignalInspector(signal);
+    const content = view.node('detailContext');
+    assert.equal(descendants(content).filter(node => node.tagName === 'A').length, 0, source_url);
+    assert.match(content.textContent, /Source link unavailable or unsafe/, source_url);
+  }
+});
+
+test('missing and failed context never inherit neutral or previously qualified facts', async () => {
+  const view = dashboard();
+  renderSignal(view, contextSignal());
+  view.renderSelectedSignalInspector(storedSignal());
+  assert.match(view.node('detailContext').textContent, /Context UNAVAILABLE; no neutral assessment/);
+  assert.ok(!view.node('detailContext').textContent.includes('source-original-123'));
+  const missing = contextSignal();
+  missing.context.status = 'MISSING';
+  missing.context.records = [];
+  missing.context.reason_codes = ['CONTEXT_IDENTITY_NOT_AVAILABLE'];
+  view.renderSelectedSignalInspector(missing);
+  assert.match(view.node('detailContext').textContent, /Context MISSING/);
+  assert.match(view.node('detailContext').textContent, /No context record available/);
+  renderSignal(view, contextSignal());
+  view.apiClient.getSignals = async () => { throw new Error('OFFLINE context API unavailable'); };
+  await view.loadSignals();
+  assert.ok(!view.node('detailContext').textContent.includes('source-original-123'));
+  assert.ok(!view.node('detailContext').textContent.includes('Context QUALIFIED'));
+});
+
+test('warning records expose stale, unverified, retracted and conflicting source state without changing candidate risk', () => {
+  const view = dashboard();
+  const signal = contextSignal();
+  const original = JSON.stringify(signal.candidate_evaluation);
+  Object.assign(signal.context, {status: 'WARNING_ONLY', reason_codes: ['CONTEXT_STALE', 'CONTEXT_CONFLICTING']});
+  Object.assign(signal.context.records[0], {verification: {allowed: false, status: 'NOT_ESTABLISHED'},
+    freshness: {status: 'STALE'}, retracted: true, conflict: true, correction: true,
+    reason_codes: ['CONTEXT_SOURCE_NOT_QUALIFIED']});
+  view.renderSelectedSignalInspector(signal);
+  const text = view.node('detailContext').textContent;
+  assert.match(text, /Context WARNING_ONLY/);
+  assert.match(text, /UNVERIFIED \/ WARNING ONLY/);
+  assert.match(text, /Freshness STALE/);
+  assert.match(text, /Retracted YES \| Conflict YES \| Correction YES/);
+  assert.ok(!text.includes('QUALIFIED UNDER LOCAL POLICY'));
+  assert.equal(JSON.stringify(signal.candidate_evaluation), original);
+});
+
+test('inconsistent qualified context and exact instrument or candidate mismatches withhold facts', () => {
+  for (const mutate of [
+    signal => { signal.context.candidate_id = 'other-candidate'; },
+    signal => { signal.context.records[0].instrument_identity.identifier = 'wrong-token'; },
+    signal => { signal.context.records[0].instrument_identity.provider = 'upstox'; },
+    signal => { signal.context.records[0].verification.allowed = false; },
+    signal => { signal.context.records[0].freshness.status = 'STALE'; },
+    signal => { signal.context.actionable = true; }
+  ]) {
+    const view = dashboard();
+    const signal = contextSignal();
+    mutate(signal);
+    view.renderSelectedSignalInspector(signal);
+    const text = view.node('detailContext').textContent;
+    assert.match(text, /Context UNAVAILABLE/);
+    assert.ok(!text.includes('source-original-123'));
+  }
+});
+
+test('current-information context remains labeled as a later informational update to a stored decision', () => {
+  const view = dashboard();
+  const signal = contextSignal();
+  signal.context.evaluation_mode = 'CURRENT_INFORMATION';
+  signal.context.as_of = '2026-10-17T10:30:00+05:30';
+  signal.context_alert_decision = {status: 'ELIGIBLE', reason_code: 'QUALIFIED_CONTEXT_FOR_STORED_CANDIDATE'};
+  view.renderSelectedSignalInspector(signal);
+  const text = view.node('detailContext').textContent;
+  assert.match(text, /CURRENT_INFORMATION \| As of 2026-10-17/);
+  assert.match(text, /Original decision 2026-10-16/);
+  assert.match(text, /no current recommendation/);
+  assert.match(text, /Context alert ELIGIBLE/);
+  assert.match(text, /no real delivery/);
+});
+
+test('scan-only rejected candidates expose retained context and suppression even with no stored signal', () => {
+  const view = dashboard();
+  const signal = contextSignal();
+  signal.candidate_evaluation.status = 'REJECTED';
+  signal.candidate_evaluation.symbol = 'RELIANCE';
+  signal.candidate_evaluation.reason_codes = ['INVALID_SIGNAL_LEVELS'];
+  signal.context.status = 'WARNING_ONLY';
+  signal.context.reason_codes = ['CONTEXT_SOURCE_NOT_QUALIFIED'];
+  signal.context.records[0].verification = {allowed: false, status: 'NOT_ESTABLISHED'};
+  view.state.scans = [{status: 'COMPLETED_EMPTY', total_signals: 0,
+    evaluation: {strategy_evaluations: [], candidate_evaluations: [signal.candidate_evaluation]},
+    context: {snapshot_id: 'snapshot-1', as_of: signal.context.as_of, decision_at: signal.context.decision_at,
+      evaluation_mode: 'DECISION_TIME', candidate_contexts: [signal.context]},
+    context_alert_decisions: [{snapshot_id: 'snapshot-1', candidate_id: signal.context.candidate_id,
+      status: 'SUPPRESSED', reason_code: 'CANDIDATE_NOT_QUALIFIED'}]}];
+  view.renderScanRunsTable();
+  const text = view.node('scanRunsTableBody').textContent;
+  assert.match(text, /Candidate REJECTED INVALID_SIGNAL_LEVELS/);
+  assert.match(text, /Context WARNING_ONLY/);
+  assert.match(text, /Context alert SUPPRESSED: CANDIDATE_NOT_QUALIFIED/);
+  assert.match(text, /Source-supplied interpretation \(unvalidated\)/);
+});
+
+test('notification view distinguishes local preview acknowledgement, retry and suppressed context without delivery claims', () => {
+  const view = dashboard();
+  view.renderStoredReports([{label: 'Notification previews', data: {counts: {ACKNOWLEDGED: 1, RETRY: 1},
+    items: [{kind: 'CONTEXT_UPDATE', delivery_state: 'DRY_RUN_RECORDED', candidate_id: 'c1', context_snapshot_id: 's1'},
+      {kind: 'CONTEXT_UPDATE', status: 'RETRY', candidate_id: 'c2', context_snapshot_id: 's2'}],
+    context_alert_decisions: [{status: 'SUPPRESSED', reason_code: 'CONTEXT_NOT_QUALIFIED'}]}}], null);
+  const text = view.node('storedReportsContainer').textContent;
+  assert.match(text, /LOCAL PREVIEW ONLY; real delivery disabled/);
+  assert.match(text, /CONTEXT_UPDATE DRY_RUN_RECORDED/);
+  assert.match(text, /CONTEXT_UPDATE RETRY/);
+  assert.match(text, /Context alert SUPPRESSED: CONTEXT_NOT_QUALIFIED/);
+  assert.ok(!text.includes('DELIVERED'));
 });
 
 if (workflowFlag !== -1) {

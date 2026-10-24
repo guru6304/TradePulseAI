@@ -137,7 +137,11 @@ def rank_signal_candidates(signals: List[TradeSignal]) -> List[TradeSignal]:
     for signal in signals:
         validate_trade_signal(signal)
     def key(signal):
-        ratio = abs(signal.target_1 - signal.entry_price) / abs(signal.entry_price - signal.stop_loss)
+        risk = abs(signal.entry_price - signal.stop_loss)
+        ratios = [abs(target - signal.entry_price) / risk for target in (signal.target_1, signal.target_2)]
+        if not all(math.isfinite(value) and value > 0 for value in ratios):
+            raise ValueError("Signal target reward/risk must be finite and positive.")
+        ratio = ratios[0]
         return (-signal.quality_score, -ratio, signal.symbol, signal.strategy_id, signal.direction,
                 signal.position_type, signal.timestamp, signal.instrument_label,
                 json.dumps(signal.to_dict(), sort_keys=True, allow_nan=False))

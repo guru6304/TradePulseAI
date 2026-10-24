@@ -1,0 +1,64 @@
+test_actual_sqlite_import_failure_returns503_and_rolls_back_source (docs.evidence.phase45_sqlite_regressions_20261024_01.TestActualContextSQLiteFailures.test_actual_sqlite_import_failure_returns503_and_rolls_back_source) ... ERROR
+test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable (docs.evidence.phase45_sqlite_regressions_20261024_01.TestActualContextSQLiteFailures.test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable) ... [2026-10-24 08:53:56,388] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_67e87ac2 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:53:56,472] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_67e87ac2 in 108.47ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:53:56,488] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_67e87ac2 with exact cash input linkage
+ERROR
+
+======================================================================
+ERROR: test_actual_sqlite_import_failure_returns503_and_rolls_back_source (docs.evidence.phase45_sqlite_regressions_20261024_01.TestActualContextSQLiteFailures.test_actual_sqlite_import_failure_returns503_and_rolls_back_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\phase45_sqlite_regressions_20261024_01.py", line 28, in test_actual_sqlite_import_failure_returns503_and_rolls_back_source
+    code,payload=self.case.handler(self.engine)._handle_context_import(dict(provider='offline_notices',
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        collected_at='2026-10-23T08:40:00+00:00',payload=self.raw.decode()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 947, in _handle_context_import
+    result = self.engine.import_context(payload.encode("utf-8"), provider=body["provider"],
+        collected_at=body["collected_at"])
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 188, in import_context
+    return self.store.import_context(raw_bytes, provider=provider, collected_at=collected_at,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        observed_at=self._now_ist(), trusted_identities=self.trusted_context_identities(),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        source_policy=self.context_policy)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 898, in import_context
+    return ingest(self, *args, **kwargs)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py", line 78, in ingest
+    conn.execute('INSERT INTO context_ingestions VALUES (?,?,?,?,?,?,?,?,?)', (
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        payload['ingestion_id'], provider, payload['collected_at'], observation, capture_id, raw_bytes,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        encoded(identities), body, checksum))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: authored SQLite failure
+
+======================================================================
+ERROR: test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable (docs.evidence.phase45_sqlite_regressions_20261024_01.TestActualContextSQLiteFailures.test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\phase45_sqlite_regressions_20261024_01.py", line 17, in test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable
+    result=self.engine.run_single_scan()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 1352, in run_single_scan
+    self._attach_context(summary, refresh=bool(summary.get("persistence_status") == "OK"
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                             and not recovery and not recovery_clock))
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 223, in _attach_context
+    enriched = self.enrich_context(summary["run_id"])
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 205, in enrich_context
+    snapshot = self.store.enrich_scan_context(run_id, as_of=as_of, evaluation_mode=evaluation_mode)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 906, in enrich_scan_context
+    return enrich(self, run_id, **kwargs)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py", line 221, in enrich
+    conn.execute('INSERT INTO scan_context_snapshots(snapshot_id,run_id,as_of,payload_json,payload_digest) VALUES (?,?,?,?,?)',
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        (payload['snapshot_id'], run_id, payload['as_of'], encoded(payload), digest(payload)))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: authored SQLite failure
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.240s
+
+FAILED (errors=2)

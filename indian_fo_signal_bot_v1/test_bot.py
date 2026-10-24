@@ -10342,7 +10342,8 @@ def load_tests(loader, tests, pattern):
                        "test_dhan_feed", "test_task2_integration", "test_angel_feed",
                        "test_angel_history_capture", "test_phase3_angel_integration",
                        "test_phase4_explanations", "test_phase4_recommendations", "test_phase4_feed_history",
-                       "test_phase4_evaluation_storage"):
+                       "test_phase4_evaluation_storage", "test_phase45_scanner_gaps", "test_context_data",
+                       "test_context_workflow", "test_context_alerts", "test_phase45_integration", "test_context_http"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

@@ -1,0 +1,44 @@
+test_corrupt_context_cannot_be_served_by_real_history_routes (test_context_http.TestContextHTTP.test_corrupt_context_cannot_be_served_by_real_history_routes) ... [2026-10-24 00:04:59,049] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_a3967eff via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 00:04:59,128] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_a3967eff in 104.87ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 00:04:59,141] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_a3967eff with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_duplicate_content_length_is_rejected_before_body_read (test_context_http.TestContextHTTP.test_duplicate_content_length_is_rejected_before_body_read) ... ok
+test_duplicate_json_nonfinite_and_invalid_structures_are_rejected (test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected) ... ok
+test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) ... 
+  test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) (route='/api/context-import') ... ERROR
+test_no_request_can_supply_trust_mapping_or_intake_time (test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time) ... ok
+test_oversize_transfer_encoding_and_missing_length_are_rejected (test_context_http.TestContextHTTP.test_oversize_transfer_encoding_and_missing_length_are_rejected) ... ok
+test_real_import_scan_enrich_and_read_routes_agree_without_sends (test_context_http.TestContextHTTP.test_real_import_scan_enrich_and_read_routes_agree_without_sends) ... [2026-10-24 00:05:02,709] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_83d7b032 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 00:05:02,888] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_83d7b032 in 180.56ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 00:05:02,921] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_83d7b032 with exact cash input linkage
+ok
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... ok
+
+======================================================================
+ERROR: test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) (route='/api/context-import')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_context_http.py", line 89, in test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert
+    code,_ = self.request('POST', route, self.body(), {'Origin':'https://untrusted.invalid'})
+             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_context_http.py", line 59, in request
+    response = connection.getresponse()
+  File "C:\Python314\Lib\http\client.py", line 1459, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+
+----------------------------------------------------------------------
+Ran 8 tests in 5.351s
+
+FAILED (errors=1)

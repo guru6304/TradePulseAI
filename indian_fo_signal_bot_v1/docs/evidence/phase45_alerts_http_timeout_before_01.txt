@@ -1,0 +1,40 @@
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... 
+  test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) (fn='_handle_context_enrich') ... ERROR
+
+======================================================================
+ERROR: test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) (fn='_handle_context_enrich')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_context_http.py", line 139, in test_timeout_in_both_new_body_readers_returns_bounded_unavailable
+    code,body=fn()
+              ~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 963, in _handle_context_enrich
+    body = self._context_body(body)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 922, in _context_body
+    raw = self.rfile.read(length)
+  File "C:\Python314\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 939, in _handle_context_import
+    body = self._context_body(body)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 922, in _context_body
+    raw = self.rfile.read(length)
+  File "C:\Python314\Lib\unittest\mock.py", line 1176, in __call__
+    return self._mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1180, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 1241, in _execute_mock_call
+    raise effect
+TimeoutError: offline controlled read timeout
+
+----------------------------------------------------------------------
+Ran 1 test in 0.567s
+
+FAILED (errors=1)

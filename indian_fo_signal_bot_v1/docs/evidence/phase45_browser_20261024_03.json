@@ -1,0 +1,140 @@
+{
+  "browser": {
+    "jsVersion": "15.5.35.23",
+    "product": "Chrome/155.0.8059.80",
+    "protocolVersion": "1.3",
+    "revision": "@43a195105613ac83c21d3f14de279f4a045c7da0",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36"
+  },
+  "checks": [
+    {
+      "name": "actual_memory_candidate_and_qualified_signed_fixture",
+      "passed": true
+    },
+    {
+      "name": "actual_dashboard_loaded_real_signals_api_and_rendered_context",
+      "passed": true
+    },
+    {
+      "name": "source_markup_is_literal_text_not_executable_dom",
+      "passed": true
+    },
+    {
+      "name": "safe_https_source_link_has_blank_noopener_noreferrer",
+      "passed": true
+    },
+    {
+      "name": "decision_time_and_source_authority_limits_rendered",
+      "passed": true
+    },
+    {
+      "name": "actual_api_current_information_scope_is_explicit",
+      "passed": true
+    },
+    {
+      "name": "actual_api_stale_context_and_suppression_rendered",
+      "passed": true
+    },
+    {
+      "name": "inconsistent_mapping_clears_prior_source_text",
+      "passed": true
+    },
+    {
+      "name": "missing_context_replaces_old_source_without_neutral_claim",
+      "passed": true
+    },
+    {
+      "name": "actual_503_api_failure_clears_old_context_and_signals",
+      "passed": true
+    },
+    {
+      "name": "external_probe_blocked_before_request_transport",
+      "passed": true
+    },
+    {
+      "name": "no_browser_javascript_runtime_exception",
+      "passed": true
+    },
+    {
+      "name": "only_get_head_requests_reached_loopback_application",
+      "passed": true
+    }
+  ],
+  "chrome_exit_code": 0,
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "docs\\evidence\\phase45_browser_verify_20261024_01.py",
+    "--stage",
+    "03"
+  ],
+  "duration_seconds": 2.011,
+  "exit_code": 0,
+  "fixture_scope": "OFFLINE_AUTHORED_MEMORY_ONLY",
+  "helper_sha256": "53f179c6b3951eda66daf902ce3069759452db4c9d1733867fd9b83d31da6d8e",
+  "html_fixture_preparation": {
+    "chart_stub": true,
+    "external_links_omitted": 3,
+    "external_scripts_omitted": 2,
+    "inline_renderer_implementations_changed": false,
+    "tailwind_stub": true,
+    "test_hooks_added": true
+  },
+  "limitations": [
+    "CDN/CSS dependencies omitted",
+    "Chart rendering stubbed",
+    "No full visual/browser compatibility claim",
+    "No genuine source authority/rights or LIVE acceptance",
+    "No provider/network/message/order requests"
+  ],
+  "log_file": "phase45_browser_20261024_03.txt",
+  "log_sha256": "f2681ef7106c9483364bafdd32ad0021d14e716df52364b7e83a4c229446d873",
+  "requests": {
+    "actual_api_paths": [
+      "/",
+      "/api/config",
+      "/api/health",
+      "/api/oi-snapshots",
+      "/api/scans",
+      "/api/signals",
+      "/favicon.ico"
+    ],
+    "allowed_same_origin": 12,
+    "blocked": [
+      {
+        "host": "blocked.example",
+        "method": "GET",
+        "path": "/offline-interception-probe",
+        "scheme": "https"
+      }
+    ],
+    "blocked_external": 1
+  },
+  "runtime_exceptions": [],
+  "schema_version": "tradepulse.actual-browser-check.v1",
+  "server_thread_stopped": true,
+  "source_after": {
+    "context_data.py": "f655e4ad3199db207ff5288934ef98cf86551172e723d8cb150f155e2f904521",
+    "context_workflow.py": "4f56dfd189be45c3243a4300dbffd452cadf84a8052715eae9fd3ff5ed79d104",
+    "notification_outbox.py": "7be84ba57e82d17aba0501e82618b5428948fa0a7434511a408a4e2c35d29c68",
+    "public/index.html": "8e504f1c59a5afcfb77dd375c81ef26317b986e1c63a24211670a1e86d29d8ba",
+    "scanner_engine.py": "38f7c8442ca9dae3b40f7403f3c4d9bf77575ffc67ab5abe51983af374a8f032",
+    "server.py": "6ec0698acff218192791356a64aa5a3c843c679b11e1e6ca0c7b6aacb4f28200",
+    "telegram_bot.py": "84bf2a125d8aaf6a4f2be2a70aafac1260a042cd340c9cea8ff203139a47b90c",
+    "test_phase45_integration.py": "8612a2bfd8a89dfd311d03cc28bc54b19e2191826b9e02eacbd9a876f1bc7292"
+  },
+  "source_before": {
+    "context_data.py": "f655e4ad3199db207ff5288934ef98cf86551172e723d8cb150f155e2f904521",
+    "context_workflow.py": "4f56dfd189be45c3243a4300dbffd452cadf84a8052715eae9fd3ff5ed79d104",
+    "notification_outbox.py": "7be84ba57e82d17aba0501e82618b5428948fa0a7434511a408a4e2c35d29c68",
+    "public/index.html": "8e504f1c59a5afcfb77dd375c81ef26317b986e1c63a24211670a1e86d29d8ba",
+    "scanner_engine.py": "38f7c8442ca9dae3b40f7403f3c4d9bf77575ffc67ab5abe51983af374a8f032",
+    "server.py": "6ec0698acff218192791356a64aa5a3c843c679b11e1e6ca0c7b6aacb4f28200",
+    "telegram_bot.py": "84bf2a125d8aaf6a4f2be2a70aafac1260a042cd340c9cea8ff203139a47b90c",
+    "test_phase45_integration.py": "8612a2bfd8a89dfd311d03cc28bc54b19e2191826b9e02eacbd9a876f1bc7292"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-24T03:18:57.928276+00:00",
+  "status": "PASS",
+  "temporary_profile_removed": true
+}

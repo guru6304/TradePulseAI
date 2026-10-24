@@ -1,5 +1,6 @@
 import logging
 import math
+import sqlite3
 import sys
 import threading
 import time
@@ -106,6 +107,8 @@ class IntradayBotEngine:
         clock: Optional[Callable[[], datetime]] = None,
         broker_scanner: Optional[MultiBrokerScanner] = None,
         store: Optional[SQLitePersistenceStore] = None,
+        context_policy=None,
+        context_identities=None,
     ):
         self.config = config or BotConfig()
         self.clock = clock
@@ -125,6 +128,8 @@ class IntradayBotEngine:
         self.last_scan_summary: Optional[Dict[str, Any]] = None
 
         self.store: Optional[SQLitePersistenceStore] = store
+        self.context_policy = context_policy
+        self._context_identities = context_identities
         if self.store is None and self.config.enable_persistence:
             try:
                 self.store = SQLitePersistenceStore(
@@ -143,6 +148,8 @@ class IntradayBotEngine:
         )
         if hasattr(self.broker, "attach_persistence_store"):
             self.broker.attach_persistence_store(self.store)
+        if self.store is not None:
+            self.store.context_source_policy = self.context_policy
 
         if self.store is not None:
             try:
@@ -159,6 +166,71 @@ class IntradayBotEngine:
     def _scanner_scope(self, adapter) -> Tuple[str, str, str]:
         return normalize_state_scope(self.config.active_broker,
                                      "SIMULATED" if adapter.is_simulated else "LIVE", "SCANNER")
+
+    def trusted_context_identities(self):
+        """Current configured mapping only; never a lookup request or name guess."""
+        import copy
+        if self._context_identities is not None:
+            return copy.deepcopy(list(self._context_identities))
+        adapter = self.broker.get_active_adapter()
+        if adapter.is_simulated:
+            return []  # A simulated symbol label does not confer canonical identity.
+        provider, _, _ = self._scanner_scope(adapter)
+        result = []
+        for meta in self.config.equity_watchlist:
+            resolved = (adapter.resolve_instrument(meta) if provider == "angelone"
+                        else validate_symbol_meta(meta, provider))
+            result.append(dict(resolved["instrument_identity"]))
+        return result
+
+    def import_context(self, raw_bytes, *, provider, collected_at):
+        if self.store is None:
+            raise PersistenceError("CONTEXT_STORAGE_REQUIRED")
+        return self.store.import_context(raw_bytes, provider=provider, collected_at=collected_at,
+            observed_at=self._now_ist(), trusted_identities=self.trusted_context_identities(),
+            source_policy=self.context_policy)
+
+    def enrich_context(self, run_id, *, as_of=None, evaluation_mode="DECISION_TIME"):
+        if self.store is None:
+            raise PersistenceError("CONTEXT_STORAGE_REQUIRED")
+        now = self._now_ist()
+        if as_of is None and evaluation_mode == "CURRENT_INFORMATION":
+            as_of = now
+        if as_of is not None:
+            try:
+                cutoff = as_of if isinstance(as_of, datetime) else datetime.fromisoformat(as_of.replace("Z", "+00:00"))
+                if cutoff.tzinfo is None or cutoff.utcoffset() is None or cutoff > now:
+                    raise ValueError()
+            except (TypeError, ValueError, AttributeError):
+                raise PersistenceValidationError("CONTEXT_INVALID_OR_FUTURE_CUTOFF") from None
+        snapshot = self.store.enrich_scan_context(run_id, as_of=as_of, evaluation_mode=evaluation_mode)
+        decisions = []
+        for candidate in snapshot["candidate_contexts"]:
+            decision = self.store.enqueue_context_alert(run_id, candidate["candidate_id"], snapshot, now)
+            if decision.get("status") == "ELIGIBLE" and decision.get("intent_id"):
+                # Only the local preview implementation is reachable here.
+                if self.config.telegram_dry_run and not self.config.enable_background_scheduler:
+                    decision = dict(decision, preview=self.store.preview_notification(decision["intent_id"], now=now))
+            decisions.append(decision)
+        return dict(context=snapshot, alert_decisions=decisions)
+
+    def _attach_context(self, summary, *, refresh=False):
+        """Optional information cannot replace or mutate the Phase 4 decision."""
+        if self.store is None or not summary.get("run_id"):
+            summary["context"] = dict(status="UNAVAILABLE", reason_codes=["CONTEXT_STORAGE_REQUIRED"], actionable=False)
+            return
+        try:
+            if refresh:
+                enriched = self.enrich_context(summary["run_id"])
+                summary["context"] = enriched["context"]
+                summary["context_alert_decisions"] = enriched["alert_decisions"]
+            else:
+                summary["context"] = self.store.load_scan_context(summary["run_id"]) or dict(
+                    status="MISSING", reason_codes=["CONTEXT_NOT_EVALUATED"], actionable=False)
+        except (PersistenceError, PersistenceValidationError, ValueError, sqlite3.Error):
+            summary["context"] = dict(status="UNAVAILABLE", reason_codes=["CONTEXT_REQUIRES_INSPECTION"],
+                actionable=False, affects_ranking=False)
+            logger.warning("Context enrichment unavailable; original scan decision retained.")
 
     def _load_zone_state(self, provider: str, mode: str, segment: str) -> Set[str]:
         key = (provider, mode, segment)
@@ -502,6 +574,7 @@ class IntradayBotEngine:
     def _replay_cash_result(self, work, paper_coordinator=None):
         from candle_lineage import replay_summary
         summary = replay_summary(work)
+        self._attach_context(summary, refresh=False)
         if paper_coordinator is not None:
             snapshot = work["snapshot"]
             observations = dict(snapshot["auxiliary"]["index_candles"])
@@ -1235,6 +1308,8 @@ class IntradayBotEngine:
                 summary["notification_intents"] = [self.store.enqueue_notification_preview(
                     run_id, sig, self.telegram, broker_label, summary["input_lineage"]["batch_ids"], now_dt)
                     for _, sig in deferred_dispatches]
+                from notification_outbox import descriptors
+                summary["notification_descriptors"] = descriptors(self.store, summary["notification_intents"])
                 if not recovery and not recovery_clock:
                     self._require_current_scan_data(provider, now_dt=scan_now())
                 self.store.finish_cash_scan(run_id, summary)
@@ -1275,6 +1350,8 @@ class IntradayBotEngine:
                     for symbol in all_candles_map:
                         self._candle_evidence.pop((provider, symbol), None)
             self.last_scan_summary = summary
+            self._attach_context(summary, refresh=bool(summary.get("persistence_status") == "OK"
+                                                     and not recovery and not recovery_clock))
             if paper_coordinator is not None:
                 try:
                     summary["paper_portfolio"] = paper_coordinator.consume_scan(summary, all_candles_map)

@@ -1,0 +1,292 @@
+{
+  "scope": "OFFLINE_ENGINEERING_ONLY",
+  "phase4_verdict": "PHASE_4_IMPLEMENTATION_ACCEPTED",
+  "phase5_verdict": "PHASE_5_IMPLEMENTATION_ACCEPTED",
+  "phase4_gates": {
+    "A": {
+      "requirement": "Strategy integrity",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase4_explanations.TestPhase4StrategyExplanations.test_all_five_bidirectional_actual_signals_match_direct_evaluation"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "B": {
+      "requirement": "Buffer and history",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_actual_ring_evicts_one_of_301_without_losing_current_session_open",
+        "test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_raw_preopen_lineage_reaches_201_bar_strategy_diagnostic_without_live_promotion"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "C": {
+      "requirement": "Scanner input",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_invalid_candle_inputs_never_reach_actual_strategy_or_outputs"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "D": {
+      "requirement": "Candidate states",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase45_integration.TestPhase45IndependentIntegration.test_rejected_detected_candidate_stays_rejected_with_qualified_context"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "E": {
+      "requirement": "Explanations",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_real_scanner_candidate_has_numeric_risk_rank_and_supported_rule_explanations"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "F": {
+      "requirement": "Risk geometry",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_ranker_rejects_derived_infinite_ratio_before_returning_candidate"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "G": {
+      "requirement": "Ranking",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase4_recommendations.TestPhase4IndependentRecommendations.test_ranking_all_permutations_and_exact_identity_ties_are_reproducible"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "H": {
+      "requirement": "Persistence and APIs",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase45_integration.TestPhase45IndependentIntegration.test_rehashed_snapshot_corruption_fails_context_and_existing_history_routes"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "I": {
+      "requirement": "Dashboard",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "J": {
+      "requirement": "Compatibility and safety",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "K": {
+      "requirement": "Evidence",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    }
+  },
+  "phase5_gates": {
+    "A": {
+      "requirement": "Context contract",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_data.TestContextData.test_real_signature_and_separate_local_policy_qualify_only_informationally"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "B": {
+      "requirement": "Provenance and qualification",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_data.TestContextData.test_policy_signature_tamper_revocation_scope_and_rights_fail_closed"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "C": {
+      "requirement": "Candidate linkage",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase45_integration.TestPhase45IndependentIntegration.test_actual_candidate_import_context_api_and_preview_preserve_phase4_result"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "D": {
+      "requirement": "No actionability bypass",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_phase45_integration.TestPhase45IndependentIntegration.test_rejected_detected_candidate_stays_rejected_with_qualified_context"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "E": {
+      "requirement": "Explainability",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_data.TestContextData.test_candidate_and_original_records_are_never_mutated"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "F": {
+      "requirement": "Dashboard integration",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "G": {
+      "requirement": "Alert lifecycle",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_alerts.TestContextAlertLifecycle.test_sqlite_restart_restores_pending_and_ack_without_duplicate_render",
+        "test_context_alerts.TestContextAlertLifecycle.test_failures_back_off_and_stop_at_dead_without_fourth_attempt",
+        "test_context_alerts.TestContextAlertLifecycle.test_rehashed_suppression_or_policy_reason_is_recomputed_from_sources"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "H": {
+      "requirement": "Source resilience",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected",
+        "test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable",
+        "test_context_http.TestStoredContextPayloadGuards.test_oversized_or_nontext_stored_snapshot_is_rejected_before_decoding",
+        "test_context_http.TestStoredContextPayloadGuards.test_integer_or_oversized_original_bytes_rejected_before_source_validator",
+        "test_context_http.TestStoredContextPayloadGuards.test_corrupt_existing_import_inventory_returns_storage_failure",
+        "test_context_http.TestStoredContextPayloadGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "I": {
+      "requirement": "Security and permissions",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [
+        "test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time"
+      ],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "J": {
+      "requirement": "Regression compatibility",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    },
+    "K": {
+      "requirement": "Evidence and release",
+      "status": "IMPLEMENTED_AND_VERIFIED",
+      "acceptance": "PASS_OFFLINE_ENGINEERING",
+      "executed_test_ids": [],
+      "strict_evidence": "docs/evidence/master_phase45_20261024_03.json"
+    }
+  },
+  "operational_source_acceptance": false,
+  "live_market_acceptance": false,
+  "profitability_claim": false,
+  "source_dependency_status": "BLOCKED_BY_EXTERNAL_DEPENDENCY",
+  "dependencies": [
+    "No genuine context publisher authority, approved use rights or operator trust policy supplied",
+    "No external source acquisition or real delivery authorized or executed",
+    "Unsupported depth, fills and net target RR remain unavailable"
+  ],
+  "roadmap": "Original six phases unchanged; Phase 6 implementation not started",
+  "browser": {
+    "path": "docs/evidence/phase45_browser_20261024_04.json",
+    "sha256": "4c6f8737379a4680b5b9b55bb12d50f63220edc422065ea6e56291eee4e45e09",
+    "checks": 13,
+    "status": "PASS",
+    "browser": {
+      "jsVersion": "15.5.35.23",
+      "product": "Chrome/155.0.8059.80",
+      "protocolVersion": "1.3",
+      "revision": "@43a195105613ac83c21d3f14de279f4a045c7da0",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36"
+    },
+    "scope": "OFFLINE_AUTHORED_MEMORY_ONLY",
+    "limitations": [
+      "CDN/CSS dependencies omitted",
+      "Chart rendering stubbed",
+      "No full visual/browser compatibility claim",
+      "No genuine source authority/rights or LIVE acceptance",
+      "No provider/network/message/order requests"
+    ]
+  },
+  "strict_verification": {
+    "path": "docs/evidence/master_phase45_20261024_03.json",
+    "sha256": "a74a635868dc79f1ea1b2c6fdd713a6fe9021c07b7717606387e20a932ccd90e",
+    "python": 1019,
+    "passed": 1019,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "unraisable_errors": [],
+    "checks": [
+      {
+        "command": [
+          "node",
+          "test_cash_dashboard.js"
+        ],
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "started_at": "2026-10-24T03:57:36.669994+00:00",
+        "completed_at": "2026-10-24T03:57:36.894821+00:00",
+        "exit_code": 0,
+        "status": "PASS",
+        "log": "docs/evidence/master_phase45_20261024_03_node.txt",
+        "executed": 22,
+        "passed": 22,
+        "failures": 0,
+        "skipped": 0
+      },
+      {
+        "command": [
+          "node",
+          "--check",
+          "test_cash_dashboard.js"
+        ],
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "started_at": "2026-10-24T03:57:36.904850+00:00",
+        "completed_at": "2026-10-24T03:57:36.954981+00:00",
+        "exit_code": 0,
+        "status": "PASS",
+        "log": "docs/evidence/master_phase45_20261024_03_syntax.txt"
+      },
+      {
+        "command": "py_compile.compile(root *.py, doraise=True)",
+        "cwd": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1",
+        "exit_code": 0,
+        "status": "PASS",
+        "compiled_files": 80
+      }
+    ],
+    "new_test_modules": {
+      "test_phase45_scanner_gaps": 8,
+      "test_context_data": 27,
+      "test_context_workflow": 17,
+      "test_context_alerts": 11,
+      "test_phase45_integration": 15,
+      "test_context_http": 17
+    }
+  }
+}

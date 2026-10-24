@@ -84,8 +84,11 @@ def validate_scan_evaluations(conn, run_id, payload):
     references(payload)
 
 
-def load_scan_evaluations(conn, run_id):
+def load_scan_evaluations(conn, run_id, read_cache=None):
     from storage import PersistenceValidationError
+    key = ('evaluation', run_id)
+    if read_cache is not None and key in read_cache:
+        return read_cache[key]
     row = conn.execute("SELECT payload_json,payload_sha256 FROM scan_evaluations WHERE run_id=?", (run_id,)).fetchone()
     durable = conn.execute("SELECT result_json,result_digest FROM cash_candle_scans "
                            "WHERE run_id=? AND status='COMMITTED'", (run_id,)).fetchone()
@@ -97,6 +100,8 @@ def load_scan_evaluations(conn, run_id):
         if row is None:
             if result and any(field in result for field in ("strategy_evaluations", "candidate_evaluations")):
                 raise ValueError("committed evaluation missing")
+            if read_cache is not None:
+                read_cache[key] = None
             return None
         payload = json.loads(row["payload_json"])
         if digest(payload) != row["payload_sha256"]:
@@ -110,12 +115,14 @@ def load_scan_evaluations(conn, run_id):
                 raise ValueError("committed evaluation mismatch")
     except (TypeError, ValueError, RecursionError) as exc:
         raise PersistenceValidationError("SCAN_EVALUATION_INTEGRITY_FAILURE") from exc
+    if read_cache is not None:
+        read_cache[key] = payload
     return payload
 
 
-def _check_evaluation_outcome(conn, run_id, result):
+def _check_evaluation_outcome(conn, run_id, result, read_cache=None):
     from storage import PersistenceValidationError
-    payload = load_scan_evaluations(conn, run_id)
+    payload = load_scan_evaluations(conn, run_id, read_cache=read_cache)
     fields = ("strategy_evaluations", "candidate_evaluations")
     if payload is None and not any(field in result for field in fields):
         return  # Legacy committed results predate persisted explanations.
@@ -304,11 +311,11 @@ def prepare(store, run_id, snapshot):
     return result
 
 
-def load(store, run_id, connection=None):
+def load(store, run_id, connection=None, read_cache=None):
     from storage import PersistenceValidationError
     if connection is None:
         with store.lineage_read() as conn:
-            return load(store, run_id, connection=conn)
+            return load(store, run_id, connection=conn, read_cache={})
     conn = connection
     row = conn.execute("SELECT * FROM cash_candle_scans WHERE run_id=?", (run_id,)).fetchone()
     if row is None:
@@ -350,11 +357,11 @@ def load(store, run_id, connection=None):
     if result is not None and digest(result) != row["result_digest"]:
         raise PersistenceValidationError("LINEAGE_RESULT_INTEGRITY_FAILURE")
     if result is not None:
-        _check_committed_outcome(conn, run_id, snapshot, result)
+        _check_committed_outcome(conn, run_id, snapshot, result, store, read_cache=read_cache)
     return dict(run_id=run_id, status=row["status"], snapshot=snapshot, result=result)
 
 
-def _check_committed_outcome(conn, run_id, snapshot, result):
+def _check_committed_outcome(conn, run_id, snapshot, result, store, read_cache=None):
     from storage import PersistenceValidationError, compute_signal_dedup_key
     scan = conn.execute("SELECT * FROM scan_runs WHERE run_id=?", (run_id,)).fetchone()
     if (not scan or result["run_id"] != run_id
@@ -362,7 +369,7 @@ def _check_committed_outcome(conn, run_id, snapshot, result):
                 ("status", "scan_status"), ("total_signals", "total_signals"),
                 ("persisted_signals", "persisted_signals"), ("duplicate_signals", "duplicate_signals")))):
         raise PersistenceValidationError("LINEAGE_SCAN_OUTCOME_INTEGRITY_FAILURE")
-    _check_evaluation_outcome(conn, run_id, result)
+    _check_evaluation_outcome(conn, run_id, result, read_cache=read_cache)
     by_symbol = {b["content"]["identity"]["symbol"]: b["batch_id"] for b in snapshot["batches"]}
     expected = set()
     for sig in result["signals"]:
@@ -389,9 +396,25 @@ def _check_committed_outcome(conn, run_id, snapshot, result):
     if expected != actual:
         raise PersistenceValidationError("LINEAGE_SIGNAL_LINK_INTEGRITY_FAILURE")
     if "notification_intents" in result:
-        outbox = {r[0] for r in conn.execute("SELECT intent_id FROM notification_outbox WHERE run_id=?", (run_id,))}
+        rows = conn.execute("SELECT * FROM notification_outbox WHERE run_id=?", (run_id,)).fetchall()
+        outbox = set()
+        for row in rows:
+            body = json.loads(row['payload_json'])
+            if body.get('version') == 2:
+                from notification_outbox import validate_context_intent
+                validate_context_intent(store, row, connection=conn, read_cache=read_cache)
+            else:
+                outbox.add(row['intent_id'])
         if outbox != set(result["notification_intents"]):
             raise PersistenceValidationError("LINEAGE_NOTIFICATION_LINK_INTEGRITY_FAILURE")
+        if 'notification_descriptors' in result:
+            descriptors = result['notification_descriptors']
+            expected = [{'intent_id': row['intent_id'], 'content_digest': row['content_digest']}
+                        for row in rows if row['intent_id'] in outbox]
+            if (not isinstance(descriptors, list)
+                    or sorted(descriptors, key=lambda item:item['intent_id']) != sorted(expected, key=lambda item:item['intent_id'])
+                    or any(digest(json.loads(row['payload_json'])) != row['content_digest'] for row in rows)):
+                raise PersistenceValidationError('LINEAGE_NOTIFICATION_DESCRIPTOR_INTEGRITY_FAILURE')
 
 
 def finish(store, run_id, summary):
@@ -440,13 +463,18 @@ def annotate_signals(store, items, account_id=None):
     from storage import PersistenceValidationError
     cache = {}
     evaluations = {}
+    contexts = {}
+    context_decisions = {}
     with store.lineage_read() as conn:
+        read_cache = {}
         for item in items:
             run_id = item["scan_run_id"]
             if run_id not in cache:
                 exists = conn.execute("SELECT 1 FROM cash_candle_scans WHERE run_id=?", (run_id,)).fetchone()
-                cache[run_id] = load(store, run_id, connection=conn) if exists else None
-                evaluations[run_id] = store.load_scan_evaluations(run_id, connection=conn)
+                cache[run_id] = load(store, run_id, connection=conn, read_cache=read_cache) if exists else None
+                evaluations[run_id] = store.load_scan_evaluations(run_id, connection=conn, read_cache=read_cache)
+                contexts[run_id] = store.load_scan_context(run_id, connection=conn, read_cache=read_cache)
+                context_decisions[run_id] = store.list_context_alert_decisions(run_id, connection=conn, read_cache=read_cache)
             work = cache[run_id]
             if work:
                 item["lineage"] = public_summary(work)
@@ -456,6 +484,15 @@ def annotate_signals(store, items, account_id=None):
             else:
                 item["lineage"] = dict(status="NOT_RETAINED", run_id=run_id, batch_ids=[])
             item["actionable"] = False  # Stored candidates never authorize real execution.
+            from context_workflow import candidate_context
+            item['context'] = candidate_context(contexts[run_id], item['dedup_key'])
+            if contexts[run_id]:
+                item['context'].update(snapshot_id=contexts[run_id]['snapshot_id'],
+                    evaluation_mode=contexts[run_id]['evaluation_mode'],
+                    as_of=contexts[run_id]['as_of'], decision_at=contexts[run_id]['decision_at'])
+            item['context_alert_decision'] = next((decision for decision in context_decisions[run_id]
+                if decision['candidate_id'] == item['dedup_key'] and contexts[run_id]
+                and decision['snapshot_id'] == contexts[run_id]['snapshot_id']), None)
             evaluation = evaluations[run_id]
             item["candidate_evaluation"] = next((copy.deepcopy(candidate)
                 for candidate in evaluation["candidate_evaluations"]

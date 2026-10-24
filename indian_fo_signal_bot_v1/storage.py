@@ -809,6 +809,8 @@ class SQLitePersistenceStore:
                     from contract_universe import create_schema as create_contract_cache_schema
                     create_contract_cache_schema(conn)
                     from notification_outbox import create_schema as create_outbox_schema
+                    from context_workflow import create_schema as create_context_schema
+                    create_context_schema(conn)
                     create_outbox_schema(conn)
             except Exception as exc:
                 logger.error("Schema initialization failed: %s", exc)
@@ -886,6 +888,37 @@ class SQLitePersistenceStore:
     def list_notification_outbox(self, limit=100, status=None):
         from notification_outbox import list_items
         return list_items(self, limit, status)
+
+    def _context_checkpoint(self, boundary):
+        """Controlled offline interruption boundary; no acquisition or dispatch."""
+
+    def import_context(self, *args, **kwargs):
+        from context_workflow import ingest
+        kwargs.setdefault('source_policy', getattr(self, 'context_source_policy', None))
+        return ingest(self, *args, **kwargs)
+
+    def list_context_ingestions(self, limit=100, offset=0):
+        from context_workflow import list_ingestions
+        return list_ingestions(self, limit, offset)
+
+    def enrich_scan_context(self, run_id, **kwargs):
+        from context_workflow import enrich
+        return enrich(self, run_id, **kwargs)
+
+    def load_scan_context(self, run_id, connection=None, snapshot_id=None, read_cache=None):
+        from context_workflow import load_snapshot
+        return load_snapshot(self, run_id, connection, snapshot_id, read_cache=read_cache)
+
+    def enqueue_context_alert(self, run_id, candidate_id, context_snapshot, reference):
+        from notification_outbox import enqueue_context
+        return enqueue_context(self, run_id, candidate_id, context_snapshot, reference)
+
+    def list_context_alert_decisions(self, run_id=None, connection=None, read_cache=None):
+        from notification_outbox import list_context_decisions
+        if connection is not None:
+            return list_context_decisions(self, run_id, connection, read_cache=read_cache)
+        with self.lineage_read() as conn:
+            return list_context_decisions(self, run_id, conn, read_cache={})
 
     @contextmanager
     def paper_transaction(self, write=True):
@@ -3099,10 +3132,10 @@ class SQLitePersistenceStore:
             finally:
                 self._close_if_file(conn)
 
-    def load_scan_evaluations(self, run_id, connection=None):
+    def load_scan_evaluations(self, run_id, connection=None, read_cache=None):
         from candle_lineage import load_scan_evaluations
         if connection is not None:
-            return load_scan_evaluations(connection, run_id)
+            return load_scan_evaluations(connection, run_id, read_cache=read_cache)
         with self.lineage_read() as conn:
             return load_scan_evaluations(conn, run_id)
 
@@ -3124,8 +3157,7 @@ class SQLitePersistenceStore:
             params.append(status.strip().upper())
 
         where_sql = ("WHERE " + " AND ".join(clauses)) if clauses else ""
-        with self._db_lock:
-            conn = self._get_connection()
+        with self.lineage_read() as conn:
             try:
                 cur = conn.cursor()
                 total_count = cur.execute(f"SELECT COUNT(*) FROM scan_runs {where_sql}", params).fetchone()[0]
@@ -3140,7 +3172,12 @@ class SQLitePersistenceStore:
                 ).fetchall()
 
                 items = []
+                # This cache exists only while this locked read is active. Every
+                # request starts with fresh source and relational validation.
+                read_cache = {}
                 for r in rows:
+                    context_snapshot = self.load_scan_context(r["run_id"], connection=conn, read_cache=read_cache)
+                    context_alerts = self.list_context_alert_decisions(r["run_id"], connection=conn, read_cache=read_cache)
                     items.append({
                         "id": int(r["id"]),
                         "run_id": r["run_id"],
@@ -3158,7 +3195,10 @@ class SQLitePersistenceStore:
                         "market_breadth": json.loads(r["market_breadth_json"]) if r["market_breadth_json"] else None,
                         "error_type": r["error_type"],
                         "error_message": r["error_message"],
-                        "evaluation": self.load_scan_evaluations(r["run_id"], connection=conn),
+                        "evaluation": self.load_scan_evaluations(r["run_id"], connection=conn, read_cache=read_cache),
+                        "context": context_snapshot,
+                        "context_alert_decisions": [decision for decision in context_alerts if context_snapshot
+                            and decision['snapshot_id'] == context_snapshot['snapshot_id']],
                     })
                 return {
                     "total_count": int(total_count),
@@ -3169,8 +3209,6 @@ class SQLitePersistenceStore:
             except Exception as exc:
                 logger.error("Failed to query scan runs: %s", exc)
                 raise PersistenceError(f"Failed to query scan runs: {exc}") from exc
-            finally:
-                self._close_if_file(conn)
 
 
     # ------------------------------------------------------------------------

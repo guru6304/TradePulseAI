@@ -1,0 +1,62 @@
+test_corrupt_existing_import_inventory_returns_storage_failure (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_existing_import_inventory_returns_storage_failure) ... [2026-10-24 09:21:48,745] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_be80e939 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:48,774] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_be80e939 in 39.38ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:48,783] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_be80e939 with exact cash input linkage
+FAIL
+test_corrupt_receipt_type_or_size_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding) ... [2026-10-24 09:21:48,813] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_6a2f5a79 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:48,845] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_6a2f5a79 in 31.95ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:48,850] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_6a2f5a79 with exact cash input linkage
+
+  test_corrupt_receipt_type_or_size_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding) (kind='oversize') ... FAIL
+  test_corrupt_receipt_type_or_size_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding) (kind='blob') ... FAIL
+test_integer_or_oversized_original_bytes_rejected_before_source_validator (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_integer_or_oversized_original_bytes_rejected_before_source_validator) ... [2026-10-24 09:21:48,883] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_dd220779 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:48,912] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_dd220779 in 29.22ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:48,917] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_dd220779 with exact cash input linkage
+ok
+test_nontext_context_decision_returns503_from_supported_alert_api (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_nontext_context_decision_returns503_from_supported_alert_api) ... [2026-10-24 09:21:48,955] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_3fa574d2 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:48,993] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_3fa574d2 in 38.57ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:49,000] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_3fa574d2 with exact cash input linkage
+ok
+test_nontext_original_outbox_payload_is_graceful_persistence_failure (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_nontext_original_outbox_payload_is_graceful_persistence_failure) ... [2026-10-24 09:21:49,038] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_d28d1c83 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:49,076] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_d28d1c83 in 37.52ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:49,083] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_d28d1c83 with exact cash input linkage
+ok
+test_oversized_or_nontext_stored_snapshot_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_oversized_or_nontext_stored_snapshot_is_rejected_before_decoding) ... [2026-10-24 09:21:49,128] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_68c2552d via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:49,170] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_68c2552d in 42.44ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:49,178] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_68c2552d with exact cash input linkage
+ok
+test_oversized_or_nontext_stored_source_json_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_oversized_or_nontext_stored_source_json_is_rejected_before_decoding) ... [2026-10-24 09:21:49,223] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_2a4edf1b via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:21:49,256] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_2a4edf1b in 33.10ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:21:49,262] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_2a4edf1b with exact cash input linkage
+ok
+
+======================================================================
+FAIL: test_corrupt_existing_import_inventory_returns_storage_failure (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_existing_import_inventory_returns_storage_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\phase45_corrupt_payload_followup_20261024_01.py", line 32, in test_corrupt_existing_import_inventory_returns_storage_failure
+    self.assertEqual(code,503)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^
+AssertionError: 400 != 503
+
+======================================================================
+FAIL: test_corrupt_receipt_type_or_size_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding) (kind='oversize')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\phase45_corrupt_payload_followup_20261024_01.py", line 23, in test_corrupt_receipt_type_or_size_is_rejected_before_decoding
+    self.assertFalse(any(call.args and call.args[0]==raw for call in decoder.call_args_list))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_corrupt_receipt_type_or_size_is_rejected_before_decoding (docs.evidence.phase45_corrupt_payload_followup_20261024_01.TestStoredReceiptAndImportGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding) (kind='blob')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\phase45_corrupt_payload_followup_20261024_01.py", line 23, in test_corrupt_receipt_type_or_size_is_rejected_before_decoding
+    self.assertFalse(any(call.args and call.args[0]==raw for call in decoder.call_args_list))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.589s
+
+FAILED (failures=3)

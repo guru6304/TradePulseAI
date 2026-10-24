@@ -1,0 +1,406 @@
+test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints) ... [2026-10-24 09:05:15,825] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_a54aa51b via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-24 09:05:16,775] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_a54aa51b in 963.13ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tmpxp94i4n2\tradepulse_concurrent.db: OperationalError
+[2026-10-24 09:05:19,265] [ERROR] [tradepulse.scanner] Failed to initialize persistence store: Failed to connect to SQLite database (OperationalError): unable to open database file
+[2026-10-24 09:05:19,265] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_6a6aed1d via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-24 09:05:19,963] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_6a6aed1d in 698.18ms: status=COMPLETED, signals=16, persisted=0, duplicates=0, persistence=ERROR
+ERROR
+test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9i8ynbn9\tamper0.sqlite: OperationalError
+
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM scan_runs') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9i8ynbn9\tamper1.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM signals') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9i8ynbn9\tamper2.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM cash_candle_signal_inputs') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9i8ynbn9\tamper3.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE signals SET entry_price=entry_price+1') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9i8ynbn9\tamper4.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE scan_runs SET total_signals=99') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9i8ynbn9\tamper5.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql="UPDATE cash_candle_scans SET result_digest='tampered'") ... ERROR
+test_actual_sqlite_import_failure_returns503_and_rolls_back_source (test_context_http.TestActualContextSQLiteFailures.test_actual_sqlite_import_failure_returns503_and_rolls_back_source) ... ok
+test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable (test_context_http.TestActualContextSQLiteFailures.test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable) ... [2026-10-24 09:05:20,705] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_b3030605 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:20,745] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_b3030605 in 40.35ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:20,752] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_b3030605 with exact cash input linkage
+[2026-10-24 09:05:20,759] [WARNING] [tradepulse.scanner] Context enrichment unavailable; original scan decision retained.
+ok
+test_corrupt_context_cannot_be_served_by_real_history_routes (test_context_http.TestContextHTTP.test_corrupt_context_cannot_be_served_by_real_history_routes) ... [2026-10-24 09:05:20,813] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_a2f5d541 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:20,850] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_a2f5d541 in 37.78ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:20,855] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_a2f5d541 with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_duplicate_content_length_is_rejected_before_body_read (test_context_http.TestContextHTTP.test_duplicate_content_length_is_rejected_before_body_read) ... ok
+test_duplicate_json_nonfinite_and_invalid_structures_are_rejected (test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected) ... ok
+test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) ... ok
+test_no_request_can_supply_trust_mapping_or_intake_time (test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time) ... ok
+test_oversize_transfer_encoding_and_missing_length_are_rejected (test_context_http.TestContextHTTP.test_oversize_transfer_encoding_and_missing_length_are_rejected) ... ok
+test_real_import_scan_enrich_and_read_routes_agree_without_sends (test_context_http.TestContextHTTP.test_real_import_scan_enrich_and_read_routes_agree_without_sends) ... [2026-10-24 09:05:24,379] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_4e03d69a via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:24,413] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_4e03d69a in 34.21ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:24,418] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_4e03d69a with exact cash input linkage
+ok
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... ok
+test_ack_loss_after_commit_recovers_without_a_second_render (test_context_alerts.TestContextAlertLifecycle.test_ack_loss_after_commit_recovers_without_a_second_render) ... [2026-10-24 09:05:25,575] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_3c531884 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:25,606] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_3c531884 in 31.89ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:25,612] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_3c531884 with exact cash input linkage
+ok
+test_concurrent_enqueue_and_reads_keep_one_semantic_intent (test_context_alerts.TestContextAlertLifecycle.test_concurrent_enqueue_and_reads_keep_one_semantic_intent) ... [2026-10-24 09:05:25,652] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_7a0661bb via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:25,684] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_7a0661bb in 32.04ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:25,689] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_7a0661bb with exact cash input linkage
+ok
+test_failures_back_off_and_stop_at_dead_without_fourth_attempt (test_context_alerts.TestContextAlertLifecycle.test_failures_back_off_and_stop_at_dead_without_fourth_attempt) ... [2026-10-24 09:05:25,800] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_22e26ad1 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:25,841] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_22e26ad1 in 41.24ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:25,847] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_22e26ad1 with exact cash input linkage
+ok
+test_pending_preview_and_ack_replay_are_local_and_exact_once (test_context_alerts.TestContextAlertLifecycle.test_pending_preview_and_ack_replay_are_local_and_exact_once) ... [2026-10-24 09:05:25,906] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_f8fc4924 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:25,943] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_f8fc4924 in 36.84ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:25,949] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_f8fc4924 with exact cash input linkage
+ok
+test_precommit_failure_rolls_back_attempt_and_remains_pending (test_context_alerts.TestContextAlertLifecycle.test_precommit_failure_rolls_back_attempt_and_remains_pending) ... [2026-10-24 09:05:25,997] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_b306a187 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,034] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_b306a187 in 37.08ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,039] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_b306a187 with exact cash input linkage
+ok
+test_rehashed_suppression_or_policy_reason_is_recomputed_from_sources (test_context_alerts.TestContextAlertLifecycle.test_rehashed_suppression_or_policy_reason_is_recomputed_from_sources) ... [2026-10-24 09:05:26,084] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_f6a6222f via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,121] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_f6a6222f in 37.06ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,127] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_f6a6222f with exact cash input linkage
+ok
+test_rehashed_v2_message_and_context_refs_cannot_replace_bound_facts (test_context_alerts.TestContextAlertLifecycle.test_rehashed_v2_message_and_context_refs_cannot_replace_bound_facts) ... [2026-10-24 09:05:26,166] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_7812e677 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,202] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_7812e677 in 36.13ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,208] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_7812e677 with exact cash input linkage
+ok
+test_signal_formatter_uses_numeric_gross_rr_and_labels_nominal_string (test_context_alerts.TestContextAlertLifecycle.test_signal_formatter_uses_numeric_gross_rr_and_labels_nominal_string) ... [2026-10-24 09:05:26,259] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_e8776788 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,308] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_e8776788 in 49.12ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,314] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_e8776788 with exact cash input linkage
+ok
+test_sqlite_restart_restores_pending_and_ack_without_duplicate_render (test_context_alerts.TestContextAlertLifecycle.test_sqlite_restart_restores_pending_and_ack_without_duplicate_render) ... [2026-10-24 09:05:26,351] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_36586439 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,388] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_36586439 in 37.03ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,394] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_36586439 with exact cash input linkage
+ok
+test_rehashed_ack_cannot_forge_identity_real_delivery_or_live_acceptance (test_context_alerts.TestContextAlerts.test_rehashed_ack_cannot_forge_identity_real_delivery_or_live_acceptance) ... [2026-10-24 09:05:26,455] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_9ca9ab20 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,490] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_9ca9ab20 in 35.99ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,496] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_9ca9ab20 with exact cash input linkage
+ok
+test_rehashed_pending_payload_cannot_change_signal_batch_or_message (test_context_alerts.TestContextAlerts.test_rehashed_pending_payload_cannot_change_signal_batch_or_message) ... [2026-10-24 09:05:26,521] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_91d6b1e4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,557] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_91d6b1e4 in 36.48ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,563] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_91d6b1e4 with exact cash input linkage
+ok
+test_actual_cash_scan_v2_context_intent_reloads_without_recursive_validation (test_context_workflow.TestContextWorkflow.test_actual_cash_scan_v2_context_intent_reloads_without_recursive_validation) ... [2026-10-24 09:05:26,591] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_461f180f via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,629] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_461f180f in 37.91ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,636] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_461f180f with exact cash input linkage
+ok
+test_backdated_collection_cannot_enter_earlier_decision (test_context_workflow.TestContextWorkflow.test_backdated_collection_cannot_enter_earlier_decision) ... ok
+test_collection_claim_after_local_capture_is_rejected (test_context_workflow.TestContextWorkflow.test_collection_claim_after_local_capture_is_rejected) ... ok
+test_current_information_is_separate_and_cannot_rewrite_decision_snapshot (test_context_workflow.TestContextWorkflow.test_current_information_is_separate_and_cannot_rewrite_decision_snapshot) ... ok
+test_decision_and_current_cutoff_modes_are_bounded (test_context_workflow.TestContextWorkflow.test_decision_and_current_cutoff_modes_are_bounded) ... ok
+test_future_import_fact_cannot_create_past_conflict (test_context_workflow.TestContextWorkflow.test_future_import_fact_cannot_create_past_conflict) ... ok
+test_import_and_snapshot_are_idempotent_without_mutating_phase4 (test_context_workflow.TestContextWorkflow.test_import_and_snapshot_are_idempotent_without_mutating_phase4) ... ok
+test_import_bounds_prevent_unqueryable_source_sprawl (test_context_workflow.TestContextWorkflow.test_import_bounds_prevent_unqueryable_source_sprawl) ... ok
+test_import_rollback_and_snapshot_source_link_rollback (test_context_workflow.TestContextWorkflow.test_import_rollback_and_snapshot_source_link_rollback) ... ok
+test_missing_parent_and_legacy_history_remain_unavailable (test_context_workflow.TestContextWorkflow.test_missing_parent_and_legacy_history_remain_unavailable) ... ok
+test_observed_time_tamper_without_capture_change_fails_reads (test_context_workflow.TestContextWorkflow.test_observed_time_tamper_without_capture_change_fails_reads) ... ok
+test_qualified_policy_is_required_after_memory_database_restart (test_context_workflow.TestContextWorkflow.test_qualified_policy_is_required_after_memory_database_restart) ... ok
+test_raw_bound_reparse_rejects_rehashed_source_facts (test_context_workflow.TestContextWorkflow.test_raw_bound_reparse_rejects_rehashed_source_facts) ... ok
+test_removed_or_changed_capture_link_is_detected (test_context_workflow.TestContextWorkflow.test_removed_or_changed_capture_link_is_detected) ... ok
+test_snapshot_rehash_cannot_substitute_candidate_or_phase4_digest (test_context_workflow.TestContextWorkflow.test_snapshot_rehash_cannot_substitute_candidate_or_phase4_digest) ... ok
+test_snapshot_scope_limits_and_pagination (test_context_workflow.TestContextWorkflow.test_snapshot_scope_limits_and_pagination) ... ok
+test_source_capture_id_binds_observed_time_and_snapshot_foreign_key (test_context_workflow.TestContextWorkflow.test_source_capture_id_binds_observed_time_and_snapshot_foreign_key) ... ok
+test_actual_candidate_import_context_api_and_preview_preserve_phase4_result (test_phase45_integration.TestPhase45IndependentIntegration.test_actual_candidate_import_context_api_and_preview_preserve_phase4_result) ... [2026-10-24 09:05:26,843] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_03915c8f via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:26,888] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_03915c8f in 45.59ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:26,894] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_03915c8f with exact cash input linkage
+ok
+test_conflicting_context_is_retained_as_warning_without_changing_candidate (test_phase45_integration.TestPhase45IndependentIntegration.test_conflicting_context_is_retained_as_warning_without_changing_candidate) ... [2026-10-24 09:05:26,960] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_f7326e20 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,000] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_f7326e20 in 40.73ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,006] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_f7326e20 with exact cash input linkage
+ok
+test_default_unverified_context_cannot_change_rank_or_make_alert_eligible (test_phase45_integration.TestPhase45IndependentIntegration.test_default_unverified_context_cannot_change_rank_or_make_alert_eligible) ... [2026-10-24 09:05:27,054] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_68edd872 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,090] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_68edd872 in 36.45ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,096] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_68edd872 with exact cash input linkage
+ok
+test_future_collection_and_future_context_cutoff_cannot_be_accepted (test_phase45_integration.TestPhase45IndependentIntegration.test_future_collection_and_future_context_cutoff_cannot_be_accepted) ... [2026-10-24 09:05:27,131] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_3c665f55 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,181] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_3c665f55 in 50.01ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,187] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_3c665f55 with exact cash input linkage
+ok
+test_import_api_rejects_payload_trust_injection_and_malformed_source (test_phase45_integration.TestPhase45IndependentIntegration.test_import_api_rejects_payload_trust_injection_and_malformed_source) ... ok
+test_late_backdated_import_is_excluded_from_decision_time_but_current_view_is_labelled (test_phase45_integration.TestPhase45IndependentIntegration.test_late_backdated_import_is_excluded_from_decision_time_but_current_view_is_labelled) ... [2026-10-24 09:05:27,227] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_8688fc38 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,264] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_8688fc38 in 37.41ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,270] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_8688fc38 with exact cash input linkage
+ok
+test_legacy_scan_history_reports_missing_context_without_fabricated_records (test_phase45_integration.TestPhase45IndependentIntegration.test_legacy_scan_history_reports_missing_context_without_fabricated_records) ... ok
+test_optional_context_commit_failure_cannot_erase_committed_phase4_candidate (test_phase45_integration.TestPhase45IndependentIntegration.test_optional_context_commit_failure_cannot_erase_committed_phase4_candidate) ... [2026-10-24 09:05:27,333] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_16160f32 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,371] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_16160f32 in 38.72ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,377] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_16160f32 with exact cash input linkage
+[2026-10-24 09:05:27,386] [WARNING] [tradepulse.scanner] Context enrichment unavailable; original scan decision retained.
+ok
+test_qualified_other_company_context_never_attaches_to_candidate (test_phase45_integration.TestPhase45IndependentIntegration.test_qualified_other_company_context_never_attaches_to_candidate) ... [2026-10-24 09:05:27,405] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_65ced294 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,443] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_65ced294 in 38.73ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,450] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_65ced294 with exact cash input linkage
+ok
+test_rehashed_snapshot_corruption_fails_context_and_existing_history_routes (test_phase45_integration.TestPhase45IndependentIntegration.test_rehashed_snapshot_corruption_fails_context_and_existing_history_routes) ... [2026-10-24 09:05:27,480] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_43fce17b via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,518] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_43fce17b in 38.37ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,524] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_43fce17b with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_rejected_detected_candidate_stays_rejected_with_qualified_context (test_phase45_integration.TestPhase45IndependentIntegration.test_rejected_detected_candidate_stays_rejected_with_qualified_context) ... [2026-10-24 09:05:27,572] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_bc6ef0da via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,608] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_bc6ef0da in 36.53ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,614] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_bc6ef0da with exact cash input linkage
+ok
+test_retry_uses_actual_clock_while_decision_context_cutoff_stays_fixed (test_phase45_integration.TestPhase45IndependentIntegration.test_retry_uses_actual_clock_while_decision_context_cutoff_stays_fixed) ... [2026-10-24 09:05:27,636] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_753ac690 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,683] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_753ac690 in 47.36ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,694] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_753ac690 with exact cash input linkage
+ok
+test_same_context_deduplicates_and_new_source_record_creates_one_new_intent (test_phase45_integration.TestPhase45IndependentIntegration.test_same_context_deduplicates_and_new_source_record_creates_one_new_intent) ... [2026-10-24 09:05:27,797] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_c9d3e37e via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:27,860] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_c9d3e37e in 63.58ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:27,866] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_c9d3e37e with exact cash input linkage
+ok
+test_stale_context_is_warning_only_and_never_creates_new_alert (test_phase45_integration.TestPhase45IndependentIntegration.test_stale_context_is_warning_only_and_never_creates_new_alert) ... [2026-10-24 09:05:27,964] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_01e18e1a via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:28,001] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_01e18e1a in 38.08ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:28,007] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_01e18e1a with exact cash input linkage
+ok
+test_supported_import_and_enrich_post_handlers_use_same_retained_context (test_phase45_integration.TestPhase45IndependentIntegration.test_supported_import_and_enrich_post_handlers_use_same_retained_context) ... [2026-10-24 09:05:28,052] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_2846372a via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:05:28,089] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_2846372a in 37.62ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:05:28,095] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_2846372a with exact cash input linkage
+ok
+
+======================================================================
+ERROR: test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_bot.py", line 2396, in test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints
+    path, status_code, data, elapsed = fut.result(timeout=4.0)
+                                       ~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 447, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\concurrent\futures\_base.py", line 396, in __get_result
+    raise self._exception
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Python314\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_bot.py", line 2387, in fetch_one
+    with urllib.request.urlopen(base_url + path, timeout=4.0) as resp:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 493, in open
+    response = meth(req, response)
+  File "C:\Python314\Lib\urllib\request.py", line 602, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "C:\Python314\Lib\urllib\request.py", line 531, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\urllib\request.py", line 464, in _call_chain
+    result = func(*args)
+  File "C:\Python314\Lib\urllib\request.py", line 611, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 503: Service Unavailable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen os>", line 377, in walk
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\tmpxp94i4n2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_bot.py", line 2342, in test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints
+    with tempfile.TemporaryDirectory() as tmpdir:
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\tempfile.py", line 971, in __exit__
+    self.cleanup()
+    ~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\tempfile.py", line 975, in cleanup
+    self._rmtree(self.name, ignore_errors=self._ignore_cleanup_errors)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 955, in _rmtree
+    _shutil.rmtree(name, onexc=onexc)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 852, in rmtree
+    _rmtree_impl(path, dir_fd, onexc)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\shutil.py", line 689, in _rmtree_unsafe
+    for dirpath, dirnames, filenames in results:
+                                        ^^^^^^^
+  File "<frozen os>", line 413, in walk
+  File "C:\Python314\Lib\shutil.py", line 687, in onerror
+    onexc(os.scandir, err.filename, err)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 927, in onexc
+    _resetperms(path)
+    ~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 283, in _resetperms
+    _dont_follow_symlinks(_os.chmod, path, 0o700)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\tempfile.py", line 272, in _dont_follow_symlinks
+    func(path, *args, follow_symlinks=False)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied: 'C:\\Users\\HP\\AppData\\Local\\Temp\\tmpxp94i4n2'
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM scan_runs')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 393, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM signals')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 393, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM cash_candle_signal_inputs')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 393, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE signals SET entry_price=entry_price+1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 393, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE scan_runs SET total_signals=99')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 393, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql="UPDATE cash_candle_scans SET result_digest='tampered'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 393, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+----------------------------------------------------------------------
+Ran 55 tests in 12.351s
+
+FAILED (errors=7)

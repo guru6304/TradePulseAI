@@ -1,0 +1,303 @@
+test_absent_old_prior_day_quote_and_unresolved_baselines_stay_unavailable (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_absent_old_prior_day_quote_and_unresolved_baselines_stay_unavailable) ... ok
+test_actual_ring_evicts_one_of_301_without_losing_current_session_open (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_actual_ring_evicts_one_of_301_without_losing_current_session_open) ... ok
+test_evicted_history_still_never_splices_gaps_or_uses_an_invalid_current_tail (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_evicted_history_still_never_splices_gaps_or_uses_an_invalid_current_tail) ... ok
+test_observed_preopen_packet_can_supply_raw_opening_volume_baseline (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_observed_preopen_packet_can_supply_raw_opening_volume_baseline) ... ok
+test_opening_gap_or_unobserved_quantity_keeps_existing_quality_rejection (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_opening_gap_or_unobserved_quantity_keeps_existing_quality_rejection) ... ok
+test_preopen_time_order_and_volume_reset_are_not_accepted_as_new_baselines (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_preopen_time_order_and_volume_reset_are_not_accepted_as_new_baselines) ... ok
+test_ranker_rejects_derived_infinite_ratio_before_returning_candidate (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_ranker_rejects_derived_infinite_ratio_before_returning_candidate) ... ok
+test_raw_preopen_lineage_reaches_201_bar_strategy_diagnostic_without_live_promotion (test_phase45_scanner_gaps.TestPhase45ScannerGaps.test_raw_preopen_lineage_reaches_201_bar_strategy_diagnostic_without_live_promotion) ... ok
+test_candidate_and_original_records_are_never_mutated (test_context_data.TestContextData.test_candidate_and_original_records_are_never_mutated) ... ok
+test_conflicting_facts_same_logical_source_remain_warning (test_context_data.TestContextData.test_conflicting_facts_same_logical_source_remain_warning) ... ok
+test_content_integrity_is_checked_even_if_conflict_flag_is_true (test_context_data.TestContextData.test_content_integrity_is_checked_even_if_conflict_flag_is_true) ... ok
+test_cross_import_conflict_is_independent_of_input_order (test_context_data.TestContextData.test_cross_import_conflict_is_independent_of_input_order) ... ok
+test_default_is_unverified_even_if_artifact_claims_qualification (test_context_data.TestContextData.test_default_is_unverified_even_if_artifact_claims_qualification) ... ok
+test_empty_records_and_missing_candidate_identity_are_explicit (test_context_data.TestContextData.test_empty_records_and_missing_candidate_identity_are_explicit) ... ok
+test_exact_canonical_mapping_and_cross_provider_or_company_reject_matching (test_context_data.TestContextData.test_exact_canonical_mapping_and_cross_provider_or_company_reject_matching) ... ok
+test_future_reversed_and_naive_timestamps_fail_without_inventing_values (test_context_data.TestContextData.test_future_reversed_and_naive_timestamps_fail_without_inventing_values) ... ok
+test_ingestion_id_exact_contract_and_policy_fingerprint (test_context_data.TestContextData.test_ingestion_id_exact_contract_and_policy_fingerprint) ... ok
+test_json_bounds_duplicate_keys_nonfinite_malformed_and_unsafe_links (test_context_data.TestContextData.test_json_bounds_duplicate_keys_nonfinite_malformed_and_unsafe_links) ... ok
+test_logical_and_content_dedup_do_not_change_on_recollection (test_context_data.TestContextData.test_logical_and_content_dedup_do_not_change_on_recollection) ... ok
+test_matching_parameters_and_source_content_limits_are_bounded (test_context_data.TestContextData.test_matching_parameters_and_source_content_limits_are_bounded) ... ok
+test_missing_local_source_approval_does_not_borrow_valid_signature (test_context_data.TestContextData.test_missing_local_source_approval_does_not_borrow_valid_signature) ... ok
+test_missing_timestamps_remain_missing_and_unavailable_for_qualification (test_context_data.TestContextData.test_missing_timestamps_remain_missing_and_unavailable_for_qualification) ... ok
+test_new_artifact_proof_keeps_policy_identity_but_approval_changes_do_not (test_context_data.TestContextData.test_new_artifact_proof_keeps_policy_identity_but_approval_changes_do_not) ... ok
+test_no_lookahead_includes_collection_and_withholds_future_text_entirely (test_context_data.TestContextData.test_no_lookahead_includes_collection_and_withholds_future_text_entirely) ... ok
+test_policy_cannot_be_supplied_as_payload_or_dictionary (test_context_data.TestContextData.test_policy_cannot_be_supplied_as_payload_or_dictionary) ... ok
+test_policy_signature_tamper_revocation_scope_and_rights_fail_closed (test_context_data.TestContextData.test_policy_signature_tamper_revocation_scope_and_rights_fail_closed) ... ok
+test_real_signature_and_separate_local_policy_qualify_only_informationally (test_context_data.TestContextData.test_real_signature_and_separate_local_policy_qualify_only_informationally) ... ok
+test_record_or_ingestion_rehash_cannot_replace_original_facts (test_context_data.TestContextData.test_record_or_ingestion_rehash_cannot_replace_original_facts) ... ok
+test_retraction_and_correction_are_retained_without_rewriting_source (test_context_data.TestContextData.test_retraction_and_correction_are_retained_without_rewriting_source) ... ok
+test_revalidation_binds_external_mapping_and_requires_original_policy (test_context_data.TestContextData.test_revalidation_binds_external_mapping_and_requires_original_policy) ... ok
+test_signature_backend_unavailable_never_falls_back (test_context_data.TestContextData.test_signature_backend_unavailable_never_falls_back) ... ok
+test_signed_date_coverage_cannot_borrow_out_of_scope_source_times (test_context_data.TestContextData.test_signed_date_coverage_cannot_borrow_out_of_scope_source_times) ... ok
+test_staleness_is_derived_at_requested_time (test_context_data.TestContextData.test_staleness_is_derived_at_requested_time) ... ok
+test_trusted_mapping_cannot_redefine_pinned_identifier (test_context_data.TestContextData.test_trusted_mapping_cannot_redefine_pinned_identifier) ... ok
+test_untrusted_interpretation_requires_rule_and_is_not_inferred_sentiment (test_context_data.TestContextData.test_untrusted_interpretation_requires_rule_and_is_not_inferred_sentiment) ... ok
+test_actual_cash_scan_v2_context_intent_reloads_without_recursive_validation (test_context_workflow.TestContextWorkflow.test_actual_cash_scan_v2_context_intent_reloads_without_recursive_validation) ... [2026-10-24 08:48:23,708] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_bccfef7b via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:23,745] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_bccfef7b in 37.84ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:23,750] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_bccfef7b with exact cash input linkage
+ok
+test_backdated_collection_cannot_enter_earlier_decision (test_context_workflow.TestContextWorkflow.test_backdated_collection_cannot_enter_earlier_decision) ... ok
+test_collection_claim_after_local_capture_is_rejected (test_context_workflow.TestContextWorkflow.test_collection_claim_after_local_capture_is_rejected) ... ok
+test_current_information_is_separate_and_cannot_rewrite_decision_snapshot (test_context_workflow.TestContextWorkflow.test_current_information_is_separate_and_cannot_rewrite_decision_snapshot) ... ok
+test_decision_and_current_cutoff_modes_are_bounded (test_context_workflow.TestContextWorkflow.test_decision_and_current_cutoff_modes_are_bounded) ... ok
+test_future_import_fact_cannot_create_past_conflict (test_context_workflow.TestContextWorkflow.test_future_import_fact_cannot_create_past_conflict) ... ok
+test_import_and_snapshot_are_idempotent_without_mutating_phase4 (test_context_workflow.TestContextWorkflow.test_import_and_snapshot_are_idempotent_without_mutating_phase4) ... ok
+test_import_bounds_prevent_unqueryable_source_sprawl (test_context_workflow.TestContextWorkflow.test_import_bounds_prevent_unqueryable_source_sprawl) ... ok
+test_import_rollback_and_snapshot_source_link_rollback (test_context_workflow.TestContextWorkflow.test_import_rollback_and_snapshot_source_link_rollback) ... ok
+test_missing_parent_and_legacy_history_remain_unavailable (test_context_workflow.TestContextWorkflow.test_missing_parent_and_legacy_history_remain_unavailable) ... ok
+test_observed_time_tamper_without_capture_change_fails_reads (test_context_workflow.TestContextWorkflow.test_observed_time_tamper_without_capture_change_fails_reads) ... ok
+test_qualified_policy_is_required_after_memory_database_restart (test_context_workflow.TestContextWorkflow.test_qualified_policy_is_required_after_memory_database_restart) ... ok
+test_raw_bound_reparse_rejects_rehashed_source_facts (test_context_workflow.TestContextWorkflow.test_raw_bound_reparse_rejects_rehashed_source_facts) ... ok
+test_removed_or_changed_capture_link_is_detected (test_context_workflow.TestContextWorkflow.test_removed_or_changed_capture_link_is_detected) ... ok
+test_snapshot_rehash_cannot_substitute_candidate_or_phase4_digest (test_context_workflow.TestContextWorkflow.test_snapshot_rehash_cannot_substitute_candidate_or_phase4_digest) ... ok
+test_snapshot_scope_limits_and_pagination (test_context_workflow.TestContextWorkflow.test_snapshot_scope_limits_and_pagination) ... ok
+test_source_capture_id_binds_observed_time_and_snapshot_foreign_key (test_context_workflow.TestContextWorkflow.test_source_capture_id_binds_observed_time_and_snapshot_foreign_key) ... ok
+test_ack_loss_after_commit_recovers_without_a_second_render (test_context_alerts.TestContextAlertLifecycle.test_ack_loss_after_commit_recovers_without_a_second_render) ... [2026-10-24 08:48:23,959] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_00404bd9 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:23,994] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_00404bd9 in 35.52ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:23,999] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_00404bd9 with exact cash input linkage
+ok
+test_concurrent_enqueue_and_reads_keep_one_semantic_intent (test_context_alerts.TestContextAlertLifecycle.test_concurrent_enqueue_and_reads_keep_one_semantic_intent) ... [2026-10-24 08:48:24,047] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_c71ac21c via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,090] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_c71ac21c in 43.17ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,097] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_c71ac21c with exact cash input linkage
+ok
+test_failures_back_off_and_stop_at_dead_without_fourth_attempt (test_context_alerts.TestContextAlertLifecycle.test_failures_back_off_and_stop_at_dead_without_fourth_attempt) ... [2026-10-24 08:48:24,246] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_53fc4b80 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,277] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_53fc4b80 in 30.65ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,282] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_53fc4b80 with exact cash input linkage
+ok
+test_pending_preview_and_ack_replay_are_local_and_exact_once (test_context_alerts.TestContextAlertLifecycle.test_pending_preview_and_ack_replay_are_local_and_exact_once) ... [2026-10-24 08:48:24,329] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_f1246fd7 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,361] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_f1246fd7 in 32.67ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,366] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_f1246fd7 with exact cash input linkage
+ok
+test_precommit_failure_rolls_back_attempt_and_remains_pending (test_context_alerts.TestContextAlertLifecycle.test_precommit_failure_rolls_back_attempt_and_remains_pending) ... [2026-10-24 08:48:24,401] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_8f45125c via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,430] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_8f45125c in 29.42ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,434] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_8f45125c with exact cash input linkage
+ok
+test_rehashed_suppression_or_policy_reason_is_recomputed_from_sources (test_context_alerts.TestContextAlertLifecycle.test_rehashed_suppression_or_policy_reason_is_recomputed_from_sources) ... [2026-10-24 08:48:24,469] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_e6168fa2 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,509] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_e6168fa2 in 40.21ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,513] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_e6168fa2 with exact cash input linkage
+ok
+test_rehashed_v2_message_and_context_refs_cannot_replace_bound_facts (test_context_alerts.TestContextAlertLifecycle.test_rehashed_v2_message_and_context_refs_cannot_replace_bound_facts) ... [2026-10-24 08:48:24,552] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_fe0a5d7b via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,589] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_fe0a5d7b in 37.13ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,594] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_fe0a5d7b with exact cash input linkage
+ok
+test_signal_formatter_uses_numeric_gross_rr_and_labels_nominal_string (test_context_alerts.TestContextAlertLifecycle.test_signal_formatter_uses_numeric_gross_rr_and_labels_nominal_string) ... [2026-10-24 08:48:24,640] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_80ad931b via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,671] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_80ad931b in 30.80ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,675] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_80ad931b with exact cash input linkage
+ok
+test_sqlite_restart_restores_pending_and_ack_without_duplicate_render (test_context_alerts.TestContextAlertLifecycle.test_sqlite_restart_restores_pending_and_ack_without_duplicate_render) ... [2026-10-24 08:48:24,702] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_55b4eea9 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,731] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_55b4eea9 in 28.87ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,735] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_55b4eea9 with exact cash input linkage
+ok
+test_rehashed_ack_cannot_forge_identity_real_delivery_or_live_acceptance (test_context_alerts.TestContextAlerts.test_rehashed_ack_cannot_forge_identity_real_delivery_or_live_acceptance) ... [2026-10-24 08:48:24,781] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_12adc6e7 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,810] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_12adc6e7 in 30.01ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,815] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_12adc6e7 with exact cash input linkage
+ok
+test_rehashed_pending_payload_cannot_change_signal_batch_or_message (test_context_alerts.TestContextAlerts.test_rehashed_pending_payload_cannot_change_signal_batch_or_message) ... [2026-10-24 08:48:24,834] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_b33b57b6 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,866] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_b33b57b6 in 31.89ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,871] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_b33b57b6 with exact cash input linkage
+ok
+test_actual_candidate_import_context_api_and_preview_preserve_phase4_result (test_phase45_integration.TestPhase45IndependentIntegration.test_actual_candidate_import_context_api_and_preview_preserve_phase4_result) ... [2026-10-24 08:48:24,889] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_c9466528 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:24,920] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_c9466528 in 31.23ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:24,925] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_c9466528 with exact cash input linkage
+ok
+test_conflicting_context_is_retained_as_warning_without_changing_candidate (test_phase45_integration.TestPhase45IndependentIntegration.test_conflicting_context_is_retained_as_warning_without_changing_candidate) ... [2026-10-24 08:48:25,002] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_157d8280 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,033] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_157d8280 in 32.04ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,038] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_157d8280 with exact cash input linkage
+ok
+test_default_unverified_context_cannot_change_rank_or_make_alert_eligible (test_phase45_integration.TestPhase45IndependentIntegration.test_default_unverified_context_cannot_change_rank_or_make_alert_eligible) ... [2026-10-24 08:48:25,076] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_49a4c0bd via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,107] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_49a4c0bd in 31.31ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,112] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_49a4c0bd with exact cash input linkage
+ok
+test_future_collection_and_future_context_cutoff_cannot_be_accepted (test_phase45_integration.TestPhase45IndependentIntegration.test_future_collection_and_future_context_cutoff_cannot_be_accepted) ... [2026-10-24 08:48:25,136] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_62406f19 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,165] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_62406f19 in 28.81ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,169] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_62406f19 with exact cash input linkage
+ok
+test_import_api_rejects_payload_trust_injection_and_malformed_source (test_phase45_integration.TestPhase45IndependentIntegration.test_import_api_rejects_payload_trust_injection_and_malformed_source) ... ok
+test_late_backdated_import_is_excluded_from_decision_time_but_current_view_is_labelled (test_phase45_integration.TestPhase45IndependentIntegration.test_late_backdated_import_is_excluded_from_decision_time_but_current_view_is_labelled) ... [2026-10-24 08:48:25,200] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_9ccfc970 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,229] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_9ccfc970 in 29.51ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,235] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_9ccfc970 with exact cash input linkage
+ok
+test_legacy_scan_history_reports_missing_context_without_fabricated_records (test_phase45_integration.TestPhase45IndependentIntegration.test_legacy_scan_history_reports_missing_context_without_fabricated_records) ... ok
+test_optional_context_commit_failure_cannot_erase_committed_phase4_candidate (test_phase45_integration.TestPhase45IndependentIntegration.test_optional_context_commit_failure_cannot_erase_committed_phase4_candidate) ... [2026-10-24 08:48:25,292] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_8c92bd90 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,321] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_8c92bd90 in 29.57ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,327] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_8c92bd90 with exact cash input linkage
+[2026-10-24 08:48:25,334] [WARNING] [tradepulse.scanner] Context enrichment unavailable; original scan decision retained.
+ok
+test_qualified_other_company_context_never_attaches_to_candidate (test_phase45_integration.TestPhase45IndependentIntegration.test_qualified_other_company_context_never_attaches_to_candidate) ... [2026-10-24 08:48:25,349] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_c4868943 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,382] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_c4868943 in 33.36ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,386] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_c4868943 with exact cash input linkage
+ok
+test_rehashed_snapshot_corruption_fails_context_and_existing_history_routes (test_phase45_integration.TestPhase45IndependentIntegration.test_rehashed_snapshot_corruption_fails_context_and_existing_history_routes) ... [2026-10-24 08:48:25,413] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_a5e65ab8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,443] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_a5e65ab8 in 30.49ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,447] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_a5e65ab8 with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_rejected_detected_candidate_stays_rejected_with_qualified_context (test_phase45_integration.TestPhase45IndependentIntegration.test_rejected_detected_candidate_stays_rejected_with_qualified_context) ... [2026-10-24 08:48:25,485] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_f5644134 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,516] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_f5644134 in 30.75ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,519] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_f5644134 with exact cash input linkage
+ok
+test_retry_uses_actual_clock_while_decision_context_cutoff_stays_fixed (test_phase45_integration.TestPhase45IndependentIntegration.test_retry_uses_actual_clock_while_decision_context_cutoff_stays_fixed) ... [2026-10-24 08:48:25,536] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_b216f0e1 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,566] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_b216f0e1 in 30.53ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,570] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_b216f0e1 with exact cash input linkage
+ok
+test_same_context_deduplicates_and_new_source_record_creates_one_new_intent (test_phase45_integration.TestPhase45IndependentIntegration.test_same_context_deduplicates_and_new_source_record_creates_one_new_intent) ... [2026-10-24 08:48:25,635] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_5b1f15ea via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,673] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_5b1f15ea in 38.02ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,679] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_5b1f15ea with exact cash input linkage
+ok
+test_stale_context_is_warning_only_and_never_creates_new_alert (test_phase45_integration.TestPhase45IndependentIntegration.test_stale_context_is_warning_only_and_never_creates_new_alert) ... [2026-10-24 08:48:25,763] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_a9df75b2 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,798] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_a9df75b2 in 34.93ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,807] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_a9df75b2 with exact cash input linkage
+ok
+test_supported_import_and_enrich_post_handlers_use_same_retained_context (test_phase45_integration.TestPhase45IndependentIntegration.test_supported_import_and_enrich_post_handlers_use_same_retained_context) ... [2026-10-24 08:48:25,844] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_385d8152 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:25,875] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_385d8152 in 32.07ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:25,880] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_385d8152 with exact cash input linkage
+ok
+test_corrupt_context_cannot_be_served_by_real_history_routes (test_context_http.TestContextHTTP.test_corrupt_context_cannot_be_served_by_real_history_routes) ... [2026-10-24 08:48:25,973] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_a1d4664c via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:26,011] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_a1d4664c in 38.92ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:26,016] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_a1d4664c with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_duplicate_content_length_is_rejected_before_body_read (test_context_http.TestContextHTTP.test_duplicate_content_length_is_rejected_before_body_read) ... ok
+test_duplicate_json_nonfinite_and_invalid_structures_are_rejected (test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected) ... ok
+test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) ... ok
+test_no_request_can_supply_trust_mapping_or_intake_time (test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time) ... ok
+test_oversize_transfer_encoding_and_missing_length_are_rejected (test_context_http.TestContextHTTP.test_oversize_transfer_encoding_and_missing_length_are_rejected) ... ok
+test_real_import_scan_enrich_and_read_routes_agree_without_sends (test_context_http.TestContextHTTP.test_real_import_scan_enrich_and_read_routes_agree_without_sends) ... [2026-10-24 08:48:29,571] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_22e4298c via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:29,602] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_22e4298c in 32.23ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:29,608] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_22e4298c with exact cash input linkage
+ok
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... ok
+test_ack_write_failure_rolls_back_and_postcommit_ack_loss_is_idempotent (test_notification_outbox.TestNotificationOutbox.test_ack_write_failure_rolls_back_and_postcommit_ack_loss_is_idempotent) ... [2026-10-24 08:48:30,821] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_1848ca90 via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:30,885] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_1848ca90 in 70.61ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:30,894] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_1848ca90 with exact cash input linkage
+ok
+test_commit_before_ack_restart_and_concurrent_preview_have_one_receipt (test_notification_outbox.TestNotificationOutbox.test_commit_before_ack_restart_and_concurrent_preview_have_one_receipt) ... [2026-10-24 08:48:30,984] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_c3221b7d via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:31,039] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_c3221b7d in 63.87ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,050] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_c3221b7d with exact cash input linkage
+ok
+test_corrupt_retry_counter_is_rejected_before_retry_work (test_notification_outbox.TestNotificationOutbox.test_corrupt_retry_counter_is_rejected_before_retry_work) ... [2026-10-24 08:48:31,188] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_e691f133 via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:31,249] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_e691f133 in 68.22ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,261] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_e691f133 with exact cash input linkage
+ok
+test_intent_rolls_back_with_result_and_never_survives_failed_scan (test_notification_outbox.TestNotificationOutbox.test_intent_rolls_back_with_result_and_never_survives_failed_scan) ... [2026-10-24 08:48:31,315] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_d122c358 via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:31,367] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_d122c358 in 58.61ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+ok
+test_render_failure_has_bounded_backoff_and_recovery (test_notification_outbox.TestNotificationOutbox.test_render_failure_has_bounded_backoff_and_recovery) ... [2026-10-24 08:48:31,418] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_ef28fb92 via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:31,471] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_ef28fb92 in 62.71ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,482] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_ef28fb92 with exact cash input linkage
+ok
+test_repeated_render_failure_stops_without_false_ack (test_notification_outbox.TestNotificationOutbox.test_repeated_render_failure_stops_without_false_ack) ... [2026-10-24 08:48:31,570] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5077975d via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:31,621] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_5077975d in 59.02ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,632] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_5077975d with exact cash input linkage
+ok
+test_tampered_intent_and_signal_cannot_generate_a_preview (test_notification_outbox.TestNotificationOutbox.test_tampered_intent_and_signal_cannot_generate_a_preview) ... [2026-10-24 08:48:31,729] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_98228bc6 via Upstox API v2 (mode=LIVE)
+[2026-10-24 08:48:31,781] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_98228bc6 in 61.65ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,792] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_98228bc6 with exact cash input linkage
+ok
+test_attractive_quality_cannot_admit_invalid_risk_geometry (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_attractive_quality_cannot_admit_invalid_risk_geometry) ... ok
+test_corrupt_or_rehashed_inconsistent_explanations_fail_both_existing_read_routes (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_corrupt_or_rehashed_inconsistent_explanations_fail_both_existing_read_routes) ... [2026-10-24 08:48:31,839] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f7212fef via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:31,871] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f7212fef in 31.86ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,879] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f7212fef with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+[2026-10-24 08:48:31,905] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_54d25bb9 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:31,935] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_54d25bb9 in 30.21ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,940] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_54d25bb9 with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_detected_setup_with_invalid_target_is_preserved_as_rejected_not_ranked (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_detected_setup_with_invalid_target_is_preserved_as_rejected_not_ranked) ... [2026-10-24 08:48:31,964] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_096c8834 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:31,994] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_096c8834 in 30.17ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 08:48:31,998] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_096c8834 with exact cash input linkage
+ok
+test_disconnect_after_actual_evaluation_blocks_commit_and_notification (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_disconnect_after_actual_evaluation_blocks_commit_and_notification) ... [2026-10-24 08:48:32,016] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_2e301bdb via Angel One SmartAPI (mode=LIVE)
+ok
+test_disconnect_after_commit_keeps_history_but_revokes_current_readiness_and_preview (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_disconnect_after_commit_keeps_history_but_revokes_current_readiness_and_preview) ... [2026-10-24 08:48:32,056] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_4a306fac via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,087] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_4a306fac in 30.86ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,095] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_4a306fac with exact cash input linkage
+ok
+test_disconnect_after_staged_write_or_last_commit_checkpoint_rolls_back (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_disconnect_after_staged_write_or_last_commit_checkpoint_rolls_back) ... [2026-10-24 08:48:32,111] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_bedc601a via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,151] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_6b117f41 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,182] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_6b117f41 in 31.00ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+ok
+test_existing_api_history_and_scan_routes_expose_same_reconciled_candidate (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_existing_api_history_and_scan_routes_expose_same_reconciled_candidate) ... [2026-10-24 08:48:32,197] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_646de377 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,227] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_646de377 in 30.39ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,232] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_646de377 with exact cash input linkage
+ok
+test_existing_vwap_and_orb_fixtures_are_explained_through_actual_scanner (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_existing_vwap_and_orb_fixtures_are_explained_through_actual_scanner) ... [2026-10-24 08:48:32,267] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103505_387f00f1 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,372] [INFO] [tradepulse.scanner] Staged scan scan_20261016_103505_387f00f1 in 105.30ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,384] [INFO] [tradepulse.scanner] Committed scan scan_20261016_103505_387f00f1 with exact cash input linkage
+[2026-10-24 08:48:32,435] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103505_cfe743d8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,535] [INFO] [tradepulse.scanner] Staged scan scan_20261016_103505_cfe743d8 in 100.05ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,554] [INFO] [tradepulse.scanner] Committed scan scan_20261016_103505_cfe743d8 with exact cash input linkage
+ok
+test_explanation_persistence_and_idempotent_retry_keep_same_source_and_candidate (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_explanation_persistence_and_idempotent_retry_keep_same_source_and_candidate) ... [2026-10-24 08:48:32,588] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_0419964c via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,623] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_0419964c in 35.13ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,627] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_0419964c with exact cash input linkage
+[2026-10-24 08:48:32,641] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_774de2c0 via Angel One SmartAPI (mode=LIVE)
+ok
+test_fresh_partial_session_cannot_invent_session_vwap_or_qualify_original_setup (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_fresh_partial_session_cannot_invent_session_vwap_or_qualify_original_setup) ... [2026-10-24 08:48:32,693] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_b1bab350 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,722] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_b1bab350 in 29.36ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,726] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_b1bab350 with exact cash input linkage
+ok
+test_fully_warmed_supertrend_reaches_actual_scanner_without_relaxing_lookback (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_fully_warmed_supertrend_reaches_actual_scanner_without_relaxing_lookback) ... [2026-10-24 08:48:32,744] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103505_990a7685 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,845] [INFO] [tradepulse.scanner] Staged scan scan_20261016_103505_990a7685 in 101.27ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,856] [INFO] [tradepulse.scanner] Committed scan scan_20261016_103505_990a7685 with exact cash input linkage
+ok
+test_insufficient_completed_history_is_explicit_nonactionable_not_silent_setup (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_insufficient_completed_history_is_explicit_nonactionable_not_silent_setup) ... [2026-10-24 08:48:32,900] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_6a682f36 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,919] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_6a682f36 in 19.64ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 08:48:32,921] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_6a682f36 with exact cash input linkage
+ok
+test_invalid_candle_inputs_never_reach_actual_strategy_or_outputs (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_invalid_candle_inputs_never_reach_actual_strategy_or_outputs) ... [2026-10-24 08:48:32,934] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_e191537d via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,945] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_c2bbc8ad via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,955] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_9ef6b1a3 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,977] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_d83df609 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:32,991] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_425292f1 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,005] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_74007465 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,018] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_dab41612 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,032] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_7542ce9d via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,046] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_0e577964 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,057] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_82dcfa73 via Angel One SmartAPI (mode=LIVE)
+ok
+test_partial_session_peer_cannot_contribute_invented_vwap_breadth (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_partial_session_peer_cannot_contribute_invented_vwap_breadth) ... ok
+test_quality_degradation_after_evaluation_blocks_even_while_stream_is_connected (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_quality_degradation_after_evaluation_blocks_even_while_stream_is_connected) ... [2026-10-24 08:48:33,071] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f75c06d3 via Angel One SmartAPI (mode=LIVE)
+ok
+test_ranking_all_permutations_and_exact_identity_ties_are_reproducible (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_ranking_all_permutations_and_exact_identity_ties_are_reproducible) ... ok
+test_real_scanner_candidate_has_numeric_risk_rank_and_supported_rule_explanations (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_real_scanner_candidate_has_numeric_risk_rank_and_supported_rule_explanations) ... [2026-10-24 08:48:33,121] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_c5a947bc via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,149] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_c5a947bc in 29.02ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:33,154] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_c5a947bc with exact cash input linkage
+ok
+test_shutdown_stops_attached_fixture_and_preserves_safe_configuration (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_shutdown_stops_attached_fixture_and_preserves_safe_configuration) ... ok
+test_stale_and_forming_only_inputs_never_publish_candidates (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_stale_and_forming_only_inputs_never_publish_candidates) ... [2026-10-24 08:48:33,180] [INFO] [tradepulse.scanner] Starting scan scan_20261016_143005_26fb1694 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,192] [INFO] [tradepulse.scanner] Starting scan scan_20261016_143005_f37eb680 via Angel One SmartAPI (mode=LIVE)
+ok
+test_valid_fixture_uses_actual_scanner_and_excludes_forming_tail_from_lineage (test_phase4_recommendations.TestPhase4IndependentRecommendations.test_valid_fixture_uses_actual_scanner_and_excludes_forming_tail_from_lineage) ... [2026-10-24 08:48:33,202] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_914760db via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:33,231] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_914760db in 28.99ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:33,235] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_914760db with exact cash input linkage
+ok
+test_existing_ranking_is_deterministic_and_geometry_based (test_phase4_explanations.TestPhase4NumericRiskAndRanking.test_existing_ranking_is_deterministic_and_geometry_based) ... ok
+test_extreme_ratio_overflow_unavailable (test_phase4_explanations.TestPhase4NumericRiskAndRanking.test_extreme_ratio_overflow_unavailable) ... ok
+test_gross_ratios_use_actual_levels_not_nominal_floor_or_label (test_phase4_explanations.TestPhase4NumericRiskAndRanking.test_gross_ratios_use_actual_levels_not_nominal_floor_or_label) ... ok
+test_invalid_geometry_has_no_supported_ratio (test_phase4_explanations.TestPhase4NumericRiskAndRanking.test_invalid_geometry_has_no_supported_ratio) ... ok
+test_short_geometry_and_long_put_premium_both_supported (test_phase4_explanations.TestPhase4NumericRiskAndRanking.test_short_geometry_and_long_put_premium_both_supported) ... ok
+test_tiny_supported_distances_are_not_rounded_to_zero (test_phase4_explanations.TestPhase4NumericRiskAndRanking.test_tiny_supported_distances_are_not_rounded_to_zero) ... ok
+test_all_five_bidirectional_actual_signals_match_direct_evaluation (test_phase4_explanations.TestPhase4StrategyExplanations.test_all_five_bidirectional_actual_signals_match_direct_evaluation) ... ok
+test_all_five_warmup_below_and_exact_boundary (test_phase4_explanations.TestPhase4StrategyExplanations.test_all_five_warmup_below_and_exact_boundary) ... ok
+test_completed_count_excludes_explicit_incomplete_and_future_bars (test_phase4_explanations.TestPhase4StrategyExplanations.test_completed_count_excludes_explicit_incomplete_and_future_bars) ... ok
+test_internal_type_error_does_not_retry_or_echo_private_error (test_phase4_explanations.TestPhase4StrategyExplanations.test_internal_type_error_does_not_retry_or_echo_private_error) ... ok
+test_invalid_candles_unavailable_and_direct_contract_unchanged (test_phase4_explanations.TestPhase4StrategyExplanations.test_invalid_candles_unavailable_and_direct_contract_unchanged) ... ok
+test_missing_current_session_open_cannot_use_partial_vwap (test_phase4_explanations.TestPhase4StrategyExplanations.test_missing_current_session_open_cannot_use_partial_vwap) ... ok
+test_ob_trace_preserves_mitigation_state_and_duplicate_rejection (test_phase4_explanations.TestPhase4StrategyExplanations.test_ob_trace_preserves_mitigation_state_and_duplicate_rejection) ... ok
+test_option_chain_missing_and_invalid_fail_without_invented_oi (test_phase4_explanations.TestPhase4StrategyExplanations.test_option_chain_missing_and_invalid_fail_without_invented_oi) ... ok
+test_orb_missing_opening_bar_is_unavailable (test_phase4_explanations.TestPhase4StrategyExplanations.test_orb_missing_opening_bar_is_unavailable) ... ok
+test_override_without_candidate_or_trace_is_unavailable (test_phase4_explanations.TestPhase4StrategyExplanations.test_override_without_candidate_or_trace_is_unavailable) ... ok
+test_override_without_trace_is_called_once (test_phase4_explanations.TestPhase4StrategyExplanations.test_override_without_trace_is_called_once) ... ok
+test_supertrend_excluded_window_is_rule_rejection (test_phase4_explanations.TestPhase4StrategyExplanations.test_supertrend_excluded_window_is_rule_rejection) ... ok
+test_unknown_strategy_and_missing_symbol_are_unavailable (test_phase4_explanations.TestPhase4StrategyExplanations.test_unknown_strategy_and_missing_symbol_are_unavailable) ... ok
+test_volume_rejection_records_actual_threshold (test_phase4_explanations.TestPhase4StrategyExplanations.test_volume_rejection_records_actual_threshold) ... ok
+test_wrapped_evaluator_retains_diagnostics (test_phase4_explanations.TestPhase4StrategyExplanations.test_wrapped_evaluator_retains_diagnostics) ... ok
+test_zero_baseline_volume_unavailable (test_phase4_explanations.TestPhase4StrategyExplanations.test_zero_baseline_volume_unavailable) ... ok
+
+----------------------------------------------------------------------
+Ran 135 tests in 18.253s
+
+OK

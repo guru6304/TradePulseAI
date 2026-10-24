@@ -1,0 +1,59 @@
+test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints) ... [2026-10-24 09:00:24,656] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_6ef17ee3 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-24 09:00:26,171] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_6ef17ee3 in 1634.55ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+[2026-10-24 09:00:31,495] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_6e61b534 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-24 09:00:32,933] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_6e61b534 in 1449.13ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+FAIL
+test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) ... [2026-10-24 09:00:38,597] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_11b4bf02 via Upstox API v2 (mode=LIVE)
+[2026-10-24 09:00:38,692] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_11b4bf02 in 109.53ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:38,706] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_11b4bf02 with exact cash input linkage
+[2026-10-24 09:00:38,846] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_6e9270f4 via Upstox API v2 (mode=LIVE)
+[2026-10-24 09:00:38,945] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_6e9270f4 in 114.82ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:38,961] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_6e9270f4 with exact cash input linkage
+[2026-10-24 09:00:39,137] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_786c3f48 via Upstox API v2 (mode=LIVE)
+[2026-10-24 09:00:39,266] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_786c3f48 in 152.68ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:39,282] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_786c3f48 with exact cash input linkage
+[2026-10-24 09:00:39,433] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_7fb6bc6f via Upstox API v2 (mode=LIVE)
+[2026-10-24 09:00:39,531] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_7fb6bc6f in 114.57ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:39,547] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_7fb6bc6f with exact cash input linkage
+[2026-10-24 09:00:39,701] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_b4393640 via Upstox API v2 (mode=LIVE)
+[2026-10-24 09:00:39,801] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_b4393640 in 116.68ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:39,816] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_b4393640 with exact cash input linkage
+[2026-10-24 09:00:39,954] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_b67a67cc via Upstox API v2 (mode=LIVE)
+[2026-10-24 09:00:40,050] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_b67a67cc in 111.84ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:40,066] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_b67a67cc with exact cash input linkage
+ok
+test_actual_sqlite_import_failure_returns503_and_rolls_back_source (test_context_http.TestActualContextSQLiteFailures.test_actual_sqlite_import_failure_returns503_and_rolls_back_source) ... ok
+test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable (test_context_http.TestActualContextSQLiteFailures.test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable) ... [2026-10-24 09:00:40,213] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_c785d9af via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:00:40,290] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_c785d9af in 77.60ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:40,303] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_c785d9af with exact cash input linkage
+[2026-10-24 09:00:40,317] [WARNING] [tradepulse.scanner] Context enrichment unavailable; original scan decision retained.
+ok
+test_corrupt_context_cannot_be_served_by_real_history_routes (test_context_http.TestContextHTTP.test_corrupt_context_cannot_be_served_by_real_history_routes) ... [2026-10-24 09:00:40,387] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_7e8e2ca4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:00:40,440] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_7e8e2ca4 in 53.85ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:40,450] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_7e8e2ca4 with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_duplicate_content_length_is_rejected_before_body_read (test_context_http.TestContextHTTP.test_duplicate_content_length_is_rejected_before_body_read) ... ok
+test_duplicate_json_nonfinite_and_invalid_structures_are_rejected (test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected) ... ok
+test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) ... ok
+test_no_request_can_supply_trust_mapping_or_intake_time (test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time) ... ok
+test_oversize_transfer_encoding_and_missing_length_are_rejected (test_context_http.TestContextHTTP.test_oversize_transfer_encoding_and_missing_length_are_rejected) ... ok
+test_real_import_scan_enrich_and_read_routes_agree_without_sends (test_context_http.TestContextHTTP.test_real_import_scan_enrich_and_read_routes_agree_without_sends) ... [2026-10-24 09:00:44,056] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_6d8e5082 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 09:00:44,117] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_6d8e5082 in 62.26ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 09:00:44,126] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_6d8e5082 with exact cash input linkage
+ok
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... ok
+
+======================================================================
+FAIL: test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_bot.py", line 2398, in test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints
+    self.assertLess(elapsed, 3.0, f"Request {path} took too long: {elapsed:.2f}s")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3.5389892999082804 not less than 3.0 : Request /api/health took too long: 3.54s
+
+----------------------------------------------------------------------
+Ran 12 tests in 20.865s
+
+FAILED (failures=1)

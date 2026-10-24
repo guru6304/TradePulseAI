@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import threading
+import sqlite3
 import urllib.parse
 import ipaddress
 from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
@@ -899,6 +900,108 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         except Exception:
             return 503, {"status": "error", "reason_code": "OPERATIONAL_STORAGE_UNAVAILABLE"}
 
+    def _context_body(self, supplied):
+        """Bounded same-origin JSON, including duplicate-key and NaN rejection."""
+        def pairs(items):
+            result = {}
+            for key,value in items:
+                if key in result:
+                    raise ValueError("CONTEXT_DUPLICATE_JSON_KEY")
+                result[key] = value
+            return result
+        if supplied is None:
+            if self.headers.get("Transfer-Encoding") or len(self.headers.get_all("Content-Length") or []) != 1:
+                raise ValueError("CONTEXT_BODY_LENGTH_REQUIRED")
+            length = int(self.headers.get("Content-Length"))
+            if not 0 < length <= 512 * 1024:
+                raise ValueError("CONTEXT_BODY_SIZE_LIMIT")
+            connection = getattr(self, "connection", None)
+            previous_timeout = connection.gettimeout() if connection is not None else None
+            try:
+                if connection is not None:
+                    connection.settimeout(5)
+                raw = self.rfile.read(length)
+            finally:
+                if connection is not None:
+                    connection.settimeout(previous_timeout)
+            if len(raw) != length:
+                raise ValueError("CONTEXT_BODY_TRUNCATED")
+            supplied = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
+                parse_constant=lambda value: (_ for _ in ()).throw(ValueError("CONTEXT_NONFINITE_JSON")))
+        if not isinstance(supplied, dict) or len(json.dumps(supplied, allow_nan=False).encode()) > 512 * 1024:
+            raise ValueError("CONTEXT_BODY_OBJECT_REQUIRED")
+        return supplied
+
+    def _handle_context_import(self, body=None):
+        from context_data import ContextValidationError
+        if self.engine.store is None:
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_STORAGE_REQUIRED"}
+        try:
+            body = self._context_body(body)
+            if set(body) != {"provider", "collected_at", "payload"}:
+                raise ValueError("CONTEXT_INVALID_IMPORT_FIELDS")
+            payload = body["payload"]
+            if isinstance(payload, dict):
+                payload = json.dumps(payload, sort_keys=True, separators=(",", ":"), allow_nan=False)
+            if not isinstance(payload, str):
+                raise ValueError("CONTEXT_INVALID_IMPORT_PAYLOAD")
+            result = self.engine.import_context(payload.encode("utf-8"), provider=body["provider"],
+                collected_at=body["collected_at"])
+            return 200, {"status": "ok", "source_mode": "OFFLINE_IMPORT_ONLY", "ingestion": result,
+                         "operational_source_acceptance": False}
+        except ContextValidationError as exc:
+            return 400, {"status": "UNAVAILABLE", "reason_code": exc.reason_code}
+        except (PersistenceError, PersistenceValidationError, sqlite3.Error):
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_STORAGE_REQUIRES_INSPECTION"}
+        except (ValueError, TypeError, RecursionError, UnicodeError, OSError):
+            return 400, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_INVALID_IMPORT"}
+
+    def _handle_context_enrich(self, body=None):
+        from context_data import ContextValidationError
+        if self.engine.store is None:
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_STORAGE_REQUIRED"}
+        try:
+            body = self._context_body(body)
+            if "run_id" not in body or set(body) - {"run_id", "as_of", "evaluation_mode"}:
+                raise ValueError("CONTEXT_INVALID_ENRICH_FIELDS")
+            result = self.engine.enrich_context(body["run_id"], as_of=body.get("as_of"),
+                evaluation_mode=body.get("evaluation_mode", "DECISION_TIME"))
+            return 200, {"status": "ok", **result}
+        except ContextValidationError as exc:
+            return 400, {"status": "UNAVAILABLE", "reason_code": exc.reason_code}
+        except PersistenceValidationError as exc:
+            if str(exc) in {"CONTEXT_INVALID_RUN_ID", "CONTEXT_INVALID_OR_FUTURE_CUTOFF",
+                            "CONTEXT_DECISION_CUTOFF_EXCEEDED", "CONTEXT_INVALID_EVALUATION_MODE",
+                            "CONTEXT_CURRENT_CUTOFF_PRECEDES_DECISION"}:
+                return 400, {"status": "UNAVAILABLE", "reason_code": str(exc)}
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_REQUIRES_INSPECTION"}
+        except (PersistenceError, sqlite3.Error):
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_STORAGE_UNAVAILABLE"}
+        except (ValueError, TypeError, RecursionError, OSError):
+            return 400, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_INVALID_ENRICHMENT"}
+
+    def _handle_context(self, query, *, alerts=False):
+        if self.engine.store is None:
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_STORAGE_REQUIRED"}
+        try:
+            allowed = {"run_id", "snapshot_id"} if "run_id" in query else {"limit", "offset"}
+            if set(query)-allowed or any(len(values) != 1 or len(values[0]) > 256 for values in query.values()):
+                raise ValueError()
+            run_id = _get_str_param(query, "run_id")
+            if alerts:
+                return 200, {"status": "ok", "alert_decisions": self.engine.store.list_context_alert_decisions(run_id)}
+            if run_id:
+                snapshot = self.engine.store.load_scan_context(run_id, snapshot_id=_get_str_param(query, "snapshot_id"))
+                return 200, {"status": "ok", "context": snapshot or dict(status="MISSING",
+                    reason_codes=["CONTEXT_NOT_EVALUATED"], actionable=False, affects_ranking=False),
+                    "alert_decisions": self.engine.store.list_context_alert_decisions(run_id)}
+            return 200, self.engine.store.list_context_ingestions(
+                limit=_parse_int_param(query,"limit",20,1,100), offset=_parse_int_param(query,"offset",0,0,100000))
+        except (PersistenceError, PersistenceValidationError, sqlite3.Error):
+            return 503, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_REQUIRES_INSPECTION"}
+        except (ValueError, TypeError, RecursionError):
+            return 400, {"status": "UNAVAILABLE", "reason_code": "CONTEXT_INVALID_QUERY"}
+
     def _dispatch_get_or_head(self, send_body: bool = True) -> None:
         if not self._allow_local_request():
             return
@@ -907,6 +1010,11 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         raw_path = parsed.path or "/"
         route = raw_path.rstrip("/") or "/"
         query_params = urllib.parse.parse_qs(parsed.query)
+
+        if route in ("/api/context", "/api/v1/context", "/api/context-alerts", "/api/v1/context-alerts"):
+            code, payload = self._handle_context(query_params, alerts=route.endswith("context-alerts"))
+            self._send_json(code, payload, send_body=send_body)
+            return
 
         if route in ("/api/notification-outbox", "/api/v1/notification-outbox",
                      "/api/historical-candle-pages", "/api/v1/historical-candle-pages"):
@@ -1037,6 +1145,11 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         self._ensure_initialized()
         parsed = urllib.parse.urlparse(self.path)
         route = parsed.path.rstrip("/") or "/"
+        if route in ("/api/context-import", "/api/v1/context-import", "/api/context-enrich", "/api/v1/context-enrich"):
+            code, payload = (self._handle_context_import() if route.endswith("context-import")
+                             else self._handle_context_enrich())
+            self._send_json(code, payload)
+            return
         if route in ("/api/scan", "/api/v1/scan"):
             code, payload = self._handle_scan()
             self._send_json(code, payload)
@@ -1077,6 +1190,8 @@ def configure_server_runtime(
     start_scheduler: Optional[bool] = None,
     clock: Optional[Any] = None,
     broker_scanner: Optional[Any] = None,
+    context_policy=None,
+    context_identities=None,
 ) -> Tuple[IntradayBotEngine, MarketScanScheduler]:
     """
     Thread-safe, idempotent initializer for `DashboardRequestHandler.engine` and
@@ -1100,12 +1215,20 @@ def configure_server_runtime(
                 resolved_cfg,
                 clock=clock,
                 broker_scanner=broker_scanner,
+                context_policy=context_policy,
+                context_identities=context_identities,
             )
             DashboardRequestHandler.scheduler = MarketScanScheduler(
                 DashboardRequestHandler.engine,
                 clock=clock,
             )
         else:
+            if context_policy is not None:
+                DashboardRequestHandler.engine.context_policy = context_policy
+                if DashboardRequestHandler.engine.store is not None:
+                    DashboardRequestHandler.engine.store.context_source_policy = context_policy
+            if context_identities is not None:
+                DashboardRequestHandler.engine._context_identities = context_identities
             if DashboardRequestHandler.scheduler is None:
                 DashboardRequestHandler.scheduler = MarketScanScheduler(
                     DashboardRequestHandler.engine,

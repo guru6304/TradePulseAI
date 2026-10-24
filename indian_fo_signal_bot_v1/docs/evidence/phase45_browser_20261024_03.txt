@@ -1,0 +1,4 @@
+[2026-10-24 08:48:58,592] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_3309a953 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 08:48:58,632] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_3309a953 in 53.12ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 08:48:58,638] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_3309a953 with exact cash input linkage
+{"status": "PASS", "checks": 13, "exit_code": 0}
