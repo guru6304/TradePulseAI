@@ -1,0 +1,460 @@
+test_bad_batches_never_create_position_reservation_or_partial_entry (test_phase5b_forward.TestPhase5BForwardPaper.test_bad_batches_never_create_position_reservation_or_partial_entry) ... ok
+test_close_fill_rejects_setup_invalidated_before_observation_close (test_phase5b_forward.TestPhase5BForwardPaper.test_close_fill_rejects_setup_invalidated_before_observation_close) ... FAIL
+test_concurrent_coordinators_cannot_spend_the_same_account_capital (test_phase5b_forward.TestPhase5BForwardPaper.test_concurrent_coordinators_cannot_spend_the_same_account_capital) ... FAIL
+test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically (test_phase5b_forward.TestPhase5BForwardPaper.test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically) ... FAIL
+test_duplicate_callbacks_and_restart_keep_one_fill_and_identical_accounting (test_phase5b_forward.TestPhase5BForwardPaper.test_duplicate_callbacks_and_restart_keep_one_fill_and_identical_accounting) ... ok
+test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link (test_phase5b_forward.TestPhase5BForwardPaper.test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link) ... FAIL
+test_legacy_open_fill_cannot_spend_capital_released_later_in_same_bar (test_phase5b_forward.TestPhase5BForwardPaper.test_legacy_open_fill_cannot_spend_capital_released_later_in_same_bar) ... ok
+test_mutated_or_unpersisted_candidate_is_audited_as_rejected (test_phase5b_forward.TestPhase5BForwardPaper.test_mutated_or_unpersisted_candidate_is_audited_as_rejected) ... ok
+test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks (test_phase5b_forward.TestPhase5BForwardPaper.test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks) ... FAIL
+test_queue_waits_for_actual_completed_next_observation_without_reservation (test_phase5b_forward.TestPhase5BForwardPaper.test_queue_waits_for_actual_completed_next_observation_without_reservation) ... FAIL
+test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot (test_phase5b_forward.TestPhase5BForwardPaper.test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot) ... ERROR
+test_runtime_rejects_different_store_before_any_broker_transport (test_phase5b_forward.TestPhase5BForwardPaper.test_runtime_rejects_different_store_before_any_broker_transport) ... ok
+test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate (test_phase5b_forward.TestPhase5BForwardPaper.test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate) ... [2026-10-25 13:50:04,134] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_1085a1f8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 13:50:04,195] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_1085a1f8 in 73.81ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:04,207] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_1085a1f8 with exact cash input linkage
+FAIL
+test_stale_required_bar_is_rejected_without_inventing_current_fill (test_phase5b_forward.TestPhase5BForwardPaper.test_stale_required_bar_is_rejected_without_inventing_current_fill) ... ok
+test_actual_http_pages_head_validation_and_corruption_are_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_pages_head_validation_and_corruption_are_read_only) ... ok
+test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) ... 
+  test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage='AFTER INSERT ON paper_positions') ... ERROR
+  test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage="BEFORE INSERT ON paper_events WHEN NEW.kind='ENTRY'") ... ERROR
+  test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage='BEFORE UPDATE ON paper_positions') ... ERROR
+  test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage="BEFORE INSERT ON paper_events WHEN NEW.kind='MARK'") ... ERROR
+  test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage='BEFORE UPDATE ON paper_candidate_decisions') ... ERROR
+test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) ... ERROR
+test_concurrent_mark_exit_and_retry_never_resurrect_closed_position (test_phase5c_recovery.TestPhase5CRecovery.test_concurrent_mark_exit_and_retry_never_resurrect_closed_position) ... ok
+test_coordinator_uses_open_positions_even_when_report_preview_omits_them (test_phase5c_recovery.TestPhase5CRecovery.test_coordinator_uses_open_positions_even_when_report_preview_omits_them) ... FAIL
+test_corrupt_event_blocks_reconciliation_entry_and_safe_reporting (test_phase5c_recovery.TestPhase5CRecovery.test_corrupt_event_blocks_reconciliation_entry_and_safe_reporting) ... ok
+test_cursor_pages_are_stable_account_scoped_and_pin_append_membership (test_phase5c_recovery.TestPhase5CRecovery.test_cursor_pages_are_stable_account_scoped_and_pin_append_membership) ... ok
+test_eod_exact_delay_boundary_incomplete_and_late_bars (test_phase5c_recovery.TestPhase5CRecovery.test_eod_exact_delay_boundary_incomplete_and_late_bars) ... ok
+test_fresh_later_eod_bar_cannot_replace_missing_required_observation (test_phase5c_recovery.TestPhase5CRecovery.test_fresh_later_eod_bar_cannot_replace_missing_required_observation) ... ok
+test_increasing_ledgers_measure_recovery_reconciliation_summary_and_pages (test_phase5c_recovery.TestPhase5CRecovery.test_increasing_ledgers_measure_recovery_reconciliation_summary_and_pages) ... PHASE5C_BENCHMARK [{"candidate_decisions": 25, "decision_page_ms": 2.638, "events": 100, "first_page_bytes": 237686, "first_page_ms": 8.994, "page_plan": ["SEARCH o USING INDEX idx_paper_ledger_page (account_id=? AND collection=? AND sequence_id>? AND sequence_id<?)", "SEARCH t USING INDEX idx_paper_events_account (account_id=? AND event_id=?) LEFT-JOIN"], "positions": 25, "reconciliation_ms": 7.929, "reconciliation_plan": ["SEARCH paper_events USING INDEX idx_paper_events_position (account_id=? AND position_id=?)"], "startup_ms": 8.239, "summary_bytes": 400353, "summary_ms": 16.095}, {"candidate_decisions": 250, "decision_page_ms": 3.022, "events": 1000, "first_page_bytes": 237897, "first_page_ms": 8.453, "page_plan": ["SEARCH o USING INDEX idx_paper_ledger_page (account_id=? AND collection=? AND sequence_id>? AND sequence_id<?)", "SEARCH t USING INDEX idx_paper_events_account (account_id=? AND event_id=?) LEFT-JOIN"], "positions": 250, "reconciliation_ms": 71.108, "reconciliation_plan": ["SEARCH paper_events USING INDEX idx_paper_events_position (account_id=? AND position_id=?)"], "startup_ms": 6.85, "summary_bytes": 551953, "summary_ms": 104.578}, {"candidate_decisions": 2500, "decision_page_ms": 4.635, "events": 10000, "first_page_bytes": 238028, "first_page_ms": 10.938, "page_plan": ["SEARCH o USING INDEX idx_paper_ledger_page (account_id=? AND collection=? AND sequence_id>? AND sequence_id<?)", "SEARCH t USING INDEX idx_paper_events_account (account_id=? AND event_id=?) LEFT-JOIN"], "positions": 2500, "reconciliation_ms": 716.772, "reconciliation_plan": ["SEARCH paper_events USING INDEX idx_paper_events_position (account_id=? AND position_id=?)"], "startup_ms": 9.729, "summary_bytes": 552767, "summary_ms": 963.74}]
+ok
+test_mark_event_failure_duplicate_out_of_order_and_conflicting_id (test_phase5c_recovery.TestPhase5CRecovery.test_mark_event_failure_duplicate_out_of_order_and_conflicting_id) ... ok
+test_mark_exit_fee_and_eod_failures_preserve_committed_reservation (test_phase5c_recovery.TestPhase5CRecovery.test_mark_exit_fee_and_eod_failures_preserve_committed_reservation) ... ok
+test_missing_eod_survives_weekend_restart_without_release_or_next_day_fill (test_phase5c_recovery.TestPhase5CRecovery.test_missing_eod_survives_weekend_restart_without_release_or_next_day_fill) ... ok
+test_normal_eod_then_next_session_entry_resets_daily_limits_only (test_phase5c_recovery.TestPhase5CRecovery.test_normal_eod_then_next_session_entry_resets_daily_limits_only) ... ok
+test_open_loss_is_carried_into_next_ist_day_and_calendar_rejects_fixture_holiday (test_phase5c_recovery.TestPhase5CRecovery.test_open_loss_is_carried_into_next_ist_day_and_calendar_rejects_fixture_holiday) ... ok
+test_order_metadata_migrates_existing_rows_and_survives_restart (test_phase5c_recovery.TestPhase5CRecovery.test_order_metadata_migrates_existing_rows_and_survives_restart) ... ok
+test_oversized_or_expanding_persisted_record_never_returns_stuck_empty_cursor (test_phase5c_recovery.TestPhase5CRecovery.test_oversized_or_expanding_persisted_record_never_returns_stuck_empty_cursor) ... ok
+test_page_byte_budget_corruption_and_invalid_queries_fail_closed (test_phase5c_recovery.TestPhase5CRecovery.test_page_byte_budget_corruption_and_invalid_queries_fail_closed) ... ok
+test_postcommit_reporting_exception_recovers_without_double_fill_or_fees (test_phase5c_recovery.TestPhase5CRecovery.test_postcommit_reporting_exception_recovers_without_double_fill_or_fees) ... FAIL
+test_realized_daily_loss_resets_at_ist_midnight_lifetime_costs_do_not (test_phase5c_recovery.TestPhase5CRecovery.test_realized_daily_loss_resets_at_ist_midnight_lifetime_costs_do_not) ... ok
+test_restart_before_observation_and_after_receipt_matches_uninterrupted_fill (test_phase5c_recovery.TestPhase5CRecovery.test_restart_before_observation_and_after_receipt_matches_uninterrupted_fill) ... ok
+test_api_rejects_invalid_data_and_distinguishes_empty_from_failure (test_cash_workflow.TestCashWorkflow.test_api_rejects_invalid_data_and_distinguishes_empty_from_failure) ... [2026-10-25 13:50:15,073] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_0bbc6e91 via Upstox API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Missing intraday candle interval in the returned batch.
+[2026-10-25 13:50:15,140] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_4d16899b via Upstox API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Candle timestamps are not strictly chronological.
+[2026-10-25 13:50:15,194] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f8fccc4d via Upstox API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Candle timestamps are not strictly chronological.
+[2026-10-25 13:50:15,253] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5d21d296 via Upstox API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Candle OHLCV validation failed.
+[2026-10-25 13:50:15,301] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_a94cf37b via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:15,302] [ERROR] [tradepulse.scanner] Scan scan_20261016_141505_a94cf37b failed due to BrokerDataError: Upstox market-data request timed out or could not be completed.
+Scan failed due to BrokerDataError: Upstox market-data request timed out or could not be completed.
+[2026-10-25 13:50:15,373] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_8728831f via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:15,444] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_8728831f in 128.01ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 13:50:15,452] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_8728831f with exact cash input linkage
+ok
+test_http_history_pages_keep_original_snapshot_scope_and_bound_queries (test_cash_workflow.TestCashWorkflow.test_http_history_pages_keep_original_snapshot_scope_and_bound_queries) ... ok
+test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger (test_cash_workflow.TestCashWorkflow.test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger) ... [2026-10-25 13:50:16,471] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_2ca71190 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:16,539] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_2ca71190 in 76.24ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:16,547] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_2ca71190 with exact cash input linkage
+[2026-10-25 13:50:16,697] [INFO] [tradepulse.scanner] Starting scan scan_20261016_142005_ea05e3f0 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:16,749] [INFO] [tradepulse.scanner] Staged scan scan_20261016_142005_ea05e3f0 in 63.37ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 13:50:16,759] [INFO] [tradepulse.scanner] Committed scan scan_20261016_142005_ea05e3f0 with exact cash input linkage
+FAIL
+test_quantity_and_risk_tamper_cannot_be_served_as_reconciled_signal (test_cash_workflow.TestCashWorkflow.test_quantity_and_risk_tamper_cannot_be_served_as_reconciled_signal) ... [2026-10-25 13:50:17,263] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_a78f8839 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:17,316] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_a78f8839 in 63.87ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:17,327] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_a78f8839 with exact cash input linkage
+ok
+test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree (test_cash_workflow.TestCashWorkflow.test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree) ... [2026-10-25 13:50:17,997] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_239ee6b8 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:18,048] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_239ee6b8 in 63.62ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:18,059] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_239ee6b8 with exact cash input linkage
+FAIL
+test_real_paper_risk_rejection_never_becomes_actionable (test_cash_workflow.TestCashWorkflow.test_real_paper_risk_rejection_never_becomes_actionable) ... [2026-10-25 13:50:18,707] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_938b6b7a via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:18,759] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_938b6b7a in 67.18ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:18,770] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_938b6b7a with exact cash input linkage
+[2026-10-25 13:50:18,859] [INFO] [tradepulse.scanner] Starting scan scan_20261016_142005_64a3d251 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:18,921] [INFO] [tradepulse.scanner] Staged scan scan_20261016_142005_64a3d251 in 74.79ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 13:50:18,931] [INFO] [tradepulse.scanner] Committed scan scan_20261016_142005_64a3d251 with exact cash input linkage
+ok
+test_required_write_failure_has_no_committed_result_or_delivery (test_cash_workflow.TestCashWorkflow.test_required_write_failure_has_no_committed_result_or_delivery) ... [2026-10-25 13:50:19,563] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5d5353e2 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:19,615] [ERROR] [tradepulse.scanner] Signal persistence failed for RELIANCE: OFFLINE write failure
+[2026-10-25 13:50:19,616] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_5d5353e2 in 63.96ms: status=COMPLETED, signals=1, persisted=0, duplicates=0, persistence=ERROR
+[2026-10-25 13:50:19,657] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5d5353e2 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:19,671] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_5d5353e2 in 22.33ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:19,680] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_5d5353e2 with exact cash input linkage
+ok
+test_stale_or_only_incomplete_input_never_enters_accepted_store (test_cash_workflow.TestCashWorkflow.test_stale_or_only_incomplete_input_never_enters_accepted_store) ... [2026-10-25 13:50:20,305] [INFO] [tradepulse.scanner] Starting scan scan_20261016_142705_a701c470 via Upstox API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Latest completed live candle is stale for the current session.
+[2026-10-25 13:50:20,337] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_eb84ddc5 via Upstox API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Candle series is empty or missing.
+ok
+test_accepted_input_is_completed_only_and_reingestion_is_idempotent (test_cash_lineage.TestCashLineage.test_accepted_input_is_completed_only_and_reingestion_is_idempotent) ... ok
+test_candle_and_input_link_tampering_is_detected (test_cash_lineage.TestCashLineage.test_candle_and_input_link_tampering_is_detected) ... ok
+test_caught_inner_sql_error_marks_transaction_rollback_only (test_cash_lineage.TestCashLineage.test_caught_inner_sql_error_marks_transaction_rollback_only) ... ok
+test_concurrent_repeated_input_has_one_work_item_and_one_candle_set (test_cash_lineage.TestCashLineage.test_concurrent_repeated_input_has_one_work_item_and_one_candle_set) ... ok
+test_different_pending_work_blocks_and_preserves_original_input (test_cash_lineage.TestCashLineage.test_different_pending_work_blocks_and_preserves_original_input) ... ok
+test_duplicate_gap_wrong_identity_stale_future_malformed_and_incomplete_reject (test_cash_lineage.TestCashLineage.test_duplicate_gap_wrong_identity_stale_future_malformed_and_incomplete_reject) ... ok
+test_input_commit_before_ack_is_discoverable_and_retry_does_not_duplicate (test_cash_lineage.TestCashLineage.test_input_commit_before_ack_is_discoverable_and_retry_does_not_duplicate) ... ok
+test_input_transaction_rolls_back_at_each_actual_write_boundary (test_cash_lineage.TestCashLineage.test_input_transaction_rolls_back_at_each_actual_write_boundary) ... ok
+test_legacy_nested_writers_cannot_commit_an_aborted_result (test_cash_lineage.TestCashLineage.test_legacy_nested_writers_cannot_commit_an_aborted_result) ... ok
+test_metadata_and_input_link_tampering_are_rejected (test_cash_lineage.TestCashLineage.test_metadata_and_input_link_tampering_are_rejected) ... ok
+test_missing_explicit_normalized_provenance_is_not_inferred (test_cash_lineage.TestCashLineage.test_missing_explicit_normalized_provenance_is_not_inferred) ... ok
+test_nested_transaction_control_cannot_commit_rollback_or_close_outer_connection (test_cash_lineage.TestCashLineage.test_nested_transaction_control_cannot_commit_rollback_or_close_outer_connection) ... ok
+test_same_identity_conflicting_content_and_changed_candle_corrections_reject (test_cash_lineage.TestCashLineage.test_same_identity_conflicting_content_and_changed_candle_corrections_reject) ... ok
+test_supported_quantity_is_retained_and_invalid_quantity_rejected (test_cash_lineage.TestCashLineage.test_supported_quantity_is_retained_and_invalid_quantity_rejected) ... ok
+test_zone_snapshot_uses_committed_database_state_inside_input_transaction (test_cash_lineage.TestCashLineage.test_zone_snapshot_uses_committed_database_state_inside_input_transaction) ... ok
+test_concurrent_scanners_commit_one_outcome_and_one_signal (test_cash_lineage.TestCashScannerRecovery.test_concurrent_scanners_commit_one_outcome_and_one_signal) ... [2026-10-25 13:50:21,404] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_027fd33c via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:21,427] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_9bb0f64e via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:21,486] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_027fd33c in 121.37ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:21,494] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_027fd33c with exact cash input linkage
+ok
+test_configuration_or_code_change_blocks_recovery_without_writes (test_cash_lineage.TestCashScannerRecovery.test_configuration_or_code_change_blocks_recovery_without_writes) ... [2026-10-25 13:50:21,600] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_58c65046 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:21,655] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_58c65046 in 63.41ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:21,664] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_58c65046 with exact cash input linkage
+ok
+test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) ... [2026-10-25 13:50:21,765] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_68be1d1a via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:21,818] [ERROR] [tradepulse.scanner] Signal persistence failed for RELIANCE: OFFLINE write interruption
+[2026-10-25 13:50:21,819] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_68be1d1a in 60.83ms: status=COMPLETED, signals=1, persisted=0, duplicates=0, persistence=ERROR
+[2026-10-25 13:50:21,869] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_68be1d1a via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:21,883] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_68be1d1a in 22.17ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:21,894] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_68be1d1a with exact cash input linkage
+[2026-10-25 13:50:21,975] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_4da68645 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,030] [ERROR] [tradepulse.scanner] Mitigated Order Block persistence failed: OFFLINE write interruption
+[2026-10-25 13:50:22,030] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_4da68645 in 63.03ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=ERROR
+[2026-10-25 13:50:22,082] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_4da68645 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,107] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_4da68645 in 32.70ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:22,117] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_4da68645 with exact cash input linkage
+[2026-10-25 13:50:22,194] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_be737126 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,257] [ERROR] [tradepulse.scanner] Scan-run metadata persistence failed for scan_20261016_141505_be737126: OFFLINE write interruption
+[2026-10-25 13:50:22,257] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_be737126 in 70.52ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=ERROR
+[2026-10-25 13:50:22,311] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_be737126 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,334] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_be737126 in 33.13ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:22,344] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_be737126 with exact cash input linkage
+[2026-10-25 13:50:22,435] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_ca36d421 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,495] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_ca36d421 in 70.40ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:22,552] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_ca36d421 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,570] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_ca36d421 in 26.82ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:22,582] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_ca36d421 with exact cash input linkage
+ok
+test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals (test_cash_lineage.TestCashScannerRecovery.test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals) ... [2026-10-25 13:50:22,669] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5debc611 via Upstox API v2 (mode=LIVE)
+ok
+test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state (test_cash_lineage.TestCashScannerRecovery.test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state) ... [2026-10-25 13:50:22,775] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_91d3094c via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,828] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_2825dbab via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,879] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_91d3094c via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,895] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_91d3094c in 24.31ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:22,905] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_91d3094c with exact cash input linkage
+[2026-10-25 13:50:22,917] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_7317e66b via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:22,970] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_7317e66b in 61.19ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 13:50:22,977] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_7317e66b with exact cash input linkage
+ok
+test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) ... [2026-10-25 13:50:23,035] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_15b8d58e via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:23,092] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_15b8d58e in 64.75ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:23,101] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_15b8d58e with exact cash input linkage
+[2026-10-25 13:50:23,191] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_190f235c via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:23,247] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_190f235c in 65.18ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:23,257] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_190f235c with exact cash input linkage
+[2026-10-25 13:50:23,344] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_3d6abfba via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:23,406] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_3d6abfba in 69.60ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:23,416] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_3d6abfba with exact cash input linkage
+[2026-10-25 13:50:23,497] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_6a753a68 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:23,552] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_6a753a68 in 63.36ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:23,562] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_6a753a68 with exact cash input linkage
+[2026-10-25 13:50:23,649] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_6d34ae40 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:23,702] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_6d34ae40 in 59.51ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:23,712] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_6d34ae40 with exact cash input linkage
+[2026-10-25 13:50:23,800] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_106aa483 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:23,857] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_106aa483 in 64.40ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:23,866] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_106aa483 with exact cash input linkage
+ok
+test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links (test_cash_lineage.TestCashScannerRecovery.test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links) ... [2026-10-25 13:50:23,946] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_304f27a7 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:24,002] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_304f27a7 in 62.40ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 13:50:24,011] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_304f27a7 with exact cash input linkage
+[2026-10-25 13:50:24,042] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_317554f0 via Upstox API v2 (mode=LIVE)
+ok
+test_overlapping_recovery_cannot_replace_original_committed_scan_outcome (test_cash_lineage.TestCashScannerRecovery.test_overlapping_recovery_cannot_replace_original_committed_scan_outcome) ... [2026-10-25 13:50:24,153] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_9f1aef7c via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:24,234] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_9f1aef7c in 91.83ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:24,255] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_9f1aef7c with exact cash input linkage
+[2026-10-25 13:50:24,352] [WARNING] [tradepulse.scanner] Scan scan_20261016_141505_9f1aef7c skipped because another scan is already in progress.
+ok
+test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger (test_cash_lineage.TestCashScannerRecovery.test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger) ... [2026-10-25 13:50:24,451] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_856ec160 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 13:50:24,514] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_856ec160 in 80.28ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:24,524] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_856ec160 with exact cash input linkage
+[2026-10-25 13:50:24,600] [INFO] [tradepulse.scanner] Starting scan scan_20261016_142005_3bbc5bd8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 13:50:24,653] [INFO] [tradepulse.scanner] Staged scan scan_20261016_142005_3bbc5bd8 in 64.69ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 13:50:24,665] [INFO] [tradepulse.scanner] Committed scan scan_20261016_142005_3bbc5bd8 with exact cash input linkage
+FAIL
+test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery (test_cash_lineage.TestCashScannerRecovery.test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery) ... [2026-10-25 13:50:24,721] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f0fdd450 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:24,781] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f0fdd450 in 66.35ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:24,795] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f0fdd450 with exact cash input linkage
+ok
+test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery (test_cash_lineage.TestCashScannerRecovery.test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery) ... [2026-10-25 13:50:24,907] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_311f7460 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:24,980] [ERROR] [tradepulse.scanner] Signal persistence failed for RELIANCE: OFFLINE storage unavailable
+[2026-10-25 13:50:24,981] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_311f7460 in 83.13ms: status=COMPLETED, signals=1, persisted=0, duplicates=0, persistence=ERROR
+[2026-10-25 13:50:25,022] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_311f7460 via Upstox API v2 (mode=LIVE)
+[2026-10-25 13:50:25,038] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_311f7460 in 27.72ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 13:50:25,066] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_311f7460 with exact cash input linkage
+ok
+test_unavailable_required_store_fails_before_any_acquisition (test_cash_lineage.TestCashScannerRecovery.test_unavailable_required_store_fails_before_any_acquisition) ... [2026-10-25 13:50:25,108] [ERROR] [tradepulse.scanner] Failed to initialize persistence store: OFFLINE unavailable
+ok
+test_account_config_tamper_detection (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_account_config_tamper_detection)
+Verifies that mutating paper_accounts config_json or config_hash triggers IMMUTABLE_ACCOUNT_CONFIG_CONFLICT. ... ok
+test_crash_recovery_during_pending_order (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_crash_recovery_during_pending_order)
+Fault injection: simulate process crash between ENTRY event insert and decision update. ... ok
+test_daily_entry_limit_enforcement (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_daily_entry_limit_enforcement)
+Verifies that exceeding max_entries_per_day rejects entries with DAILY_ENTRY_LIMIT. ... ok
+test_daily_loss_limit_blocks_new_entries (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_daily_loss_limit_blocks_new_entries)
+Verifies that breaching max_daily_loss_inr blocks new entries with DAILY_LOSS_LIMIT. ... ok
+test_invalid_bracket_geometry_rejection (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_invalid_bracket_geometry_rejection)
+Verifies that invalid brackets (stop >= entry or target <= entry for LONG) are rejected. ... ok
+test_non_contiguous_bar_rejection (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_non_contiguous_bar_rejection)
+Verifies that processing a non-contiguous bar in process_bar raises MISSING_OR_OUT_OF_ORDER_POSITION_BAR. ... ok
+test_open_position_limit_enforcement (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_open_position_limit_enforcement)
+Verifies that exceeding max_open_positions rejects new entries with OPEN_POSITION_LIMIT. ... ok
+test_stale_mark_and_candle_age_rejection (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_stale_mark_and_candle_age_rejection)
+Verifies that bars older than max_mark_age_seconds are rejected as stale. ... ok
+test_unapproved_financial_recovery_action_rejection (test_phase6_risk_recovery.TestPhase6RiskRecovery.test_unapproved_financial_recovery_action_rejection)
+Verifies that review_unresolved_eod rejects unauthorized financial repairs. ... ok
+test_three_sessions_restart_repeated_callbacks_and_stable_eod_statements (test_paper_sessions.TestPaperSessionQualification.test_three_sessions_restart_repeated_callbacks_and_stable_eod_statements) ... ok
+
+======================================================================
+ERROR: test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot (test_phase5b_forward.TestPhase5BForwardPaper.test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 259, in test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot
+    report = self.fixture.store.get_paper_portfolio_report("account", self.fixture.now)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 994, in get_paper_portfolio_report
+    return PaperPortfolio.report_existing(self, account_id, as_of=as_of)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 193, in report_existing
+    else instance._snapshot(conn, instance._now()))
+         ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 255, in snapshot_then_concurrent_fill
+    writer.enter(candidate, self.fixture._bar(candidate), event_key=candidate_id,
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                 candidate_decision_id=candidate_id)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+ERROR: test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage='AFTER INSERT ON paper_positions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 219, in test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect
+    self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+ERROR: test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage="BEFORE INSERT ON paper_events WHEN NEW.kind='ENTRY'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 219, in test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect
+    self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+ERROR: test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage='BEFORE UPDATE ON paper_positions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 219, in test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect
+    self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+ERROR: test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage="BEFORE INSERT ON paper_events WHEN NEW.kind='MARK'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 219, in test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect
+    self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+ERROR: test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) (stage='BEFORE UPDATE ON paper_candidate_decisions')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 219, in test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect
+    self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+ERROR: test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 224, in test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect
+    self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 755, in enter
+    _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
+
+======================================================================
+FAIL: test_close_fill_rejects_setup_invalidated_before_observation_close (test_phase5b_forward.TestPhase5BForwardPaper.test_close_fill_rejects_setup_invalidated_before_observation_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 138, in test_close_fill_rejects_setup_invalidated_before_observation_close
+    self.assertEqual(result["report"]["candidate_decisions"][0]["reason_code"], "SETUP_INVALIDATED_BEFORE_CLOSE_FILL")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED' != 'SETUP_INVALIDATED_BEFORE_CLOSE_FILL'
+- LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED
++ SETUP_INVALIDATED_BEFORE_CLOSE_FILL
+
+
+======================================================================
+FAIL: test_concurrent_coordinators_cannot_spend_the_same_account_capital (test_phase5b_forward.TestPhase5BForwardPaper.test_concurrent_coordinators_cannot_spend_the_same_account_capital)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 222, in test_concurrent_coordinators_cannot_spend_the_same_account_capital
+    self.assertEqual(report["accounting"]["open_positions"], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically (test_phase5b_forward.TestPhase5BForwardPaper.test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 195, in test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically
+    with self.assertRaises(sqlite3.DatabaseError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: DatabaseError not raised
+
+======================================================================
+FAIL: test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link (test_phase5b_forward.TestPhase5BForwardPaper.test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 55, in test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link
+    self.assertEqual(report["candidate_decisions"][0]["status"], "FILLED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECTED' != 'FILLED'
+- REJECTED
++ FILLED
+
+
+======================================================================
+FAIL: test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks (test_phase5b_forward.TestPhase5BForwardPaper.test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 126, in test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks
+    with self.assertRaises(RuntimeError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_queue_waits_for_actual_completed_next_observation_without_reservation (test_phase5b_forward.TestPhase5BForwardPaper.test_queue_waits_for_actual_completed_next_observation_without_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 82, in test_queue_waits_for_actual_completed_next_observation_without_reservation
+    self.assertEqual(waiting["report"]["candidate_decisions"][0]["status"], "QUEUED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECTED' != 'QUEUED'
+- REJECTED
++ QUEUED
+
+
+======================================================================
+FAIL: test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate (test_phase5b_forward.TestPhase5BForwardPaper.test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5b_forward.py", line 166, in test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate
+    self.assertEqual(report["candidate_decisions"][0]["status"], "QUEUED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECTED' != 'QUEUED'
+- REJECTED
++ QUEUED
+
+
+======================================================================
+FAIL: test_coordinator_uses_open_positions_even_when_report_preview_omits_them (test_phase5c_recovery.TestPhase5CRecovery.test_coordinator_uses_open_positions_even_when_report_preview_omits_them)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 404, in test_coordinator_uses_open_positions_even_when_report_preview_omits_them
+    self.assertEqual(report["accounting"]["closed_positions"], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_postcommit_reporting_exception_recovers_without_double_fill_or_fees (test_phase5c_recovery.TestPhase5CRecovery.test_postcommit_reporting_exception_recovers_without_double_fill_or_fees)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 274, in test_postcommit_reporting_exception_recovers_without_double_fill_or_fees
+    self.assertEqual(report["total_events"], 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger (test_cash_workflow.TestCashWorkflow.test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 178, in test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger
+    self.assertEqual(changed, 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree (test_cash_workflow.TestCashWorkflow.test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 80, in test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree
+    self.assertEqual(item["paper_decision"]["status"], "QUEUED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REJECTED' != 'QUEUED'
+- REJECTED
++ QUEUED
+
+
+======================================================================
+FAIL: test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger (test_cash_lineage.TestCashScannerRecovery.test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 371, in test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger
+    self.assertEqual(second["paper_portfolio"]["status"], "UNAVAILABLE")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED' != 'UNAVAILABLE'
+- COMPLETED
++ UNAVAILABLE
+
+
+----------------------------------------------------------------------
+Ran 79 tests in 22.547s
+
+FAILED (failures=12, errors=7)

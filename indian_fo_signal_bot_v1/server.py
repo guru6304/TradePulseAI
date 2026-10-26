@@ -87,7 +87,6 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
       with an approved static asset extension and no dotfiles. Otherwise returns a safe JSON 404.
     - Exposes documented API endpoints:
       * GET  /api/health       (and /api/v1/health)
-      * GET  /api/scan         (and /api/v1/scan)
       * POST /api/scan         (and /api/v1/scan)
       * GET  /api/signals      (and /api/v1/signals)
       * GET  /api/scans        (and /api/v1/scans)
@@ -259,12 +258,12 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             operations["alerts"].append("STREAM_" + str(stream.get("status", "UNAVAILABLE")))
         overall_status = "ok" if (http_code == 200 and broker_info["connection_state"] != "INVALID_CONFIG"
                                   and not operations["alerts"]) else "degraded"
-        from readiness_policy import live_acceptance
+        from readiness_policy import live_acceptance_for_symbols
         symbols = [str(m["symbol"]).upper() for m in self.engine.config.equity_watchlist]
         clock = getattr(self.engine, "clock", None)
         now = clock() if callable(clock) else None
-        acceptance = {s: live_acceptance(self.engine.config, self.engine.store,
-                                         self.engine.config.active_broker, s, now) for s in symbols}
+        acceptance = live_acceptance_for_symbols(self.engine.config, self.engine.store,
+                                                self.engine.config.active_broker, symbols, now)
         return http_code, {
             "status": overall_status,
             "broker": broker_info,
@@ -429,6 +428,28 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             return 400, {"status": "error", "message": "Invalid cash-lineage query."}
         except Exception:
             return 503, {"status": "error", "message": "Cash lineage storage unavailable."}
+
+    def _handle_opportunity_rankings(self, query):
+        """Read stored candidate priority using the server clock; never refresh it."""
+        if self.engine.store is None:
+            return 503, {"status": "UNAVAILABLE", "message": "Required storage unavailable."}
+        try:
+            if set(query) - {"run_id", "limit", "offset"} or any(len(values) != 1 for values in query.values()):
+                raise ValueError()
+            run_id = _get_str_param(query, "run_id")
+            if "run_id" in query and (not run_id or len(run_id) > 160):
+                raise ValueError()
+            limit = _parse_int_param(query, "limit", 20, 1, 100)
+            offset = _parse_int_param(query, "offset", 0, 0, 512)
+            from rank_history import read_current
+            return 200, read_current(self.engine.store, self.engine.config, self.engine._now_ist(),
+                                     run_id=run_id, limit=limit, offset=offset)
+        except PersistenceValidationError:
+            return 503, {"status": "RECONCILIATION_REQUIRED", "message": "Stored ranking evidence requires inspection."}
+        except ValueError:
+            return 400, {"status": "error", "message": "Invalid ranking query."}
+        except Exception:
+            return 503, {"status": "UNAVAILABLE", "message": "Ranking storage unavailable."}
 
     def _handle_oi_snapshots(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
         assert self.engine is not None
@@ -1005,10 +1026,16 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
     def _dispatch_get_or_head(self, send_body: bool = True) -> None:
         if not self._allow_local_request():
             return
-        self._ensure_initialized()
         parsed = urllib.parse.urlparse(self.path)
         raw_path = parsed.path or "/"
         route = raw_path.rstrip("/") or "/"
+        if route in ("/api/scan", "/api/v1/scan"):
+            # Reject before runtime initialization: a browser read/refresh must
+            # never acquire data, persist a scan or consume a paper observation.
+            self._send_json(405, {"status": "error", "reason_code": "EXPLICIT_POST_REQUIRED",
+                "message": "Use an explicit POST to request a scan."}, send_body=send_body)
+            return
+        self._ensure_initialized()
         query_params = urllib.parse.parse_qs(parsed.query)
 
         if route in ("/api/context", "/api/v1/context", "/api/context-alerts", "/api/v1/context-alerts"):
@@ -1027,6 +1054,11 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             self._send_json(code, payload, send_body=send_body)
             return
 
+        if route in ("/api/opportunity-rankings", "/api/v1/opportunity-rankings"):
+            code, payload = self._handle_opportunity_rankings(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+
         if route in ("/api/paper-accounts", "/api/v1/paper-accounts", "/api/paper-portfolio", "/api/v1/paper-portfolio",
                      "/api/paper-ledger", "/api/v1/paper-ledger", "/api/paper-session", "/api/v1/paper-session"):
             code, payload = self._handle_paper_portfolio(query_params, accounts=route.endswith("paper-accounts"),
@@ -1040,10 +1072,6 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
 
         if route in ("/api/health", "/api/v1/health"):
             code, payload = self._handle_health()
-            self._send_json(code, payload, send_body=send_body)
-            return
-        if route in ("/api/scan", "/api/v1/scan"):
-            code, payload = self._handle_scan()
             self._send_json(code, payload, send_body=send_body)
             return
         if route in ("/api/signals", "/api/v1/signals"):

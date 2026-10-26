@@ -1,0 +1,22 @@
+test_backup_fails_on_memory_db (test_release_management.TestReleaseManagement.test_backup_fails_on_memory_db) ... ok
+test_backup_rejects_escape_and_existing_destination (test_release_management.TestReleaseManagement.test_backup_rejects_escape_and_existing_destination) ... ok
+test_database_backup_and_restore_drill (test_release_management.TestReleaseManagement.test_database_backup_and_restore_drill) ... ok
+test_health_does_not_claim_missing_or_corrupt_storage_accessible (test_release_management.TestReleaseManagement.test_health_does_not_claim_missing_or_corrupt_storage_accessible) ... ok
+test_health_rejects_invalid_config_without_echoing_values (test_release_management.TestReleaseManagement.test_health_rejects_invalid_config_without_echoing_values) ... ok
+test_manifest_covers_every_production_module (test_release_management.TestReleaseManagement.test_manifest_covers_every_production_module) ... ok
+test_manifest_generation_and_verification (test_release_management.TestReleaseManagement.test_manifest_generation_and_verification) ... ok
+test_manifest_rejects_empty_partial_and_incomplete_claims (test_release_management.TestReleaseManagement.test_manifest_rejects_empty_partial_and_incomplete_claims) ... ok
+test_manifest_rejects_malformed_file_metadata (test_release_management.TestReleaseManagement.test_manifest_rejects_malformed_file_metadata) ... ok
+test_manifest_rejects_unknown_paths_before_reading_files (test_release_management.TestReleaseManagement.test_manifest_rejects_unknown_paths_before_reading_files) ... ok
+test_operational_health_monitor (test_release_management.TestReleaseManagement.test_operational_health_monitor) ... ok
+test_restore_really_copies_and_compares_logical_content (test_release_management.TestReleaseManagement.test_restore_really_copies_and_compares_logical_content) ... ok
+test_restore_rejects_corrupt_backup_and_missing_file (test_release_management.TestReleaseManagement.test_restore_rejects_corrupt_backup_and_missing_file) ... ok
+test_runtime_compatibility (test_release_management.TestReleaseManagement.test_runtime_compatibility) ... ok
+test_bundle_detects_changed_source_bytes_with_original_manifest (test_release_operations.TestReleaseBundle.test_bundle_detects_changed_source_bytes_with_original_manifest) ... ok
+test_bundle_rejects_corrupt_content_and_undeclared_paths (test_release_operations.TestReleaseBundle.test_bundle_rejects_corrupt_content_and_undeclared_paths) ... ok
+test_reproducible_bundle_excludes_private_state_and_runs_bootstrap (test_release_operations.TestReleaseBundle.test_reproducible_bundle_excludes_private_state_and_runs_bootstrap) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 5.472s
+
+OK

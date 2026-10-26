@@ -1,0 +1,43 @@
+Command: node --test test_cash_dashboard.js
+Exit code: 0
+Sandbox: require_escalated after process-spawn EPERM
+Scope: actual inline JavaScript in DOM test double, no browser/live acceptance
+✔ candidate cards and inspector use supported numeric gross RR and visited rule explanations (53.8519ms)
+✔ empty scan renders warm-up and rejected-rule reasons from retained evaluation (2.3029ms)
+✔ scan history exposes downstream risk rejection when a detected setup has no stored signal (2.9773ms)
+✔ signal cards never promote missing, unknown or conflicting provenance to LIVE (18.6923ms)
+✔ selected inspector never promotes untrusted provenance to LIVE (17.7007ms)
+✔ explicit source labels distinguish stored LIVE records from simulated records (2.7224ms)
+✔ backend health failure clears a previously accepted header (2.167ms)
+✔ continuous feed status exposes stale and fixture observations with signals blocked (2.2257ms)
+✔ a failed signals API request removes cached cards and inspector prices (4.1511ms)
+✔ late successful health response cannot replace a newer unavailable state (2.8665ms)
+✔ fixture scope overrides live-shaped source and acceptance flags (3.339ms)
+✔ risk-rejected stored candidates show rejection and exact source batch (2.3499ms)
+✔ stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (3.7628ms)
+✔ late stored report response cannot restore accounting after current health fails (2.0626ms)
+✔ actual inspector renders source identity, times, safe links and local qualification without HTML injection (2.9526ms)
+✔ source hyperlinks reject executable, credentialed and local addresses without hiding the qualified facts (36.2961ms)
+✔ missing and failed context never inherit neutral or previously qualified facts (4.8413ms)
+✔ warning records expose stale, unverified, retracted and conflicting source state without changing candidate risk (2.0351ms)
+✔ inconsistent qualified context and exact instrument or candidate mismatches withhold facts (16.8439ms)
+✔ current-information context remains labeled as a later informational update to a stored decision (2.2703ms)
+✔ scan-only rejected candidates expose retained context and suppression even with no stored signal (1.8589ms)
+✔ notification view distinguishes local preview acknowledgement, retry and suppressed context without delivery claims (1.6812ms)
+✔ phase 6 paper ledger report renders open positions, closed positions, fees, and equity with simulation disclaimer (2.0253ms)
+✔ phase 6 EOD statement renders reconciled statement hash or unresolved status truthfully (1.5765ms)
+✔ missing persisted quantity and price levels remain unavailable without invented sizing or chart zeros (2.7868ms)
+✔ valid stored zero quantity is preserved and a missing entry zone is not invented from entry price (2.3549ms)
+✔ stale paper marks suppress current equity and unrealized P&L in retained reports (1.8007ms)
+✔ stored paper journal shows persisted lifecycle and costs safely while missing trigger fields remain unavailable (2.4023ms)
+✔ paper journal withholds stale open marks and reports bounded partial preview (1.8297ms)
+✔ paper report refresh uses only GET routes and rendering cannot create paper entries (2.0684ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 329.8611
+

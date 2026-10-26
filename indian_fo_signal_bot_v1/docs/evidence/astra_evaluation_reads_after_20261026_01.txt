@@ -1,0 +1,15 @@
+test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) ... [2026-10-26 22:25:33,826] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_9876b47d via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:25:34,559] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_9876b47d in 745.39ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only) ... [2026-10-26 22:25:34,897] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_b2be8d0e via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:25:36,078] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_b2be8d0e in 1180.60ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+EVALUATION_TRAVERSAL containers=3844 scalars=33628 reference_calls=3844
+ok
+test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked) ... [2026-10-26 22:25:36,234] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_a2339723 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:25:37,298] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_a2339723 in 1064.76ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.646s
+
+OK

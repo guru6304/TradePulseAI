@@ -1,0 +1,27 @@
+test_actual_multicandidate_enrichment_validates_source_once_per_batch (test_astra_context_batch.TestAstraContextBatch.test_actual_multicandidate_enrichment_validates_source_once_per_batch) ... [2026-10-26 11:54:54,783] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_6ca29f1a via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 11:54:55,664] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_6ca29f1a in 893.23ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+FAIL
+
+======================================================================
+FAIL: test_actual_multicandidate_enrichment_validates_source_once_per_batch (test_astra_context_batch.TestAstraContextBatch.test_actual_multicandidate_enrichment_validates_source_once_per_batch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_context_batch.py", line 52, in test_actual_multicandidate_enrichment_validates_source_once_per_batch
+    self.assertEqual(dict(context_reconstructions=reconstruct.call_count,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                          evaluation_validations=validate.call_count),
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     dict(context_reconstructions=2, evaluation_validations=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'context_reconstructions': 17, 'evaluation_validations': 33} != {'context_reconstructions': 2, 'evaluation_validations': 2}
+- {'context_reconstructions': 17, 'evaluation_validations': 33}
+?                             ^^                            ^^
+
++ {'context_reconstructions': 2, 'evaluation_validations': 2}
+?                             ^                            ^
+
+
+----------------------------------------------------------------------
+Ran 1 test in 2.337s
+
+FAILED (failures=1)

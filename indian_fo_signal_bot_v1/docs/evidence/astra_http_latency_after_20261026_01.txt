@@ -1,0 +1,25 @@
+test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints) ... [2026-10-26 16:57:28,923] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_9fd06ba1 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 16:57:30,922] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_9fd06ba1 in 2010.35ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+[2026-10-26 16:57:34,065] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_1cf30d1b via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 16:57:38,382] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_1cf30d1b in 4358.98ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+FAIL
+test_p1f_concurrent_reads_do_not_block_during_active_slow_scan_and_overlap_returns_409 (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_reads_do_not_block_during_active_slow_scan_and_overlap_returns_409) ... [2026-10-26 16:57:43,087] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_ba38604c via NSE Slow Simulation Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 16:57:43,105] [WARNING] [tradepulse.scanner] Scan scan_20261016_103500_eec4f092 skipped because another scan is already in progress.
+[2026-10-26 16:57:45,240] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_ba38604c in 2154.02ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_p1f_private_file_disclosure_remains_blocked_under_concurrent_requests (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_private_file_disclosure_remains_blocked_under_concurrent_requests) ... ok
+test_p1f_server_uses_threading_http_server_and_base_request_handler (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_server_uses_threading_http_server_and_base_request_handler) ... ok
+
+======================================================================
+FAIL: test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_bot.py", line 2400, in test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints
+    self.assertLess(elapsed, 3.0, f"Request {path} took too long: {elapsed:.2f}s")
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3.4447790002450347 not less than 3.0 : Request /api/health took too long: 3.44s
+
+----------------------------------------------------------------------
+Ran 4 tests in 17.401s
+
+FAILED (failures=1)

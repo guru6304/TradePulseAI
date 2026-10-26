@@ -1,0 +1,500 @@
+{
+  "inputs": [
+    {
+      "actionable": false,
+      "candidate_evaluations": [
+        {
+          "candidate_id": "synthetic-r1TCS",
+          "explanation": {
+            "setup_quality": 90
+          },
+          "ranking": {
+            "qualified": true
+          },
+          "risk_reward": {
+            "allowed": true,
+            "gross_t1_rr": 2.0
+          },
+          "source_reference": {
+            "candle_digest": "4906d47f6ef19bae54333b35584fd04b63263e381c92f66de7d91bb755ef6bd0",
+            "candle_timestamps": [
+              "2026-10-16 09:55:00"
+            ],
+            "data_mode": "SIMULATED",
+            "instrument_identity": {
+              "exchange": "NSE",
+              "identifier": "SYNTHETIC_TCS",
+              "instrument_type": "EQ",
+              "is_index": false,
+              "provider": "upstox",
+              "symbol": "TCS"
+            },
+            "provider": "upstox",
+            "run_id": "synthetic-r1"
+          },
+          "status": "QUALIFIED",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "TCS"
+        },
+        {
+          "candidate_id": "synthetic-r1INFY",
+          "explanation": {
+            "setup_quality": 80
+          },
+          "ranking": {
+            "qualified": true
+          },
+          "risk_reward": {
+            "allowed": true,
+            "gross_t1_rr": 2.0
+          },
+          "source_reference": {
+            "candle_digest": "5af05c1a7ac3d09d7692e5eb008bb23d28e6f52cb03aacce11f42faaf966e02e",
+            "candle_timestamps": [
+              "2026-10-16 09:55:00"
+            ],
+            "data_mode": "SIMULATED",
+            "instrument_identity": {
+              "exchange": "NSE",
+              "identifier": "SYNTHETIC_INFY",
+              "instrument_type": "EQ",
+              "is_index": false,
+              "provider": "upstox",
+              "symbol": "INFY"
+            },
+            "provider": "upstox",
+            "run_id": "synthetic-r1"
+          },
+          "status": "QUALIFIED",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "INFY"
+        }
+      ],
+      "data_mode": "SIMULATED",
+      "run_id": "synthetic-r1"
+    },
+    {
+      "actionable": false,
+      "candidate_evaluations": [
+        {
+          "candidate_id": "synthetic-r2TCS",
+          "explanation": {
+            "setup_quality": 85
+          },
+          "ranking": {
+            "qualified": true
+          },
+          "risk_reward": {
+            "allowed": true,
+            "gross_t1_rr": 2.0
+          },
+          "source_reference": {
+            "candle_digest": "eb28e1dbf1cf63c287c6335a175e2b21fa776940b5f03938f29c266fbcf3a898",
+            "candle_timestamps": [
+              "2026-10-16 10:05:00"
+            ],
+            "data_mode": "SIMULATED",
+            "instrument_identity": {
+              "exchange": "NSE",
+              "identifier": "SYNTHETIC_TCS",
+              "instrument_type": "EQ",
+              "is_index": false,
+              "provider": "upstox",
+              "symbol": "TCS"
+            },
+            "provider": "upstox",
+            "run_id": "synthetic-r2"
+          },
+          "status": "QUALIFIED",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "TCS"
+        },
+        {
+          "candidate_id": "synthetic-r2INFY",
+          "explanation": {
+            "setup_quality": 95
+          },
+          "ranking": {
+            "qualified": true
+          },
+          "risk_reward": {
+            "allowed": true,
+            "gross_t1_rr": 2.0
+          },
+          "source_reference": {
+            "candle_digest": "6138fa7cc4d0f338ce6ed8e2b74fa3199543f0f8a73c34bcaab6c70a64986ad6",
+            "candle_timestamps": [
+              "2026-10-16 10:05:00"
+            ],
+            "data_mode": "SIMULATED",
+            "instrument_identity": {
+              "exchange": "NSE",
+              "identifier": "SYNTHETIC_INFY",
+              "instrument_type": "EQ",
+              "is_index": false,
+              "provider": "upstox",
+              "symbol": "INFY"
+            },
+            "provider": "upstox",
+            "run_id": "synthetic-r2"
+          },
+          "status": "QUALIFIED",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "INFY"
+        }
+      ],
+      "data_mode": "SIMULATED",
+      "run_id": "synthetic-r2"
+    }
+  ],
+  "kind": "EXECUTED_SYNTHETIC_PURE_FUNCTION_DEMO",
+  "provider_requests": 0,
+  "scope": "NO_SCANNER_CONSUMER_PERSISTENCE_LIVE_OR_EMPIRICAL_ACCEPTANCE",
+  "snapshots": [
+    {
+      "actionable": false,
+      "as_of": "2026-10-16T10:00:05+05:30",
+      "evaluation_digest": "aa7879dc78b3f0886889759366e350b02b23b528d82aebaf72471088b3e2a84a",
+      "evidence_scope": "RANKING_MECHANICS_ONLY_NO_EMPIRICAL_OR_LIVE_ACCEPTANCE",
+      "exclusions": [],
+      "policy": "CASH_QUALITY_ACTUAL_RR_ONE_SYMBOL_V1",
+      "previous_rank_version": null,
+      "rank_version": "a9dace08e3679b1024fbab20b22b67fc0a5e305d815a64a8e6091b57b8ae7b7f",
+      "removals": [],
+      "rows": [
+        {
+          "actionable": false,
+          "candidate_id": "synthetic-r1TCS",
+          "component_changes": {
+            "actual_target1_rr": {
+              "current": 2.0,
+              "previous": null
+            },
+            "rule_quality": {
+              "current": 90,
+              "previous": null
+            }
+          },
+          "component_versions": {
+            "actual_target1_rr": "PRICE_LEVEL_GEOMETRY_V1",
+            "rule_quality": "EXISTING_EVALUATOR_V1"
+          },
+          "instrument_identity": {
+            "exchange": "NSE",
+            "identifier": "SYNTHETIC_TCS",
+            "instrument_type": "EQ",
+            "is_index": false,
+            "provider": "upstox",
+            "symbol": "TCS"
+          },
+          "missing_components": [
+            "RELATIVE_STRENGTH",
+            "SECTOR",
+            "REGIME",
+            "LIQUIDITY_DEPTH",
+            "OBSERVED_SPREAD",
+            "NET_EXECUTABLE_REWARD",
+            "EMPIRICAL_EDGE"
+          ],
+          "opportunity_key": "79e8f2a2dc6cb28f8fe58b3f4e3b0eee8f9e0b11c10b23d66c44aa686af305f0",
+          "previous_rank": null,
+          "priority_scope": "QUALIFIED_SCANNER_CANDIDATE_ONLY",
+          "rank": 1,
+          "rank_change_reason": "NEWLY_QUALIFIED",
+          "score_components": {
+            "actual_target1_rr": 2.0,
+            "rule_quality": 90
+          },
+          "source_data_watermark": "2026-10-16T09:55:00+05:30",
+          "source_digest": "4906d47f6ef19bae54333b35584fd04b63263e381c92f66de7d91bb755ef6bd0",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "TCS"
+        },
+        {
+          "actionable": false,
+          "candidate_id": "synthetic-r1INFY",
+          "component_changes": {
+            "actual_target1_rr": {
+              "current": 2.0,
+              "previous": null
+            },
+            "rule_quality": {
+              "current": 80,
+              "previous": null
+            }
+          },
+          "component_versions": {
+            "actual_target1_rr": "PRICE_LEVEL_GEOMETRY_V1",
+            "rule_quality": "EXISTING_EVALUATOR_V1"
+          },
+          "instrument_identity": {
+            "exchange": "NSE",
+            "identifier": "SYNTHETIC_INFY",
+            "instrument_type": "EQ",
+            "is_index": false,
+            "provider": "upstox",
+            "symbol": "INFY"
+          },
+          "missing_components": [
+            "RELATIVE_STRENGTH",
+            "SECTOR",
+            "REGIME",
+            "LIQUIDITY_DEPTH",
+            "OBSERVED_SPREAD",
+            "NET_EXECUTABLE_REWARD",
+            "EMPIRICAL_EDGE"
+          ],
+          "opportunity_key": "9fb8467229684be0c03423911c0783e98ad3ff0e00b724a50b026555cdfe2609",
+          "previous_rank": null,
+          "priority_scope": "QUALIFIED_SCANNER_CANDIDATE_ONLY",
+          "rank": 2,
+          "rank_change_reason": "NEWLY_QUALIFIED",
+          "score_components": {
+            "actual_target1_rr": 2.0,
+            "rule_quality": 80
+          },
+          "source_data_watermark": "2026-10-16T09:55:00+05:30",
+          "source_digest": "5af05c1a7ac3d09d7692e5eb008bb23d28e6f52cb03aacce11f42faaf966e02e",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "INFY"
+        }
+      ],
+      "run_id": "synthetic-r1",
+      "schema_version": "tradepulse.opportunity-ranking.v1",
+      "scope": {
+        "data_mode": "SIMULATED",
+        "provider": "upstox",
+        "segment": "NSE_EQUITY_INTRADAY"
+      },
+      "snapshot_sha256": "a7ab3d832516d75fd62d89ab610acafe1f1980e2df3bafcb6b9fc5b42795993a",
+      "valid_until": "2026-10-16T10:01:00+05:30"
+    },
+    {
+      "actionable": false,
+      "as_of": "2026-10-16T10:10:05+05:30",
+      "evaluation_digest": "5f704d240edc64ac0e1fab854ac18d4df70f574751cb8f7d76f6bda96350020e",
+      "evidence_scope": "RANKING_MECHANICS_ONLY_NO_EMPIRICAL_OR_LIVE_ACCEPTANCE",
+      "exclusions": [],
+      "policy": "CASH_QUALITY_ACTUAL_RR_ONE_SYMBOL_V1",
+      "previous_rank_version": "a9dace08e3679b1024fbab20b22b67fc0a5e305d815a64a8e6091b57b8ae7b7f",
+      "rank_version": "1e3cbfad18794dc14d6ea81487ea133aaf9924e499d8fa8363f30491a45bdde1",
+      "removals": [],
+      "rows": [
+        {
+          "actionable": false,
+          "candidate_id": "synthetic-r2INFY",
+          "component_changes": {
+            "rule_quality": {
+              "current": 95,
+              "previous": 80
+            }
+          },
+          "component_versions": {
+            "actual_target1_rr": "PRICE_LEVEL_GEOMETRY_V1",
+            "rule_quality": "EXISTING_EVALUATOR_V1"
+          },
+          "instrument_identity": {
+            "exchange": "NSE",
+            "identifier": "SYNTHETIC_INFY",
+            "instrument_type": "EQ",
+            "is_index": false,
+            "provider": "upstox",
+            "symbol": "INFY"
+          },
+          "missing_components": [
+            "RELATIVE_STRENGTH",
+            "SECTOR",
+            "REGIME",
+            "LIQUIDITY_DEPTH",
+            "OBSERVED_SPREAD",
+            "NET_EXECUTABLE_REWARD",
+            "EMPIRICAL_EDGE"
+          ],
+          "opportunity_key": "9fb8467229684be0c03423911c0783e98ad3ff0e00b724a50b026555cdfe2609",
+          "previous_rank": 2,
+          "priority_scope": "QUALIFIED_SCANNER_CANDIDATE_ONLY",
+          "rank": 1,
+          "rank_change_reason": "SCORE_COMPONENT_CHANGED",
+          "score_components": {
+            "actual_target1_rr": 2.0,
+            "rule_quality": 95
+          },
+          "source_data_watermark": "2026-10-16T10:05:00+05:30",
+          "source_digest": "6138fa7cc4d0f338ce6ed8e2b74fa3199543f0f8a73c34bcaab6c70a64986ad6",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "INFY"
+        },
+        {
+          "actionable": false,
+          "candidate_id": "synthetic-r2TCS",
+          "component_changes": {
+            "rule_quality": {
+              "current": 85,
+              "previous": 90
+            }
+          },
+          "component_versions": {
+            "actual_target1_rr": "PRICE_LEVEL_GEOMETRY_V1",
+            "rule_quality": "EXISTING_EVALUATOR_V1"
+          },
+          "instrument_identity": {
+            "exchange": "NSE",
+            "identifier": "SYNTHETIC_TCS",
+            "instrument_type": "EQ",
+            "is_index": false,
+            "provider": "upstox",
+            "symbol": "TCS"
+          },
+          "missing_components": [
+            "RELATIVE_STRENGTH",
+            "SECTOR",
+            "REGIME",
+            "LIQUIDITY_DEPTH",
+            "OBSERVED_SPREAD",
+            "NET_EXECUTABLE_REWARD",
+            "EMPIRICAL_EDGE"
+          ],
+          "opportunity_key": "79e8f2a2dc6cb28f8fe58b3f4e3b0eee8f9e0b11c10b23d66c44aa686af305f0",
+          "previous_rank": 1,
+          "priority_scope": "QUALIFIED_SCANNER_CANDIDATE_ONLY",
+          "rank": 2,
+          "rank_change_reason": "SCORE_COMPONENT_CHANGED",
+          "score_components": {
+            "actual_target1_rr": 2.0,
+            "rule_quality": 85
+          },
+          "source_data_watermark": "2026-10-16T10:05:00+05:30",
+          "source_digest": "eb28e1dbf1cf63c287c6335a175e2b21fa776940b5f03938f29c266fbcf3a898",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "TCS"
+        }
+      ],
+      "run_id": "synthetic-r2",
+      "schema_version": "tradepulse.opportunity-ranking.v1",
+      "scope": {
+        "data_mode": "SIMULATED",
+        "provider": "upstox",
+        "segment": "NSE_EQUITY_INTRADAY"
+      },
+      "snapshot_sha256": "226a172f304513e4f5bfbfa4f563607eeb0552f4234d304de92ba69949299837",
+      "valid_until": "2026-10-16T10:11:00+05:30"
+    }
+  ],
+  "source_sha256": "6f0e3916ed2babbdc7c3543229e41d25be3443fb7a098ac4b54f4e9f56b129d5",
+  "stale_read": {
+    "actionable": false,
+    "archive": {
+      "actionable": false,
+      "as_of": "2026-10-16T10:10:05+05:30",
+      "evaluation_digest": "5f704d240edc64ac0e1fab854ac18d4df70f574751cb8f7d76f6bda96350020e",
+      "evidence_scope": "RANKING_MECHANICS_ONLY_NO_EMPIRICAL_OR_LIVE_ACCEPTANCE",
+      "exclusions": [],
+      "policy": "CASH_QUALITY_ACTUAL_RR_ONE_SYMBOL_V1",
+      "previous_rank_version": "a9dace08e3679b1024fbab20b22b67fc0a5e305d815a64a8e6091b57b8ae7b7f",
+      "rank_version": "1e3cbfad18794dc14d6ea81487ea133aaf9924e499d8fa8363f30491a45bdde1",
+      "removals": [],
+      "rows": [
+        {
+          "actionable": false,
+          "candidate_id": "synthetic-r2INFY",
+          "component_changes": {
+            "rule_quality": {
+              "current": 95,
+              "previous": 80
+            }
+          },
+          "component_versions": {
+            "actual_target1_rr": "PRICE_LEVEL_GEOMETRY_V1",
+            "rule_quality": "EXISTING_EVALUATOR_V1"
+          },
+          "instrument_identity": {
+            "exchange": "NSE",
+            "identifier": "SYNTHETIC_INFY",
+            "instrument_type": "EQ",
+            "is_index": false,
+            "provider": "upstox",
+            "symbol": "INFY"
+          },
+          "missing_components": [
+            "RELATIVE_STRENGTH",
+            "SECTOR",
+            "REGIME",
+            "LIQUIDITY_DEPTH",
+            "OBSERVED_SPREAD",
+            "NET_EXECUTABLE_REWARD",
+            "EMPIRICAL_EDGE"
+          ],
+          "opportunity_key": "9fb8467229684be0c03423911c0783e98ad3ff0e00b724a50b026555cdfe2609",
+          "previous_rank": 2,
+          "priority_scope": "QUALIFIED_SCANNER_CANDIDATE_ONLY",
+          "rank": 1,
+          "rank_change_reason": "SCORE_COMPONENT_CHANGED",
+          "score_components": {
+            "actual_target1_rr": 2.0,
+            "rule_quality": 95
+          },
+          "source_data_watermark": "2026-10-16T10:05:00+05:30",
+          "source_digest": "6138fa7cc4d0f338ce6ed8e2b74fa3199543f0f8a73c34bcaab6c70a64986ad6",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "INFY"
+        },
+        {
+          "actionable": false,
+          "candidate_id": "synthetic-r2TCS",
+          "component_changes": {
+            "rule_quality": {
+              "current": 85,
+              "previous": 90
+            }
+          },
+          "component_versions": {
+            "actual_target1_rr": "PRICE_LEVEL_GEOMETRY_V1",
+            "rule_quality": "EXISTING_EVALUATOR_V1"
+          },
+          "instrument_identity": {
+            "exchange": "NSE",
+            "identifier": "SYNTHETIC_TCS",
+            "instrument_type": "EQ",
+            "is_index": false,
+            "provider": "upstox",
+            "symbol": "TCS"
+          },
+          "missing_components": [
+            "RELATIVE_STRENGTH",
+            "SECTOR",
+            "REGIME",
+            "LIQUIDITY_DEPTH",
+            "OBSERVED_SPREAD",
+            "NET_EXECUTABLE_REWARD",
+            "EMPIRICAL_EDGE"
+          ],
+          "opportunity_key": "79e8f2a2dc6cb28f8fe58b3f4e3b0eee8f9e0b11c10b23d66c44aa686af305f0",
+          "previous_rank": 1,
+          "priority_scope": "QUALIFIED_SCANNER_CANDIDATE_ONLY",
+          "rank": 2,
+          "rank_change_reason": "SCORE_COMPONENT_CHANGED",
+          "score_components": {
+            "actual_target1_rr": 2.0,
+            "rule_quality": 85
+          },
+          "source_data_watermark": "2026-10-16T10:05:00+05:30",
+          "source_digest": "eb28e1dbf1cf63c287c6335a175e2b21fa776940b5f03938f29c266fbcf3a898",
+          "strategy_id": "strat_4_orb_filtered",
+          "symbol": "TCS"
+        }
+      ],
+      "run_id": "synthetic-r2",
+      "schema_version": "tradepulse.opportunity-ranking.v1",
+      "scope": {
+        "data_mode": "SIMULATED",
+        "provider": "upstox",
+        "segment": "NSE_EQUITY_INTRADAY"
+      },
+      "snapshot_sha256": "226a172f304513e4f5bfbfa4f563607eeb0552f4234d304de92ba69949299837",
+      "valid_until": "2026-10-16T10:11:00+05:30"
+    },
+    "as_of": "2026-10-16T10:11:01+05:30",
+    "current_rows": [],
+    "status": "STALE_OR_FUTURE_SNAPSHOT"
+  }
+}

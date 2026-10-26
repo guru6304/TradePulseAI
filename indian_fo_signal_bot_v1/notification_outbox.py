@@ -272,34 +272,61 @@ def _checked_decision(store, row, conn, read_cache=None):
         raise PersistenceValidationError("CONTEXT_ALERT_DECISION_INTEGRITY_FAILURE") from exc
 
 
+def _enqueue_context_decision(store, conn, snapshot, evaluation, candidate_id, reference, read_cache):
+    """Recompute and persist one decision inside its caller's write transaction."""
+    candidate = next((item for item in evaluation["candidate_evaluations"]
+                      if item["candidate_id"] == candidate_id), None)
+    context = next((item for item in snapshot["candidate_contexts"] if item.get("candidate_id") == candidate_id), None)
+    decision = _decision_body(conn, snapshot, candidate, context, candidate_id, reference)
+    decision_id, semantic = decision["decision_id"], decision["semantic_context_digest"]
+    old = conn.execute("SELECT * FROM context_alert_decisions WHERE decision_id=?", (decision_id,)).fetchone()
+    if old:
+        return _checked_decision(store, old, conn, read_cache)
+    if decision["status"] == "ELIGIBLE":
+        body = _context_body(candidate, context, snapshot, parse_ist_timestamp(snapshot["decision_at"]).isoformat())
+        existing = conn.execute("SELECT * FROM notification_outbox WHERE intent_id=?", (body["intent_id"],)).fetchone()
+        if existing:
+            original = validate_context_intent(store, existing, connection=conn, read_cache=read_cache)
+            if original["semantic_context_digest"] != semantic:
+                raise PersistenceValidationError("CONTEXT_ALERT_INTENT_CONFLICT")
+        else:
+            conn.execute("INSERT INTO notification_outbox VALUES (?,?,?,?, 'PENDING',0,?,NULL,NULL)",
+                (body["intent_id"], snapshot["run_id"], encoded(body), digest(body), parse_ist_timestamp(reference).isoformat()))
+    conn.execute("INSERT INTO context_alert_decisions VALUES (?,?,?,?,?,?)", (
+        decision_id, snapshot["snapshot_id"], candidate_id, snapshot["run_id"], encoded(decision), digest(decision)))
+    return decision
+
+
+def _checked_context_submission(store, conn, run_id, context_snapshot, read_cache):
+    snapshot_id = context_snapshot.get("snapshot_id") if isinstance(context_snapshot, dict) else None
+    snapshot, evaluation = _context_components(store, run_id, snapshot_id, conn, read_cache)
+    if digest(snapshot) != digest(context_snapshot):
+        raise PersistenceValidationError("CONTEXT_ALERT_SNAPSHOT_BINDING_FAILURE")
+    return snapshot, evaluation
+
+
 def enqueue_context(store, run_id, candidate_id, context_snapshot, reference):
     """Persist a context alert decision; eligible output remains a local preview."""
     with store.paper_transaction(write=True) as conn:
-        snapshot_id = context_snapshot.get("snapshot_id") if isinstance(context_snapshot, dict) else None
-        snapshot, evaluation = _context_components(store, run_id, snapshot_id, conn)
-        if digest(snapshot) != digest(context_snapshot):
-            raise PersistenceValidationError("CONTEXT_ALERT_SNAPSHOT_BINDING_FAILURE")
-        candidate = next((item for item in evaluation["candidate_evaluations"]
-                          if item["candidate_id"] == candidate_id), None)
-        context = next((item for item in snapshot["candidate_contexts"] if item.get("candidate_id") == candidate_id), None)
-        decision = _decision_body(conn, snapshot, candidate, context, candidate_id, reference)
-        decision_id, semantic = decision["decision_id"], decision["semantic_context_digest"]
-        old = conn.execute("SELECT * FROM context_alert_decisions WHERE decision_id=?", (decision_id,)).fetchone()
-        if old:
-            return _checked_decision(store, old, conn)
-        if decision["status"] == "ELIGIBLE":
-            body = _context_body(candidate, context, snapshot, parse_ist_timestamp(snapshot["decision_at"]).isoformat())
-            existing = conn.execute("SELECT * FROM notification_outbox WHERE intent_id=?", (body["intent_id"],)).fetchone()
-            if existing:
-                original = validate_context_intent(store, existing, connection=conn)
-                if original["semantic_context_digest"] != semantic:
-                    raise PersistenceValidationError("CONTEXT_ALERT_INTENT_CONFLICT")
-            else:
-                conn.execute("INSERT INTO notification_outbox VALUES (?,?,?,?, 'PENDING',0,?,NULL,NULL)",
-                    (body["intent_id"], run_id, encoded(body), digest(body), parse_ist_timestamp(reference).isoformat()))
-        conn.execute("INSERT INTO context_alert_decisions VALUES (?,?,?,?,?,?)", (
-            decision_id, snapshot_id, candidate_id, run_id, encoded(decision), digest(decision)))
-        return decision
+        read_cache = {}
+        snapshot, evaluation = _checked_context_submission(store, conn, run_id, context_snapshot, read_cache)
+        return _enqueue_context_decision(store, conn, snapshot, evaluation, candidate_id, reference, read_cache)
+
+
+def enqueue_context_batch(store, run_id, context_snapshot, reference):
+    """Atomically retain all decisions in authenticated snapshot candidate order.
+
+    Context reconstruction validates the retained, size-bounded snapshot against
+    its raw captures and Phase 4 evaluation. Only those immutable inputs are
+    reused inside this one transaction; every decision and existing intent is
+    checked separately, and no cache or verdict survives the operation.
+    """
+    with store.paper_transaction(write=True) as conn:
+        read_cache = {}
+        snapshot, evaluation = _checked_context_submission(store, conn, run_id, context_snapshot, read_cache)
+        return [_enqueue_context_decision(store, conn, snapshot, evaluation,
+                    context["candidate_id"], reference, read_cache)
+                for context in snapshot["candidate_contexts"]]
 
 
 def list_context_decisions(store, run_id=None, connection=None, read_cache=None):

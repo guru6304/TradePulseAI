@@ -223,7 +223,7 @@ class BotConfig:
         if self.angel_request_timeout_seconds is None:
             self.angel_request_timeout_seconds = _config_number(os.getenv("ANGEL_REQUEST_TIMEOUT_SECONDS", "8.0"), "ANGEL_REQUEST_TIMEOUT_SECONDS", float)
         if self.angel_min_request_interval_seconds is None:
-            self.angel_min_request_interval_seconds = _config_number(os.getenv("ANGEL_MIN_REQUEST_INTERVAL_SECONDS", "0.0"), "ANGEL_MIN_REQUEST_INTERVAL_SECONDS", float)
+            self.angel_min_request_interval_seconds = _config_number(os.getenv("ANGEL_MIN_REQUEST_INTERVAL_SECONDS", "0.4"), "ANGEL_MIN_REQUEST_INTERVAL_SECONDS", float)
         if self.dhan_client_id is None:
             self.dhan_client_id = os.getenv("DHAN_CLIENT_ID", "")
         if self.dhan_access_token is None:

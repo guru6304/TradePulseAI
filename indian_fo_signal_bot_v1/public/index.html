@@ -147,6 +147,11 @@
     <!-- TAB 1: LIVE SIGNAL TERMINAL (Connected to GET /api/signals)        -->
     <!-- ================================================================== -->
     <section id="tab-terminal" class="tab-panel space-y-5">
+      <section class="glass-card rounded-xl p-4 space-y-2" aria-label="Candidate priority">
+        <h2 class="font-bold text-white">Candidate priority</h2>
+        <p class="text-xs text-slate-400">Qualified cash setups ranked by rule quality and actual target risk/reward. Paper entry still requires its own trigger.</p>
+        <div id="opportunityRankingsContainer" class="text-sm space-y-2" aria-live="polite">Priority unavailable until stored evidence is read.</div>
+      </section>
       <!-- Filter, Pagination & Capital Sizing Toolbar -->
       <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-3">
         <div class="flex flex-wrap items-end gap-2.5">
@@ -194,16 +199,9 @@
           </button>
         </div>
 
-        <!-- Position Sizing Preview Controls -->
+        <!-- Sizing is retained from the validated backend decision. -->
         <div class="flex flex-wrap items-end gap-3">
-          <div>
-            <label for="inputCapital" class="block text-[11px] text-slate-400 mb-1">Sizing Capital (&#8377;)</label>
-            <input id="inputCapital" type="number" value="150000" min="10000" step="10000" class="w-28 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs mono text-emerald-400 font-semibold focus:outline-none focus:border-emerald-500" />
-          </div>
-          <div>
-            <label for="inputRiskPct" class="block text-[11px] text-slate-400 mb-1">Risk / Trade (%)</label>
-            <input id="inputRiskPct" type="number" value="1.0" min="0.25" max="5" step="0.25" class="w-20 bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs mono text-amber-400 font-semibold focus:outline-none focus:border-emerald-500" />
-          </div>
+          <p class="text-[11px] text-slate-400 max-w-48">Displayed quantity is the stored sizing decision. Paper fills use the attached account's risk limits.</p>
           <div>
             <label for="selectPageLimit" class="block text-[11px] text-slate-400 mb-1">Page Size</label>
             <select id="selectPageLimit" class="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-xs mono text-slate-200 focus:outline-none focus:border-emerald-500">
@@ -819,6 +817,7 @@
         getHealth: function() { return this.request('GET', '/api/health', null, 6000); },
         getConfig: function() { return this.request('GET', '/api/config', null, 6000); },
         getSignals: function(params) { return this.request('GET', '/api/signals', params, 8000); },
+        getOpportunityRankings: function(params) { return this.request('GET', '/api/opportunity-rankings', params, 8000); },
         getScans: function(params) { return this.request('GET', '/api/scans', params, 8000); },
         getOiSnapshots: function(params) { return this.request('GET', '/api/oi-snapshots', params, 8000); },
         getOiBaselines: function(params) { return this.request('GET', '/api/oi-baselines', params, 8000); },
@@ -853,13 +852,15 @@
         scanInFlight: false,
         lastRefreshIst: null,
         refreshTimerId: null,
+        rankingExpiryTimer: null,
         reqSeq: {
           health: 0,
           config: 0,
           signals: 0,
           scans: 0,
           oi: 0,
-          headerIndexes: 0
+          headerIndexes: 0,
+          rankings: 0
         }
       };
 
@@ -886,6 +887,7 @@
       }
 
       function formatInr(val) {
+        if (val === null || val === undefined || typeof val === 'boolean' || (typeof val === 'string' && !val.trim())) return '--';
         const num = Number(val);
         if (!Number.isFinite(num)) return '--';
         return '₹' + num.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -977,6 +979,9 @@
 
       async function loadHealthAndConfig() {
         const seq = ++state.reqSeq.health;
+        state.reqSeq.rankings++;
+        clearRankingExpiry();
+        document.getElementById('opportunityRankingsContainer').textContent = 'Reading current evidence availability...';
         try {
           const [healthData, configData] = await Promise.all([
             apiClient.getHealth(),
@@ -997,10 +1002,91 @@
         } catch (err) {
           if (seq !== state.reqSeq.health) return;
           state.health = null;
+          document.getElementById('opportunityRankingsContainer').textContent = 'Candidate priority unavailable: current health request failed.';
           state.reqSeq.reports = (state.reqSeq.reports || 0) + 1;
           document.getElementById('storedReportsContainer').textContent = 'Reports unavailable: current health request failed.';
           renderHeaderOffline(err);
           renderSystemHealthOffline(err);
+        }
+      }
+
+      function clearRankingExpiry() {
+        if (state.rankingExpiryTimer !== null && typeof clearTimeout === 'function') clearTimeout(state.rankingExpiryTimer);
+        state.rankingExpiryTimer = null;
+      }
+
+      function renderOpportunityRankings(data, expired) {
+        const container = document.getElementById('opportunityRankingsContainer');
+        clearChildren(container);
+        if (!data || data.actionable !== false || !data.snapshot) {
+          container.appendChild(el('p', 'text-amber-300', 'Candidate priority unavailable: no qualified retained ranking for this source and universe.'));
+          return;
+        }
+        const snapshot = data.snapshot;
+        const fresh = !expired && data.status === 'CURRENT_CANDIDATE_PRIORITY';
+        const rows = fresh ? data.current_rows : data.historical_rows;
+        container.appendChild(el('p', fresh ? 'text-cyan-300' : 'text-amber-300', fresh ?
+          'Current candidate priority — not an entry instruction or win probability.' :
+          'Historical priority only — no current ranks available.'));
+        const text = v => typeof v === 'string' && v.trim() ? v : 'unavailable';
+        const number = v => typeof v === 'number' && Number.isFinite(v) ? String(v) : 'unavailable';
+        container.appendChild(el('p', 'text-xs text-slate-400', 'Observed ' + text(snapshot.reference) +
+          ' | Valid until ' + text(snapshot.valid_until) + ' | Source ' + text((snapshot.scope || {}).provider)));
+        if (!Array.isArray(rows) || !rows.length) container.appendChild(el('p', '', fresh ?
+          'No qualified cash candidate in the latest scan.' : 'No historical candidate rows in this view.'));
+        (Array.isArray(rows) ? rows.slice(0, 100) : []).forEach(function(row) {
+          const scores = row.score_components || {};
+          const card = el('div', 'border border-slate-700 rounded p-3 space-y-1');
+          card.appendChild(el('p', 'font-semibold', (fresh ? 'Rank ' : 'Historical rank ') + number(row.rank) +
+            ' | ' + text(row.symbol) + ' | ' + text(row.direction) + ' | ' + text(row.strategy_id)));
+          card.appendChild(el('p', '', 'Quality ' + number(scores.rule_quality) + ' | Gross T1 reward/risk ' +
+            number(scores.actual_target1_rr) + ' | Previous rank ' + number(row.previous_rank)));
+          const reasons = {NEWLY_QUALIFIED: 'Newly qualified', SCORE_COMPONENT_CHANGED: 'Score inputs changed',
+            RELATIVE_ORDER_CHANGED: 'Other candidates changed order', UNCHANGED_PRIORITY: 'Priority unchanged'};
+          card.appendChild(el('p', '', reasons[row.rank_change_reason] || text(row.rank_change_reason)));
+          Object.entries(row.component_changes || {}).slice(0, 10).forEach(function(pair) {
+            const change = pair[1] || {};
+            card.appendChild(el('p', 'text-xs', pair[0] + ': ' + number(change.previous) + ' → ' + number(change.current)));
+          });
+          card.appendChild(el('p', 'text-xs text-slate-400', 'Source candle ' + text(row.source_data_watermark)));
+          card.appendChild(el('p', 'text-xs text-amber-200', 'Unavailable inputs: ' +
+            (Array.isArray(row.missing_components) ? row.missing_components.slice(0, 20).map(text).join(', ') : 'unavailable')));
+          container.appendChild(card);
+        });
+        (snapshot.removals || []).slice(0, 100).forEach(function(row) {
+          container.appendChild(el('p', 'text-xs text-amber-200', text(row.symbol) + ' removed from priority: ' + text(row.reason_code)));
+        });
+        const page = data.pagination || {};
+        container.appendChild(el('p', 'text-xs text-slate-400', 'Showing ' + number(Array.isArray(rows) ? rows.length : 0) +
+          ' of ' + number(page.total) + '. Stored candidate evidence; live acceptance and empirical performance remain separate.'));
+      }
+
+      async function loadOpportunityRankings() {
+        const seq = ++state.reqSeq.rankings;
+        const health = state.health;
+        clearRankingExpiry();
+        const container = document.getElementById('opportunityRankingsContainer');
+        container.textContent = health ? 'Reading stored candidate priority...' : 'Candidate priority unavailable: current health is unavailable.';
+        if (!health) return;
+        try {
+          const elapsedClock = typeof performance !== 'undefined' && performance && typeof performance.now === 'function' ?
+            () => performance.now() : () => Date.now();
+          const requestedAt = elapsedClock();
+          const data = await apiClient.getOpportunityRankings({limit: 20});
+          if (seq !== state.reqSeq.rankings || health !== state.health) return;
+          // Use server timestamps and conservatively include the whole request
+          // duration; client wall-clock skew cannot keep a rank alive longer.
+          const lifetime = Date.parse((data.snapshot || {}).valid_until) - Date.parse(data.as_of) - Math.max(0, elapsedClock() - requestedAt);
+          const expired = data.status === 'CURRENT_CANDIDATE_PRIORITY' && (!Number.isFinite(lifetime) || lifetime < 0);
+          renderOpportunityRankings(data, expired);
+          if (!expired && data.status === 'CURRENT_CANDIDATE_PRIORITY' && typeof setTimeout === 'function') {
+            state.rankingExpiryTimer = setTimeout(function() {
+              if (seq === state.reqSeq.rankings && health === state.health) renderOpportunityRankings(data, true);
+            }, Math.max(1, lifetime + 1));
+          }
+        } catch (err) {
+          if (seq !== state.reqSeq.rankings || health !== state.health) return;
+          container.textContent = 'Candidate priority unavailable: retained evidence could not be verified. No cached ranks retained.';
         }
       }
 
@@ -1043,8 +1129,11 @@
             if (recon !== 'OK') text += 'RECONCILIATION REQUIRED; accounting unavailable';
             else {
               const a = data.accounting || {};
-              text += 'Reconciliation OK | Open ' + a.open_positions + ' | Closed ' + a.closed_positions +
-                ' | Equity ' + formatInr(a.equity_inr) + ' | Fees ' + formatInr(a.fees_paid_inr);
+              text += 'Reconciliation OK | Open ' + (a.open_positions ?? '--') + ' | Closed ' + (a.closed_positions ?? '--') +
+                (paperMarksUnavailable(data) ? ' | Current equity and unrealized P&L unavailable' :
+                  ' | Equity ' + formatInr(a.equity_inr)) + ' | Fees ' + formatInr(a.fees_paid_inr) +
+                ' | Stored snapshot as of ' + (data.as_of_ist || 'unavailable') +
+                ' | Entry blocks: ' + (data.entry_blocks || []).join(', ');
             }
           } else if (result.label === 'EOD statement') {
             text += data.status + ' | ' + (data.eod_status || 'No accepted EOD statement') +
@@ -1064,6 +1153,81 @@
             }).join('; ');
           }
           container.appendChild(el('div', 'mono border-b border-slate-800 py-1', text));
+          if (result.label === 'Paper ledger' && !result.unavailable) renderPaperJournal(data, container);
+        });
+      }
+
+      function paperMarksUnavailable(data) {
+        return (data.entry_blocks || []).some(function(code) {
+          return code === 'MISSING_OR_STALE_MARKS' || code === 'UNRESOLVED_EOD_POSITION';
+        });
+      }
+
+      function persistedQuantity(value) {
+        return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0 ? String(value) : 'unavailable';
+      }
+
+      // Only an existing read-only account snapshot is rendered here. Rendering never
+      // dispatches observations, scans, fills or broker actions.
+      function renderPaperJournal(data, container) {
+        const journal = el('section', 'border border-slate-700 rounded p-3 space-y-2');
+        journal.setAttribute('aria-label', 'Stored simulated paper journal');
+        journal.appendChild(el('h4', 'font-bold text-slate-200', 'Paper journal — simulated execution'));
+        container.appendChild(journal);
+        if ((data.reconciliation || {}).status !== 'OK') {
+          journal.appendChild(el('p', 'text-amber-300', 'Journal withheld: reconciliation required.'));
+          return;
+        }
+        const value = function(v) {
+          return typeof v === 'string' && v.trim() ? v :
+            typeof v === 'number' && Number.isFinite(v) ? String(v) : 'unavailable';
+        };
+        journal.appendChild(el('p', 'text-amber-200',
+          'Source ' + value(data.source_data_mode) + ' | Provider ' + value(data.provider) +
+          ' | Fill policy ' + value(data.fill_policy) + ' | As of ' + value(data.as_of_ist) +
+          '. Retained observations do not establish a current market quote.'));
+        const sections = [
+          ['Setups and decisions', 'candidate_decisions', data.total_candidate_decisions, function(d) {
+            const candidate = d.candidate || {};
+            const rule = d.trigger_contract || {};
+            const history = Array.isArray(d.history) ? d.history : [];
+            return value(d.status) + ' | ' + value(d.reason_code) + ' | ' + value(candidate.symbol) +
+              ' | ' + value(candidate.strategy_id) + ' | Setup ' + value(d.candidate_id) +
+              ' | Signal time ' + value(candidate.timestamp) + ' | Position ' + value(d.position_id) +
+              ' | Trigger rule ' + value(rule.rule_id) + ' | Strategy version ' + value(rule.strategy_version) +
+              ' | Observed trigger time ' + value(d.trigger_timestamp_ist) +
+              ' | Last decision time ' + value(history.length ? history[history.length - 1].observed_at_ist : null);
+          }],
+          ['Positions', 'positions', data.total_positions, function(p) {
+            const closed = p.status === 'CLOSED';
+            const pnl = closed ? 'Closed net P&L ' + formatInr(p.net_pnl_inr) :
+              paperMarksUnavailable(data) ? 'Current unrealized P&L unavailable' :
+                'Retained unrealized net P&L ' + formatInr(p.unrealized_net_pnl_inr);
+            return value(p.status) + ' | ' + value(p.symbol) + ' | ' + value(p.side) +
+              ' | Position ' + value(p.position_id) + ' | Qty ' + persistedQuantity(p.quantity) +
+              ' | Raw entry ' + formatInr(p.raw_entry_price) + ' | Effective entry ' + formatInr(p.effective_entry_price) +
+              ' | Fill time ' + value(p.fill_timestamp_ist) + ' | Stop ' + formatInr(p.stop_loss) +
+              ' | Target ' + formatInr(p.target_price) + ' | Mark time ' + value(p.mark_timestamp_ist) +
+              ' | ' + pnl + ' | Exit ' + value(p.exit_reason) + ' at ' + value(p.exit_timestamp_ist) +
+              ' | Charges ' + formatInr((p.costs || {}).charges_inr) +
+              ' | Modeled slippage ' + formatInr((p.costs || {}).slippage_inr);
+          }],
+          ['Retained events', 'events', data.total_events, function(e) {
+            return value(e.kind) + ' | Event ' + value(e.event_id) + ' | Position ' + value(e.position_id) +
+              ' | Result ' + value((e.result || {}).status) + ' | ' + value((e.result || {}).reason_code);
+          }]
+        ];
+        sections.forEach(function(section) {
+          const rows = Array.isArray(data[section[1]]) ? data[section[1]] : [];
+          journal.appendChild(el('h5', 'font-semibold text-slate-200', section[0] + ' — showing ' +
+            Math.min(rows.length, 40) + ' of retained total ' + value(section[2])));
+          rows.slice(0, 40).forEach(function(row) {
+            journal.appendChild(el('p', 'mono border-b border-slate-800 py-1 break-words', section[3](row || {})));
+          });
+          if (!rows.length) journal.appendChild(el('p', 'text-slate-400', 'No rows in this retained preview.'));
+          if (rows.length > 40 || (data.previews_truncated || {})[section[1]]) {
+            journal.appendChild(el('p', 'text-amber-200', 'Partial preview; complete retained pages are available through /api/paper-ledger.'));
+          }
         });
       }
 
@@ -1487,22 +1651,13 @@
           state.selectedSignalKey = items[0].dedup_key || String(items[0].id);
         }
 
-        const cap = parseFloat(document.getElementById('inputCapital').value) || 150000;
-        const riskPct = parseFloat(document.getElementById('inputRiskPct').value) || 1.0;
-        const riskBudget = cap * (riskPct / 100.0);
-
         items.forEach(function(s) {
           const sigKey = s.dedup_key || String(s.id);
           const isSelected = sigKey === state.selectedSignalKey;
           const dirStr = String(s.direction || '').toUpperCase();
           const isBull = dirStr.indexOf('BULLISH') !== -1;
           const sourceInfo = describeStoredSignalSource(s);
-          const qualityScore = Number.isFinite(Number(s.quality_score)) ? Number(s.quality_score) : Number(s.confidence_pct || 0);
-
-          const entryPrice = Number(s.entry_price || 0);
-          const stopLoss = Number(s.stop_loss || 0);
-          const riskPerUnit = Math.max(0.5, Math.abs(entryPrice - stopLoss));
-          const previewQty = Number(s.position_qty) || Math.max(1, Math.floor(riskBudget / riskPerUnit));
+          const qualityScore = storedQuality(s);
 
           const borderCls = isSelected
             ? 'border-emerald-500 ring-1 ring-emerald-500/40 bg-slate-900/95'
@@ -1533,7 +1688,7 @@
           topRow.appendChild(leftBadges);
 
           const rightMeta = el('div', 'flex items-center gap-2 text-xs');
-          rightMeta.appendChild(el('span', 'text-cyan-400 font-semibold mono', 'Quality ' + qualityScore + '/100'));
+          rightMeta.appendChild(el('span', 'text-cyan-400 font-semibold mono', 'Quality ' + (qualityScore === null ? 'unavailable' : qualityScore + '/100')));
           rightMeta.appendChild(el('span', 'text-slate-400 mono', s.timestamp || '--'));
           topRow.appendChild(rightMeta);
           card.appendChild(topRow);
@@ -1541,8 +1696,15 @@
           // Second row: Strategy name + Position Type + Qty
           const midRow = el('div', 'mt-1.5 flex flex-wrap items-center justify-between gap-2 text-xs');
           midRow.appendChild(el('span', 'text-slate-300 font-medium', (s.strategy_name || s.strategy_id || '--') + ' • ' + (s.position_type || '--')));
-          midRow.appendChild(el('span', 'mono text-slate-400', 'Qty: ' + previewQty + ' | ' + signalRiskRewardText(s)));
+          midRow.appendChild(el('span', 'mono text-slate-400', 'Persisted Qty: ' + persistedQuantity(s.position_qty) + ' | ' + signalRiskRewardText(s)));
           card.appendChild(midRow);
+          const candidateEvaluation = s.candidate_evaluation || {};
+          const retainedRank = candidateEvaluation.ranking || {};
+          const maturity = s.strategy_evidence || candidateEvaluation.strategy_evidence || {};
+          card.appendChild(el('div', 'mt-1 text-xs text-slate-300',
+            'Scan rank: ' + (Number.isInteger(retainedRank.rank) && retainedRank.rank > 0 ? retainedRank.rank : 'unavailable') +
+            ' | Historical scan ' + (s.scan_run_id || 'unavailable') + ' | ' +
+            (maturity.maturity_state || 'Evidence maturity unavailable')));
           const decision = s.paper_decision || {};
           card.appendChild(el('div', 'mt-1 text-xs text-amber-200 mono',
             'Stored candidate | ' + (s.recommendation_status || 'CANDIDATE_ONLY') +
@@ -1561,7 +1723,7 @@
           const gridRow = el('div', 'mt-2.5 grid grid-cols-5 gap-2 pt-2 border-t border-slate-800/80 text-xs mono');
           const cols = [
             ['ENTRY', formatInr(s.entry_price), 'text-white font-semibold'],
-            ['INVALIDATION', formatInr(s.invalidation_level ?? s.stop_loss), 'text-amber-300 font-semibold'],
+            ['INVALIDATION', formatInr(s.invalidation_level), 'text-amber-300 font-semibold'],
             ['STOP (S1)', formatInr(s.stop_loss), 'text-rose-400 font-semibold'],
             ['TARGET 1', formatInr(s.target_1), 'text-emerald-400 font-semibold'],
             ['TARGET 2', formatInr(s.target_2), 'text-cyan-400 font-semibold']
@@ -1621,11 +1783,16 @@
         }
       }
 
+      function storedQuality(sig) {
+        const value = sig.quality_score === undefined ? sig.confidence_pct : sig.quality_score;
+        return typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= 100 ? value : null;
+      }
+
       function renderSelectedSignalInspector(sig) {
         const dirStr = String(sig.direction || '').toUpperCase();
         const isBull = dirStr.indexOf('BULLISH') !== -1;
         const sourceInfo = describeStoredSignalSource(sig);
-        const qScore = Number.isFinite(Number(sig.quality_score)) ? Number(sig.quality_score) : Number(sig.confidence_pct || 0);
+        const qScore = storedQuality(sig);
 
         document.getElementById('detailSymbolTitle').textContent = sig.instrument_label || sig.symbol || 'UNKNOWN';
         const dirEl = document.getElementById('detailDirectionBadge');
@@ -1640,16 +1807,16 @@
 
         document.getElementById('detailStrategySubtitle').textContent =
           (sig.strategy_name || sig.strategy_id || '--') + ' • ' + (sig.segment || '--') + ' • ' + (sig.position_type || '--');
-        document.getElementById('detailRrrBadge').textContent = signalRiskRewardText(sig) + ' • Quality ' + qScore + '/100';
+        document.getElementById('detailRrrBadge').textContent = signalRiskRewardText(sig) + ' • Quality ' + (qScore === null ? 'unavailable' : qScore + '/100');
 
         document.getElementById('detailEntryPrice').textContent = formatInr(sig.entry_price);
         document.getElementById('detailEntryZone').textContent =
           formatInr(sig.entry_zone_low) + ' – ' + formatInr(sig.entry_zone_high);
-        document.getElementById('detailInvalidation').textContent = formatInr(sig.invalidation_level ?? sig.stop_loss);
+        document.getElementById('detailInvalidation').textContent = formatInr(sig.invalidation_level);
         document.getElementById('detailStopLoss').textContent = formatInr(sig.stop_loss);
         document.getElementById('detailTarget1').textContent = formatInr(sig.target_1);
         document.getElementById('detailTarget2').textContent = formatInr(sig.target_2);
-        document.getElementById('detailQualityScore').textContent = qScore + ' / 100';
+        document.getElementById('detailQualityScore').textContent = qScore === null ? 'unavailable' : qScore + ' / 100';
 
         const bdContainer = document.getElementById('detailScoreBreakdown');
         clearChildren(bdContainer);
@@ -1669,14 +1836,8 @@
           bdContainer.appendChild(item);
         });
 
-        const cap = parseFloat(document.getElementById('inputCapital').value) || 150000;
-        const riskPct = parseFloat(document.getElementById('inputRiskPct').value) || 1.0;
-        const riskBudget = cap * (riskPct / 100.0);
-        const riskPerUnit = Math.max(0.5, Math.abs(Number(sig.entry_price || 0) - Number(sig.stop_loss || 0)));
-        const customQty = Math.max(1, Math.floor(riskBudget / riskPerUnit));
-
         document.getElementById('detailQty').textContent =
-          (sig.position_type || 'POSITION') + ' • Persisted Qty: ' + (sig.position_qty ?? '--') + ' (Preview @ ' + riskPct + '%: ' + customQty + ')';
+          (sig.position_type || 'POSITION') + ' • Persisted Qty: ' + persistedQuantity(sig.position_qty) + ' (account risk controls apply at paper entry)';
         document.getElementById('detailRiskAndCharges').textContent =
           'Risk: ' + formatInr(sig.capital_risk_inr) + ' | Est. NSE Charges: ' + formatInr(sig.est_charges_inr);
         document.getElementById('detailTimestampAndBroker').textContent =
@@ -1692,6 +1853,12 @@
             return rule.rule_id + ': ' + rule.status + ' (' + rule.reason + ')';
           }).join('; ') +
           ' | ' + ((sig.candidate_evaluation || {}).warnings || ['Evaluation details unavailable']).join(', ');
+        const maturity = sig.strategy_evidence || (sig.candidate_evaluation || {}).strategy_evidence || {};
+        document.getElementById('detailRationale').textContent +=
+          ' | Strategy evidence: ' + (maturity.maturity_state || 'unavailable') +
+          ' | Empirical: ' + (maturity.empirical_status || 'not established') +
+          ' | ' + (maturity.explanation || 'No evidence passport retained for this strategy.') +
+          ' | Displayed entry is a strategy reference; a future paper trigger needs its own versioned rule.';
         renderCandidateContext(document.getElementById('detailContext'), sig.context,
           sig.context_metadata || sig.context, sig.candidate_evaluation, sig.context_alert_decision);
 
@@ -1701,15 +1868,10 @@
           priceChartInstance.destroy();
         }
         const levelLabels = ['Stop-Loss (S1)', 'Invalidation', 'Zone Low', 'Entry Price', 'Zone High', 'Target 1 (T1)', 'Target 2 (T2)'];
-        const levelValues = [
-          Number(sig.stop_loss || 0),
-          Number(sig.invalidation_level ?? sig.stop_loss ?? 0),
-          Number(sig.entry_zone_low || sig.entry_price || 0),
-          Number(sig.entry_price || 0),
-          Number(sig.entry_zone_high || sig.entry_price || 0),
-          Number(sig.target_1 || 0),
-          Number(sig.target_2 || 0)
-        ];
+        const levelValues = [sig.stop_loss, sig.invalidation_level, sig.entry_zone_low,
+          sig.entry_price, sig.entry_zone_high, sig.target_1, sig.target_2].map(function(value) {
+          return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : null;
+        });
         const barColors = [
           'rgba(244, 63, 94, 0.8)',
           'rgba(245, 158, 11, 0.8)',
@@ -2200,6 +2362,7 @@
           refreshHeaderIndexPills(),
           loadOiSnapshots()
         ]);
+        await loadOpportunityRankings();
       }
 
       async function triggerManualScan() {
@@ -2424,12 +2587,6 @@
           document.getElementById('searchSymbol').value = '';
           state.signalsOffset = 0;
           loadSignals();
-        });
-
-        ['inputCapital', 'inputRiskPct'].forEach(function(id) {
-          document.getElementById(id).addEventListener('input', function() {
-            renderSignalCards();
-          });
         });
 
         document.getElementById('btnPrevSignalsPage').addEventListener('click', function() {

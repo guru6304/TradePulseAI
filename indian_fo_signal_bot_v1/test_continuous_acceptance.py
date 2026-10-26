@@ -259,18 +259,24 @@ class TestPaperOperationalAcceptance(unittest.TestCase):
             after=conn.execute("SELECT seq FROM sqlite_sequence WHERE name='paper_ledger_order'").fetchone()[0]
         self.assertEqual(after,before)
 
-    def test_expired_queued_candidates_are_processed_in_bounded_chronological_batches(self):
+    def test_legacy_queued_candidates_are_rejected_in_bounded_chronological_batches(self):
         paper=self.f.paper
         candidate=self.f.f._candidate(paper)
         summary=self.f.h._summary(candidate)
         self.f.coordinator._queue(summary)
         original=paper.snapshot()["candidate_decisions"][0]
+        # Model the pending backlog written by the retired automatic policy.
+        # New legacy candidates reject at queue time; existing pending rows must
+        # still drain in bounded order without acquiring a synthetic trigger.
+        original.update(status="QUEUED", reason_code="WAITING_FOR_NEXT_COMPLETED_OBSERVATION")
         dates=[]
         day=datetime(2026,10,1)
         while len(dates)<8:
             if day.weekday()<5: dates.append(day)
             day+=timedelta(days=1)
         with self.store.paper_transaction() as conn:
+            conn.execute("UPDATE paper_candidate_decisions SET payload_json=? WHERE candidate_id=?",
+                         (_encode(original), original["candidate_id"]))
             for i in range(449):
                 d=copy.deepcopy(original)
                 key=_hash(["OFFLINE_BACKLOG",i])
@@ -283,6 +289,9 @@ class TestPaperOperationalAcceptance(unittest.TestCase):
         self.assertEqual(first["status"],"PARTIAL")
         self.assertEqual(len(first["actions"]),200)
         self.assertEqual(first["pending_deferred_count"],250)
+        self.assertTrue(all(action["reason_code"] == "LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED" for action in first["actions"]))
+        timestamps = [action["candidate"]["timestamp"] for action in first["actions"]]
+        self.assertEqual(timestamps, sorted(timestamps))
         self.f.coordinator.consume_scan(summary,{})
         self.f.coordinator.consume_scan(summary,{})
         with self.store.paper_transaction(write=False) as conn:

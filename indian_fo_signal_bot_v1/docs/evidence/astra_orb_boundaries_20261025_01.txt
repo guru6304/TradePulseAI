@@ -1,0 +1,814 @@
+test_later_completed_input_is_a_distinct_committed_scanner_run (test_astra_paper_triggers.TestAstraORBScannerFixture.test_later_completed_input_is_a_distinct_committed_scanner_run) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_os2q3qft\orb_trigger.sqlite: OperationalError
+ERROR
+test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage (test_astra_paper_triggers.TestAstraORBScannerFixture.test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_e90o19iy\orb_trigger.sqlite: OperationalError
+
+  test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage (test_astra_paper_triggers.TestAstraORBScannerFixture.test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage) (side='LONG') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_cclxee0q\orb_trigger.sqlite: OperationalError
+  test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage (test_astra_paper_triggers.TestAstraORBScannerFixture.test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage) (side='SHORT') ... ERROR
+test_clock_expiry_after_staged_mark_rolls_back_entire_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_clock_expiry_after_staged_mark_rolls_back_entire_entry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_gf82sbub\orb_trigger.sqlite: OperationalError
+ERROR
+test_confirmed_trigger_restarts_before_entry_and_recovers_committed_effect_after_code_change (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_confirmed_trigger_restarts_before_entry_and_recovers_committed_effect_after_code_change) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_49gitfep\orb_trigger.sqlite: OperationalError
+ERROR
+test_current_code_mismatch_blocks_a_retained_prospective_trigger (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_current_code_mismatch_blocks_a_retained_prospective_trigger) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_6vidjz4f\orb_trigger.sqlite: OperationalError
+ERROR
+test_decision_identity_fields_cannot_be_rebound_to_a_valid_trigger (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_decision_identity_fields_cannot_be_rebound_to_a_valid_trigger) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_75fsd2mo\orb_trigger.sqlite: OperationalError
+ERROR
+test_post_entry_collision_uses_stop_first_and_never_replays_entry_bar_extremes (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_post_entry_collision_uses_stop_first_and_never_replays_entry_bar_extremes) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_skh91jja\orb_trigger.sqlite: OperationalError
+ERROR
+test_recovery_rejects_trigger_timestamp_tamper_without_replaying_effect (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_trigger_timestamp_tamper_without_replaying_effect) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_c0ymn46w\orb_trigger.sqlite: OperationalError
+ERROR
+test_stream_degradation_after_staged_mark_rolls_back_entire_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_stream_degradation_after_staged_mark_rolls_back_entire_entry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_a0ls4pt1\orb_trigger.sqlite: OperationalError
+ERROR
+test_stream_degradation_between_observation_and_entry_blocks_effect (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_stream_degradation_between_observation_and_entry_blocks_effect) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_9zs5uvpi\orb_trigger.sqlite: OperationalError
+ERROR
+test_valid_durable_trigger_still_requires_current_scanner_guard (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_valid_durable_trigger_still_requires_current_scanner_guard) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_m2awkwwx\orb_trigger.sqlite: OperationalError
+ERROR
+test_direct_entry_cannot_bypass_durable_observation_even_when_price_crossed (test_astra_paper_triggers.TestAstraPaperTriggers.test_direct_entry_cannot_bypass_durable_observation_even_when_price_crossed) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_78arj9f0\orb_trigger.sqlite: OperationalError
+ERROR
+test_four_fresh_nontriggering_bars_do_not_create_an_arbitrary_three_bar_expiry (test_astra_paper_triggers.TestAstraPaperTriggers.test_four_fresh_nontriggering_bars_do_not_create_an_arbitrary_three_bar_expiry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_n06x5d4k\orb_trigger.sqlite: OperationalError
+ERROR
+test_long_waits_for_future_cross_then_fills_once_at_observed_close (test_astra_paper_triggers.TestAstraPaperTriggers.test_long_waits_for_future_cross_then_fills_once_at_observed_close) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_x9eu7126\orb_trigger.sqlite: OperationalError
+ERROR
+test_missing_intervening_observation_cannot_jump_directly_to_a_later_cross (test_astra_paper_triggers.TestAstraPaperTriggers.test_missing_intervening_observation_cannot_jump_directly_to_a_later_cross) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_rs_2z704\orb_trigger.sqlite: OperationalError
+ERROR
+test_observation_must_reference_a_real_committed_run (test_astra_paper_triggers.TestAstraPaperTriggers.test_observation_must_reference_a_real_committed_run) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_b_i9rotq\orb_trigger.sqlite: OperationalError
+ERROR
+test_other_genuinely_detected_strategy_has_no_implicit_orb_future_rule (test_astra_paper_triggers.TestAstraPaperTriggers.test_other_genuinely_detected_strategy_has_no_implicit_orb_future_rule) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_qslhg9u1\unsupported_orb.sqlite: OperationalError
+ERROR
+test_range_invalidation_before_cross_prohibits_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_range_invalidation_before_cross_prohibits_entry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_3qsaggn6\orb_trigger.sqlite: OperationalError
+ERROR
+test_short_uses_frozen_signal_low_and_strict_future_downward_cross (test_astra_paper_triggers.TestAstraPaperTriggers.test_short_uses_frozen_signal_low_and_strict_future_downward_cross) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_higf0ulb\orb_trigger.sqlite: OperationalError
+ERROR
+test_stale_crossing_observation_cannot_become_a_historical_fill (test_astra_paper_triggers.TestAstraPaperTriggers.test_stale_crossing_observation_cannot_become_a_historical_fill) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_pbhw6jz0\orb_trigger.sqlite: OperationalError
+ERROR
+test_supplied_bar_must_equal_retained_scanner_input (test_astra_paper_triggers.TestAstraPaperTriggers.test_supplied_bar_must_equal_retained_scanner_input) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_j7rd2eob\orb_trigger.sqlite: OperationalError
+ERROR
+test_tampered_trigger_contract_cannot_authorize_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_tampered_trigger_contract_cannot_authorize_entry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_zqo8_ukl\orb_trigger.sqlite: OperationalError
+ERROR
+test_tampered_waiting_observation_is_replayed_before_transactional_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_tampered_waiting_observation_is_replayed_before_transactional_entry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_15xdwede\orb_trigger.sqlite: OperationalError
+ERROR
+test_target_already_touched_before_close_prohibits_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_target_already_touched_before_close_prohibits_entry) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_ezfm18xp\orb_trigger.sqlite: OperationalError
+ERROR
+test_threshold_touch_waits_until_a_later_strict_close_cross (test_astra_paper_triggers.TestAstraPaperTriggers.test_threshold_touch_waits_until_a_later_strict_close_cross) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4__awvaifq\orb_trigger.sqlite: OperationalError
+ERROR
+
+======================================================================
+ERROR: test_later_completed_input_is_a_distinct_committed_scanner_run (test_astra_paper_triggers.TestAstraORBScannerFixture.test_later_completed_input_is_a_distinct_committed_scanner_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 150, in test_later_completed_input_is_a_distinct_committed_scanner_run
+    fixture = ORBScannerFixture(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage (test_astra_paper_triggers.TestAstraORBScannerFixture.test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage) (side='LONG')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 122, in test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage (test_astra_paper_triggers.TestAstraORBScannerFixture.test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage) (side='SHORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 122, in test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_clock_expiry_after_staged_mark_rolls_back_entire_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_clock_expiry_after_staged_mark_rolls_back_entire_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 435, in test_clock_expiry_after_staged_mark_rolls_back_entire_entry
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_confirmed_trigger_restarts_before_entry_and_recovers_committed_effect_after_code_change (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_confirmed_trigger_restarts_before_entry_and_recovers_committed_effect_after_code_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 469, in test_confirmed_trigger_restarts_before_entry_and_recovers_committed_effect_after_code_change
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_current_code_mismatch_blocks_a_retained_prospective_trigger (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_current_code_mismatch_blocks_a_retained_prospective_trigger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 392, in test_current_code_mismatch_blocks_a_retained_prospective_trigger
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_decision_identity_fields_cannot_be_rebound_to_a_valid_trigger (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_decision_identity_fields_cannot_be_rebound_to_a_valid_trigger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 376, in test_decision_identity_fields_cannot_be_rebound_to_a_valid_trigger
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_post_entry_collision_uses_stop_first_and_never_replays_entry_bar_extremes (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_post_entry_collision_uses_stop_first_and_never_replays_entry_bar_extremes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 483, in test_post_entry_collision_uses_stop_first_and_never_replays_entry_bar_extremes
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_recovery_rejects_trigger_timestamp_tamper_without_replaying_effect (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_trigger_timestamp_tamper_without_replaying_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 450, in test_recovery_rejects_trigger_timestamp_tamper_without_replaying_effect
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_stream_degradation_after_staged_mark_rolls_back_entire_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_stream_degradation_after_staged_mark_rolls_back_entire_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 418, in test_stream_degradation_after_staged_mark_rolls_back_entire_entry
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_stream_degradation_between_observation_and_entry_blocks_effect (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_stream_degradation_between_observation_and_entry_blocks_effect)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 409, in test_stream_degradation_between_observation_and_entry_blocks_effect
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_valid_durable_trigger_still_requires_current_scanner_guard (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_valid_durable_trigger_still_requires_current_scanner_guard)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 400, in test_valid_durable_trigger_still_requires_current_scanner_guard
+    ready = ready_orb_trigger(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 98, in ready_orb_trigger
+    fixture = ORBScannerFixture(owner, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_direct_entry_cannot_bypass_durable_observation_even_when_price_crossed (test_astra_paper_triggers.TestAstraPaperTriggers.test_direct_entry_cannot_bypass_durable_observation_even_when_price_crossed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 253, in test_direct_entry_cannot_bypass_durable_observation_even_when_price_crossed
+    fixture, paper, _, candidate = self._queued()
+                                   ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_four_fresh_nontriggering_bars_do_not_create_an_arbitrary_three_bar_expiry (test_astra_paper_triggers.TestAstraPaperTriggers.test_four_fresh_nontriggering_bars_do_not_create_an_arbitrary_three_bar_expiry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 242, in test_four_fresh_nontriggering_bars_do_not_create_an_arbitrary_three_bar_expiry
+    fixture, paper, _, _ = self._queued()
+                           ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_long_waits_for_future_cross_then_fills_once_at_observed_close (test_astra_paper_triggers.TestAstraPaperTriggers.test_long_waits_for_future_cross_then_fills_once_at_observed_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 205, in test_long_waits_for_future_cross_then_fills_once_at_observed_close
+    fixture, paper, first, candidate = self._queued()
+                                       ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_intervening_observation_cannot_jump_directly_to_a_later_cross (test_astra_paper_triggers.TestAstraPaperTriggers.test_missing_intervening_observation_cannot_jump_directly_to_a_later_cross)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 263, in test_missing_intervening_observation_cannot_jump_directly_to_a_later_cross
+    fixture, paper, _, candidate = self._queued()
+                                   ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_observation_must_reference_a_real_committed_run (test_astra_paper_triggers.TestAstraPaperTriggers.test_observation_must_reference_a_real_committed_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 308, in test_observation_must_reference_a_real_committed_run
+    fixture, paper, _, _ = self._queued()
+                           ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_other_genuinely_detected_strategy_has_no_implicit_orb_future_rule (test_astra_paper_triggers.TestAstraPaperTriggers.test_other_genuinely_detected_strategy_has_no_implicit_orb_future_rule)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 353, in test_other_genuinely_detected_strategy_has_no_implicit_orb_future_rule
+    engine = scenario._engine("angelone", database="unsupported_orb.sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_range_invalidation_before_cross_prohibits_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_range_invalidation_before_cross_prohibits_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 282, in test_range_invalidation_before_cross_prohibits_entry
+    fixture, paper, _, _ = self._queued()
+                           ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_short_uses_frozen_signal_low_and_strict_future_downward_cross (test_astra_paper_triggers.TestAstraPaperTriggers.test_short_uses_frozen_signal_low_and_strict_future_downward_cross)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 224, in test_short_uses_frozen_signal_low_and_strict_future_downward_cross
+    fixture, paper, _, _ = self._queued("SHORT")
+                           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_stale_crossing_observation_cannot_become_a_historical_fill (test_astra_paper_triggers.TestAstraPaperTriggers.test_stale_crossing_observation_cannot_become_a_historical_fill)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 273, in test_stale_crossing_observation_cannot_become_a_historical_fill
+    fixture, paper, _, candidate = self._queued()
+                                   ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_supplied_bar_must_equal_retained_scanner_input (test_astra_paper_triggers.TestAstraPaperTriggers.test_supplied_bar_must_equal_retained_scanner_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 298, in test_supplied_bar_must_equal_retained_scanner_input
+    fixture, paper, _, _ = self._queued()
+                           ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_tampered_trigger_contract_cannot_authorize_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_tampered_trigger_contract_cannot_authorize_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 316, in test_tampered_trigger_contract_cannot_authorize_entry
+    fixture, paper, _, candidate = self._queued()
+                                   ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_tampered_waiting_observation_is_replayed_before_transactional_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_tampered_waiting_observation_is_replayed_before_transactional_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 332, in test_tampered_waiting_observation_is_replayed_before_transactional_entry
+    fixture, paper, _, candidate = self._queued()
+                                   ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_target_already_touched_before_close_prohibits_entry (test_astra_paper_triggers.TestAstraPaperTriggers.test_target_already_touched_before_close_prohibits_entry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 290, in test_target_already_touched_before_close_prohibits_entry
+    fixture, paper, _, candidate = self._queued()
+                                   ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_threshold_touch_waits_until_a_later_strict_close_cross (test_astra_paper_triggers.TestAstraPaperTriggers.test_threshold_touch_waits_until_a_later_strict_close_cross)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 233, in test_threshold_touch_waits_until_a_later_strict_close_cross
+    fixture, paper, _, _ = self._queued()
+                           ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 175, in _queued
+    fixture = ORBScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.223s
+
+FAILED (errors=26)

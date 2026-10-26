@@ -1,0 +1,72 @@
+test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) ... [2026-10-25 18:27:09,026] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_04d3805e via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 18:27:09,064] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_04d3805e in 55.57ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 18:27:09,073] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_04d3805e with exact cash input linkage
+[2026-10-25 18:27:09,337] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_87f3620a via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 18:27:09,395] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_87f3620a in 78.62ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 18:27:09,409] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_87f3620a with exact cash input linkage
+
+  test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='candidate_id') ... FAIL
+  test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='signal_key') ... FAIL
+  test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='run_id') ... FAIL
+  test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='account_id') ... FAIL
+  test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='config_hash') ... FAIL
+  test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='candidate_hash') ... FAIL
+
+======================================================================
+FAIL: test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='candidate_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 478, in test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='signal_key')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 478, in test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='run_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 478, in test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='account_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 478, in test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='config_hash')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 478, in test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry (test_astra_paper_triggers.TestAstraPaperTriggerBoundaries.test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry) (field='candidate_hash')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 478, in test_recovery_rejects_corrupted_decision_identity_even_with_committed_entry
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.912s
+
+FAILED (failures=6)

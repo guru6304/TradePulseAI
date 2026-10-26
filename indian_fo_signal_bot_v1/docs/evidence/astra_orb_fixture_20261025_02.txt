@@ -1,0 +1,19 @@
+test_later_completed_input_is_a_distinct_committed_scanner_run (test_astra_paper_triggers.TestAstraORBScannerFixture.test_later_completed_input_is_a_distinct_committed_scanner_run) ... [2026-10-25 07:36:08,544] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_9ca28adf via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 07:36:08,579] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_9ca28adf in 85.27ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 07:36:08,588] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_9ca28adf with exact cash input linkage
+[2026-10-25 07:36:08,779] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_520bf1c6 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 07:36:08,815] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_520bf1c6 in 51.28ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 07:36:08,823] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_520bf1c6 with exact cash input linkage
+ok
+test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage (test_astra_paper_triggers.TestAstraORBScannerFixture.test_long_and_short_orb_candidates_have_committed_rule_and_input_lineage) ... [2026-10-25 07:36:08,889] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_f93741a8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 07:36:08,924] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_f93741a8 in 46.71ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 07:36:08,932] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_f93741a8 with exact cash input linkage
+[2026-10-25 07:36:09,027] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_1f588ffb via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 07:36:09,056] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_1f588ffb in 39.30ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 07:36:09,064] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_1f588ffb with exact cash input linkage
+ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.677s
+
+OK

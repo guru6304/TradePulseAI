@@ -29,6 +29,11 @@ class ReleaseManagementError(Exception):
 class ReleasePackager:
     """Creates and validates reproducible release package manifests."""
 
+    # Operator-owned local experiment, preserved in the workspace. It initiates
+    # provider requests and prints unqualified PASS claims; it is not a supported
+    # application entry point or a release/acceptance tool. Do not import or run it.
+    LOCAL_ONLY_MODULES = frozenset({"verify_live_quick.py"})
+
     CORE_MODULES = [
         "config.py",
         "brokers.py",
@@ -37,6 +42,7 @@ class ReleasePackager:
         "server.py",
         "instrument_identity.py",
         "paper_portfolio.py",
+        "paper_triggers.py",
         "historical_data.py",
         "backtest_engine.py",
         "forward_paper.py",
@@ -45,6 +51,9 @@ class ReleasePackager:
         "source_qualification.py",
         "storage.py",
         "strategies.py",
+        "strategy_evidence.py",
+        "opportunity_ranking.py",
+        "rank_history.py",
         "upstox_diagnostics.py",
         "telegram_bot.py",
         "configuration_check.py",

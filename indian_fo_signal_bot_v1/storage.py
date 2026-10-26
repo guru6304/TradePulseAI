@@ -806,6 +806,8 @@ class SQLitePersistenceStore:
                     )""")
                     from candle_lineage import create_schema
                     create_schema(conn)
+                    from rank_history import initialize as initialize_rank_history
+                    initialize_rank_history(conn)
                     from contract_universe import create_schema as create_contract_cache_schema
                     create_contract_cache_schema(conn)
                     from notification_outbox import create_schema as create_outbox_schema
@@ -912,6 +914,10 @@ class SQLitePersistenceStore:
     def enqueue_context_alert(self, run_id, candidate_id, context_snapshot, reference):
         from notification_outbox import enqueue_context
         return enqueue_context(self, run_id, candidate_id, context_snapshot, reference)
+
+    def enqueue_context_alerts(self, run_id, context_snapshot, reference):
+        from notification_outbox import enqueue_context_batch
+        return enqueue_context_batch(self, run_id, context_snapshot, reference)
 
     def list_context_alert_decisions(self, run_id=None, connection=None, read_cache=None):
         from notification_outbox import list_context_decisions
@@ -1289,7 +1295,11 @@ class SQLitePersistenceStore:
             finally:
                 self._close_if_file(conn)
 
-    def load_live_acceptance_evidence(self, provider: str, symbol: str) -> Optional[Dict[str, Any]]:
+    def load_live_acceptance_evidence(self, provider: str, symbol: str, *, connection=None) -> Optional[Dict[str, Any]]:
+        if connection is not None:
+            row = connection.execute("SELECT evidence_json FROM live_acceptance_evidence WHERE provider=? AND symbol=?",
+                                     (provider, symbol)).fetchone()
+            return json.loads(row[0]) if row else None
         with self._db_lock:
             conn = self._get_connection()
             try:

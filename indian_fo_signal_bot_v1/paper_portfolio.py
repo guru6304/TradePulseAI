@@ -15,6 +15,7 @@ from decimal import Decimal, ROUND_HALF_UP
 from backtest_engine import IndianCostModel
 from brokers import assess_live_candle_batch, candle_session_context
 from instrument_identity import IdentityValidationError, check_echo, validate_signal_identity
+from paper_triggers import ORB_FILL_POLICY
 from strategies import IST, TradeSignal, format_ist_timestamp, parse_ist_timestamp, signal_state_identity, size_position, validate_candles
 
 FORWARD_FILL_POLICY = "NEXT_COMPLETED_BAR_CLOSE_V1"
@@ -119,7 +120,7 @@ class PaperAccountConfig:
                 clocks.append(time.fromisoformat(value))
             if not clocks[0] < clocks[1] <= clocks[2] or any(c.minute % 5 for c in clocks):
                 raise ValueError()
-            if self.fill_policy not in ("OBSERVED_NEXT_COMPLETED_BAR_OPEN_STOP_FIRST_V1", FORWARD_FILL_POLICY):
+            if self.fill_policy not in ("OBSERVED_NEXT_COMPLETED_BAR_OPEN_STOP_FIRST_V1", FORWARD_FILL_POLICY, ORB_FILL_POLICY):
                 raise ValueError()
             if not isinstance(self.cost_model_json, str):
                 raise ValueError()
@@ -692,7 +693,50 @@ class PaperPortfolio:
             self._event(conn, key, "MARK", position, dict(command_hash=command_hash, mark=mark, result=result))
         return result
 
-    def enter(self, candidate, completed_next_bar, event_key, *, candidate_decision_id=None):
+    def observe_candidate(self, candidate_id, supplied, source_scan_run_id):
+        """Retain one strategy observation without reserving capital or filling."""
+        from paper_triggers import observation_record, validate_history
+        if self.config.fill_policy != ORB_FILL_POLICY:
+            _reject("STRATEGY_TRIGGER_POLICY_REQUIRED")
+        with self.store.paper_transaction(write=True) as conn:
+            row = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND candidate_id=?",
+                               (self.config.account_id, candidate_id)).fetchone()
+            decision = self._decode(row[0]) if row else None
+            if not decision or decision.get("candidate_id") != candidate_id:
+                _reject("PAPER_DECISION_NOT_ELIGIBLE")
+            if decision["status"] != "QUEUED":
+                return decision
+            try:
+                self._candidate(decision["candidate"])
+                self._bar(supplied, decision["candidate"]["instrument_identity"], self._now())
+                cache = {}
+                _, records = validate_history(self.store, conn, decision, self.config, cache)
+                if records and parse_ist_timestamp(supplied["timestamp"]) == parse_ist_timestamp(records[-1]["timestamp_ist"]):
+                    replay = dict(decision, trigger_evaluations=records[:-1])
+                    repeated = observation_record(self.store, conn, replay, supplied, source_scan_run_id,
+                        self._now(), self.config, cache)
+                    if repeated != dict(records[-1], observed_at_ist=repeated["observed_at_ist"]):
+                        _reject("PAPER_TRIGGER_OBSERVATION_CONFLICT")
+                    return decision
+                if records and records[-1]["status"] != "WAITING":
+                    _reject("PAPER_TRIGGER_HISTORY_AFTER_TERMINAL")
+                record = observation_record(self.store, conn, decision, supplied, source_scan_run_id,
+                    self._now(), self.config, cache)
+            except (KeyError, TypeError, ValueError) as exc:
+                if isinstance(exc, PaperPortfolioError):
+                    raise
+                _reject(str(exc) if isinstance(exc, ValueError) else "PAPER_TRIGGER_EVIDENCE_INVALID")
+            decision["trigger_evaluations"].append(record)
+            decision.update(trigger_timestamp_ist=record["trigger_timestamp_ist"], reason_code=record["reason_code"],
+                status="REJECTED" if record["status"] == "INVALIDATED" else "QUEUED")
+            decision["history"] = (decision["history"] + [dict(status=decision["status"],
+                reason_code=record["reason_code"], observed_at_ist=record["observed_at_ist"])])[-32:]
+            conn.execute("UPDATE paper_candidate_decisions SET payload_json=? WHERE account_id=? AND candidate_id=?",
+                         (self._record(decision), self.config.account_id, candidate_id))
+            return decision
+
+    def enter(self, candidate, completed_next_bar, event_key, *, candidate_decision_id=None,
+              source_scan_run_id=None, entry_guard=None):
         """Atomically reserve and simulate the next completed bar, including exits."""
         data, side = self._candidate(candidate)
         now = self._now()
@@ -700,19 +744,38 @@ class PaperPortfolio:
         with self.store.paper_transaction(write=True) as conn:
             retry = self._event_retry(conn, event_key, command_hash)
             if retry:
+                if self.config.fill_policy == ORB_FILL_POLICY and self._reconciliation(conn)["status"] != "OK":
+                    _reject("RECONCILIATION_REQUIRED")
                 return retry
             decision = None
+            triggered_policy = self.config.fill_policy == ORB_FILL_POLICY
+            if triggered_policy and candidate_decision_id is None:
+                _reject("PAPER_TRIGGER_DECISION_REQUIRED")
+            if candidate_decision_id is not None and not triggered_policy:
+                _reject("LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED")
             if candidate_decision_id is not None:
                 row = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND candidate_id=?",
                                    (self.config.account_id, candidate_decision_id)).fetchone()
                 decision = json.loads(row[0]) if row else None
-                if (not decision or candidate_decision_id != event_key or decision["status"] != "QUEUED"
+                if (not decision or candidate_decision_id != event_key or decision.get("candidate_id") != candidate_decision_id or decision["status"] != "QUEUED"
                         or decision["candidate_hash"] != _hash(data) or decision["config_hash"] != self.config.config_hash):
                     _reject("PAPER_DECISION_NOT_ELIGIBLE")
+            trigger_evidence = None
+            if triggered_policy:
+                from paper_triggers import entry_evidence
+                try:
+                    trigger_evidence = entry_evidence(self.store, conn, decision, completed_next_bar,
+                        source_scan_run_id, now, self.config)
+                except (KeyError, TypeError, ValueError) as exc:
+                    _reject(str(exc) if isinstance(exc, ValueError) else "PAPER_TRIGGER_EVIDENCE_INVALID")
+                if not callable(entry_guard):
+                    _reject("CURRENT_SCANNER_GUARD_REQUIRED")
+                entry_guard()
             bar = self._bar(completed_next_bar, data["instrument_identity"], now)
             signal_time = parse_ist_timestamp(data["timestamp"])
             fill_time = parse_ist_timestamp(bar["timestamp"])
-            if (fill_time != signal_time + timedelta(minutes=5) or fill_time.date() != signal_time.date()
+            if ((fill_time <= signal_time if triggered_policy else fill_time != signal_time + timedelta(minutes=5))
+                    or fill_time.date() != signal_time.date()
                     or fill_time.time() >= time.fromisoformat(self.config.square_off_ist)):
                 _reject("NEXT_COMPLETED_SAME_SESSION_BAR_REQUIRED")
             entry_key = _hash([self.config.run_id, signal_state_identity(data)[0]])
@@ -729,7 +792,7 @@ class PaperPortfolio:
                 _reject(snapshot["entry_blocks"][0])
             if (datetime.combine(now.date(), time.fromisoformat(self.config.square_off_ist), tzinfo=IST) <= now):
                 _reject("ENTRY_AFTER_SQUARE_OFF")
-            forward_close = self.config.fill_policy == FORWARD_FILL_POLICY
+            forward_close = self.config.fill_policy in (FORWARD_FILL_POLICY, ORB_FILL_POLICY)
             if not forward_close and any(p["status"] == "CLOSED" and
                     parse_ist_timestamp(p["exit_timestamp_ist"]) + timedelta(minutes=5) > fill_time
                     for p in self._positions(conn)):
@@ -778,11 +841,16 @@ class PaperPortfolio:
                 estimated_stop_risk_inr=sizing["estimated_risk_inr"], initial_reserved_capital_inr=sizing["capital_required_inr"],
                 status="OPEN", reserved_capital_inr=sizing["capital_required_inr"], fill_policy=self.config.fill_policy,
                 entry_provenance=bar)
+            if trigger_evidence is not None:
+                position.update(trigger_evidence)
             conn.execute("INSERT INTO paper_positions(position_id,account_id,entry_key,payload_json) VALUES(?,?,?,?)",
                 (position["position_id"], self.config.account_id, entry_key, self._record(position)))
             immutable = {key: value for key, value in position.items() if key not in ("status", "reserved_capital_inr")}
             # Entry and first-bar result commit together; no capital-only orphan.
             result = self._mark_or_exit(conn, position, bar, event_key + ":fill", command_hash, mark_only=forward_close)
+            if triggered_policy:
+                self._bar(completed_next_bar, data["instrument_identity"], self._now())
+                entry_guard()  # A late degradation rolls back position, mark and reservation.
             self._event(conn, event_key, "ENTRY", position,
                 dict(command_hash=command_hash, entry=immutable, result=result))
             if decision is not None:

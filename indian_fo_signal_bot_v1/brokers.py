@@ -753,13 +753,14 @@ class AngelOneSmartAPIAdapter(BaseBrokerAdapter):
             raise BrokerDataError(msg)
 
     def _headers(self, include_auth: bool = True) -> Dict[str, str]:
+        public_ip = getattr(self.config, "angel_client_public_ip", "") or os.getenv("ANGEL_CLIENT_PUBLIC_IP", "") or "183.83.136.189"
         headers = {
             "Content-Type": "application/json",
             "Accept": "application/json",
             "X-UserType": "USER",
             "X-SourceID": "WEB",
             "X-ClientLocalIP": "127.0.0.1",
-            "X-ClientPublicIP": "127.0.0.1",
+            "X-ClientPublicIP": str(public_ip).strip(),
             "X-MACAddress": "00:00:00:00:00:00",
             "X-PrivateKey": str(self.config.angel_api_key or ""),
         }
@@ -3341,6 +3342,7 @@ class UpstoxV2Adapter(BaseBrokerAdapter):
     def _headers(self) -> Dict[str, str]:
         return {
             "Accept": "application/json",
+            "User-Agent": "TradePulse/1.0",
             "Authorization": f"Bearer {self.config.upstox_access_token}",
         }
 

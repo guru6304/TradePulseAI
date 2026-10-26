@@ -1,3 +1,4 @@
+import copy
 import logging
 import math
 import sqlite3
@@ -205,8 +206,7 @@ class IntradayBotEngine:
                 raise PersistenceValidationError("CONTEXT_INVALID_OR_FUTURE_CUTOFF") from None
         snapshot = self.store.enrich_scan_context(run_id, as_of=as_of, evaluation_mode=evaluation_mode)
         decisions = []
-        for candidate in snapshot["candidate_contexts"]:
-            decision = self.store.enqueue_context_alert(run_id, candidate["candidate_id"], snapshot, now)
+        for decision in self.store.enqueue_context_alerts(run_id, snapshot, now):
             if decision.get("status") == "ELIGIBLE" and decision.get("intent_id"):
                 # Only the local preview implementation is reachable here.
                 if self.config.telegram_dry_run and not self.config.enable_background_scheduler:
@@ -609,7 +609,8 @@ class IntradayBotEngine:
         paper_coordinator = None
         if paper_portfolio is not None:
             from forward_paper import ForwardPaperCoordinator
-            paper_coordinator = ForwardPaperCoordinator(paper_portfolio)
+            paper_coordinator = ForwardPaperCoordinator(paper_portfolio, entry_guard=lambda:
+                self._require_current_scan_data(self.config.active_broker, now_dt=paper_portfolio._now()))
             if (paper_portfolio.store is not self.store or paper_portfolio.config.provider != self.config.active_broker
                     or not self.config.telegram_dry_run or self.config.enable_background_scheduler
                     or paper_portfolio.config.source_data_mode != ("SIMULATED" if self.broker.get_active_adapter().is_simulated else "LIVE")):
@@ -814,7 +815,7 @@ class IntradayBotEngine:
                     durable_work = recovery
                 else:
                     snapshot = make_snapshot(self.config, equity_candles_map, index_candles_map,
-                                             index_oc_map, zone_states, scan_now())
+                                             index_oc_map, zone_states, scan_now(), rank_history_required=True)
                     snapshot["acquisition_errors"] = instrument_errors[:]
                     durable_work = self.store.prepare_cash_scan(run_id, snapshot)
                 requested_run_id = run_id
@@ -842,14 +843,25 @@ class IntradayBotEngine:
             strategy_evaluations, candidate_evaluations = [], []
             ranking_policy = "QUALITY_THEN_TARGET1_REWARD_RISK_THEN_IDENTITY_V1"
 
+            source_references = {}
             def source_reference(symbol):
-                rows = filter_completed_candles(all_candles_map.get(symbol, []), interval_min=5, now=now_val)
+                raw = all_candles_map.get(symbol, [])
+                raw_digest = digest(raw)
+                cached = source_references.get(symbol)
+                if cached is not None and cached[0] == raw_digest:
+                    return copy.deepcopy(cached[1])
+                rows = filter_completed_candles(raw, interval_min=5, now=now_val)
                 batches = durable_work["snapshot"]["batches"] if durable_work else []
-                return dict(run_id=run_id, provider=provider,
+                reference = dict(run_id=run_id, provider=provider,
                     batch_ids=[b["batch_id"] for b in batches if b["content"]["identity"]["symbol"] == symbol],
                     instrument_identity=dict(rows[-1].get("instrument_identity", {})) if rows else {},
                     candle_timestamps=[r["timestamp"] for r in rows], candle_digest=digest(rows),
                     source_authenticity="NOT_ESTABLISHED", data_mode=data_mode)
+                # Only metadata for exact input content in this scan is reused.
+                # Evaluators still validate candles; mutable overrides invalidate
+                # the cache, and callers cannot modify another trace's reference.
+                source_references[symbol] = (raw_digest, reference)
+                return copy.deepcopy(reference)
 
             def evaluate(strategy_id, evaluator, **arguments):
                 symbol = arguments.get("symbol", arguments.get("index_symbol"))
@@ -860,6 +872,7 @@ class IntradayBotEngine:
                 return signal
 
             def candidate_record(signal, reason=None, rank=None):
+                from strategy_evidence import strategy_evidence
                 signal.provider, signal.state_context, signal.interval_min = provider, state_context, 5
                 if not is_simulated and signal.segment == "NSE_EQUITY_INTRADAY":
                     signal.instrument_identity = dict(equity_candles_map[signal.symbol][-1]["instrument_identity"])
@@ -869,9 +882,10 @@ class IntradayBotEngine:
                     return value if type(value) in (int, float) and math.isfinite(value) else None
                 return dict(schema_version="tradepulse.candidate-evaluation.v1",
                     candidate_id=compute_signal_dedup_key(signal, broker_label),
-                    symbol=signal.symbol, strategy_id=signal.strategy_id,
+                    symbol=signal.symbol, strategy_id=signal.strategy_id, position_type=signal.position_type,
                     status="QUALIFIED" if qualified else "REJECTED", actionable=False,
                     recommendation_status="CANDIDATE_ONLY", data_mode=data_mode,
+                    strategy_evidence=strategy_evidence(signal.strategy_id),
                     reason_codes=["QUALIFIED_EXISTING_RULES" if qualified else reason or numeric["reason_code"]],
                     risk_reward=numeric, ranking=dict(rank=rank, qualified=qualified, policy=ranking_policy),
                     source_reference=source_reference(signal.symbol),
@@ -1299,6 +1313,7 @@ class IntradayBotEngine:
             if durable_work:
                 if persistence_status != "OK":
                     raise PersistenceError("LINEAGE_SCAN_RESULT_ROLLED_BACK")
+                summary["ranking_required"] = True
                 summary["input_lineage"] = dict(version="cash-lineage-v1", run_id=run_id,
                     batch_ids=[b["batch_id"] for b in durable_work["snapshot"]["batches"]],
                     work_id=durable_work["snapshot"]["work_id"], reference=durable_work["snapshot"]["reference"],

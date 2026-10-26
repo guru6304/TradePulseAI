@@ -308,6 +308,16 @@ def run_frozen_study(engine, *, strategy_id, symbol, provider, backtest_config, 
     available_sessions = sorted({aware(b["timestamp"]).date().isoformat() for b in bars})
     if any(s not in available_sessions for f in folds for s in f["train_sessions"] + f["test_sessions"]):
         raise ValueError("Study plan references missing source sessions.")
+    for fold in folds:
+        # The engine consumes the full past prefix and scores an inclusive date
+        # range. A sparse declaration must not silently include undeclared bars
+        # in either warm-up or out-of-sample results. Validate before retaining
+        # inputs or running any fold, for cash and option studies alike.
+        start, end = fold["test_sessions"][0], fold["test_sessions"][-1]
+        actual_train = [session for session in available_sessions if session < start]
+        actual_test = [session for session in available_sessions if start <= session <= end]
+        if fold["train_sessions"] != actual_train or fold["test_sessions"] != actual_test:
+            raise ValueError("Study fold must declare every source session in its warm-up prefix and test range.")
     first = min(aware(b["timestamp"]) for b in bars)
     last = max(aware(b["timestamp"]) for b in bars) + timedelta(minutes=5)
     qualifications = []

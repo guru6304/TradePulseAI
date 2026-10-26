@@ -1,0 +1,37 @@
+test_older_valid_input_cannot_replace_newer_committed_priority (test_astra_rank_history.TestAstraRankHistory.test_older_valid_input_cannot_replace_newer_committed_priority) ... [2026-10-26 10:08:34,234] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_3b7d2506 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:34,267] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_3b7d2506 in 81.67ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-26 10:08:34,282] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_3b7d2506 with exact cash input linkage
+[2026-10-26 10:08:34,471] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114005_9b278e37 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:34,499] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114005_9b278e37 in 44.86ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+ok
+test_predecessor_signal_corruption_blocks_current_rank_without_fallback (test_astra_rank_history.TestAstraRankHistory.test_predecessor_signal_corruption_blocks_current_rank_without_fallback) ... [2026-10-26 10:08:34,561] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_cdd12731 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:34,589] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_cdd12731 in 38.82ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-26 10:08:34,605] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_cdd12731 with exact cash input linkage
+[2026-10-26 10:08:34,651] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_da2fc071 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:34,680] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_da2fc071 in 41.60ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 10:08:34,702] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_da2fc071 with exact cash input linkage
+ok
+test_append_cannot_skip_deleted_latest_required_rank_history (test_astra_rank_history.TestAstraRankHistory.test_append_cannot_skip_deleted_latest_required_rank_history) ... [2026-10-26 10:08:34,772] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_8e74e77a via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:34,806] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_8e74e77a in 45.87ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-26 10:08:34,825] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_8e74e77a with exact cash input linkage
+[2026-10-26 10:08:34,901] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_9c585f41 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:34,955] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_9c585f41 in 77.62ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 10:08:34,990] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_9c585f41 with exact cash input linkage
+[2026-10-26 10:08:35,040] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115505_7caa9a81 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 10:08:35,078] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115505_7caa9a81 in 54.69ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 10:08:35,096] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115505_7caa9a81 with exact cash input linkage
+FAIL
+
+======================================================================
+FAIL: test_append_cannot_skip_deleted_latest_required_rank_history (test_astra_rank_history.TestAstraRankHistory.test_append_cannot_skip_deleted_latest_required_rank_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 207, in test_append_cannot_skip_deleted_latest_required_rank_history
+    with self.assertRaises(PersistenceValidationError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PersistenceValidationError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.969s
+
+FAILED (failures=1)

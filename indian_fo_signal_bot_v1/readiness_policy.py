@@ -113,17 +113,32 @@ def _validate_receipt(envelope, config, provider, symbol, now):
         return _failure("ACCEPTANCE_EVIDENCE_INVALID", "Malformed or inconsistent diagnostic evidence.")
 
 
-def live_acceptance(config, store, provider, symbol, now=None):
+def live_acceptance(config, store, provider, symbol, now=None, *, connection=None):
     now = parse_ist_timestamp(now or datetime.now(IST))
     if store is None:
         return _failure("ACCEPTANCE_EVIDENCE_MISSING", "No persisted diagnostic evidence is available.")
     try:
-        envelope = store.load_live_acceptance_evidence(provider, symbol)
+        envelope = (store.load_live_acceptance_evidence(provider, symbol) if connection is None else
+                    store.load_live_acceptance_evidence(provider, symbol, connection=connection))
         if envelope is None:
             return _failure("ACCEPTANCE_EVIDENCE_MISSING", "No diagnostic evidence for this provider/symbol.")
         return _validate_receipt(envelope, config, provider, symbol, now)
     except Exception:
         return _failure("ACCEPTANCE_EVIDENCE_UNREADABLE", "Diagnostic evidence could not be read or verified.")
+
+
+def live_acceptance_for_symbols(config, store, provider, symbols, now=None):
+    """Validate every symbol in one fresh locked read; no verdict outlives it."""
+    reference = parse_ist_timestamp(now or datetime.now(IST))
+    if store is None:
+        return {symbol: live_acceptance(config, store, provider, symbol, reference) for symbol in symbols}
+    try:
+        with store.lineage_read() as conn:
+            return {symbol: live_acceptance(config, store, provider, symbol, reference, connection=conn)
+                    for symbol in symbols}
+    except Exception:
+        return {symbol: _failure("ACCEPTANCE_EVIDENCE_UNREADABLE",
+            "Diagnostic evidence could not be read or verified.") for symbol in symbols}
 
 
 def _record_completed_diagnostic(config, store, adapter, checks, quotes, candles, symbol, observed, *,

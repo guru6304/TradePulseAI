@@ -1,0 +1,37 @@
+test_get_and_head_scan_aliases_cannot_reach_scanner_or_paper (test_astra_http_safety.TestAstraReadSafety.test_get_and_head_scan_aliases_cannot_reach_scanner_or_paper) ... ok
+test_post_scan_remains_explicit_paper_consumer (test_astra_http_safety.TestAstraReadSafety.test_post_scan_remains_explicit_paper_consumer) ... ok
+test_p1d_security_private_file_disclosure_blocked_over_real_http (test_bot.TestIndianFOSignalBotPhase1D.test_p1d_security_private_file_disclosure_blocked_over_real_http) ... [2026-10-25 00:10:13,854] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_693d19fe via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-25 00:10:14,585] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_693d19fe in 743.66ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_scan_aliases_require_post_and_preserve_freshness_rejection (test_bot.TestMarketDataFreshness.test_scan_aliases_require_post_and_preserve_freshness_rejection) ... [2026-10-25 00:10:16,381] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_13987a4c via DhanHQ API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Latest completed live candle is stale for the current session.
+[2026-10-25 00:10:16,382] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_dcc754a7 via DhanHQ API v2 (mode=LIVE)
+Scan failed due to BrokerDataError: Latest completed live candle is stale for the current session.
+ok
+test_backup_fails_on_memory_db (test_release_management.TestReleaseManagement.test_backup_fails_on_memory_db) ... ok
+test_backup_rejects_escape_and_existing_destination (test_release_management.TestReleaseManagement.test_backup_rejects_escape_and_existing_destination) ... ok
+test_database_backup_and_restore_drill (test_release_management.TestReleaseManagement.test_database_backup_and_restore_drill) ... ok
+test_health_does_not_claim_missing_or_corrupt_storage_accessible (test_release_management.TestReleaseManagement.test_health_does_not_claim_missing_or_corrupt_storage_accessible) ... ok
+test_health_rejects_invalid_config_without_echoing_values (test_release_management.TestReleaseManagement.test_health_rejects_invalid_config_without_echoing_values) ... ok
+test_manifest_covers_every_production_module (test_release_management.TestReleaseManagement.test_manifest_covers_every_production_module) ... ok
+test_manifest_generation_and_verification (test_release_management.TestReleaseManagement.test_manifest_generation_and_verification) ... ok
+test_manifest_rejects_empty_partial_and_incomplete_claims (test_release_management.TestReleaseManagement.test_manifest_rejects_empty_partial_and_incomplete_claims) ... ok
+test_manifest_rejects_malformed_file_metadata (test_release_management.TestReleaseManagement.test_manifest_rejects_malformed_file_metadata) ... ok
+test_manifest_rejects_unknown_paths_before_reading_files (test_release_management.TestReleaseManagement.test_manifest_rejects_unknown_paths_before_reading_files) ... ok
+test_operational_health_monitor (test_release_management.TestReleaseManagement.test_operational_health_monitor) ... ok
+test_restore_really_copies_and_compares_logical_content (test_release_management.TestReleaseManagement.test_restore_really_copies_and_compares_logical_content) ... ok
+test_restore_rejects_corrupt_backup_and_missing_file (test_release_management.TestReleaseManagement.test_restore_rejects_corrupt_backup_and_missing_file) ... ok
+test_runtime_compatibility (test_release_management.TestReleaseManagement.test_runtime_compatibility) ... ok
+test_archived_current_view_expires_at_the_same_boundary_as_rebuild (test_astra_ranking.TestAstraRanking.test_archived_current_view_expires_at_the_same_boundary_as_rebuild) ... ok
+test_multiple_setups_do_not_double_count_symbol_or_rank_option_premium_as_cash (test_astra_ranking.TestAstraRanking.test_multiple_setups_do_not_double_count_symbol_or_rank_option_premium_as_cash) ... ok
+test_out_of_order_or_same_watermark_revision_requires_explicit_new_source (test_astra_ranking.TestAstraRanking.test_out_of_order_or_same_watermark_revision_requires_explicit_new_source) ... ok
+test_permutation_ties_and_duplicate_input_keep_deterministic_priority (test_astra_ranking.TestAstraRanking.test_permutation_ties_and_duplicate_input_keep_deterministic_priority) ... ok
+test_rejection_high_score_and_empty_refresh_remove_prior_rank (test_astra_ranking.TestAstraRanking.test_rejection_high_score_and_empty_refresh_remove_prior_rank) ... ok
+test_snapshot_tampering_is_rejected_and_reads_do_not_mutate (test_astra_ranking.TestAstraRanking.test_snapshot_tampering_is_rejected_and_reads_do_not_mutate) ... ok
+test_stale_and_forming_rows_never_keep_current_priority (test_astra_ranking.TestAstraRanking.test_stale_and_forming_rows_never_keep_current_priority) ... ok
+test_tcs_infy_rank_reversal_records_actual_factor_and_source_changes (test_astra_ranking.TestAstraRanking.test_tcs_infy_rank_reversal_records_actual_factor_and_source_changes) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 4.002s
+
+OK

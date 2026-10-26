@@ -1,0 +1,16 @@
+test_each_distinct_input_is_normalized_once_and_all_references_match (test_astra_scan_references.TestAstraScanReferences.test_each_distinct_input_is_normalized_once_and_all_references_match) ... [2026-10-26 22:23:33,579] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_39fa07d0 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:33,653] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_39fa07d0 in 89.68ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+ok
+test_evaluator_input_mutation_invalidates_metadata_reuse (test_astra_scan_references.TestAstraScanReferences.test_evaluator_input_mutation_invalidates_metadata_reuse) ... [2026-10-26 22:23:33,786] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_a578ada9 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:33,863] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_a578ada9 in 77.54ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+ok
+test_returned_metadata_is_independent_and_next_scan_rebuilds_it (test_astra_scan_references.TestAstraScanReferences.test_returned_metadata_is_independent_and_next_scan_rebuilds_it) ... [2026-10-26 22:23:33,890] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_712aee87 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:33,987] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_712aee87 in 96.82ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+[2026-10-26 22:23:34,016] [INFO] [tradepulse.scanner] Starting scan scan_20261016_104000_f49ce0cd via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:34,107] [INFO] [tradepulse.scanner] Completed scan scan_20261016_104000_f49ce0cd in 91.75ms: status=COMPLETED, signals=1, persisted=0, duplicates=1, persistence=OK
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.591s
+
+OK

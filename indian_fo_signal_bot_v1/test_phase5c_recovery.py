@@ -176,32 +176,57 @@ class TestPhase5CRecovery(unittest.TestCase):
             self.f._bar(candidate, timestamp="2026-10-19T10:05:00+05:30"), "holiday"))
 
     def test_restart_before_observation_and_after_receipt_matches_uninterrupted_fill(self):
-        candidate = self.f._candidate(self.paper)
-        summary = self.h._summary(candidate)
-        self.coordinator._queue(summary)
-        queued = self.paper.snapshot()
-        restarted = self.restart()
-        coordinator = ForwardPaperCoordinator(restarted)
-        received = self.f._bar(candidate)  # received, not yet durably consumed
+        fixture, paper, _ = self.h._orb_fixture()
+        first = fixture.scan(paper)
+        candidate = fixture.candidate(first)
+        queued = paper.snapshot()
+        def restart():
+            store = SQLitePersistenceStore(fixture.store.database_url)
+            self.addCleanup(store.close)
+            return PaperPortfolio(store, paper.config, clock=lambda: fixture.now)
+        restarted = restart()
         self.assertEqual(restarted.snapshot(), queued)
-        coordinator.consume_scan(summary, {candidate.symbol: [received]})
+        self.assertEqual(queued["candidate_decisions"][0]["status"], "QUEUED")
+        fixture.append_bar(open=102, high=102.8, low=101.7, close=102.6)
+        later = fixture.scan()
+        received = fixture.retained_bar(later)  # retained input, not consumed by paper yet
+        guard = lambda: fixture.engine._require_current_scan_data("angelone", now_dt=fixture.now)
+        coordinator = ForwardPaperCoordinator(restarted, entry_guard=guard)
+        coordinator.consume_scan(later, {candidate["symbol"]: [received]})
         committed = restarted.snapshot()
-        coordinator = ForwardPaperCoordinator(self.restart())
-        coordinator.consume_scan(summary, {candidate.symbol: [received]})
+        self.assertEqual(committed["accounting"]["open_positions"], 1)
+        self.assertEqual(committed["candidate_decisions"][0]["status"], "FILLED")
+        coordinator = ForwardPaperCoordinator(restart(), entry_guard=guard)
+        coordinator.consume_scan(later, {candidate["symbol"]: [received]})
         self.assertEqual(coordinator.paper.snapshot(), committed)
 
     def test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect(self):
-        candidate = self.f._candidate(self.paper)
-        summary = self.h._summary(candidate)
-        with self.store.paper_transaction() as conn:
+        fixture, paper, coordinator = self.h._orb_fixture()
+        summary = fixture.scan()
+        candidate = fixture.candidate(summary)
+        store = fixture.store
+        with store.paper_transaction() as conn:
             conn.execute("CREATE TRIGGER phase5c_fault BEFORE INSERT ON paper_candidate_decisions BEGIN SELECT RAISE(ABORT,'OFFLINE fault'); END")
         with self.assertRaises(sqlite3.IntegrityError):
-            self.coordinator._queue(summary)
-        self.assertEqual(self.paper.snapshot()["candidate_decisions"], [])
-        with self.store.paper_transaction() as conn:
+            coordinator._queue(summary)
+        self.assertEqual(paper.snapshot()["candidate_decisions"], [])
+        with store.paper_transaction() as conn:
             conn.execute("DROP TRIGGER phase5c_fault")
-        self.coordinator._queue(summary)
-        decision = self.paper.snapshot()["candidate_decisions"][0]["candidate_id"]
+        coordinator._queue(summary)
+        decision = paper.snapshot()["candidate_decisions"][0]["candidate_id"]
+        fixture.append_bar(open=102, high=102.8, low=101.7, close=102.6)
+        later = fixture.scan()
+        bar = fixture.retained_bar(later)
+        observed = paper.observe_candidate(decision, bar, later["run_id"])
+        self.assertEqual(observed["trigger_evaluations"][-1]["status"], "TRIGGERED")
+        arguments = dict(candidate_decision_id=decision, source_scan_run_id=later["run_id"],
+                         entry_guard=coordinator.entry_guard)
+        def restarted_snapshot():
+            reopened = SQLitePersistenceStore(store.database_url)
+            try:
+                return PaperPortfolio(reopened, paper.config, clock=lambda: fixture.now).snapshot()
+            finally:
+                reopened.close()
         stages = (
             "AFTER INSERT ON paper_positions",
             "BEFORE INSERT ON paper_events WHEN NEW.kind='ENTRY'",
@@ -211,18 +236,22 @@ class TestPhase5CRecovery(unittest.TestCase):
         )
         for stage in stages:
             with self.subTest(stage=stage):
-                before = self.paper.snapshot()
-                with self.store.paper_transaction() as conn:
+                before = paper.snapshot()
+                with store.paper_transaction() as conn:
                     conn.execute("CREATE TRIGGER phase5c_fault " + stage + " BEGIN SELECT RAISE(ABORT,'OFFLINE fault'); END")
                 try:
                     with self.assertRaises(sqlite3.IntegrityError):
-                        self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
-                    self.assertEqual(self.restart().snapshot(), before)
+                        paper.enter(candidate, bar, decision, **arguments)
+                    self.assertEqual(restarted_snapshot(), before)
+                    self.assertEqual(before["total_events"], 0)
+                    self.assertEqual(before["accounting"]["reserved_capital_inr"], 0)
                 finally:
-                    with self.store.paper_transaction() as conn:
+                    with store.paper_transaction() as conn:
                         conn.execute("DROP TRIGGER phase5c_fault")
-        self.paper.enter(candidate, self.f._bar(candidate), decision, candidate_decision_id=decision)
-        self.assertEqual(self.restart().snapshot()["reconciliation"]["status"], "OK")
+        paper.enter(candidate, bar, decision, **arguments)
+        committed = restarted_snapshot()
+        self.assertEqual(committed["accounting"]["open_positions"], 1)
+        self.assertEqual(committed["reconciliation"]["status"], "OK")
 
     def test_mark_exit_fee_and_eod_failures_preserve_committed_reservation(self):
         paper, result, candidate, eod = self.eod_entry(cost_model_json="{}")
@@ -261,20 +290,22 @@ class TestPhase5CRecovery(unittest.TestCase):
         self.assertEqual(paper.snapshot(), after)
 
     def test_postcommit_reporting_exception_recovers_without_double_fill_or_fees(self):
-        candidate = self.f._candidate(self.paper)
-        summary = self.h._summary(candidate)
-        bar = self.f._bar(candidate)
-        with patch.object(self.store, "get_paper_portfolio_report", side_effect=RuntimeError("OFFLINE callback fault")):
+        ready = self.h._orb_ready()
+        with patch.object(ready.fixture.store, "get_paper_portfolio_report", side_effect=RuntimeError("OFFLINE callback fault")):
             with self.assertRaises(RuntimeError):
-                self.coordinator.consume_scan(summary, {candidate.symbol: [bar]})
-        committed = self.restart().snapshot()
-        self.f._set_time("10:20")
-        report = ForwardPaperCoordinator(self.restart()).consume_scan(summary, {})["report"]
+                self.h._orb_consume(ready)
+        store = SQLitePersistenceStore(ready.fixture.store.database_url)
+        self.addCleanup(store.close)
+        restarted = PaperPortfolio(store, ready.paper.config, clock=lambda: ready.fixture.now)
+        committed = restarted.snapshot()
+        self.assertEqual(committed["accounting"]["open_positions"], 1)
+        ready.fixture.scenario.now += timedelta(minutes=10)
+        report = ForwardPaperCoordinator(restarted).consume_scan(ready.later, {})["report"]
         self.assertEqual(report["accounting"], committed["accounting"])
         self.assertEqual(report["total_events"], 2)
         self.assertEqual(report["candidate_decisions"][0]["status"], "FILLED")
         for _ in range(2):
-            self.assertEqual(self.paper.snapshot(), report)
+            self.assertEqual(ready.paper.snapshot(), report)
 
     def test_mark_event_failure_duplicate_out_of_order_and_conflicting_id(self):
         result, candidate = self.enter()
@@ -394,7 +425,10 @@ class TestPhase5CRecovery(unittest.TestCase):
                 self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD", lambda: self.store.query_paper_ledger("account", "candidate_decisions"))
 
     def test_coordinator_uses_open_positions_even_when_report_preview_omits_them(self):
-        candidate, summary, bar, result = self.h._consume()
+        # A prior manually opened legacy position still receives accounting
+        # observations; this is independent of eligibility for a new entry.
+        _, candidate = self.enter()
+        summary = self.h._summary(candidate)
         self.f._set_time("10:15")
         exit_bar = self.f._bar(candidate, stamp="10:10", high=125, low=99, close=121)
         with patch.object(PaperPortfolio, "_preview_append", side_effect=lambda items, item, used: used):

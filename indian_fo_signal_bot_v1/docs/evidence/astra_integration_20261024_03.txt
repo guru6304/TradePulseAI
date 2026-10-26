@@ -1,0 +1,151 @@
+test_get_and_head_scan_aliases_cannot_reach_scanner_or_paper (test_astra_http_safety.TestAstraReadSafety.test_get_and_head_scan_aliases_cannot_reach_scanner_or_paper) ... ok
+test_post_scan_remains_explicit_paper_consumer (test_astra_http_safety.TestAstraReadSafety.test_post_scan_remains_explicit_paper_consumer) ... ok
+test_multiple_setups_do_not_double_count_symbol_or_rank_option_premium_as_cash (test_astra_ranking.TestAstraRanking.test_multiple_setups_do_not_double_count_symbol_or_rank_option_premium_as_cash) ... ok
+test_out_of_order_or_same_watermark_revision_requires_explicit_new_source (test_astra_ranking.TestAstraRanking.test_out_of_order_or_same_watermark_revision_requires_explicit_new_source) ... ok
+test_permutation_ties_and_duplicate_input_keep_deterministic_priority (test_astra_ranking.TestAstraRanking.test_permutation_ties_and_duplicate_input_keep_deterministic_priority) ... ok
+test_rejection_high_score_and_empty_refresh_remove_prior_rank (test_astra_ranking.TestAstraRanking.test_rejection_high_score_and_empty_refresh_remove_prior_rank) ... ok
+test_snapshot_tampering_is_rejected_and_reads_do_not_mutate (test_astra_ranking.TestAstraRanking.test_snapshot_tampering_is_rejected_and_reads_do_not_mutate) ... ok
+test_stale_and_forming_rows_never_keep_current_priority (test_astra_ranking.TestAstraRanking.test_stale_and_forming_rows_never_keep_current_priority) ... ok
+test_tcs_infy_rank_reversal_records_actual_factor_and_source_changes (test_astra_ranking.TestAstraRanking.test_tcs_infy_rank_reversal_records_actual_factor_and_source_changes) ... ok
+test_explicit_unscored_step_session_stays_in_later_training_prefix (test_astra_research.TestAstraFrozenStudyPartitions.test_explicit_unscored_step_session_stays_in_later_training_prefix) ... ok
+test_omitted_session_inside_declared_test_range_is_rejected (test_astra_research.TestAstraFrozenStudyPartitions.test_omitted_session_inside_declared_test_range_is_rejected) ... ok
+test_omitted_training_session_cannot_silently_change_warmup_prefix (test_astra_research.TestAstraFrozenStudyPartitions.test_omitted_training_session_cannot_silently_change_warmup_prefix) ... ok
+test_option_study_also_rejects_undeclared_test_session_before_evaluation (test_astra_research.TestAstraFrozenStudyPartitions.test_option_study_also_rejects_undeclared_test_session_before_evaluation) ... ok
+test_undeclared_early_or_gap_warmup_is_rejected_before_retaining_or_evaluating (test_astra_research.TestAstraFrozenStudyPartitions.test_undeclared_early_or_gap_warmup_is_rejected_before_retaining_or_evaluating) ... ok
+test_valid_complete_plan_remains_repeatable_and_fixture_labelled (test_astra_research.TestAstraFrozenStudyPartitions.test_valid_complete_plan_remains_repeatable_and_fixture_labelled) ... ok
+test_existing_strategies_are_mechanics_only_without_empirical_metrics (test_astra_research.TestAstraStrategyEvidence.test_existing_strategies_are_mechanics_only_without_empirical_metrics) ... ok
+test_returned_evidence_cannot_mutate_registry_or_promote_later_calls (test_astra_research.TestAstraStrategyEvidence.test_returned_evidence_cannot_mutate_registry_or_promote_later_calls) ... ok
+test_strategy_specific_confirmation_and_premium_semantics_are_retained (test_astra_research.TestAstraStrategyEvidence.test_strategy_specific_confirmation_and_premium_semantics_are_retained) ... ok
+test_unknown_strategy_cannot_inherit_tested_or_promoted_status (test_astra_research.TestAstraStrategyEvidence.test_unknown_strategy_cannot_inherit_tested_or_promoted_status) ... ok
+test_additive_schema_legacy_scan_and_candidate_have_no_evaluation (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_additive_schema_legacy_scan_and_candidate_have_no_evaluation) ... ok
+test_checksum_corruption_fails_load_scan_query_and_candidate_annotation (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_checksum_corruption_fails_load_scan_query_and_candidate_annotation) ... Failed to query scan runs: SCAN_EVALUATION_INTEGRITY_FAILURE
+ok
+test_durable_commit_checks_exact_evaluations_and_preserves_lineage (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_durable_commit_checks_exact_evaluations_and_preserves_lineage) ... ok
+test_finish_rejects_mismatched_list_and_transaction_remains_pending (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_finish_rejects_mismatched_list_and_transaction_remains_pending) ... ok
+test_idempotent_payload_is_immutable_and_api_candidate_matches_identity (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_idempotent_payload_is_immutable_and_api_candidate_matches_identity) ... ok
+test_missing_evaluation_after_durable_commit_fails_result_integrity (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_missing_evaluation_after_durable_commit_fails_result_integrity) ... Failed to query scan runs: SCAN_EVALUATION_INTEGRITY_FAILURE
+ok
+test_missing_parent_and_nonfinite_or_oversize_json_reject (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_missing_parent_and_nonfinite_or_oversize_json_reject) ... ok
+test_outer_rollback_removes_scan_and_evaluation (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_outer_rollback_removes_scan_and_evaluation) ... ok
+test_partial_legacy_source_reference_is_preserved_without_forged_fields (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_partial_legacy_source_reference_is_preserved_without_forged_fields) ... ok
+test_recomputed_checksum_cannot_change_durable_result_evaluation (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_recomputed_checksum_cannot_change_durable_result_evaluation) ... Failed to query scan runs: SCAN_EVALUATION_INTEGRITY_FAILURE
+ok
+test_scope_authority_duplicate_id_foreign_batch_and_run_reject (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_scope_authority_duplicate_id_foreign_batch_and_run_reject) ... ok
+test_swallowed_invalid_borrowed_write_still_rolls_back_outer_scan (test_phase4_evaluation_storage.TestPhase4EvaluationStorage.test_swallowed_invalid_borrowed_write_still_rolls_back_outer_scan) ... ok
+test_both_wire_adapters_produce_real_candidate_risk_persistence_and_dry_run (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_both_wire_adapters_produce_real_candidate_risk_persistence_and_dry_run) ... [2026-10-24 23:54:47,929] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_98f17e49 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:47,989] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_98f17e49 in 78.83ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:48,002] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_98f17e49 with exact cash input linkage
+[2026-10-24 23:54:48,102] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_11b724d5 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:48,177] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_11b724d5 in 85.56ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:48,189] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_11b724d5 with exact cash input linkage
+ok
+test_independent_broker_failure_revokes_signal_status_despite_fresh_scan_evidence (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_independent_broker_failure_revokes_signal_status_despite_fresh_scan_evidence) ... [2026-10-24 23:54:48,304] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_25bcbc1a via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:48,370] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_25bcbc1a in 83.61ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:48,381] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_25bcbc1a with exact cash input linkage
+[2026-10-24 23:54:48,480] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_769035a9 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:48,552] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_769035a9 in 83.98ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:48,564] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_769035a9 with exact cash input linkage
+ok
+test_invalid_ohlcv_identity_or_stale_second_batch_never_reuses_prior_candidate (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_invalid_ohlcv_identity_or_stale_second_batch_never_reuses_prior_candidate) ... [2026-10-24 23:54:48,670] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_a050aee4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:48,728] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_a050aee4 in 74.83ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:48,740] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_a050aee4 with exact cash input linkage
+[2026-10-24 23:54:48,796] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_84f334cb via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:48,862] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f78baa45 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:48,934] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f78baa45 in 84.58ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:48,946] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f78baa45 with exact cash input linkage
+[2026-10-24 23:54:48,995] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_eda261a1 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:49,070] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5df0fd2b via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:49,124] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_5df0fd2b in 68.12ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:49,137] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_5df0fd2b with exact cash input linkage
+[2026-10-24 23:54:49,191] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_07f40ce9 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:49,254] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f577f407 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:49,337] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f577f407 in 92.84ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:49,356] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f577f407 with exact cash input linkage
+[2026-10-24 23:54:49,409] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5bb8c17a via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:49,485] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_2fc38bd1 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:49,544] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_2fc38bd1 in 76.12ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:49,556] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_2fc38bd1 with exact cash input linkage
+[2026-10-24 23:54:49,613] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_98e5eb01 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:49,679] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_93b46ac2 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:49,771] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_93b46ac2 in 101.75ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:49,784] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_93b46ac2 with exact cash input linkage
+[2026-10-24 23:54:49,839] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_ef4c4e0f via Upstox API v2 (mode=LIVE)
+ok
+test_offline_candidate_never_grants_historical_acceptance_or_strategy3_execution (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_offline_candidate_never_grants_historical_acceptance_or_strategy3_execution) ... [2026-10-24 23:54:49,924] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_cb9de0b9 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:49,994] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_cb9de0b9 in 86.93ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:50,006] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_cb9de0b9 with exact cash input linkage
+[2026-10-24 23:54:50,113] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_2dfe14da via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:50,185] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_2dfe14da in 83.87ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:50,196] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_2dfe14da with exact cash input linkage
+ok
+test_price_invalidation_rejects_setup_without_fabricating_an_alternate_signal (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_price_invalidation_rejects_setup_without_fabricating_an_alternate_signal) ... [2026-10-24 23:54:50,302] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_9ffb9c66 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:50,362] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_9ffb9c66 in 75.12ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 23:54:50,376] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_9ffb9c66 with exact cash input linkage
+[2026-10-24 23:54:50,435] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_d1df82cc via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:50,509] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_d1df82cc in 83.78ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 23:54:50,521] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_d1df82cc with exact cash input linkage
+ok
+test_provider_scopes_never_suppress_each_others_actual_candidates (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_provider_scopes_never_suppress_each_others_actual_candidates) ... [2026-10-24 23:54:50,603] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_b0f4b5d8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:50,662] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_b0f4b5d8 in 85.94ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:50,674] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_b0f4b5d8 with exact cash input linkage
+[2026-10-24 23:54:50,750] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_59df6d12 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:50,820] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_59df6d12 in 79.01ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:50,832] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_59df6d12 with exact cash input linkage
+ok
+test_real_risk_budget_rejects_fixture_without_consuming_its_zone (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_real_risk_budget_rejects_fixture_without_consuming_its_zone) ... [2026-10-24 23:54:50,946] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_a47730af via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:51,006] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_a47730af in 80.44ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 23:54:51,016] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_a47730af with exact cash input linkage
+[2026-10-24 23:54:51,082] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_7498f1e7 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:51,155] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_7498f1e7 in 89.05ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 23:54:51,164] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_7498f1e7 with exact cash input linkage
+ok
+test_same_scope_dedup_and_restart_preserve_real_mitigated_zone (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_same_scope_dedup_and_restart_preserve_real_mitigated_zone) ... [2026-10-24 23:54:51,238] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_fd890bc7 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:51,302] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_fd890bc7 in 84.11ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:51,314] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_fd890bc7 with exact cash input linkage
+[2026-10-24 23:54:51,388] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_86e87db0 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:51,469] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_1652a876 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:51,572] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_1909077d via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:51,649] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_1909077d in 87.02ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:51,664] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_1909077d with exact cash input linkage
+[2026-10-24 23:54:51,719] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_39b3ae13 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:51,814] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_af6f8206 via Upstox API v2 (mode=LIVE)
+ok
+test_transport_failure_after_candidate_never_reuses_success_summary_or_dispatch (test_phase4_e2e.TestPhase4OfflineEndToEnd.test_transport_failure_after_candidate_never_reuses_success_summary_or_dispatch) ... [2026-10-24 23:54:51,934] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_5ff5cf1d via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:51,993] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_5ff5cf1d in 75.91ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:52,006] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_5ff5cf1d with exact cash input linkage
+[2026-10-24 23:54:52,062] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_53fe6a23 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:52,063] [ERROR] [tradepulse.scanner] Scan scan_20261016_141505_53fe6a23 failed due to BrokerDataError: Angel One SmartAPI candle data (RELIANCE) failed (URLError).
+[2026-10-24 23:54:52,125] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_38c64641 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:52,193] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_38c64641 in 80.33ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:52,205] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_38c64641 with exact cash input linkage
+[2026-10-24 23:54:52,249] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_067ce541 via Upstox API v2 (mode=LIVE)
+[2026-10-24 23:54:52,250] [ERROR] [tradepulse.scanner] Scan scan_20261016_141505_067ce541 failed due to BrokerDataError: Upstox market-data request timed out or could not be completed.
+ok
+test_bad_batches_never_create_position_reservation_or_partial_entry (test_phase5b_forward.TestPhase5BForwardPaper.test_bad_batches_never_create_position_reservation_or_partial_entry) ... ok
+test_close_fill_rejects_setup_invalidated_before_observation_close (test_phase5b_forward.TestPhase5BForwardPaper.test_close_fill_rejects_setup_invalidated_before_observation_close) ... ok
+test_concurrent_coordinators_cannot_spend_the_same_account_capital (test_phase5b_forward.TestPhase5BForwardPaper.test_concurrent_coordinators_cannot_spend_the_same_account_capital) ... ok
+test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically (test_phase5b_forward.TestPhase5BForwardPaper.test_decision_write_failure_rolls_back_fill_events_and_reservation_atomically) ... ok
+test_duplicate_callbacks_and_restart_keep_one_fill_and_identical_accounting (test_phase5b_forward.TestPhase5BForwardPaper.test_duplicate_callbacks_and_restart_keep_one_fill_and_identical_accounting) ... ok
+test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link (test_phase5b_forward.TestPhase5BForwardPaper.test_forward_entry_uses_observed_close_with_full_candidate_and_risk_link) ... ok
+test_legacy_open_fill_cannot_spend_capital_released_later_in_same_bar (test_phase5b_forward.TestPhase5BForwardPaper.test_legacy_open_fill_cannot_spend_capital_released_later_in_same_bar) ... ok
+test_mutated_or_unpersisted_candidate_is_audited_as_rejected (test_phase5b_forward.TestPhase5BForwardPaper.test_mutated_or_unpersisted_candidate_is_audited_as_rejected) ... ok
+test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks (test_phase5b_forward.TestPhase5BForwardPaper.test_partial_handoff_failure_recovers_committed_effect_before_new_market_checks) ... ok
+test_queue_waits_for_actual_completed_next_observation_without_reservation (test_phase5b_forward.TestPhase5BForwardPaper.test_queue_waits_for_actual_completed_next_observation_without_reservation) ... ok
+test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot (test_phase5b_forward.TestPhase5BForwardPaper.test_reporting_keeps_decisions_and_balances_in_one_concurrent_read_snapshot) ... ok
+test_runtime_rejects_different_store_before_any_broker_transport (test_phase5b_forward.TestPhase5BForwardPaper.test_runtime_rejects_different_store_before_any_broker_transport) ... ok
+test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate (test_phase5b_forward.TestPhase5BForwardPaper.test_scanner_runtime_queues_then_fills_marks_exits_and_recovers_real_wire_candidate) ... [2026-10-24 23:54:53,676] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_c6f472b4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:53,733] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_c6f472b4 in 75.94ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-24 23:54:53,746] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_c6f472b4 with exact cash input linkage
+[2026-10-24 23:54:53,838] [INFO] [tradepulse.scanner] Starting scan scan_20261016_142005_e8be6b4f via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:53,896] [INFO] [tradepulse.scanner] Staged scan scan_20261016_142005_e8be6b4f in 75.28ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 23:54:53,907] [INFO] [tradepulse.scanner] Committed scan scan_20261016_142005_e8be6b4f with exact cash input linkage
+[2026-10-24 23:54:53,969] [INFO] [tradepulse.scanner] Starting scan scan_20261016_142505_d532eded via Angel One SmartAPI (mode=LIVE)
+[2026-10-24 23:54:54,026] [INFO] [tradepulse.scanner] Staged scan scan_20261016_142505_d532eded in 72.96ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-24 23:54:54,037] [INFO] [tradepulse.scanner] Committed scan scan_20261016_142505_d532eded with exact cash input linkage
+ok
+test_stale_required_bar_is_rejected_without_inventing_current_fill (test_phase5b_forward.TestPhase5BForwardPaper.test_stale_required_bar_is_rejected_without_inventing_current_fill) ... ok
+
+----------------------------------------------------------------------
+Ran 54 tests in 13.021s
+
+OK

@@ -30,8 +30,10 @@ class Element {
   getContext() { return {}; }
 }
 
-function dashboard() {
+function dashboard(options = {}) {
   const nodes = new Map();
+  const charts = [];
+  const timers = [];
   const document = {
     getElementById(id) {
       if (!nodes.has(id)) nodes.set(id, new Element());
@@ -43,8 +45,12 @@ function dashboard() {
     document,
     window: { location: { protocol: 'http:', port: '8080', pathname: '/', origin: 'http://127.0.0.1:8080' }, addEventListener() {} },
     localStorage: { getItem() { return null; } },
-    Chart: function() { this.destroy = function() {}; },
+    Chart: function(_, config) { charts.push(config); this.destroy = function() {}; },
     URLSearchParams, URL,
+    Date: options.Date || Date,
+    performance: options.performance,
+    setTimeout(callback, delay) { const timer = {callback, delay}; timers.push(timer); return timer; },
+    clearTimeout(timer) { timer.cancelled = true; },
     fetch() { throw new Error('External transport forbidden in renderer test'); }
   });
   const html = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
@@ -53,9 +59,9 @@ function dashboard() {
   assert.ok(script, 'actual dashboard inline script must exist');
   const end = script.lastIndexOf('})();');
   assert.ok(end > 0, 'dashboard closure must exist');
-  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports, renderScanRunsTable };\n';
+  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports, renderScanRunsTable, renderOpportunityRankings, loadOpportunityRankings, renderPaperJournal: typeof renderPaperJournal === "function" ? renderPaperJournal : null, loadPaperJournal: typeof loadPaperJournal === "function" ? loadPaperJournal : null };\n';
   vm.runInContext(script.slice(0, end) + hooks + script.slice(end), context, { timeout: 1000 });
-  return { ...context.hooks, node: id => document.getElementById(id) };
+  return { ...context.hooks, charts, timers, node: id => document.getElementById(id) };
 }
 
 function storedSignal(overrides = {}) {
@@ -472,6 +478,218 @@ test('phase 6 EOD statement renders reconciled statement hash or unresolved stat
   assert.match(text, /OK \| RECONCILED \| 2026-10-16 \| Statement abc123def4567890fedcba0987654321/);
 });
 
+test('missing persisted quantity and price levels remain unavailable without invented sizing or chart zeros', () => {
+  const view = dashboard();
+  renderSignal(view, storedSignal({position_qty: null, entry_price: null, stop_loss: null,
+    target_1: null, target_2: null, entry_zone_low: null, entry_zone_high: null}));
+  assert.match(view.node('signalCardsContainer').textContent, /Persisted Qty: unavailable/);
+  assert.match(view.node('detailQty').textContent, /Persisted Qty: unavailable/);
+  assert.doesNotMatch(view.node('detailQty').textContent, /Preview/);
+  assert.equal(view.node('detailEntryPrice').textContent, '--');
+  assert.ok(view.charts.at(-1).data.datasets[0].data.every(value => value === null));
+});
+
+test('missing quality and invalidation stay unavailable while observed zero quality is preserved', () => {
+  const view = dashboard();
+  for (const missing of [null, undefined, '', false, 'not-a-score']) {
+    renderSignal(view, storedSignal({quality_score: missing, confidence_pct: undefined,
+      invalidation_level: null, stop_loss: 95}));
+    assert.match(view.node('signalCardsContainer').textContent, /Quality unavailable/);
+    assert.equal(view.node('detailQualityScore').textContent, 'unavailable');
+    assert.equal(view.node('detailInvalidation').textContent, '--');
+  }
+  renderSignal(view, storedSignal({quality_score: 0, confidence_pct: 75, invalidation_level: 97}));
+  assert.equal(view.node('detailQualityScore').textContent, '0 / 100');
+  assert.match(view.node('detailInvalidation').textContent, /97\.00/);
+  renderSignal(view, storedSignal({quality_score: undefined, confidence_pct: 75}));
+  assert.equal(view.node('detailQualityScore').textContent, '75 / 100');
+});
+
+test('valid stored zero quantity is preserved and a missing entry zone is not invented from entry price', () => {
+  const view = dashboard();
+  renderSignal(view, storedSignal({position_qty: 0}));
+  assert.match(view.node('signalCardsContainer').textContent, /Persisted Qty: 0/);
+  assert.equal(view.charts.at(-1).data.datasets[0].data[2], null);
+  assert.equal(view.charts.at(-1).data.datasets[0].data[4], null);
+  assert.equal(view.charts.at(-1).data.datasets[0].data[3], 100);
+});
+
+test('stale paper marks suppress current equity and unrealized P&L in retained reports', () => {
+  const view = dashboard();
+  view.renderStoredReports([{label: 'Paper ledger', data: {status: 'BLOCKED',
+    as_of_ist: '2026-10-16 15:30:00', reconciliation: {status: 'OK'},
+    entry_blocks: ['MISSING_OR_STALE_MARKS', 'UNRESOLVED_EOD_POSITION'],
+    accounting: {open_positions: 1, closed_positions: 0, equity_inr: 999999, fees_paid_inr: 5}
+  }}], 'test-account');
+  const text = view.node('storedReportsContainer').textContent;
+  assert.match(text, /Current equity and unrealized P&L unavailable/);
+  assert.match(text, /MISSING_OR_STALE_MARKS/);
+  assert.doesNotMatch(text, /9,99,999/);
+});
+
+test('stored paper journal shows persisted lifecycle and costs safely while missing trigger fields remain unavailable', () => {
+  const view = dashboard();
+  const data = {reconciliation: {status: 'OK'}, source_data_mode: 'SIMULATED', provider: 'paper_sim',
+    as_of_ist: '2026-10-16 10:40:00', fill_policy: 'TEST_FIXTURE_ONLY', accounting: {},
+    total_candidate_decisions: 2, total_positions: 1, total_events: 1,
+    candidate_decisions: [
+      {candidate_id: 'setup-1', status: 'QUEUED', reason_code: 'WAITING_FOR_TRIGGER',
+        candidate: {symbol: '<script>unsafe()</script>', strategy_id: 'fixture', timestamp: '2026-10-16 10:30:00'}},
+      {candidate_id: 'setup-2', status: 'FILLED', reason_code: 'PAPER_RISK_APPROVED', position_id: 'position-2',
+        trigger_contract: {rule_id: 'fixture-rule', strategy_version: 'fixture-v1'},
+        trigger_timestamp_ist: '2026-10-16 10:35:00'}],
+    positions: [{position_id: 'position-2', status: 'CLOSED', symbol: 'RELIANCE', side: 'LONG', quantity: 2,
+      raw_entry_price: 100, effective_entry_price: 100.05, net_pnl_inr: -12.5,
+      exit_reason: 'STOP_FIRST_COLLISION', costs: {charges_inr: 2.25, slippage_inr: 0.5}}],
+    events: [{event_id: 'event-1', kind: 'ENTRY', position_id: 'position-2', result: {status: 'OPEN'}}]};
+  view.renderStoredReports([{label: 'Paper ledger', data}], 'test-account');
+  const text = view.node('storedReportsContainer').textContent;
+  for (const expected of ['Paper journal — simulated execution', 'Source SIMULATED', 'QUEUED | WAITING_FOR_TRIGGER',
+    '<script>unsafe()</script>', 'Trigger rule unavailable', 'Trigger rule fixture-rule', 'Strategy version fixture-v1',
+    'Observed trigger time 2026-10-16 10:35:00', 'Closed net P&L ₹-12.50', 'STOP_FIRST_COLLISION',
+    'Charges ₹2.25', 'Modeled slippage ₹0.50', 'ENTRY | Event event-1']) assert.ok(text.includes(expected), expected);
+  assert.ok(view.node('storedReportsContainer').children.some(node => node.attributes['aria-label'] === 'Stored simulated paper journal'));
+  data.reconciliation.status = 'RECONCILIATION_REQUIRED';
+  view.renderStoredReports([{label: 'Paper ledger', data}], 'test-account');
+  const withheld = view.node('storedReportsContainer').textContent;
+  assert.match(withheld, /Journal withheld: reconciliation required/);
+  assert.doesNotMatch(withheld, /setup-1|position-2|-12.50/);
+});
+
+test('paper journal withholds stale open marks and reports bounded partial preview', () => {
+  const view = dashboard();
+  const data = {reconciliation: {status: 'OK'}, entry_blocks: ['MISSING_OR_STALE_MARKS'], accounting: {},
+    total_positions: 41, positions: Array.from({length: 41}, (_, index) => ({position_id: 'position-' + index,
+      status: 'OPEN', unrealized_net_pnl_inr: 789123, mark_timestamp_ist: '2026-10-16 10:30:00'})),
+    previews_truncated: {positions: true}};
+  view.renderStoredReports([{label: 'Paper ledger', data}], 'test-account');
+  const text = view.node('storedReportsContainer').textContent;
+  assert.match(text, /Positions — showing 40 of retained total 41/);
+  assert.match(text, /Current unrealized P&L unavailable/);
+  assert.match(text, /Partial preview/);
+  assert.doesNotMatch(text, /7,89,123|position-40/);
+});
+
+test('paper report refresh uses only GET routes and rendering cannot create paper entries', async () => {
+  const view = dashboard();
+  view.state.health = {paper_account_id: 'test-account'};
+  view.node('paperReportSession').value = '2026-10-16';
+  const requests = [];
+  view.apiClient.request = async (method, route, params) => {
+    requests.push({method, route, params});
+    assert.equal(method, 'GET', 'refresh must never submit a mutation');
+    assert.ok(!/scan|order|trigger/.test(route));
+    return {reconciliation: {status: 'OK'}, accounting: {}, candidate_decisions: [], positions: [], events: []};
+  };
+  await view.loadStoredReports();
+  assert.equal(requests.length, 4);
+  assert.ok(requests.some(request => request.route === '/api/paper-portfolio'));
+  assert.ok(requests.some(request => request.route === '/api/paper-session'));
+});
+
+test('strategy evidence and retained rank are scoped to a historical scan, never current probability', () => {
+  const view = dashboard();
+  renderSignal(view, storedSignal({scan_run_id: 'old-scan',
+    candidate_evaluation: {ranking: {rank: 2}},
+    strategy_evidence: {maturity_state: 'OFFLINE_MECHANICS_TESTED', empirical_status: 'EMPIRICAL_VALIDATION_BLOCKED',
+      explanation: 'Mechanics evidence only.'}}));
+  assert.match(view.node('signalCardsContainer').textContent, /Scan rank: 2 \| Historical scan old-scan/);
+  assert.match(view.node('detailRationale').textContent, /EMPIRICAL_VALIDATION_BLOCKED/);
+  assert.match(view.node('detailRationale').textContent, /future paper trigger needs its own versioned rule/);
+  renderSignal(view, storedSignal());
+  assert.match(view.node('signalCardsContainer').textContent, /Evidence maturity unavailable/);
+});
+
+function rankingPayload() {
+  const row = {rank: 1, previous_rank: 2, symbol: '<img src=x onerror=alert(1)>', strategy_id: 'strat_4_orb_filtered',
+    score_components: {rule_quality: 0, actual_target1_rr: 1.6}, source_data_watermark: '2026-10-16T10:05:00+05:30',
+    rank_change_reason: 'SCORE_COMPONENT_CHANGED', component_changes: {rule_quality: {previous: 80, current: 0}},
+    missing_components: ['NET_EXECUTABLE_REWARD', 'EMPIRICAL_EDGE']};
+  return {status: 'CURRENT_CANDIDATE_PRIORITY', actionable: false, as_of: '2026-10-16T10:10:05+05:30',
+    current_rows: [row], historical_rows: [row], pagination: {offset: 0, limit: 20, total: 1},
+    snapshot: {reference: '2026-10-16T10:10:05+05:30', valid_until: '2026-10-16T10:11:00+05:30',
+      scope: {provider: 'angelone'}, removals: []}};
+}
+
+test('candidate priority shows real score changes and unavailable components safely', () => {
+  const view = dashboard();
+  view.renderOpportunityRankings(rankingPayload());
+  const text = view.node('opportunityRankingsContainer').textContent;
+  for (const expected of ['Current candidate priority', 'Quality 0', 'Previous rank 2', '80 → 0',
+    '<img src=x onerror=alert(1)>', 'NET_EXECUTABLE_REWARD', 'not an entry instruction']) assert.ok(text.includes(expected), expected);
+  const missing = rankingPayload();
+  missing.current_rows[0].score_components.rule_quality = null;
+  view.renderOpportunityRankings(missing);
+  assert.match(view.node('opportunityRankingsContainer').textContent, /Quality unavailable/);
+});
+
+test('expired priority shows historical ranks and removes current labels', () => {
+  const view = dashboard();
+  const data = rankingPayload();
+  data.status = 'STALE_OR_FUTURE_SNAPSHOT';
+  data.current_rows = [];
+  view.renderOpportunityRankings(data);
+  const text = view.node('opportunityRankingsContainer').textContent;
+  assert.match(text, /Historical priority only/);
+  assert.match(text, /Historical rank 1/);
+  assert.doesNotMatch(text, /Current candidate priority/);
+  view.renderOpportunityRankings({...data, snapshot: null});
+  assert.doesNotMatch(view.node('opportunityRankingsContainer').textContent, /Historical rank 1/);
+});
+
+test('ranking refresh only reads GET and expires current ranks between refreshes', async () => {
+  const view = dashboard();
+  view.state.health = {};
+  const requests = [];
+  view.apiClient.request = async (method, route) => { requests.push([method, route]); return rankingPayload(); };
+  await view.loadOpportunityRankings();
+  assert.deepEqual(requests, [['GET', '/api/opportunity-rankings']]);
+  assert.match(view.node('opportunityRankingsContainer').textContent, /Current candidate priority/);
+  assert.ok(view.timers.at(-1).delay <= 55001);
+  view.timers.at(-1).callback();
+  assert.match(view.node('opportunityRankingsContainer').textContent, /Historical priority only/);
+  assert.equal(requests.length, 1);
+});
+
+test('ranking read failure and older in-flight response cannot restore cached current ranks', async () => {
+  const view = dashboard();
+  view.state.health = {};
+  let resolveOld;
+  view.apiClient.getOpportunityRankings = () => new Promise(resolve => {resolveOld = resolve;});
+  const old = view.loadOpportunityRankings();
+  view.apiClient.getOpportunityRankings = async () => {throw new Error('OFFLINE');};
+  await view.loadOpportunityRankings();
+  resolveOld(rankingPayload());
+  await old;
+  assert.match(view.node('opportunityRankingsContainer').textContent, /No cached ranks retained/);
+  assert.doesNotMatch(view.node('opportunityRankingsContainer').textContent, /Current candidate priority/);
+});
+
+test('health failure clears candidate priority and cancels pending rank rendering', async () => {
+  const view = dashboard();
+  view.state.health = {};
+  let resolveRank;
+  view.apiClient.getOpportunityRankings = () => new Promise(resolve => {resolveRank = resolve;});
+  const pending = view.loadOpportunityRankings();
+  view.apiClient.getHealth = async () => {throw new Error('OFFLINE');};
+  view.apiClient.getConfig = async () => ({});
+  await view.loadHealthAndConfig();
+  resolveRank(rankingPayload());
+  await pending;
+  assert.match(view.node('opportunityRankingsContainer').textContent, /current health request failed/);
+  assert.doesNotMatch(view.node('opportunityRankingsContainer').textContent, /Current candidate priority/);
+});
+
+test('a backward client clock jump cannot extend the server ranking validity', async () => {
+  let call = 0;
+  class BackwardsDate extends Date { static now() { return call++ ? 90000 : 100000; } }
+  const view = dashboard({Date: BackwardsDate});
+  view.state.health = {};
+  view.apiClient.getOpportunityRankings = async () => rankingPayload();
+  await view.loadOpportunityRankings();
+  assert.ok(view.timers.at(-1).delay <= 55001, 'clock jump cannot add lifetime');
+});
+
 if (workflowFlag !== -1) {
   test('actual HTTP workflow payload renders matching source, timestamp, prices and paper decision', () => {
     const payload = JSON.parse(fs.readFileSync(process.argv[workflowFlag+1], 'utf8'));
@@ -489,5 +707,9 @@ if (workflowFlag !== -1) {
     const reports = view.node('storedReportsContainer').textContent;
     assert.ok(reports.includes('Reconciliation OK | Open 1'));
     assert.ok(reports.includes('real delivery disabled'));
+    view.renderOpportunityRankings(payload.opportunity_rankings);
+    const priority = view.node('opportunityRankingsContainer').textContent;
+    assert.match(priority, /Historical priority only/);
+    assert.match(priority, /Historical rank 1 \| RELIANCE/);
   });
 }

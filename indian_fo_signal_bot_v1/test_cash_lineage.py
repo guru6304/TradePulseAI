@@ -355,25 +355,29 @@ class TestCashScannerRecovery(unittest.TestCase):
                          (60, 1, 1, 1))
 
     def test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger(self):
-        from paper_portfolio import PaperPortfolio, PaperAccountConfig, FORWARD_FILL_POLICY
+        from paper_portfolio import PaperPortfolio, PaperAccountConfig
+        from paper_triggers import ORB_FILL_POLICY
         from forward_paper import ForwardPaperCoordinator
-        engine = self.engine(provider="angelone")
+        from test_astra_paper_triggers import ORBScannerFixture
+        orb = ORBScannerFixture(self)
+        engine = orb.engine
         paper_config = PaperAccountConfig(account_id="lineage-paper", run_id="offline-task4",
-            provider="angelone", source_data_mode="LIVE", fill_policy=FORWARD_FILL_POLICY)
-        paper = PaperPortfolio(engine.store, paper_config, clock=lambda: self.scenario.now)
+            provider="angelone", source_data_mode="LIVE", fill_policy=ORB_FILL_POLICY)
+        paper = PaperPortfolio(engine.store, paper_config, clock=lambda: orb.now)
         first = engine.run_single_scan(paper_portfolio=paper)
-        candidate = first["signals"][0]
-        price = candidate["entry_price"]
-        self.scenario.batches["angelone"][-1].update(open=price, high=price+.2, low=price-.2, close=price+.1, volume=10000)
-        self.scenario.now += timedelta(minutes=5)
+        self.assertEqual(first["paper_portfolio"]["report"]["candidate_decisions"][0]["status"], "QUEUED")
+        orb.append_bar(open=102.0, high=102.8, low=101.7, close=102.6)
         with patch.object(ForwardPaperCoordinator, "_transition", side_effect=RuntimeError("OFFLINE interrupted decision update")):
             second = engine.run_single_scan(paper_portfolio=paper)
         self.assertEqual(second["paper_portfolio"]["status"], "UNAVAILABLE")
         before = self.state(engine.store)
         self.assertEqual(before["paper_positions"], 1)
+        original_position = paper.snapshot()["positions"][0]
+        self.assertEqual(original_position["raw_entry_price"], 102.6)
+        self.assertEqual(original_position["trigger_evaluations"][-1]["status"], "TRIGGERED")
         engine.close()
-        restarted = self.engine(provider="angelone")
-        restored_paper = PaperPortfolio(restarted.store, paper_config, clock=lambda: self.scenario.now)
+        restarted = orb.scenario._engine("angelone", database="orb_trigger.sqlite")
+        restored_paper = PaperPortfolio(restarted.store, paper_config, clock=lambda: orb.now)
         with patch.object(restarted.broker, "fetch_candles", side_effect=AssertionError("No recovery transport")), \
                 patch.object(restarted.telegram, "send_signal", side_effect=AssertionError("No recovery delivery")):
             recovered = restarted.resume_cash_scan(second["run_id"], paper_portfolio=restored_paper)
@@ -382,6 +386,7 @@ class TestCashScannerRecovery(unittest.TestCase):
         self.assertEqual(recovered["paper_portfolio"]["report"]["reconciliation"]["status"], "OK")
         self.assertEqual(self.state(restarted.store)["paper_events"], before["paper_events"])
         self.assertEqual(self.state(restarted.store)["paper_positions"], 1)
+        self.assertEqual(recovered["paper_portfolio"]["report"]["positions"][0], original_position)
         self.assertEqual(recovered["paper_portfolio"]["report"]["accounting"], again["paper_portfolio"]["report"]["accounting"])
 
     def test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed(self):

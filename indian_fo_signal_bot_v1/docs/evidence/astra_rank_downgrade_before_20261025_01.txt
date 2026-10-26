@@ -1,0 +1,18 @@
+test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy (test_astra_rank_history.TestAstraRankHistory.test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy) ... [2026-10-25 23:31:05,719] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_378e1f5e via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 23:31:05,752] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_378e1f5e in 63.22ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 23:31:05,768] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_378e1f5e with exact cash input linkage
+FAIL
+
+======================================================================
+FAIL: test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy (test_astra_rank_history.TestAstraRankHistory.test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 239, in test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy
+    with self.assertRaises(PersistenceValidationError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PersistenceValidationError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.238s
+
+FAILED (failures=1)

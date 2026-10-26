@@ -1863,7 +1863,9 @@ class TestIndianFOSignalBotPhase1D(unittest.TestCase):
 
             try:
                 # 1) Verify legitimate API endpoints work over real HTTP
-                with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/scan", timeout=5) as resp:
+                scan_request = urllib.request.Request(
+                    f"http://127.0.0.1:{port}/api/scan", data=b"", method="POST")
+                with urllib.request.urlopen(scan_request, timeout=5) as resp:
                     self.assertEqual(resp.status, 200)
                     scan_data = json.loads(resp.read().decode("utf-8"))
                     self.assertEqual(scan_data["status"], "ok")
@@ -8057,10 +8059,10 @@ class TestMarketDataFreshness(unittest.TestCase):
         self.assertEqual(scheduled["freshness"]["status"], "STALE")
         self.assertEqual(self.store.query_signals()["total_count"], 0)
 
-    def test_get_and_post_scan_aliases_enforce_the_same_policy(self):
+    def test_scan_aliases_require_post_and_preserve_freshness_rejection(self):
         from server import DashboardRequestHandler
         engine = self._live_engine([self._bar("2026-10-16T10:15:00+05:30")])
-        for method in ("do_GET", "do_POST"):
+        for method in ("do_GET", "do_HEAD", "do_POST"):
             for route in ("/api/scan", "/api/v1/scan"):
                 handler = object.__new__(DashboardRequestHandler)
                 handler.engine = engine
@@ -8070,8 +8072,13 @@ class TestMarketDataFreshness(unittest.TestCase):
                 handler._send_json = MagicMock()
                 getattr(handler, method)()
                 code, payload = handler._send_json.call_args.args
-                self.assertEqual(code, 502)
-                self.assertEqual(payload["freshness"]["status"], "STALE")
+                if method == "do_POST":
+                    self.assertEqual(code, 502)
+                    self.assertEqual(payload["freshness"]["status"], "STALE")
+                else:
+                    self.assertEqual(code, 405)
+                    self.assertEqual(payload["reason_code"], "EXPLICIT_POST_REQUIRED")
+                    handler._ensure_initialized.assert_not_called()
         self.assertEqual(self.store.query_signals()["total_count"], 0)
 
     def test_market_closed_manual_api_and_scheduler_skip_before_fetching(self):
@@ -10344,7 +10351,8 @@ def load_tests(loader, tests, pattern):
                        "test_phase4_explanations", "test_phase4_recommendations", "test_phase4_feed_history",
                        "test_phase4_evaluation_storage", "test_phase45_scanner_gaps", "test_context_data",
                        "test_context_workflow", "test_context_alerts", "test_phase45_integration", "test_context_http",
-                       "test_phase6_paper_lifecycle", "test_phase6_risk_recovery", "test_phase6_performance_validity"):
+                       "test_phase6_paper_lifecycle", "test_phase6_risk_recovery", "test_phase6_performance_validity",
+                       "test_astra_http_safety", "test_astra_research", "test_astra_ranking", "test_astra_paper_triggers", "test_astra_rank_history", "test_astra_context_batch", "test_astra_health_reads"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

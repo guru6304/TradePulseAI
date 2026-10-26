@@ -1,0 +1,18 @@
+desktop.production_dom_content_loaded_and_fixture_gets PASS
+desktop.literal_hostile_text_no_executable_dom PASS
+desktop.zero_and_unavailable_values_preserved PASS
+desktop.fixture_scope_and_no_invented_quantity PASS
+desktop.native_tab_reaches_read_only_refresh PASS
+desktop.native_enter_refreshes_retained_ranking PASS
+desktop.refresh_made_new_get_requests FAIL
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\astra_browser_verify_20261026_01.py", line 411, in main
+    run(receipt, args.browser, prefix)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\astra_browser_verify_20261026_01.py", line 293, in run
+    check(label + ".refresh_made_new_get_requests", len(requests) > before)
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\astra_browser_verify_20261026_01.py", line 170, in check
+    raise AssertionError(name)
+AssertionError: desktop.refresh_made_new_get_requests
+{"status": "FAIL", "checks": 7, "exit_code": 1}

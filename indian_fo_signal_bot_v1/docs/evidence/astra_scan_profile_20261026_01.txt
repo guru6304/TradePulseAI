@@ -1,0 +1,128 @@
+[2026-10-26 22:17:26,458] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_1a47e499 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:17:28,376] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_1a47e499 in 1960.77ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+
+PROFILE scan
+         3130991 function calls (3008998 primitive calls) in 2.316 seconds
+
+   Ordered by: cumulative time
+   List reduced from 852 to 32 due to restriction <32>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.001    0.001    2.315    2.315 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py:594(run_single_scan)
+       70    0.001    0.000    1.365    0.019 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py:854(evaluate)
+      192    0.386    0.002    1.119    0.006 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:539(validate_candles)
+      175    0.010    0.000    1.021    0.006 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:694(filter_completed_candles)
+       70    0.003    0.000    0.892    0.013 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:243(evaluate_strategy_detailed)
+   134303    0.373    0.000    0.594    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:470(parse_ist_timestamp)
+       86    0.002    0.000    0.563    0.007 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py:845(source_reference)
+    46449    0.032    0.000    0.297    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:526(format_ist_timestamp)
+    75848    0.271    0.000    0.271    0.000 {method 'strftime' of 'datetime.date' objects}
+       87    0.057    0.001    0.271    0.003 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:1004(compute_session_vwap)
+        1    0.000    0.000    0.269    0.269 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py:216(_attach_context)
+        1    0.000    0.000    0.269    0.269 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py:193(enrich_context)
+       17    0.004    0.000    0.227    0.013 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:1618(evaluate_orb_breakout)
+       17    0.001    0.000    0.219    0.013 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:1787(evaluate_supertrend_pullback)
+       17    0.001    0.000    0.210    0.012 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:1273(evaluate_vwap_pullback)
+        1    0.001    0.001    0.208    0.208 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py:544(_compute_universe_breadth)
+        1    0.001    0.001    0.206    0.206 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:906(enrich_scan_context)
+        1    0.000    0.000    0.205    0.205 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:228(enrich)
+     40/3    0.000    0.000    0.203    0.068 <frozen importlib._bootstrap>:1360(_find_and_load)
+     40/3    0.000    0.000    0.202    0.067 <frozen importlib._bootstrap>:1308(_find_and_load_unlocked)
+     39/3    0.000    0.000    0.201    0.067 <frozen importlib._bootstrap>:914(_load_unlocked)
+     37/3    0.000    0.000    0.201    0.067 <frozen importlib._bootstrap_external>:753(exec_module)
+       17    0.001    0.000    0.193    0.011 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\strategies.py:1062(evaluate_order_block_fvg)
+       17    0.000    0.000    0.192    0.011 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\brokers.py:4166(fetch_candles)
+       17    0.001    0.000    0.191    0.011 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_bot.py:1010(get_intraday_candles)
+       17    0.021    0.001    0.191    0.011 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\brokers.py:3791(get_intraday_candles)
+        2    0.000    0.000    0.171    0.086 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:188(_snapshot)
+  1042377    0.168    0.000    0.168    0.000 {built-in method builtins.isinstance}
+    104/7    0.000    0.000    0.163    0.023 <frozen importlib._bootstrap>:483(_call_with_frames_removed)
+     38/3    0.001    0.000    0.155    0.052 {built-in method builtins.exec}
+        1    0.000    0.000    0.149    0.149 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:1(<module>)
+        1    0.000    0.000    0.146    0.146 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\publisher_trust.py:1(<module>)
+
+
+
+PROFILE scans_read
+         122265 function calls (84790 primitive calls) in 0.105 seconds
+
+   Ordered by: cumulative time
+   List reduced from 83 to 32 due to restriction <32>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.104    0.104 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\astra_scan_profile_20261026_01.py:40(<lambda>)
+        1    0.000    0.000    0.104    0.104 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:3152(query_scan_runs)
+        2    0.000    0.000    0.086    0.043 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:910(load_scan_context)
+        2    0.000    0.000    0.086    0.043 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:277(load_snapshot)
+        1    0.000    0.000    0.086    0.086 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:251(_load_snapshot)
+        1    0.000    0.000    0.067    0.067 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:129(_phase4)
+        3    0.000    0.000    0.067    0.022 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:3145(load_scan_evaluations)
+        3    0.000    0.000    0.067    0.022 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:87(load_scan_evaluations)
+        1    0.000    0.000    0.055    0.055 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:44(validate_scan_evaluations)
+  37472/1    0.039    0.000    0.054    0.054 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:61(references)
+       53    0.001    0.000    0.038    0.001 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:40(digest)
+       54    0.000    0.000    0.034    0.001 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:33(encoded)
+       54    0.000    0.000    0.032    0.001 C:\Python314\Lib\json\__init__.py:185(dumps)
+       54    0.000    0.000    0.032    0.001 C:\Python314\Lib\json\encoder.py:185(encode)
+       54    0.032    0.001    0.032    0.001 C:\Python314\Lib\json\encoder.py:207(iterencode)
+        1    0.000    0.000    0.018    0.018 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:922(list_context_alert_decisions)
+        1    0.000    0.000    0.018    0.018 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:332(list_context_decisions)
+        1    0.000    0.000    0.018    0.018 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:188(_snapshot)
+       16    0.000    0.000    0.018    0.001 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:250(_checked_decision)
+       16    0.000    0.000    0.015    0.001 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:144(_context_components)
+    72312    0.014    0.000    0.014    0.000 {built-in method builtins.isinstance}
+       19    0.000    0.000    0.005    0.000 C:\Python314\Lib\json\__init__.py:304(loads)
+       19    0.000    0.000    0.004    0.000 C:\Python314\Lib\json\decoder.py:340(decode)
+       19    0.004    0.000    0.004    0.000 C:\Python314\Lib\json\decoder.py:351(raw_decode)
+       53    0.003    0.000    0.003    0.000 {built-in method _hashlib.openssl_sha256}
+       16    0.000    0.000    0.003    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:329(context_for_candidate)
+       32    0.001    0.000    0.002    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:39(_text)
+      125    0.002    0.000    0.002    0.000 {method 'encode' of 'str' objects}
+       16    0.000    0.000    0.002    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:231(_decision_body)
+     3376    0.001    0.000    0.002    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:43(<genexpr>)
+       29    0.001    0.000    0.001    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+     3371    0.001    0.000    0.001    0.000 {method 'values' of 'dict' objects}
+
+
+
+PROFILE outbox_read
+         122234 function calls (84763 primitive calls) in 0.094 seconds
+
+   Ordered by: cumulative time
+   List reduced from 80 to 32 due to restriction <32>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.094    0.094 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\astra_scan_profile_20261026_01.py:41(<lambda>)
+        1    0.001    0.001    0.094    0.094 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:890(list_notification_outbox)
+        1    0.000    0.000    0.093    0.093 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:422(list_items)
+        1    0.000    0.000    0.092    0.092 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:332(list_context_decisions)
+       16    0.000    0.000    0.092    0.006 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:250(_checked_decision)
+       16    0.000    0.000    0.090    0.006 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:144(_context_components)
+        1    0.000    0.000    0.079    0.079 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:910(load_scan_context)
+        1    0.000    0.000    0.079    0.079 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:277(load_snapshot)
+        1    0.000    0.000    0.079    0.079 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:251(_load_snapshot)
+        1    0.000    0.000    0.065    0.065 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:129(_phase4)
+        2    0.000    0.000    0.065    0.032 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py:3145(load_scan_evaluations)
+        2    0.000    0.000    0.065    0.032 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:87(load_scan_evaluations)
+        1    0.000    0.000    0.047    0.047 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:44(validate_scan_evaluations)
+  37472/1    0.034    0.000    0.047    0.047 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:61(references)
+       53    0.001    0.000    0.031    0.001 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:40(digest)
+       54    0.000    0.000    0.028    0.001 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py:33(encoded)
+       54    0.000    0.000    0.026    0.000 C:\Python314\Lib\json\__init__.py:185(dumps)
+       54    0.000    0.000    0.026    0.000 C:\Python314\Lib\json\encoder.py:185(encode)
+       54    0.026    0.000    0.026    0.000 C:\Python314\Lib\json\encoder.py:207(iterencode)
+        1    0.000    0.000    0.014    0.014 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_workflow.py:188(_snapshot)
+    72307    0.012    0.000    0.012    0.000 {built-in method builtins.isinstance}
+       18    0.000    0.000    0.008    0.000 C:\Python314\Lib\json\__init__.py:304(loads)
+       18    0.000    0.000    0.008    0.000 C:\Python314\Lib\json\decoder.py:340(decode)
+       18    0.008    0.000    0.008    0.000 C:\Python314\Lib\json\decoder.py:351(raw_decode)
+       53    0.003    0.000    0.003    0.000 {built-in method _hashlib.openssl_sha256}
+       16    0.000    0.000    0.002    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:329(context_for_candidate)
+       32    0.000    0.000    0.002    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:39(_text)
+       16    0.000    0.000    0.002    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\notification_outbox.py:231(_decision_body)
+      125    0.001    0.000    0.001    0.000 {method 'encode' of 'str' objects}
+       31    0.001    0.000    0.001    0.000 {method 'execute' of 'sqlite3.Connection' objects}
+     3376    0.001    0.000    0.001    0.000 C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\context_data.py:43(<genexpr>)
+     3371    0.001    0.000    0.001    0.000 {method 'values' of 'dict' objects}
+
+

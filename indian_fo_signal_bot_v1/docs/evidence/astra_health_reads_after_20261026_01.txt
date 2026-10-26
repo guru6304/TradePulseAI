@@ -1,0 +1,8 @@
+test_bulk_reads_preserve_individual_validation_and_reread_later_changes (test_astra_health_reads.TestAstraHealthReads.test_bulk_reads_preserve_individual_validation_and_reread_later_changes) ... ok
+test_health_checks_every_symbol_using_one_fresh_read_snapshot (test_astra_health_reads.TestAstraHealthReads.test_health_checks_every_symbol_using_one_fresh_read_snapshot) ... ok
+test_missing_store_and_failed_read_snapshot_remain_unavailable (test_astra_health_reads.TestAstraHealthReads.test_missing_store_and_failed_read_snapshot_remain_unavailable) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.295s
+
+OK

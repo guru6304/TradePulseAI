@@ -69,7 +69,23 @@ class TestCashWorkflow(unittest.TestCase):
             return rows
         self.fixture._wire_rows = wire
 
+    def use_orb_account(self, account_id="offline-cash", **settings):
+        """Use retained real-evaluator ORB inputs for new automatic entries."""
+        from test_astra_paper_triggers import ORBScannerFixture
+        from paper_triggers import ORB_FILL_POLICY
+        self.orb = ORBScannerFixture(self)
+        self.engine = self.orb.engine
+        self.paper_config = PaperAccountConfig(account_id=account_id, run_id="workflow",
+            provider="angelone", source_data_mode="LIVE", fill_policy=ORB_FILL_POLICY, **settings)
+        self.paper = PaperPortfolio(self.engine.store, self.paper_config, clock=lambda: self.orb.now)
+        self.handler.engine, self.handler.paper_portfolio = self.engine, self.paper
+        self.handler.scheduler = MarketScanScheduler(self.engine)
+
+    def advance_orb_trigger(self):
+        self.orb.append_bar(open=102.0, high=102.8, low=101.7, close=102.6)
+
     def test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree(self):
+        self.use_orb_account()
         code, first = self.request("POST", "/api/scan")
         self.assertEqual(code, 200)
         self.assertEqual(first["paper_portfolio"]["status"], "COMPLETED")
@@ -78,6 +94,7 @@ class TestCashWorkflow(unittest.TestCase):
         item = listed["items"][0]
         self.assertEqual(item["lineage"]["status"], "COMMITTED")
         self.assertEqual(item["paper_decision"]["status"], "QUEUED")
+        self.assertEqual(item["strategy_id"], "strat_4_orb_filtered")
         self.assertFalse(item["actionable"])
         self.assertEqual(listed["evidence_scope"], "OFFLINE_FIXTURE_NOT_LIVE_ACCEPTANCE")
         _, duplicate = self.request("POST", "/api/scan")
@@ -88,11 +105,11 @@ class TestCashWorkflow(unittest.TestCase):
         self.assertEqual(code, 200)
         self.assertEqual(lineage["code_digest"], item["lineage"]["code_digest"])
         batch = lineage["batches"][0]
-        code, bars = self.request("GET", "/api/cash-candles?run_id="+run+"&batch_id="+batch["batch_id"]+"&limit=40")
+        code, bars = self.request("GET", "/api/cash-candles?run_id="+run+"&batch_id="+batch["batch_id"]+"&limit=20")
         self.assertEqual(code, 200)
-        self.assertEqual((bars["total_count"], len(bars["items"])), (60, 40))
+        self.assertEqual((bars["total_count"], len(bars["items"])), (30, 20))
         self.assertTrue(all(b["is_complete"] for b in bars["items"]))
-        self.advance(item["entry_price"])
+        self.advance_orb_trigger()
         self.assertEqual(self.request("POST", "/api/scan")[0], 200)
         _, listed = self.request("GET", "/api/signals")
         self.assertEqual(listed["items"][0]["paper_decision"]["status"], "FILLED")
@@ -100,10 +117,19 @@ class TestCashWorkflow(unittest.TestCase):
         _, paper = self.request("GET", "/api/paper-portfolio?account_id=offline-cash")
         self.assertEqual(paper["reconciliation"]["status"], "OK")
         self.assertEqual(paper["accounting"]["open_positions"], 1)
+        decision = paper["candidate_decisions"][0]
+        self.assertEqual(decision["trigger_contract"]["rule_id"], "orb.signal_extreme_completed_close_cross.v1")
+        self.assertEqual(decision["trigger_evaluations"][-1]["status"], "TRIGGERED")
+        self.assertEqual(paper["positions"][0]["raw_entry_price"], 102.6)
+        self.assertNotEqual(paper["positions"][0]["raw_entry_price"], item["entry_price"])
         _, outbox = self.request("GET", "/api/notification-outbox")
         _, research = self.request("GET", "/api/backtest-runs?limit=5")
         listed["stored_reports"] = [dict(label="Paper ledger", data=paper),
             dict(label="Notification previews", data=outbox), dict(label="Stored research runs", data=research)]
+        code, listed["opportunity_rankings"] = self.request("GET", "/api/opportunity-rankings?run_id=" + run)
+        self.assertEqual(code, 200)
+        self.assertEqual(listed["opportunity_rankings"]["current_rows"], [])
+        self.assertEqual(listed["opportunity_rankings"]["historical_rows"][0]["symbol"], "RELIANCE")
         artifact = Path(self.fixture.temp.name)/"workflow.json"
         artifact.write_text(json.dumps(listed), encoding="utf-8")
         rendered = subprocess.run(["node", "test_cash_dashboard.js", "--workflow-payload", str(artifact)],
@@ -142,23 +168,23 @@ class TestCashWorkflow(unittest.TestCase):
         self.assertTrue(empty["empty_reason"])
 
     def test_real_paper_risk_rejection_never_becomes_actionable(self):
-        self.handler.paper_portfolio = PaperPortfolio(self.engine.store,
-            PaperAccountConfig(account_id="offline-risk-reject", run_id="workflow", provider="upstox",
-                source_data_mode="LIVE", fill_policy=FORWARD_FILL_POLICY, max_position_exposure_pct=.01),
-            clock=lambda: self.fixture.now)
+        self.use_orb_account(account_id="offline-risk-reject", max_position_exposure_pct=.01)
         _, first = self.request("POST", "/api/scan")
-        self.advance(first["signals"][0]["entry_price"])
+        self.assertEqual(first["paper_portfolio"]["report"]["candidate_decisions"][0]["status"], "QUEUED")
+        self.advance_orb_trigger()
         self.assertEqual(self.request("POST", "/api/scan")[0], 200)
         code, listed = self.request("GET", "/api/signals")
         self.assertEqual(code, 200)
         item = listed["items"][0]
         self.assertFalse(item["actionable"])
         self.assertEqual(item["recommendation_status"], "PAPER_REJECTED")
-        self.assertTrue(item["paper_decision"]["reason_code"])
+        self.assertEqual(item["paper_decision"]["reason_code"], "EXPOSURE_LIMIT")
         _, report = self.request("GET", "/api/paper-portfolio?account_id=offline-risk-reject")
         self.assertEqual(report["accounting"]["open_positions"], 0)
+        self.assertEqual(report["candidate_decisions"][0]["trigger_evaluations"][-1]["status"], "TRIGGERED")
 
     def test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger(self):
+        self.use_orb_account()
         with patch("notification_outbox.render_preview", side_effect=ValueError("OFFLINE preview failure")):
             code, scan = self.request("POST", "/api/scan")
             self.assertEqual(code, 200)
@@ -171,7 +197,7 @@ class TestCashWorkflow(unittest.TestCase):
             self.assertEqual(code, 200)
             self.assertEqual(health["status"], "degraded")
             self.assertIn("NOTIFICATION_PREVIEW_REQUIRES_ATTENTION", health["operations"]["alerts"])
-        self.advance(scan["signals"][0]["entry_price"])
+        self.advance_orb_trigger()
         self.assertEqual(self.request("POST", "/api/scan")[0], 200)
         with self.engine.store.paper_transaction() as conn:
             changed = conn.execute("UPDATE paper_positions SET payload_json='{}'").rowcount

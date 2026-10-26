@@ -114,7 +114,8 @@ class TestReleaseManagement(unittest.TestCase):
     def test_manifest_covers_every_production_module(self):
         root = Path(__file__).parent
         production = {p.name for p in root.glob("*.py") if not p.name.startswith("test_")}
-        self.assertEqual(set(ReleasePackager.CORE_MODULES), production)
+        self.assertFalse(set(ReleasePackager.CORE_MODULES) & ReleasePackager.LOCAL_ONLY_MODULES)
+        self.assertEqual(set(ReleasePackager.CORE_MODULES), production - ReleasePackager.LOCAL_ONLY_MODULES)
 
     def test_restore_rejects_corrupt_backup_and_missing_file(self):
         mgr = DatabaseBackupRecovery(str(self.temp_path / "unused.db"))

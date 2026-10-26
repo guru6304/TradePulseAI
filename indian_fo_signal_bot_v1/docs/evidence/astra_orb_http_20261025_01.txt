@@ -1,0 +1,819 @@
+test_api_rejects_invalid_data_and_distinguishes_empty_from_failure (test_cash_workflow.TestCashWorkflow.test_api_rejects_invalid_data_and_distinguishes_empty_from_failure) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_gq7maasl\workflow.sqlite: OperationalError
+ERROR
+test_http_history_pages_keep_original_snapshot_scope_and_bound_queries (test_cash_workflow.TestCashWorkflow.test_http_history_pages_keep_original_snapshot_scope_and_bound_queries) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_c8mnpju1\workflow.sqlite: OperationalError
+ERROR
+test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger (test_cash_workflow.TestCashWorkflow.test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_0r0f5anz\workflow.sqlite: OperationalError
+ERROR
+test_quantity_and_risk_tamper_cannot_be_served_as_reconciled_signal (test_cash_workflow.TestCashWorkflow.test_quantity_and_risk_tamper_cannot_be_served_as_reconciled_signal) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_cs6l5nf8\workflow.sqlite: OperationalError
+ERROR
+test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree (test_cash_workflow.TestCashWorkflow.test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_t2blif81\workflow.sqlite: OperationalError
+ERROR
+test_real_paper_risk_rejection_never_becomes_actionable (test_cash_workflow.TestCashWorkflow.test_real_paper_risk_rejection_never_becomes_actionable) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_bl7e9wn4\workflow.sqlite: OperationalError
+ERROR
+test_required_write_failure_has_no_committed_result_or_delivery (test_cash_workflow.TestCashWorkflow.test_required_write_failure_has_no_committed_result_or_delivery) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_3muswmvi\workflow.sqlite: OperationalError
+ERROR
+test_stale_or_only_incomplete_input_never_enters_accepted_store (test_cash_workflow.TestCashWorkflow.test_stale_or_only_incomplete_input_never_enters_accepted_store) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_1qdl3e6x\workflow.sqlite: OperationalError
+ERROR
+test_accepted_input_is_completed_only_and_reingestion_is_idempotent (test_cash_lineage.TestCashLineage.test_accepted_input_is_completed_only_and_reingestion_is_idempotent) ... ok
+test_candle_and_input_link_tampering_is_detected (test_cash_lineage.TestCashLineage.test_candle_and_input_link_tampering_is_detected) ... ok
+test_caught_inner_sql_error_marks_transaction_rollback_only (test_cash_lineage.TestCashLineage.test_caught_inner_sql_error_marks_transaction_rollback_only) ... ok
+test_concurrent_repeated_input_has_one_work_item_and_one_candle_set (test_cash_lineage.TestCashLineage.test_concurrent_repeated_input_has_one_work_item_and_one_candle_set) ... ok
+test_different_pending_work_blocks_and_preserves_original_input (test_cash_lineage.TestCashLineage.test_different_pending_work_blocks_and_preserves_original_input) ... ok
+test_duplicate_gap_wrong_identity_stale_future_malformed_and_incomplete_reject (test_cash_lineage.TestCashLineage.test_duplicate_gap_wrong_identity_stale_future_malformed_and_incomplete_reject) ... ok
+test_input_commit_before_ack_is_discoverable_and_retry_does_not_duplicate (test_cash_lineage.TestCashLineage.test_input_commit_before_ack_is_discoverable_and_retry_does_not_duplicate) ... ok
+test_input_transaction_rolls_back_at_each_actual_write_boundary (test_cash_lineage.TestCashLineage.test_input_transaction_rolls_back_at_each_actual_write_boundary) ... ok
+test_legacy_nested_writers_cannot_commit_an_aborted_result (test_cash_lineage.TestCashLineage.test_legacy_nested_writers_cannot_commit_an_aborted_result) ... ok
+test_metadata_and_input_link_tampering_are_rejected (test_cash_lineage.TestCashLineage.test_metadata_and_input_link_tampering_are_rejected) ... ok
+test_missing_explicit_normalized_provenance_is_not_inferred (test_cash_lineage.TestCashLineage.test_missing_explicit_normalized_provenance_is_not_inferred) ... ok
+test_nested_transaction_control_cannot_commit_rollback_or_close_outer_connection (test_cash_lineage.TestCashLineage.test_nested_transaction_control_cannot_commit_rollback_or_close_outer_connection) ... ok
+test_same_identity_conflicting_content_and_changed_candle_corrections_reject (test_cash_lineage.TestCashLineage.test_same_identity_conflicting_content_and_changed_candle_corrections_reject) ... ok
+test_supported_quantity_is_retained_and_invalid_quantity_rejected (test_cash_lineage.TestCashLineage.test_supported_quantity_is_retained_and_invalid_quantity_rejected) ... ok
+test_zone_snapshot_uses_committed_database_state_inside_input_transaction (test_cash_lineage.TestCashLineage.test_zone_snapshot_uses_committed_database_state_inside_input_transaction) ... ok
+test_concurrent_scanners_commit_one_outcome_and_one_signal (test_cash_lineage.TestCashScannerRecovery.test_concurrent_scanners_commit_one_outcome_and_one_signal) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4__dun2n4i\lineage.sqlite: OperationalError
+ERROR
+test_configuration_or_code_change_blocks_recovery_without_writes (test_cash_lineage.TestCashScannerRecovery.test_configuration_or_code_change_blocks_recovery_without_writes) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_56tvrp0i\lineage.sqlite: OperationalError
+ERROR
+test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_vth61r60\after_signal_write.sqlite: OperationalError
+
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_signal_write') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_vth61r60\after_zone_write.sqlite: OperationalError
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_zone_write') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_vth61r60\after_scan_result_write.sqlite: OperationalError
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_scan_result_write') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_vth61r60\before_result_commit.sqlite: OperationalError
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='before_result_commit') ... ERROR
+test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals (test_cash_lineage.TestCashScannerRecovery.test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_hz5f53bj\lineage.sqlite: OperationalError
+ERROR
+test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state (test_cash_lineage.TestCashScannerRecovery.test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_ki56ylgl\lineage.sqlite: OperationalError
+ERROR
+test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_xgktz_d1\tamper0.sqlite: OperationalError
+
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM scan_runs') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_xgktz_d1\tamper1.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM signals') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_xgktz_d1\tamper2.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM cash_candle_signal_inputs') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_xgktz_d1\tamper3.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE signals SET entry_price=entry_price+1') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_xgktz_d1\tamper4.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE scan_runs SET total_signals=99') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_xgktz_d1\tamper5.sqlite: OperationalError
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql="UPDATE cash_candle_scans SET result_digest='tampered'") ... ERROR
+test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links (test_cash_lineage.TestCashScannerRecovery.test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_mykye9hv\lineage.sqlite: OperationalError
+ERROR
+test_overlapping_recovery_cannot_replace_original_committed_scan_outcome (test_cash_lineage.TestCashScannerRecovery.test_overlapping_recovery_cannot_replace_original_committed_scan_outcome) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_97e3e7pl\lineage.sqlite: OperationalError
+ERROR
+test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger (test_cash_lineage.TestCashScannerRecovery.test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_2qnf_8tf\orb_trigger.sqlite: OperationalError
+ERROR
+test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery (test_cash_lineage.TestCashScannerRecovery.test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_c2ooodlu\lineage.sqlite: OperationalError
+ERROR
+test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery (test_cash_lineage.TestCashScannerRecovery.test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_o8h_4c1z\lineage.sqlite: OperationalError
+ERROR
+test_unavailable_required_store_fails_before_any_acquisition (test_cash_lineage.TestCashScannerRecovery.test_unavailable_required_store_fails_before_any_acquisition) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_pr6vv16_\lineage.sqlite: OperationalError
+ERROR
+
+======================================================================
+ERROR: test_api_rejects_invalid_data_and_distinguishes_empty_from_failure (test_cash_workflow.TestCashWorkflow.test_api_rejects_invalid_data_and_distinguishes_empty_from_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_http_history_pages_keep_original_snapshot_scope_and_bound_queries (test_cash_workflow.TestCashWorkflow.test_http_history_pages_keep_original_snapshot_scope_and_bound_queries)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger (test_cash_workflow.TestCashWorkflow.test_operations_reads_expose_retry_without_dispatch_and_health_rejects_corrupt_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_quantity_and_risk_tamper_cannot_be_served_as_reconciled_signal (test_cash_workflow.TestCashWorkflow.test_quantity_and_risk_tamper_cannot_be_served_as_reconciled_signal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree (test_cash_workflow.TestCashWorkflow.test_real_http_scan_lineage_paper_api_and_actual_dashboard_agree)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_real_paper_risk_rejection_never_becomes_actionable (test_cash_workflow.TestCashWorkflow.test_real_paper_risk_rejection_never_becomes_actionable)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_required_write_failure_has_no_committed_result_or_delivery (test_cash_workflow.TestCashWorkflow.test_required_write_failure_has_no_committed_result_or_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_stale_or_only_incomplete_input_never_enters_accepted_store (test_cash_workflow.TestCashWorkflow.test_stale_or_only_incomplete_input_never_enters_accepted_store)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_workflow.py", line 26, in setUp
+    self.engine = self.fixture._engine("upstox", database="workflow.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_concurrent_scanners_commit_one_outcome_and_one_signal (test_cash_lineage.TestCashScannerRecovery.test_concurrent_scanners_commit_one_outcome_and_one_signal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 348, in test_concurrent_scanners_commit_one_outcome_and_one_signal
+    first, second = self.engine(), self.engine()
+                    ~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_configuration_or_code_change_blocks_recovery_without_writes (test_cash_lineage.TestCashScannerRecovery.test_configuration_or_code_change_blocks_recovery_without_writes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 335, in test_configuration_or_code_change_blocks_recovery_without_writes
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_signal_write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 243, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    engine = self.engine(point+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_zone_write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 243, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    engine = self.engine(point+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_scan_result_write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 243, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    engine = self.engine(point+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='before_result_commit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 243, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    engine = self.engine(point+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals (test_cash_lineage.TestCashScannerRecovery.test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 457, in test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state (test_cash_lineage.TestCashScannerRecovery.test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 434, in test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM scan_runs')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 398, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM signals')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 398, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM cash_candle_signal_inputs')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 398, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE signals SET entry_price=entry_price+1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 398, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE scan_runs SET total_signals=99')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 398, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql="UPDATE cash_candle_scans SET result_digest='tampered'")
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 398, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    engine = self.engine("tamper"+str(number)+".sqlite")
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links (test_cash_lineage.TestCashScannerRecovery.test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 306, in test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_overlapping_recovery_cannot_replace_original_committed_scan_outcome (test_cash_lineage.TestCashScannerRecovery.test_overlapping_recovery_cannot_replace_original_committed_scan_outcome)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 471, in test_overlapping_recovery_cannot_replace_original_committed_scan_outcome
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger (test_cash_lineage.TestCashScannerRecovery.test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 362, in test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger
+    orb = ORBScannerFixture(self)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery (test_cash_lineage.TestCashScannerRecovery.test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 282, in test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery (test_cash_lineage.TestCashScannerRecovery.test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 419, in test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_unavailable_required_store_fails_before_any_acquisition (test_cash_lineage.TestCashScannerRecovery.test_unavailable_required_store_fails_before_any_acquisition)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 323, in test_unavailable_required_store_fails_before_any_acquisition
+    engine = self.engine()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 232, in engine
+    return self.scenario._engine(provider, database=database)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.633s
+
+FAILED (errors=28)

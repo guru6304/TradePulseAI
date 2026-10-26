@@ -67,10 +67,12 @@ def validate_scan_evaluations(conn, run_id, payload):
                             or any(not isinstance(b, str) or b not in allowed_batches for b in ref["batch_ids"])))):
                     invalid()
             for child in value.values():
-                references(child)
+                if isinstance(child, (dict, list)):
+                    references(child)
         elif isinstance(value, list):
             for child in value:
-                references(child)
+                if isinstance(child, (dict, list)):
+                    references(child)
     seen = set()
     for candidate in payload["candidate_evaluations"]:
         if not isinstance(candidate, dict):
@@ -198,7 +200,7 @@ def completed_cash_batch(rows, meta, profile, reference):
         rejected_tail_count=len(normalized)-len(bars))
 
 
-def make_snapshot(config, equities, indices, chains, zones, reference):
+def make_snapshot(config, equities, indices, chains, zones, reference, *, rank_history_required=False):
     profile = runtime_profile(config)
     reference = parse_ist_timestamp(reference).isoformat()
     batches = [completed_cash_batch(equities[m["symbol"]], m, profile, reference)
@@ -211,6 +213,8 @@ def make_snapshot(config, equities, indices, chains, zones, reference):
         code_digest=code_fingerprint(), reference=reference,
         batches=batches, auxiliary=copy.deepcopy(auxiliary),
         zones={key: sorted(value) for key, value in zones.items()})
+    if rank_history_required:
+        snapshot["rank_history_required"] = True
     # Original zone state/time are frozen for resumption, not additional work identities.
     snapshot["work_id"] = work_identity(snapshot)
     encoded(snapshot)
@@ -218,9 +222,12 @@ def make_snapshot(config, equities, indices, chains, zones, reference):
 
 
 def work_identity(snapshot):
-    return digest(dict(version=VERSION, profile=snapshot["profile_digest"], code=snapshot["code_digest"],
+    identity = dict(version=VERSION, profile=snapshot["profile_digest"], code=snapshot["code_digest"],
         batches=[b["batch_id"] if isinstance(b, dict) else b for b in snapshot["batches"]],
-        auxiliary=snapshot["auxiliary"]))
+        auxiliary=snapshot["auxiliary"])
+    if "rank_history_required" in snapshot:
+        identity["rank_history_required"] = snapshot["rank_history_required"]
+    return digest(identity)
 
 
 def create_schema(conn):
@@ -370,6 +377,9 @@ def _check_committed_outcome(conn, run_id, snapshot, result, store, read_cache=N
                 ("persisted_signals", "persisted_signals"), ("duplicate_signals", "duplicate_signals")))):
         raise PersistenceValidationError("LINEAGE_SCAN_OUTCOME_INTEGRITY_FAILURE")
     _check_evaluation_outcome(conn, run_id, result, read_cache=read_cache)
+    from rank_history import validate_descriptor
+    validate_descriptor(store, conn, dict(run_id=run_id, status="COMMITTED", snapshot=snapshot, result=result),
+                        result, read_cache=read_cache)
     by_symbol = {b["content"]["identity"]["symbol"]: b["batch_id"] for b in snapshot["batches"]}
     expected = set()
     for sig in result["signals"]:
@@ -438,6 +448,10 @@ def finish(store, run_id, summary):
     if not scan or scan[0] != summary["scan_status"]:
         raise PersistenceError("LINEAGE_PERSISTED_SCAN_OUTCOME_REQUIRED")
     _check_evaluation_outcome(conn, run_id, summary)
+    from rank_history import record as record_rank_history
+    record_rank_history(store, conn, work, summary)
+    if summary.get("ranking_required") is True:
+        store._lineage_checkpoint("after_rank_insert")
     body = encoded(summary)
     conn.execute("UPDATE cash_candle_scans SET status='COMMITTED',result_json=?,result_digest=? WHERE run_id=?",
                  (body, digest(summary), run_id))
@@ -468,6 +482,8 @@ def annotate_signals(store, items, account_id=None):
     with store.lineage_read() as conn:
         read_cache = {}
         for item in items:
+            from strategy_evidence import strategy_evidence
+            item["strategy_evidence"] = strategy_evidence(item.get("strategy_id", "UNKNOWN"))
             run_id = item["scan_run_id"]
             if run_id not in cache:
                 exists = conn.execute("SELECT 1 FROM cash_candle_scans WHERE run_id=?", (run_id,)).fetchone()
@@ -505,7 +521,8 @@ def annotate_signals(store, items, account_id=None):
                     decision = json.loads(row[0])
                     if decision["signal_key"] != item["dedup_key"] or decision["account_id"] != account_id:
                         raise PersistenceValidationError("PAPER_DECISION_SCOPE_CONFLICT")
-                    item["paper_decision"] = {k: decision[k] for k in ("status", "reason_code", "position_id", "account_id")}
+                    item["paper_decision"] = {k: decision.get(k) for k in ("status", "reason_code", "position_id", "account_id",
+                        "candidate_id", "trigger_contract", "trigger_timestamp_ist")}
                     item["recommendation_status"] = "PAPER_" + decision["status"]
             item.setdefault("paper_decision", dict(status="NOT_EVALUATED", reason_code="NO_PAPER_DECISION"))
     return items

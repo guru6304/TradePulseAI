@@ -1,0 +1,25 @@
+test_each_distinct_input_is_normalized_once_and_all_references_match (test_astra_scan_references.TestAstraScanReferences.test_each_distinct_input_is_normalized_once_and_all_references_match) ... [2026-10-26 22:22:25,237] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_1f6f009e via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:25,340] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_1f6f009e in 120.11ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+FAIL
+test_evaluator_input_mutation_invalidates_metadata_reuse (test_astra_scan_references.TestAstraScanReferences.test_evaluator_input_mutation_invalidates_metadata_reuse) ... [2026-10-26 22:22:25,443] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_692c34bd via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:25,539] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_692c34bd in 96.03ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+ok
+test_returned_metadata_is_independent_and_next_scan_rebuilds_it (test_astra_scan_references.TestAstraScanReferences.test_returned_metadata_is_independent_and_next_scan_rebuilds_it) ... [2026-10-26 22:22:25,581] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_de0b9554 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:25,705] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_de0b9554 in 124.21ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+[2026-10-26 22:22:25,732] [INFO] [tradepulse.scanner] Starting scan scan_20261016_104000_fec3afd6 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:25,835] [INFO] [tradepulse.scanner] Completed scan scan_20261016_104000_fec3afd6 in 104.69ms: status=COMPLETED, signals=1, persisted=0, duplicates=1, persistence=OK
+ok
+
+======================================================================
+FAIL: test_each_distinct_input_is_normalized_once_and_all_references_match (test_astra_scan_references.TestAstraScanReferences.test_each_distinct_input_is_normalized_once_and_all_references_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_scan_references.py", line 53, in test_each_distinct_input_is_normalized_once_and_all_references_match
+    self.assertEqual(normalize.call_count, 2)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 7 != 2
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.655s
+
+FAILED (failures=1)

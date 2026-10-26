@@ -10,25 +10,53 @@ from datetime import datetime, timedelta
 from brokers import assess_live_candle_batch
 from instrument_identity import check_echo
 from paper_portfolio import FORWARD_FILL_POLICY, PaperPortfolio, PaperPortfolioError, _encode, _hash
+from paper_triggers import ORB_FILL_POLICY, build_contract
 from strategies import TradeSignal, format_ist_timestamp, parse_ist_timestamp, signal_state_identity, validate_candles
 
 
 class ForwardPaperCoordinator:
     MAX_PENDING_PER_HANDOFF = 200
 
-    def __init__(self, portfolio):
-        if not isinstance(portfolio, PaperPortfolio) or portfolio.config.fill_policy != FORWARD_FILL_POLICY:
+    def __init__(self, portfolio, entry_guard=None):
+        if not isinstance(portfolio, PaperPortfolio) or portfolio.config.fill_policy not in (FORWARD_FILL_POLICY, ORB_FILL_POLICY):
             raise PaperPortfolioError("EXPLICIT_FORWARD_CLOSE_ACCOUNT_REQUIRED")
         self.paper, self.store, self.config = portfolio, portfolio.store, portfolio.config
+        self.entry_guard = entry_guard
 
     def _transition(self, candidate_id, status, reason, position_id=None):
         with self.store.paper_transaction() as conn:
             row = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND candidate_id=?",
                                (self.config.account_id, candidate_id)).fetchone()
             data = json.loads(row[0])
-            effect = conn.execute("SELECT position_id FROM paper_events WHERE account_id=? AND event_key=? AND kind='ENTRY'",
+            effect = conn.execute("SELECT position_id,payload_json FROM paper_events WHERE account_id=? AND event_key=? AND kind='ENTRY'",
                                   (self.config.account_id, candidate_id)).fetchone()
             if effect:
+                # Recover a committed effect without consulting today's strategy
+                # code or feed, but never bless a corrupted decision envelope.
+                if (data.get("candidate_id") != candidate_id
+                        or data.get("account_id") != self.config.account_id
+                        or data.get("run_id") != self.config.run_id
+                        or data.get("config_hash") != self.config.config_hash
+                        or data.get("candidate_hash") != _hash(data["candidate"])):
+                    raise PaperPortfolioError("PAPER_RECOVERY_DECISION_CONFLICT")
+                if self.config.fill_policy == ORB_FILL_POLICY:
+                    signal_key = signal_state_identity(data["candidate"])[0]
+                    if (data.get("signal_key") != signal_key
+                            or candidate_id != _hash([self.config.account_id, signal_key])):
+                        raise PaperPortfolioError("PAPER_RECOVERY_DECISION_CONFLICT")
+                entry = json.loads(effect["payload_json"])["entry"]
+                if (entry.get("candidate_hash") != _hash(data["candidate"])
+                        or entry.get("config_hash") != self.config.config_hash
+                        or entry.get("account_id") != self.config.account_id
+                        or entry.get("position_id") != effect["position_id"]
+                        or self.paper._reconciliation(conn)["status"] != "OK"):
+                    raise PaperPortfolioError("PAPER_RECOVERY_EFFECT_CONFLICT")
+                if self.config.fill_policy == ORB_FILL_POLICY and (
+                        entry.get("candidate_id") != candidate_id
+                        or entry.get("trigger_timestamp_ist") != data.get("trigger_timestamp_ist")
+                        or entry.get("trigger_contract") != data.get("trigger_contract")
+                        or entry.get("trigger_evaluations") != data.get("trigger_evaluations")):
+                    raise PaperPortfolioError("PAPER_RECOVERY_TRIGGER_CONFLICT")
                 status, reason, position_id = "FILLED", "PAPER_RISK_APPROVED", effect[0]
             elif data["status"] in ("FILLED", "REJECTED"):
                 return data
@@ -55,8 +83,10 @@ class ForwardPaperCoordinator:
                 if not isinstance(supplied, dict) or len(_encode(supplied).encode()) > 65536:
                     raise PaperPortfolioError("BOUNDED_CANDIDATE_REQUIRED")
                 data = json.loads(_encode(supplied))
+                signal_key = _hash(data)
                 reason = "WAITING_FOR_NEXT_COMPLETED_OBSERVATION"
                 status = "QUEUED"
+                contract = None
                 try:
                     self.paper._candidate(data)
                     signal_key = signal_state_identity(data)[0]
@@ -71,10 +101,18 @@ class ForwardPaperCoordinator:
                             actual = json.loads(actual)
                         if actual != value:
                             raise PaperPortfolioError("PERSISTED_CANDIDATE_CONFLICT")
+                    if self.config.fill_policy != ORB_FILL_POLICY:
+                        status, reason = "REJECTED", "LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED"
+                    else:
+                        contract = build_contract(self.store, conn, summary["run_id"], data, self.config.square_off_ist)
+                        close = parse_ist_timestamp(data["timestamp"]) + timedelta(minutes=5)
+                        if not 0 <= (self.paper._now() - close).total_seconds() <= self.config.max_mark_age_seconds:
+                            status, reason = "REJECTED", "PAPER_TRIGGER_QUEUE_TIME_INVALID"
+                        else:
+                            reason = "ORB_FUTURE_CLOSE_CROSS_NOT_CONFIRMED"
                 except (ValueError, KeyError, IndexError, TypeError) as exc:
-                    signal_key = _hash(data)
                     status = "REJECTED"
-                    reason = exc.reason_code if isinstance(exc, PaperPortfolioError) else "INVALID_SCANNER_CANDIDATE"
+                    reason = exc.reason_code if isinstance(exc, PaperPortfolioError) else str(exc) if isinstance(exc, ValueError) else "INVALID_SCANNER_CANDIDATE"
                 candidate_id = _hash([self.config.account_id, signal_key])
                 previous = conn.execute("SELECT payload_json FROM paper_candidate_decisions WHERE account_id=? AND signal_key=?",
                                         (self.config.account_id, signal_key)).fetchone()
@@ -88,6 +126,9 @@ class ForwardPaperCoordinator:
                     candidate_hash=_hash(data), candidate=data, execution_mode="SIMULATED",
                     status=status, reason_code=reason, position_id=None,
                     history=[dict(status=status, reason_code=reason, observed_at_ist=format_ist_timestamp(self.paper._now()))])
+                if contract is not None:
+                    decision.update(trigger_contract=contract, queued_at_ist=format_ist_timestamp(self.paper._now()),
+                        trigger_evaluations=[], trigger_timestamp_ist=None)
                 conn.execute("INSERT INTO paper_candidate_decisions VALUES (?,?,?,?,?)",
                              (candidate_id, self.config.account_id, signal_key, summary["run_id"], _encode(decision)))
 
@@ -169,25 +210,41 @@ class ForwardPaperCoordinator:
             if decision["candidate_hash"] != _hash(data) or decision["config_hash"] != self.config.config_hash:
                 actions.append(self._transition(candidate_id, "REJECTED", "CANDIDATE_DECISION_INTEGRITY_FAILURE"))
                 continue
-            # No observation inbox exists: once the required close + permitted
-            # publication delay is past, an unfilled candidate cannot be repaired
-            # into a historical entry. Existing committed effects were checked first.
-            expected = parse_ist_timestamp(data["timestamp"]) + timedelta(minutes=5)
+            if self.config.fill_policy != ORB_FILL_POLICY:
+                actions.append(self._transition(candidate_id, "REJECTED", "LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED"))
+                continue
+            # New paper entries require a strategy-owned prospective contract.
+            # Committed effects above remain recoverable without fresh market data.
+            if (summary.get("candle_freshness", {}).get("live_signal_allowed") is not True
+                    or not callable(self.entry_guard)):
+                actions.append(dict(candidate_id=candidate_id, status="DEFERRED", reason_code="CURRENT_SCANNER_GUARD_REQUIRED"))
+                continue
+            history = decision.get("trigger_evaluations", [])
+            last_stamp = parse_ist_timestamp(history[-1]["timestamp_ist"] if history else data["timestamp"])
+            trigger_pending = bool(history and history[-1]["status"] == "TRIGGERED")
+            expected = last_stamp if trigger_pending else last_stamp + timedelta(minutes=5)
             deadline = expected + timedelta(minutes=5, seconds=self.config.max_mark_age_seconds)
+            if (self.paper._now().date() != parse_ist_timestamp(data["timestamp"]).date()
+                    or self.paper._now().strftime("%H:%M") >= self.config.square_off_ist):
+                actions.append(self._transition(candidate_id, "REJECTED", "TRIGGER_SESSION_EXPIRED"))
+                continue
             if self.paper._now() > deadline:
-                actions.append(self._transition(candidate_id, "REJECTED", "REQUIRED_OBSERVATION_WINDOW_EXPIRED"))
+                actions.append(self._transition(candidate_id, "REJECTED", "TRIGGER_REQUIRED_OBSERVATION_WINDOW_EXPIRED"))
                 continue
             bars = batches.get(data["symbol"], [])
-            if not bars:
-                actions.append(self._transition(candidate_id, "QUEUED", failures.get(data["symbol"], "OBSERVATIONS_UNAVAILABLE")))
-                continue
             bar = next((b for b in bars if parse_ist_timestamp(b["timestamp"]) == expected), None)
-            if bar is None:
-                reason = "WAITING_FOR_NEXT_COMPLETED_OBSERVATION" if parse_ist_timestamp(bars[-1]["timestamp"]) < expected else "REQUIRED_OBSERVATION_MISSING"
-                actions.append(self._transition(candidate_id, "QUEUED", reason))
+            if bar is None or self.paper._now() < expected + timedelta(minutes=5):
+                actions.append(dict(candidate_id=candidate_id, status="QUEUED",
+                    reason_code=failures.get(data["symbol"], "WAITING_FOR_COMPLETED_TRIGGER_OBSERVATION")))
                 continue
             try:
-                result = self.paper.enter(data, bar, event_key=candidate_id, candidate_decision_id=candidate_id)
+                self.entry_guard()
+                observed = self.paper.observe_candidate(candidate_id, bar, summary["run_id"])
+                if observed["status"] == "REJECTED" or not observed["trigger_evaluations"] or observed["trigger_evaluations"][-1]["status"] != "TRIGGERED":
+                    actions.append(observed)
+                    continue
+                result = self.paper.enter(data, bar, event_key=candidate_id, candidate_decision_id=candidate_id,
+                    source_scan_run_id=summary["run_id"], entry_guard=self.entry_guard)
                 actions.append(self._transition(candidate_id, "FILLED", "PAPER_RISK_APPROVED", result["position_id"]))
             except PaperPortfolioError as exc:
                 actions.append(self._transition(candidate_id, "REJECTED", exc.reason_code))

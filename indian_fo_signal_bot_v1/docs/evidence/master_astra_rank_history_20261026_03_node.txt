@@ -1,0 +1,46 @@
+✔ candidate cards and inspector use supported numeric gross RR and visited rule explanations (62.8498ms)
+✔ empty scan renders warm-up and rejected-rule reasons from retained evaluation (4.9886ms)
+✔ scan history exposes downstream risk rejection when a detected setup has no stored signal (3.4066ms)
+✔ signal cards never promote missing, unknown or conflicting provenance to LIVE (31.561ms)
+✔ selected inspector never promotes untrusted provenance to LIVE (35.0754ms)
+✔ explicit source labels distinguish stored LIVE records from simulated records (5.9135ms)
+✔ backend health failure clears a previously accepted header (4.9411ms)
+✔ continuous feed status exposes stale and fixture observations with signals blocked (4.8691ms)
+✔ a failed signals API request removes cached cards and inspector prices (5.766ms)
+✔ late successful health response cannot replace a newer unavailable state (5.2896ms)
+✔ fixture scope overrides live-shaped source and acceptance flags (4.4263ms)
+✔ risk-rejected stored candidates show rejection and exact source batch (4.7827ms)
+✔ stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (5.4034ms)
+✔ late stored report response cannot restore accounting after current health fails (3.7268ms)
+✔ actual inspector renders source identity, times, safe links and local qualification without HTML injection (7.4095ms)
+✔ source hyperlinks reject executable, credentialed and local addresses without hiding the qualified facts (68.9957ms)
+✔ missing and failed context never inherit neutral or previously qualified facts (10.6906ms)
+✔ warning records expose stale, unverified, retracted and conflicting source state without changing candidate risk (4.261ms)
+✔ inconsistent qualified context and exact instrument or candidate mismatches withhold facts (21.4928ms)
+✔ current-information context remains labeled as a later informational update to a stored decision (4.3612ms)
+✔ scan-only rejected candidates expose retained context and suppression even with no stored signal (5.2304ms)
+✔ notification view distinguishes local preview acknowledgement, retry and suppressed context without delivery claims (3.2324ms)
+✔ phase 6 paper ledger report renders open positions, closed positions, fees, and equity with simulation disclaimer (3.4082ms)
+✔ phase 6 EOD statement renders reconciled statement hash or unresolved status truthfully (2.6067ms)
+✔ missing persisted quantity and price levels remain unavailable without invented sizing or chart zeros (3.6737ms)
+✔ missing quality and invalidation stay unavailable while observed zero quality is preserved (7.8518ms)
+✔ valid stored zero quantity is preserved and a missing entry zone is not invented from entry price (4.2292ms)
+✔ stale paper marks suppress current equity and unrealized P&L in retained reports (7.3324ms)
+✔ stored paper journal shows persisted lifecycle and costs safely while missing trigger fields remain unavailable (4.8953ms)
+✔ paper journal withholds stale open marks and reports bounded partial preview (3.6505ms)
+✔ paper report refresh uses only GET routes and rendering cannot create paper entries (5.5098ms)
+✔ strategy evidence and retained rank are scoped to a historical scan, never current probability (3.5585ms)
+✔ candidate priority shows real score changes and unavailable components safely (3.2102ms)
+✔ expired priority shows historical ranks and removes current labels (2.6012ms)
+✔ ranking refresh only reads GET and expires current ranks between refreshes (4.2418ms)
+✔ ranking read failure and older in-flight response cannot restore cached current ranks (3.4098ms)
+✔ health failure clears candidate priority and cancels pending rank rendering (3.1755ms)
+✔ a backward client clock jump cannot extend the server ranking validity (3.0834ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 395.5983

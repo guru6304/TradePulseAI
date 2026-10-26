@@ -1,0 +1,26 @@
+test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) ... [2026-10-26 22:23:46,927] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_0d4d1194 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:47,600] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_0d4d1194 in 683.31ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only) ... [2026-10-26 22:23:47,849] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_4cf31ad4 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:49,280] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_4cf31ad4 in 1430.61ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+EVALUATION_TRAVERSAL containers=3844 scalars=33628 reference_calls=37472
+FAIL
+test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked) ... [2026-10-26 22:23:49,462] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_dafb5eac via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:23:50,186] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_dafb5eac in 723.71ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+
+======================================================================
+FAIL: test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 79, in test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only
+    self.assertLessEqual(traversals, containers + 1,
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         "Scalar timestamp/measurement leaves must not incur recursive validation calls")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 37472 not less than or equal to 3845 : Scalar timestamp/measurement leaves must not incur recursive validation calls
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.447s
+
+FAILED (failures=1)

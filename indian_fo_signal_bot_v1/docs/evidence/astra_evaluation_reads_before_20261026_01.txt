@@ -1,0 +1,265 @@
+test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) ... [2026-10-26 22:22:35,574] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_159b0742 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:36,944] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_159b0742 in 1409.87ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+
+  test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference={'run_id': 'different-retained-run', 'batch_ids': []}) ... FAIL
+  test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference={'run_id': 'scan_20261016_103500_159b0742', 'batch_ids': ['unknown-batch']}) ... FAIL
+  test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference={'run_id': 'scan_20261016_103500_159b0742', 'batch_ids': 'not-a-list'}) ... FAIL
+  test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference='not-a-reference-object') ... FAIL
+test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only) ... [2026-10-26 22:22:37,218] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_63f25e4c via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:37,974] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_63f25e4c in 756.92ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+EVALUATION_TRAVERSAL containers=3844 scalars=33628 reference_calls=37472
+FAIL
+test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked) ... [2026-10-26 22:22:38,074] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_30e3bc28 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:38,835] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_30e3bc28 in 761.02ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+FAIL
+
+======================================================================
+FAIL: test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference={'run_id': 'different-retained-run', 'batch_ids': []})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 109, in load_scan_evaluations
+    validate_scan_evaluations(conn, run_id, payload)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 84, in validate_scan_evaluations
+    references(payload)
+    ~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 68, in references
+    invalid()
+    ~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 48, in invalid
+    raise PersistenceValidationError("SCAN_EVALUATION_SCOPE_INVALID")
+storage.PersistenceValidationError: SCAN_EVALUATION_SCOPE_INVALID
+
+The above exception was the direct cause of the following exception:
+
+storage.PersistenceValidationError: SCAN_EVALUATION_INTEGRITY_FAILURE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 97, in test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject
+    with self.assertRaisesRegex(PersistenceValidationError, "SCAN_EVALUATION_SCOPE_INVALID"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SCAN_EVALUATION_SCOPE_INVALID" does not match "SCAN_EVALUATION_INTEGRITY_FAILURE"
+
+======================================================================
+FAIL: test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference={'run_id': 'scan_20261016_103500_159b0742', 'batch_ids': ['unknown-batch']})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 109, in load_scan_evaluations
+    validate_scan_evaluations(conn, run_id, payload)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 84, in validate_scan_evaluations
+    references(payload)
+    ~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 68, in references
+    invalid()
+    ~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 48, in invalid
+    raise PersistenceValidationError("SCAN_EVALUATION_SCOPE_INVALID")
+storage.PersistenceValidationError: SCAN_EVALUATION_SCOPE_INVALID
+
+The above exception was the direct cause of the following exception:
+
+storage.PersistenceValidationError: SCAN_EVALUATION_INTEGRITY_FAILURE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 97, in test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject
+    with self.assertRaisesRegex(PersistenceValidationError, "SCAN_EVALUATION_SCOPE_INVALID"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SCAN_EVALUATION_SCOPE_INVALID" does not match "SCAN_EVALUATION_INTEGRITY_FAILURE"
+
+======================================================================
+FAIL: test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference={'run_id': 'scan_20261016_103500_159b0742', 'batch_ids': 'not-a-list'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 109, in load_scan_evaluations
+    validate_scan_evaluations(conn, run_id, payload)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 84, in validate_scan_evaluations
+    references(payload)
+    ~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 68, in references
+    invalid()
+    ~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 48, in invalid
+    raise PersistenceValidationError("SCAN_EVALUATION_SCOPE_INVALID")
+storage.PersistenceValidationError: SCAN_EVALUATION_SCOPE_INVALID
+
+The above exception was the direct cause of the following exception:
+
+storage.PersistenceValidationError: SCAN_EVALUATION_INTEGRITY_FAILURE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 97, in test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject
+    with self.assertRaisesRegex(PersistenceValidationError, "SCAN_EVALUATION_SCOPE_INVALID"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SCAN_EVALUATION_SCOPE_INVALID" does not match "SCAN_EVALUATION_INTEGRITY_FAILURE"
+
+======================================================================
+FAIL: test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) (reference='not-a-reference-object')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 109, in load_scan_evaluations
+    validate_scan_evaluations(conn, run_id, payload)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 84, in validate_scan_evaluations
+    references(payload)
+    ~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 68, in references
+    invalid()
+    ~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 48, in invalid
+    raise PersistenceValidationError("SCAN_EVALUATION_SCOPE_INVALID")
+storage.PersistenceValidationError: SCAN_EVALUATION_SCOPE_INVALID
+
+The above exception was the direct cause of the following exception:
+
+storage.PersistenceValidationError: SCAN_EVALUATION_INTEGRITY_FAILURE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 97, in test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject
+    with self.assertRaisesRegex(PersistenceValidationError, "SCAN_EVALUATION_SCOPE_INVALID"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SCAN_EVALUATION_SCOPE_INVALID" does not match "SCAN_EVALUATION_INTEGRITY_FAILURE"
+
+======================================================================
+FAIL: test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 79, in test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only
+    self.assertLessEqual(traversals, containers + 1,
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         "Scalar timestamp/measurement leaves must not incur recursive validation calls")
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 37472 not less than or equal to 3845 : Scalar timestamp/measurement leaves must not incur recursive validation calls
+
+======================================================================
+FAIL: test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 109, in load_scan_evaluations
+    validate_scan_evaluations(conn, run_id, payload)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 84, in validate_scan_evaluations
+    references(payload)
+    ~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 70, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 73, in references
+    references(child)
+    ~~~~~~~~~~^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 68, in references
+    invalid()
+    ~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\candle_lineage.py", line 48, in invalid
+    raise PersistenceValidationError("SCAN_EVALUATION_SCOPE_INVALID")
+storage.PersistenceValidationError: SCAN_EVALUATION_SCOPE_INVALID
+
+The above exception was the direct cause of the following exception:
+
+storage.PersistenceValidationError: SCAN_EVALUATION_INTEGRITY_FAILURE
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 112, in test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked
+    with self.assertRaisesRegex(PersistenceValidationError, "SCAN_EVALUATION_SCOPE_INVALID"):
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "SCAN_EVALUATION_SCOPE_INVALID" does not match "SCAN_EVALUATION_INTEGRITY_FAILURE"
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.459s
+
+FAILED (failures=6)

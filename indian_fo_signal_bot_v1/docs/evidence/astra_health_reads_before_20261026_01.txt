@@ -1,0 +1,15 @@
+test_health_checks_every_symbol_using_one_fresh_read_snapshot (test_astra_health_reads.TestAstraHealthReads.test_health_checks_every_symbol_using_one_fresh_read_snapshot) ... FAIL
+
+======================================================================
+FAIL: test_health_checks_every_symbol_using_one_fresh_read_snapshot (test_astra_health_reads.TestAstraHealthReads.test_health_checks_every_symbol_using_one_fresh_read_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_health_reads.py", line 49, in test_health_checks_every_symbol_using_one_fresh_read_snapshot
+    self.assertTrue(all(conn is not None for conn in connections))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.128s
+
+FAILED (failures=1)

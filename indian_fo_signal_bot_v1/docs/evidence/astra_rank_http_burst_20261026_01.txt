@@ -1,0 +1,16 @@
+test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints) ... [2026-10-26 11:29:32,278] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_2fdd0f10 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 11:29:33,142] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_2fdd0f10 in 875.89ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+[2026-10-26 11:29:36,094] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_2b56ce57 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 11:29:36,938] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_2b56ce57 in 846.71ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_p1f_concurrent_reads_do_not_block_during_active_slow_scan_and_overlap_returns_409 (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_reads_do_not_block_during_active_slow_scan_and_overlap_returns_409) ... [2026-10-26 11:29:40,128] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_cc036b98 via NSE Slow Simulation Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 11:29:40,157] [WARNING] [tradepulse.scanner] Scan scan_20261016_103500_f207a92c skipped because another scan is already in progress.
+[2026-10-26 11:29:40,901] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_cc036b98 in 773.47ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_p1f_private_file_disclosure_remains_blocked_under_concurrent_requests (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_private_file_disclosure_remains_blocked_under_concurrent_requests) ... ok
+test_p1f_server_uses_threading_http_server_and_base_request_handler (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_server_uses_threading_http_server_and_base_request_handler) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 10.532s
+
+OK

@@ -1,0 +1,272 @@
+test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) ... [2026-10-26 22:22:57,146] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_7a9169f8 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:57,563] [ERROR] [tradepulse.scanner] Option Apex evaluation error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,579] [ERROR] [tradepulse.scanner] Order Block evaluation error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,605] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,625] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,647] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,691] [ERROR] [tradepulse.scanner] Option Apex evaluation error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,710] [ERROR] [tradepulse.scanner] Order Block evaluation error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,735] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,764] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,781] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:57,812] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:57,831] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:57,848] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:57,865] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:57,888] [ERROR] [tradepulse.scanner] Order Block evaluation error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,907] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,927] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,941] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,957] [ERROR] [tradepulse.scanner] Order Block evaluation error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,973] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,983] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:57,995] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,017] [ERROR] [tradepulse.scanner] Order Block evaluation error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,036] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,063] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,083] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,098] [ERROR] [tradepulse.scanner] Order Block evaluation error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:58,111] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:58,121] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:58,136] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:58,153] [ERROR] [tradepulse.scanner] Order Block evaluation error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:58,161] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:58,169] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:58,177] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:58,187] [ERROR] [tradepulse.scanner] Order Block evaluation error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,194] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,204] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,214] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,230] [ERROR] [tradepulse.scanner] Order Block evaluation error on LT: name 'copy' is not defined
+[2026-10-26 22:22:58,239] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on LT: name 'copy' is not defined
+[2026-10-26 22:22:58,247] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on LT: name 'copy' is not defined
+[2026-10-26 22:22:58,256] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on LT: name 'copy' is not defined
+[2026-10-26 22:22:58,273] [ERROR] [tradepulse.scanner] Order Block evaluation error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:58,285] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:58,298] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:58,309] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:58,325] [ERROR] [tradepulse.scanner] Order Block evaluation error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,334] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,347] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,356] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,376] [ERROR] [tradepulse.scanner] Order Block evaluation error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:58,384] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:58,393] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:58,401] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:58,419] [ERROR] [tradepulse.scanner] Order Block evaluation error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:58,433] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:58,443] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:58,455] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:58,468] [ERROR] [tradepulse.scanner] Order Block evaluation error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:58,480] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:58,490] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:58,498] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:58,508] [ERROR] [tradepulse.scanner] Order Block evaluation error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:58,516] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:58,524] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:58,531] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:58,543] [ERROR] [tradepulse.scanner] Order Block evaluation error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:58,550] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:58,557] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:58,565] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:58,565] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_7a9169f8 in 1445.75ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+FAIL
+test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only) ... [2026-10-26 22:22:58,577] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_85be0d93 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:58,779] [ERROR] [tradepulse.scanner] Option Apex evaluation error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,784] [ERROR] [tradepulse.scanner] Order Block evaluation error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,791] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,798] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,805] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,818] [ERROR] [tradepulse.scanner] Option Apex evaluation error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,826] [ERROR] [tradepulse.scanner] Order Block evaluation error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,837] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,849] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,861] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:58,878] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,889] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,899] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,905] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:58,913] [ERROR] [tradepulse.scanner] Order Block evaluation error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,919] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,926] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,932] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,941] [ERROR] [tradepulse.scanner] Order Block evaluation error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,946] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,953] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,959] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:58,968] [ERROR] [tradepulse.scanner] Order Block evaluation error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,974] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,980] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,986] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:58,995] [ERROR] [tradepulse.scanner] Order Block evaluation error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,001] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,008] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,014] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,022] [ERROR] [tradepulse.scanner] Order Block evaluation error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,029] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,035] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,043] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,053] [ERROR] [tradepulse.scanner] Order Block evaluation error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,060] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,068] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,075] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,083] [ERROR] [tradepulse.scanner] Order Block evaluation error on LT: name 'copy' is not defined
+[2026-10-26 22:22:59,090] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on LT: name 'copy' is not defined
+[2026-10-26 22:22:59,097] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on LT: name 'copy' is not defined
+[2026-10-26 22:22:59,104] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on LT: name 'copy' is not defined
+[2026-10-26 22:22:59,113] [ERROR] [tradepulse.scanner] Order Block evaluation error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:59,119] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:59,130] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:59,137] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:22:59,146] [ERROR] [tradepulse.scanner] Order Block evaluation error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,153] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,164] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,171] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,181] [ERROR] [tradepulse.scanner] Order Block evaluation error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:59,189] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:59,196] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:59,202] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on M&M: name 'copy' is not defined
+[2026-10-26 22:22:59,211] [ERROR] [tradepulse.scanner] Order Block evaluation error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:59,217] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:59,224] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:59,233] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:22:59,243] [ERROR] [tradepulse.scanner] Order Block evaluation error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:59,251] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:59,263] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:59,274] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TRENT: name 'copy' is not defined
+[2026-10-26 22:22:59,285] [ERROR] [tradepulse.scanner] Order Block evaluation error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:59,291] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:59,298] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:59,305] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on HAL: name 'copy' is not defined
+[2026-10-26 22:22:59,314] [ERROR] [tradepulse.scanner] Order Block evaluation error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:59,320] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:59,327] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:59,333] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:22:59,334] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_85be0d93 in 757.14ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+FAIL
+test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked) ... [2026-10-26 22:22:59,346] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_4ffaa4d8 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:59,540] [ERROR] [tradepulse.scanner] Option Apex evaluation error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,557] [ERROR] [tradepulse.scanner] Order Block evaluation error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,568] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,582] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,593] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on NIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,616] [ERROR] [tradepulse.scanner] Option Apex evaluation error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,628] [ERROR] [tradepulse.scanner] Order Block evaluation error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,641] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,660] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,671] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BANKNIFTY: name 'copy' is not defined
+[2026-10-26 22:22:59,687] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,698] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,711] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,721] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:59,736] [ERROR] [tradepulse.scanner] Order Block evaluation error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,750] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,768] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,781] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on HDFCBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,802] [ERROR] [tradepulse.scanner] Order Block evaluation error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,813] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,826] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,835] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on ICICIBANK: name 'copy' is not defined
+[2026-10-26 22:22:59,850] [ERROR] [tradepulse.scanner] Order Block evaluation error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:59,863] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:59,877] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:59,889] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:59,908] [ERROR] [tradepulse.scanner] Order Block evaluation error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,918] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,930] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,941] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:59,956] [ERROR] [tradepulse.scanner] Order Block evaluation error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,965] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,979] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on SBIN: name 'copy' is not defined
+[2026-10-26 22:22:59,990] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on SBIN: name 'copy' is not defined
+[2026-10-26 22:23:00,007] [ERROR] [tradepulse.scanner] Order Block evaluation error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:23:00,023] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:23:00,038] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:23:00,053] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BAJFINANCE: name 'copy' is not defined
+[2026-10-26 22:23:00,074] [ERROR] [tradepulse.scanner] Order Block evaluation error on LT: name 'copy' is not defined
+[2026-10-26 22:23:00,084] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on LT: name 'copy' is not defined
+[2026-10-26 22:23:00,100] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on LT: name 'copy' is not defined
+[2026-10-26 22:23:00,114] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on LT: name 'copy' is not defined
+[2026-10-26 22:23:00,130] [ERROR] [tradepulse.scanner] Order Block evaluation error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:23:00,139] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:23:00,151] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:23:00,162] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TATAMOTORS: name 'copy' is not defined
+[2026-10-26 22:23:00,176] [ERROR] [tradepulse.scanner] Order Block evaluation error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:23:00,187] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:23:00,201] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:23:00,212] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on AXISBANK: name 'copy' is not defined
+[2026-10-26 22:23:00,227] [ERROR] [tradepulse.scanner] Order Block evaluation error on M&M: name 'copy' is not defined
+[2026-10-26 22:23:00,238] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on M&M: name 'copy' is not defined
+[2026-10-26 22:23:00,257] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on M&M: name 'copy' is not defined
+[2026-10-26 22:23:00,267] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on M&M: name 'copy' is not defined
+[2026-10-26 22:23:00,282] [ERROR] [tradepulse.scanner] Order Block evaluation error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:23:00,295] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:23:00,315] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:23:00,331] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on BHARTIARTL: name 'copy' is not defined
+[2026-10-26 22:23:00,352] [ERROR] [tradepulse.scanner] Order Block evaluation error on TRENT: name 'copy' is not defined
+[2026-10-26 22:23:00,367] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TRENT: name 'copy' is not defined
+[2026-10-26 22:23:00,385] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TRENT: name 'copy' is not defined
+[2026-10-26 22:23:00,397] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TRENT: name 'copy' is not defined
+[2026-10-26 22:23:00,412] [ERROR] [tradepulse.scanner] Order Block evaluation error on HAL: name 'copy' is not defined
+[2026-10-26 22:23:00,422] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on HAL: name 'copy' is not defined
+[2026-10-26 22:23:00,434] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on HAL: name 'copy' is not defined
+[2026-10-26 22:23:00,448] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on HAL: name 'copy' is not defined
+[2026-10-26 22:23:00,466] [ERROR] [tradepulse.scanner] Order Block evaluation error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:23:00,476] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:23:00,488] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:23:00,498] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TATASTEEL: name 'copy' is not defined
+[2026-10-26 22:23:00,499] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_4ffaa4d8 in 1152.51ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+FAIL
+
+======================================================================
+FAIL: test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 30, in setUp
+    self.fixture.setUp()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_context_batch.py", line 45, in setUp
+    self.assertEqual(self.summary["scan_status"], "COMPLETED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 30, in setUp
+    self.fixture.setUp()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_context_batch.py", line 45, in setUp
+    self.assertEqual(self.summary["scan_status"], "COMPLETED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_evaluation_reads.py", line 30, in setUp
+    self.fixture.setUp()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_context_batch.py", line 45, in setUp
+    self.assertEqual(self.summary["scan_status"], "COMPLETED")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 3.416s
+
+FAILED (failures=3)

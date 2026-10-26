@@ -1,0 +1,791 @@
+test_each_distinct_input_is_normalized_once_and_all_references_match (test_astra_scan_references.TestAstraScanReferences.test_each_distinct_input_is_normalized_once_and_all_references_match) ... [2026-10-26 22:22:45,243] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_185fc869 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:45,264] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,270] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,277] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,283] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,284] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_185fc869 in 57.55ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+FAIL
+test_evaluator_input_mutation_invalidates_metadata_reuse (test_astra_scan_references.TestAstraScanReferences.test_evaluator_input_mutation_invalidates_metadata_reuse) ... [2026-10-26 22:22:45,354] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_a39fd58b via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:45,380] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+ERROR
+test_returned_metadata_is_independent_and_next_scan_rebuilds_it (test_astra_scan_references.TestAstraScanReferences.test_returned_metadata_is_independent_and_next_scan_rebuilds_it) ... [2026-10-26 22:22:45,406] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_485ffb20 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-26 22:22:45,424] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,431] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,438] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,444] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,445] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_485ffb20 in 38.90ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+ERROR
+test_actual_two_stock_scanner_refresh_reverses_priority_on_new_volume_evidence (test_astra_rank_history.TestAstraRankHistory.test_actual_two_stock_scanner_refresh_reverses_priority_on_new_volume_evidence) ... [2026-10-26 22:22:45,517] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_bd74bec0 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:45,568] [ERROR] [tradepulse.scanner] Order Block evaluation error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:45,569] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:45,571] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:45,571] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on INFY: name 'copy' is not defined
+[2026-10-26 22:22:45,573] [ERROR] [tradepulse.scanner] Order Block evaluation error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:45,573] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:45,575] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:45,576] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on TCS: name 'copy' is not defined
+[2026-10-26 22:22:45,577] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_bd74bec0 in 79.27ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:45,598] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_bd74bec0 with exact cash input linkage
+FAIL
+test_append_cannot_skip_deleted_latest_required_rank_history (test_astra_rank_history.TestAstraRankHistory.test_append_cannot_skip_deleted_latest_required_rank_history) ... [2026-10-26 22:22:45,781] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_bee1c654 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:45,848] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,849] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,851] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,852] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:45,853] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_bee1c654 in 152.94ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:45,870] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_bee1c654 with exact cash input linkage
+FAIL
+test_code_change_archives_without_rewriting_source (test_astra_rank_history.TestAstraRankHistory.test_code_change_archives_without_rewriting_source) ... [2026-10-26 22:22:45,945] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_7bea9c5c via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:46,001] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,003] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,006] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,007] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,009] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_7bea9c5c in 84.04ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:46,040] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_7bea9c5c with exact cash input linkage
+FAIL
+test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy (test_astra_rank_history.TestAstraRankHistory.test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy) ... [2026-10-26 22:22:46,175] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_f0142072 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:46,283] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,285] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,289] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,291] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,292] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_f0142072 in 154.30ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:46,327] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_f0142072 with exact cash input linkage
+FAIL
+test_duplicate_scan_and_store_restart_keep_one_immutable_snapshot (test_astra_rank_history.TestAstraRankHistory.test_duplicate_scan_and_store_restart_keep_one_immutable_snapshot) ... [2026-10-26 22:22:46,468] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_8181376a via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:46,617] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,619] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,623] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,625] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,626] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_8181376a in 192.99ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:46,687] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_8181376a with exact cash input linkage
+FAIL
+test_empty_refresh_removes_old_current_priority_and_retains_predecessor (test_astra_rank_history.TestAstraRankHistory.test_empty_refresh_removes_old_current_priority_and_retains_predecessor) ... [2026-10-26 22:22:46,791] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_23807e77 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:46,837] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,840] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,843] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,845] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:46,846] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_23807e77 in 78.14ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:46,865] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_23807e77 with exact cash input linkage
+FAIL
+test_exact_expiry_current_clock_and_profile_cannot_resurrect_history (test_astra_rank_history.TestAstraRankHistory.test_exact_expiry_current_clock_and_profile_cannot_resurrect_history) ... [2026-10-26 22:22:46,950] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_347838f5 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:47,004] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,006] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,009] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,012] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,014] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_347838f5 in 83.53ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:47,036] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_347838f5 with exact cash input linkage
+FAIL
+test_http_ranking_get_head_validation_and_failed_integrity_are_read_only (test_astra_rank_history.TestAstraRankHistory.test_http_ranking_get_head_validation_and_failed_integrity_are_read_only) ... [2026-10-26 22:22:47,485] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_e0498ca8 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:47,560] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,561] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,563] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,564] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:47,565] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_e0498ca8 in 111.31ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:47,584] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_e0498ca8 with exact cash input linkage
+FAIL
+test_latest_committed_lookup_uses_input_scope_order_index (test_astra_rank_history.TestAstraRankHistory.test_latest_committed_lookup_uses_input_scope_order_index) ... [2026-10-26 22:22:48,180] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_a7721abb via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,215] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,216] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,218] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,218] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,219] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_a7721abb in 55.55ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,236] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_a7721abb with exact cash input linkage
+FAIL
+test_missing_latest_rank_row_does_not_fall_back_to_older_rank (test_astra_rank_history.TestAstraRankHistory.test_missing_latest_rank_row_does_not_fall_back_to_older_rank) ... [2026-10-26 22:22:48,312] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_c7ab4169 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,355] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,356] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,359] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,360] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,361] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_c7ab4169 in 67.85ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,380] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_c7ab4169 with exact cash input linkage
+FAIL
+test_missing_required_descriptor_rejects_recomputed_result_checksum (test_astra_rank_history.TestAstraRankHistory.test_missing_required_descriptor_rejects_recomputed_result_checksum) ... [2026-10-26 22:22:48,465] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_902472bb via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,498] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,500] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,502] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,504] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,504] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_902472bb in 60.19ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,519] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_902472bb with exact cash input linkage
+FAIL
+test_older_valid_input_cannot_replace_newer_committed_priority (test_astra_rank_history.TestAstraRankHistory.test_older_valid_input_cannot_replace_newer_committed_priority) ... [2026-10-26 22:22:48,591] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_0691224c via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,626] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,627] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,628] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,629] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,629] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_0691224c in 54.94ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,646] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_0691224c with exact cash input linkage
+FAIL
+test_predecessor_signal_corruption_blocks_current_rank_without_fallback (test_astra_rank_history.TestAstraRankHistory.test_predecessor_signal_corruption_blocks_current_rank_without_fallback) ... [2026-10-26 22:22:48,721] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_a31f1628 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,753] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,754] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,756] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,756] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,757] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_a31f1628 in 54.70ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,769] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_a31f1628 with exact cash input linkage
+FAIL
+test_rank_insertion_failure_rolls_back_signals_evaluations_outbox_and_rank (test_astra_rank_history.TestAstraRankHistory.test_rank_insertion_failure_rolls_back_signals_evaluations_outbox_and_rank) ... [2026-10-26 22:22:48,842] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_77eb4b46 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,883] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,883] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,885] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,886] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,886] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_77eb4b46 in 64.23ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,929] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_102e4763 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:48,961] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,962] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,965] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,967] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:48,968] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_77eb4b46 in 59.96ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:48,986] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_77eb4b46 with exact cash input linkage
+FAIL
+test_rank_payload_rehash_cannot_forge_a_score (test_astra_rank_history.TestAstraRankHistory.test_rank_payload_rehash_cannot_forge_a_score) ... [2026-10-26 22:22:49,049] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_32807813 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:49,086] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,087] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,089] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,089] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,090] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_32807813 in 58.47ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:49,105] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_32807813 with exact cash input linkage
+FAIL
+test_result_mode_corruption_cannot_hide_latest_committed_scan (test_astra_rank_history.TestAstraRankHistory.test_result_mode_corruption_cannot_hide_latest_committed_scan) ... [2026-10-26 22:22:49,181] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_baf7420c via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:49,213] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,214] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,215] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,216] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,216] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_baf7420c in 54.46ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:49,231] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_baf7420c with exact cash input linkage
+FAIL
+test_retained_actual_orb_rank_is_current_and_read_only (test_astra_rank_history.TestAstraRankHistory.test_retained_actual_orb_rank_is_current_and_read_only) ... [2026-10-26 22:22:49,303] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_eafcc83e via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:49,341] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,342] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,343] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,344] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,344] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_eafcc83e in 58.85ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:49,359] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_eafcc83e with exact cash input linkage
+FAIL
+test_source_digest_and_quality_forgery_fail_even_with_matching_evaluation_result_hashes (test_astra_rank_history.TestAstraRankHistory.test_source_digest_and_quality_forgery_fail_even_with_matching_evaluation_result_hashes) ... [2026-10-26 22:22:49,427] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_5b7050d0 via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:49,504] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,506] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,508] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,509] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:49,510] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_5b7050d0 in 99.72ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:49,528] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_5b7050d0 with exact cash input linkage
+FAIL
+test_accepted_input_is_completed_only_and_reingestion_is_idempotent (test_cash_lineage.TestCashLineage.test_accepted_input_is_completed_only_and_reingestion_is_idempotent) ... ok
+test_candle_and_input_link_tampering_is_detected (test_cash_lineage.TestCashLineage.test_candle_and_input_link_tampering_is_detected) ... ok
+test_caught_inner_sql_error_marks_transaction_rollback_only (test_cash_lineage.TestCashLineage.test_caught_inner_sql_error_marks_transaction_rollback_only) ... ok
+test_concurrent_repeated_input_has_one_work_item_and_one_candle_set (test_cash_lineage.TestCashLineage.test_concurrent_repeated_input_has_one_work_item_and_one_candle_set) ... ok
+test_different_pending_work_blocks_and_preserves_original_input (test_cash_lineage.TestCashLineage.test_different_pending_work_blocks_and_preserves_original_input) ... ok
+test_duplicate_gap_wrong_identity_stale_future_malformed_and_incomplete_reject (test_cash_lineage.TestCashLineage.test_duplicate_gap_wrong_identity_stale_future_malformed_and_incomplete_reject) ... ok
+test_input_commit_before_ack_is_discoverable_and_retry_does_not_duplicate (test_cash_lineage.TestCashLineage.test_input_commit_before_ack_is_discoverable_and_retry_does_not_duplicate) ... ok
+test_input_transaction_rolls_back_at_each_actual_write_boundary (test_cash_lineage.TestCashLineage.test_input_transaction_rolls_back_at_each_actual_write_boundary) ... ok
+test_legacy_nested_writers_cannot_commit_an_aborted_result (test_cash_lineage.TestCashLineage.test_legacy_nested_writers_cannot_commit_an_aborted_result) ... ok
+test_metadata_and_input_link_tampering_are_rejected (test_cash_lineage.TestCashLineage.test_metadata_and_input_link_tampering_are_rejected) ... ok
+test_missing_explicit_normalized_provenance_is_not_inferred (test_cash_lineage.TestCashLineage.test_missing_explicit_normalized_provenance_is_not_inferred) ... ok
+test_nested_transaction_control_cannot_commit_rollback_or_close_outer_connection (test_cash_lineage.TestCashLineage.test_nested_transaction_control_cannot_commit_rollback_or_close_outer_connection) ... ok
+test_same_identity_conflicting_content_and_changed_candle_corrections_reject (test_cash_lineage.TestCashLineage.test_same_identity_conflicting_content_and_changed_candle_corrections_reject) ... ok
+test_supported_quantity_is_retained_and_invalid_quantity_rejected (test_cash_lineage.TestCashLineage.test_supported_quantity_is_retained_and_invalid_quantity_rejected) ... ok
+test_zone_snapshot_uses_committed_database_state_inside_input_transaction (test_cash_lineage.TestCashLineage.test_zone_snapshot_uses_committed_database_state_inside_input_transaction) ... ok
+test_concurrent_scanners_commit_one_outcome_and_one_signal (test_cash_lineage.TestCashScannerRecovery.test_concurrent_scanners_commit_one_outcome_and_one_signal) ... [2026-10-26 22:22:50,311] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_d6cbd0fd via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:50,349] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_78fde506 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:50,407] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,409] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,411] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,413] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,413] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_d6cbd0fd in 118.37ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:50,429] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_d6cbd0fd with exact cash input linkage
+FAIL
+test_configuration_or_code_change_blocks_recovery_without_writes (test_cash_lineage.TestCashScannerRecovery.test_configuration_or_code_change_blocks_recovery_without_writes) ... [2026-10-26 22:22:50,530] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_0f856b7c via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:50,595] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,597] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,599] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,600] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,601] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_0f856b7c in 81.35ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:50,620] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_0f856b7c with exact cash input linkage
+ok
+test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) ... [2026-10-26 22:22:50,724] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_843e1b33 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:50,784] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,786] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,789] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,790] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,790] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_843e1b33 in 77.21ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:50,807] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_843e1b33 with exact cash input linkage
+
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_signal_write') ... FAIL
+[2026-10-26 22:22:50,871] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_cdf36934 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:50,933] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,935] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,938] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,941] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:50,942] [ERROR] [tradepulse.scanner] Mitigated Order Block persistence failed: OFFLINE write interruption
+[2026-10-26 22:22:50,942] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_cdf36934 in 83.38ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=ERROR
+[2026-10-26 22:22:51,008] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_cdf36934 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:51,018] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,021] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,023] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,024] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,025] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_cdf36934 in 28.13ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:51,042] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_cdf36934 with exact cash input linkage
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_zone_write') ... FAIL
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_scan_result_write') ... FAIL
+  test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='before_result_commit') ... FAIL
+test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals (test_cash_lineage.TestCashScannerRecovery.test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals) ... [2026-10-26 22:22:51,218] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_ee631408 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:51,291] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,294] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,296] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,299] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,300] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_ee631408 in 93.18ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:51,323] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_ee631408 with exact cash input linkage
+FAIL
+test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state (test_cash_lineage.TestCashScannerRecovery.test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state) ... [2026-10-26 22:22:51,407] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_fe0d7818 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:51,536] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_57075c72 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:51,661] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_fe0d7818 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:51,676] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,679] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,681] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,683] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,683] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_fe0d7818 in 36.05ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:51,703] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_fe0d7818 with exact cash input linkage
+FAIL
+test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) ... [2026-10-26 22:22:51,788] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_564eecc2 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:51,908] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,911] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,916] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,919] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:51,921] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_564eecc2 in 150.43ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:51,948] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_564eecc2 with exact cash input linkage
+[2026-10-26 22:22:52,057] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f12e0ddc via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:52,185] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,189] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,192] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,194] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,195] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f12e0ddc in 156.60ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:52,233] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f12e0ddc with exact cash input linkage
+
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM signals') ... FAIL
+[2026-10-26 22:22:52,456] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f60ad8aa via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:52,606] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,609] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,611] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,614] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,615] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f60ad8aa in 184.73ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:52,644] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f60ad8aa with exact cash input linkage
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM cash_candle_signal_inputs') ... FAIL
+[2026-10-26 22:22:52,798] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_9202ebc8 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:52,901] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,904] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,906] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,908] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:52,909] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_9202ebc8 in 128.19ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:52,926] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_9202ebc8 with exact cash input linkage
+  test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE signals SET entry_price=entry_price+1') ... FAIL
+[2026-10-26 22:22:53,032] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_4f35f51f via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:53,101] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,103] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,106] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,108] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,108] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_4f35f51f in 86.77ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:53,126] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_4f35f51f with exact cash input linkage
+[2026-10-26 22:22:53,224] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_e515fa5d via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:53,299] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,302] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,305] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,307] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,307] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_e515fa5d in 97.34ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:53,325] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_e515fa5d with exact cash input linkage
+test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links (test_cash_lineage.TestCashScannerRecovery.test_no_signal_scan_keeps_inputs_outcome_and_idempotent_links) ... [2026-10-26 22:22:53,410] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_915e9649 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:53,479] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,481] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,483] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,484] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,485] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_915e9649 in 87.79ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:53,504] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_915e9649 with exact cash input linkage
+[2026-10-26 22:22:53,545] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_d29c6ad4 via Upstox API v2 (mode=LIVE)
+ok
+test_overlapping_recovery_cannot_replace_original_committed_scan_outcome (test_cash_lineage.TestCashScannerRecovery.test_overlapping_recovery_cannot_replace_original_committed_scan_outcome) ... [2026-10-26 22:22:53,672] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_f9955c3c via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:53,758] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,760] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,763] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,764] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,765] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_f9955c3c in 107.12ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:53,786] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_f9955c3c with exact cash input linkage
+[2026-10-26 22:22:53,830] [WARNING] [tradepulse.scanner] Scan scan_20261016_141505_f9955c3c skipped because another scan is already in progress.
+ok
+test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger (test_cash_lineage.TestCashScannerRecovery.test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger) ... [2026-10-26 22:22:53,938] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_8947e53d via Angel One SmartAPI (mode=LIVE)
+[2026-10-26 22:22:53,981] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,981] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,983] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,984] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:53,984] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_8947e53d in 67.95ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:53,998] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_8947e53d with exact cash input linkage
+ERROR
+test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery (test_cash_lineage.TestCashScannerRecovery.test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery) ... [2026-10-26 22:22:54,081] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_52fd3828 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:54,174] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,178] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,181] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,183] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,184] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_52fd3828 in 113.72ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:54,203] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_52fd3828 with exact cash input linkage
+FAIL
+test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery (test_cash_lineage.TestCashScannerRecovery.test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery) ... [2026-10-26 22:22:54,263] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_6d4ca106 via Upstox API v2 (mode=LIVE)
+[2026-10-26 22:22:54,329] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,331] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,333] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,334] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: name 'copy' is not defined
+[2026-10-26 22:22:54,335] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_6d4ca106 in 82.79ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-26 22:22:54,350] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_6d4ca106 with exact cash input linkage
+FAIL
+test_unavailable_required_store_fails_before_any_acquisition (test_cash_lineage.TestCashScannerRecovery.test_unavailable_required_store_fails_before_any_acquisition) ... [2026-10-26 22:22:54,403] [ERROR] [tradepulse.scanner] Failed to initialize persistence store: OFFLINE unavailable
+ok
+test_phase4_pipeline (unittest.loader._FailedTest.test_phase4_pipeline) ... ERROR
+
+======================================================================
+ERROR: test_evaluator_input_mutation_invalidates_metadata_reuse (test_astra_scan_references.TestAstraScanReferences.test_evaluator_input_mutation_invalidates_metadata_reuse)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 1088, in run_single_scan
+    s = evaluate(strategy_id, eval_fn,
+        symbol=sym,
+    ...<5 lines>...
+        market_breadth=market_breadth,
+    )
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 869, in evaluate
+    trace.update(symbol=symbol, data_mode=data_mode, source_reference=source_reference(symbol))
+                                                                      ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 863, in source_reference
+    return copy.deepcopy(reference)
+           ^^^^
+NameError: name 'copy' is not defined. Did you forget to import 'copy'?
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_scan_references.py", line 97, in test_evaluator_input_mutation_invalidates_metadata_reuse
+    scan = self.engine.run_single_scan()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\scanner_engine.py", line 1102, in run_single_scan
+    logger.error("Strategy %s error on %s: %s", eval_fn.__name__, sym, eval_exc)
+                                                ^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\unittest\mock.py", line 699, in __getattr__
+    raise AttributeError(name)
+AttributeError: __name__
+
+======================================================================
+ERROR: test_returned_metadata_is_independent_and_next_scan_rebuilds_it (test_astra_scan_references.TestAstraScanReferences.test_returned_metadata_is_independent_and_next_scan_rebuilds_it)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_scan_references.py", line 65, in test_returned_metadata_is_independent_and_next_scan_rebuilds_it
+    before = copy.deepcopy(refs[1])
+                           ~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger (test_cash_lineage.TestCashScannerRecovery.test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 368, in test_paper_handoff_failure_recovers_existing_effect_without_duplicate_ledger
+    self.assertEqual(first["paper_portfolio"]["report"]["candidate_decisions"][0]["status"], "QUEUED")
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+IndexError: list index out of range
+
+======================================================================
+ERROR: test_phase4_pipeline (unittest.loader._FailedTest.test_phase4_pipeline)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_phase4_pipeline
+Traceback (most recent call last):
+  File "C:\Python314\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+ModuleNotFoundError: No module named 'test_phase4_pipeline'
+
+
+======================================================================
+FAIL: test_each_distinct_input_is_normalized_once_and_all_references_match (test_astra_scan_references.TestAstraScanReferences.test_each_distinct_input_is_normalized_once_and_all_references_match)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_scan_references.py", line 49, in test_each_distinct_input_is_normalized_once_and_all_references_match
+    self.assertEqual(scan['scan_status'], 'COMPLETED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_actual_two_stock_scanner_refresh_reverses_priority_on_new_volume_evidence (test_astra_rank_history.TestAstraRankHistory.test_actual_two_stock_scanner_refresh_reverses_priority_on_new_volume_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 100, in test_actual_two_stock_scanner_refresh_reverses_priority_on_new_volume_evidence
+    first = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_append_cannot_skip_deleted_latest_required_rank_history (test_astra_rank_history.TestAstraRankHistory.test_append_cannot_skip_deleted_latest_required_rank_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 201, in test_append_cannot_skip_deleted_latest_required_rank_history
+    self.first()
+    ~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_code_change_archives_without_rewriting_source (test_astra_rank_history.TestAstraRankHistory.test_code_change_archives_without_rewriting_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 150, in test_code_change_archives_without_rewriting_source
+    self.first()
+    ~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy (test_astra_rank_history.TestAstraRankHistory.test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 288, in test_deleted_row_and_result_flags_cannot_downgrade_new_scan_to_legacy
+    scan = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_duplicate_scan_and_store_restart_keep_one_immutable_snapshot (test_astra_rank_history.TestAstraRankHistory.test_duplicate_scan_and_store_restart_keep_one_immutable_snapshot)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 70, in test_duplicate_scan_and_store_restart_keep_one_immutable_snapshot
+    first = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_empty_refresh_removes_old_current_priority_and_retains_predecessor (test_astra_rank_history.TestAstraRankHistory.test_empty_refresh_removes_old_current_priority_and_retains_predecessor)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 122, in test_empty_refresh_removes_old_current_priority_and_retains_predecessor
+    first = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_exact_expiry_current_clock_and_profile_cannot_resurrect_history (test_astra_rank_history.TestAstraRankHistory.test_exact_expiry_current_clock_and_profile_cannot_resurrect_history)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 134, in test_exact_expiry_current_clock_and_profile_cannot_resurrect_history
+    first = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_http_ranking_get_head_validation_and_failed_integrity_are_read_only (test_astra_rank_history.TestAstraRankHistory.test_http_ranking_get_head_validation_and_failed_integrity_are_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 313, in test_http_ranking_get_head_validation_and_failed_integrity_are_read_only
+    self.assertEqual(len(payload["current_rows"]), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_latest_committed_lookup_uses_input_scope_order_index (test_astra_rank_history.TestAstraRankHistory.test_latest_committed_lookup_uses_input_scope_order_index)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 226, in test_latest_committed_lookup_uses_input_scope_order_index
+    self.first()
+    ~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_missing_latest_rank_row_does_not_fall_back_to_older_rank (test_astra_rank_history.TestAstraRankHistory.test_missing_latest_rank_row_does_not_fall_back_to_older_rank)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 173, in test_missing_latest_rank_row_does_not_fall_back_to_older_rank
+    self.first()
+    ~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_missing_required_descriptor_rejects_recomputed_result_checksum (test_astra_rank_history.TestAstraRankHistory.test_missing_required_descriptor_rejects_recomputed_result_checksum)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 277, in test_missing_required_descriptor_rejects_recomputed_result_checksum
+    scan = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_older_valid_input_cannot_replace_newer_committed_priority (test_astra_rank_history.TestAstraRankHistory.test_older_valid_input_cannot_replace_newer_committed_priority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 181, in test_older_valid_input_cannot_replace_newer_committed_priority
+    first = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_predecessor_signal_corruption_blocks_current_rank_without_fallback (test_astra_rank_history.TestAstraRankHistory.test_predecessor_signal_corruption_blocks_current_rank_without_fallback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 193, in test_predecessor_signal_corruption_blocks_current_rank_without_fallback
+    first = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_rank_insertion_failure_rolls_back_signals_evaluations_outbox_and_rank (test_astra_rank_history.TestAstraRankHistory.test_rank_insertion_failure_rolls_back_signals_evaluations_outbox_and_rank)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 168, in test_rank_insertion_failure_rolls_back_signals_evaluations_outbox_and_rank
+    retried = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_rank_payload_rehash_cannot_forge_a_score (test_astra_rank_history.TestAstraRankHistory.test_rank_payload_rehash_cannot_forge_a_score)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 238, in test_rank_payload_rehash_cannot_forge_a_score
+    scan = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_result_mode_corruption_cannot_hide_latest_committed_scan (test_astra_rank_history.TestAstraRankHistory.test_result_mode_corruption_cannot_hide_latest_committed_scan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 214, in test_result_mode_corruption_cannot_hide_latest_committed_scan
+    self.first()
+    ~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_retained_actual_orb_rank_is_current_and_read_only (test_astra_rank_history.TestAstraRankHistory.test_retained_actual_orb_rank_is_current_and_read_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 54, in test_retained_actual_orb_rank_is_current_and_read_only
+    scan = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_source_digest_and_quality_forgery_fail_even_with_matching_evaluation_result_hashes (test_astra_rank_history.TestAstraRankHistory.test_source_digest_and_quality_forgery_fail_even_with_matching_evaluation_result_hashes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 254, in test_source_digest_and_quality_forgery_fail_even_with_matching_evaluation_result_hashes
+    scan = self.first()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_rank_history.py", line 42, in first
+    self.assertEqual(scan["scan_status"], "COMPLETED", scan.get("error"))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+======================================================================
+FAIL: test_concurrent_scanners_commit_one_outcome_and_one_signal (test_cash_lineage.TestCashScannerRecovery.test_concurrent_scanners_commit_one_outcome_and_one_signal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 351, in test_concurrent_scanners_commit_one_outcome_and_one_signal
+    self.assertEqual(sum(r["persisted_signals"] for r in results), 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_signal_write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 248, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises((RuntimeError, PersistenceError)):
+                                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'RuntimeError'>, <class 'storage.PersistenceError'>) not raised
+
+======================================================================
+FAIL: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_zone_write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 268, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    self.assertEqual(result["total_signals"], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='after_scan_result_write')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 248, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises((RuntimeError, PersistenceError)):
+                                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'RuntimeError'>, <class 'storage.PersistenceError'>) not raised
+
+======================================================================
+FAIL: test_each_result_write_failure_rolls_back_and_restart_replays_without_transport (test_cash_lineage.TestCashScannerRecovery.test_each_result_write_failure_rolls_back_and_restart_replays_without_transport) (boundary='before_result_commit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 248, in test_each_result_write_failure_rolls_back_and_restart_replays_without_transport
+    patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises((RuntimeError, PersistenceError)):
+                                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'RuntimeError'>, <class 'storage.PersistenceError'>) not raised
+
+======================================================================
+FAIL: test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals (test_cash_lineage.TestCashScannerRecovery.test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 462, in test_expiry_after_staged_signal_rolls_back_and_reports_zero_committed_signals
+    patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(CandleFreshnessError):
+                                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: CandleFreshnessError not raised
+
+======================================================================
+FAIL: test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state (test_cash_lineage.TestCashScannerRecovery.test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 447, in test_later_work_proceeds_after_pending_scan_recovery_with_committed_zone_state
+    self.assertEqual(first["persisted_signals"], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM signals')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 414, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    with patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(PersistenceValidationError):
+                                                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PersistenceValidationError not raised
+
+======================================================================
+FAIL: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='DELETE FROM cash_candle_signal_inputs')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 414, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    with patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(PersistenceValidationError):
+                                                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PersistenceValidationError not raised
+
+======================================================================
+FAIL: test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed (test_cash_lineage.TestCashScannerRecovery.test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed) (sql='UPDATE signals SET entry_price=entry_price+1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 414, in test_missing_or_tampered_committed_outcome_signal_and_links_fail_closed
+    with patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(PersistenceValidationError):
+                                                                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PersistenceValidationError not raised
+
+======================================================================
+FAIL: test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery (test_cash_lineage.TestCashScannerRecovery.test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 290, in test_postcommit_acknowledgement_loss_keeps_result_and_suppresses_repeat_delivery
+    self.assertEqual(self.state(engine.store)["signals"], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery (test_cash_lineage.TestCashScannerRecovery.test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_cash_lineage.py", line 421, in test_storage_unavailable_mid_scan_preserves_pending_input_and_blocks_delivery
+    patch.object(engine.telegram, "send_signal") as delivery, self.assertRaises(PersistenceError):
+                                                              ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: PersistenceError not raised
+
+----------------------------------------------------------------------
+Ran 49 tests in 9.193s
+
+FAILED (failures=31, errors=4)

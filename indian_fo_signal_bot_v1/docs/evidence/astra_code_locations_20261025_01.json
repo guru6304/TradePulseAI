@@ -1,0 +1,1586 @@
+{
+  "files": {
+    "candle_lineage.py": {
+      "sha256": "0435889fe64ac821d3ddf1e5303331234d0737ed0be144eda9f221386e0c0edc",
+      "symbols": [
+        {
+          "end": 37,
+          "start": 33,
+          "symbol": "encoded"
+        },
+        {
+          "end": 41,
+          "start": 40,
+          "symbol": "digest"
+        },
+        {
+          "end": 84,
+          "start": 44,
+          "symbol": "validate_scan_evaluations"
+        },
+        {
+          "end": 120,
+          "start": 87,
+          "symbol": "load_scan_evaluations"
+        },
+        {
+          "end": 132,
+          "start": 123,
+          "symbol": "_check_evaluation_outcome"
+        },
+        {
+          "end": 144,
+          "start": 135,
+          "symbol": "runtime_profile"
+        },
+        {
+          "end": 149,
+          "start": 147,
+          "symbol": "code_fingerprint"
+        },
+        {
+          "end": 156,
+          "start": 152,
+          "symbol": "_policy"
+        },
+        {
+          "end": 198,
+          "start": 159,
+          "symbol": "completed_cash_batch"
+        },
+        {
+          "end": 217,
+          "start": 201,
+          "symbol": "make_snapshot"
+        },
+        {
+          "end": 223,
+          "start": 220,
+          "symbol": "work_identity"
+        },
+        {
+          "end": 248,
+          "start": 226,
+          "symbol": "create_schema"
+        },
+        {
+          "end": 254,
+          "start": 251,
+          "symbol": "_candle_key"
+        },
+        {
+          "end": 311,
+          "start": 257,
+          "symbol": "prepare"
+        },
+        {
+          "end": 361,
+          "start": 314,
+          "symbol": "load"
+        },
+        {
+          "end": 417,
+          "start": 364,
+          "symbol": "_check_committed_outcome"
+        },
+        {
+          "end": 444,
+          "start": 420,
+          "symbol": "finish"
+        },
+        {
+          "end": 458,
+          "start": 447,
+          "symbol": "public_summary"
+        },
+        {
+          "end": 514,
+          "start": 461,
+          "symbol": "annotate_signals"
+        },
+        {
+          "end": 525,
+          "start": 517,
+          "symbol": "replay_summary"
+        }
+      ]
+    },
+    "forward_paper.py": {
+      "sha256": "c3026be8b3813be6c55d1bb21712d9b758815ae35e515751c6b5d12e6b96a3c4",
+      "symbols": [
+        {
+          "end": 196,
+          "start": 16,
+          "symbol": "ForwardPaperCoordinator"
+        },
+        {
+          "end": 22,
+          "start": 19,
+          "symbol": "ForwardPaperCoordinator.__init__"
+        },
+        {
+          "end": 41,
+          "start": 24,
+          "symbol": "ForwardPaperCoordinator._transition"
+        },
+        {
+          "end": 92,
+          "start": 43,
+          "symbol": "ForwardPaperCoordinator._queue"
+        },
+        {
+          "end": 131,
+          "start": 94,
+          "symbol": "ForwardPaperCoordinator._observations"
+        },
+        {
+          "end": 196,
+          "start": 133,
+          "symbol": "ForwardPaperCoordinator.consume_scan"
+        }
+      ]
+    },
+    "historical_study.py": {
+      "sha256": "7084ac6912a569ca9107b904d3867cb3b19eae3df989e96efa8e5104815be9e9",
+      "symbols": [
+        {
+          "end": 24,
+          "start": 23,
+          "symbol": "sha"
+        },
+        {
+          "end": 28,
+          "start": 27,
+          "symbol": "encode"
+        },
+        {
+          "end": 35,
+          "start": 31,
+          "symbol": "aware"
+        },
+        {
+          "end": 47,
+          "start": 38,
+          "symbol": "strict_json"
+        },
+        {
+          "end": 53,
+          "start": 50,
+          "symbol": "evidence_identity"
+        },
+        {
+          "end": 122,
+          "start": 56,
+          "symbol": "HistoricalEvidenceArchive"
+        },
+        {
+          "end": 73,
+          "start": 62,
+          "symbol": "HistoricalEvidenceArchive.__init__"
+        },
+        {
+          "end": 100,
+          "start": 75,
+          "symbol": "HistoricalEvidenceArchive.retain"
+        },
+        {
+          "end": 122,
+          "start": 102,
+          "symbol": "HistoricalEvidenceArchive.load"
+        },
+        {
+          "end": 133,
+          "start": 125,
+          "symbol": "option_request_artifacts"
+        },
+        {
+          "end": 178,
+          "start": 136,
+          "symbol": "OperatorRightsPolicy"
+        },
+        {
+          "end": 145,
+          "start": 143,
+          "symbol": "OperatorRightsPolicy.__init__"
+        },
+        {
+          "end": 150,
+          "start": 148,
+          "symbol": "OperatorRightsPolicy.fingerprint"
+        },
+        {
+          "end": 178,
+          "start": 152,
+          "symbol": "OperatorRightsPolicy.assess"
+        },
+        {
+          "end": 228,
+          "start": 181,
+          "symbol": "qualify_artifact"
+        },
+        {
+          "end": 249,
+          "start": 231,
+          "symbol": "walk_forward_plan"
+        },
+        {
+          "end": 256,
+          "start": 252,
+          "symbol": "source_fingerprint"
+        },
+        {
+          "end": 417,
+          "start": 259,
+          "symbol": "run_frozen_study"
+        }
+      ]
+    },
+    "opportunity_ranking.py": {
+      "sha256": "6f0e3916ed2babbdc7c3543229e41d25be3443fb7a098ac4b54f4e9f56b129d5",
+      "symbols": [
+        {
+          "end": 21,
+          "start": 20,
+          "symbol": "encoded"
+        },
+        {
+          "end": 25,
+          "start": 24,
+          "symbol": "digest"
+        },
+        {
+          "end": 33,
+          "start": 28,
+          "symbol": "_clock"
+        },
+        {
+          "end": 37,
+          "start": 36,
+          "symbol": "_number"
+        },
+        {
+          "end": 144,
+          "start": 40,
+          "symbol": "build_snapshot"
+        },
+        {
+          "end": 151,
+          "start": 147,
+          "symbol": "verify_snapshot"
+        },
+        {
+          "end": 161,
+          "start": 154,
+          "symbol": "current_view"
+        }
+      ]
+    },
+    "option_execution.py": {
+      "sha256": "dd5fccfef2b7bd15c7e7bb1da252db2ed5c1ed4b1e6519a0e87e969e1ebc1a57",
+      "symbols": [
+        {
+          "end": 26,
+          "start": 24,
+          "symbol": "reject"
+        },
+        {
+          "end": 33,
+          "start": 29,
+          "symbol": "number"
+        },
+        {
+          "end": 46,
+          "start": 36,
+          "symbol": "timestamp"
+        },
+        {
+          "end": 62,
+          "start": 49,
+          "symbol": "decode"
+        },
+        {
+          "end": 207,
+          "start": 65,
+          "symbol": "_prepare"
+        },
+        {
+          "end": 221,
+          "start": 210,
+          "symbol": "gate"
+        },
+        {
+          "end": 420,
+          "start": 224,
+          "symbol": "run"
+        }
+      ]
+    },
+    "paper_portfolio.py": {
+      "sha256": "664b1de60daf926457440ae69c84f3dba0c05013830d9c980891ed71c3f3da50",
+      "symbols": [
+        {
+          "end": 26,
+          "start": 23,
+          "symbol": "PaperPortfolioError"
+        },
+        {
+          "end": 26,
+          "start": 24,
+          "symbol": "PaperPortfolioError.__init__"
+        },
+        {
+          "end": 30,
+          "start": 29,
+          "symbol": "_reject"
+        },
+        {
+          "end": 34,
+          "start": 33,
+          "symbol": "_encode"
+        },
+        {
+          "end": 38,
+          "start": 37,
+          "symbol": "_hash"
+        },
+        {
+          "end": 42,
+          "start": 41,
+          "symbol": "_money"
+        },
+        {
+          "end": 46,
+          "start": 45,
+          "symbol": "_sum"
+        },
+        {
+          "end": 53,
+          "start": 49,
+          "symbol": "_number"
+        },
+        {
+          "end": 59,
+          "start": 56,
+          "symbol": "_name"
+        },
+        {
+          "end": 142,
+          "start": 63,
+          "symbol": "PaperAccountConfig"
+        },
+        {
+          "end": 135,
+          "start": 85,
+          "symbol": "PaperAccountConfig.__post_init__"
+        },
+        {
+          "end": 138,
+          "start": 137,
+          "symbol": "PaperAccountConfig.to_dict"
+        },
+        {
+          "end": 142,
+          "start": 141,
+          "symbol": "PaperAccountConfig.config_hash"
+        },
+        {
+          "end": 819,
+          "start": 145,
+          "symbol": "PaperPortfolio"
+        },
+        {
+          "end": 165,
+          "start": 152,
+          "symbol": "PaperPortfolio.__init__"
+        },
+        {
+          "end": 171,
+          "start": 167,
+          "symbol": "PaperPortfolio._now"
+        },
+        {
+          "end": 192,
+          "start": 174,
+          "symbol": "PaperPortfolio.report_existing"
+        },
+        {
+          "end": 201,
+          "start": 194,
+          "symbol": "PaperPortfolio._positions"
+        },
+        {
+          "end": 208,
+          "start": 204,
+          "symbol": "PaperPortfolio._decode"
+        },
+        {
+          "end": 218,
+          "start": 210,
+          "symbol": "PaperPortfolio._events"
+        },
+        {
+          "end": 224,
+          "start": 220,
+          "symbol": "PaperPortfolio._reconciliation"
+        },
+        {
+          "end": 288,
+          "start": 226,
+          "symbol": "PaperPortfolio._reconcile_checked"
+        },
+        {
+          "end": 297,
+          "start": 290,
+          "symbol": "PaperPortfolio._snapshot"
+        },
+        {
+          "end": 305,
+          "start": 300,
+          "symbol": "PaperPortfolio._preview_append"
+        },
+        {
+          "end": 376,
+          "start": 307,
+          "symbol": "PaperPortfolio._snapshot_checked"
+        },
+        {
+          "end": 380,
+          "start": 378,
+          "symbol": "PaperPortfolio.snapshot"
+        },
+        {
+          "end": 384,
+          "start": 382,
+          "symbol": "PaperPortfolio.reconcile"
+        },
+        {
+          "end": 389,
+          "start": 386,
+          "symbol": "PaperPortfolio.open_positions"
+        },
+        {
+          "end": 448,
+          "start": 391,
+          "symbol": "PaperPortfolio.review_unresolved_eod"
+        },
+        {
+          "end": 452,
+          "start": 450,
+          "symbol": "PaperPortfolio.session_statement"
+        },
+        {
+          "end": 531,
+          "start": 454,
+          "symbol": "PaperPortfolio._session_statement"
+        },
+        {
+          "end": 584,
+          "start": 533,
+          "symbol": "PaperPortfolio._bar"
+        },
+        {
+          "end": 618,
+          "start": 586,
+          "symbol": "PaperPortfolio._candidate"
+        },
+        {
+          "end": 621,
+          "start": 620,
+          "symbol": "PaperPortfolio._model"
+        },
+        {
+          "end": 625,
+          "start": 623,
+          "symbol": "PaperPortfolio._costs"
+        },
+        {
+          "end": 638,
+          "start": 627,
+          "symbol": "PaperPortfolio._event_retry"
+        },
+        {
+          "end": 642,
+          "start": 640,
+          "symbol": "PaperPortfolio._event"
+        },
+        {
+          "end": 649,
+          "start": 645,
+          "symbol": "PaperPortfolio._record"
+        },
+        {
+          "end": 653,
+          "start": 651,
+          "symbol": "PaperPortfolio._save"
+        },
+        {
+          "end": 693,
+          "start": 655,
+          "symbol": "PaperPortfolio._mark_or_exit"
+        },
+        {
+          "end": 794,
+          "start": 695,
+          "symbol": "PaperPortfolio.enter"
+        },
+        {
+          "end": 819,
+          "start": 796,
+          "symbol": "PaperPortfolio.process_bar"
+        }
+      ]
+    },
+    "scanner_engine.py": {
+      "sha256": "55cc4516e4a48213a9dc3cd45f452fe65d77ce5f7998b781ccb06d780499381e",
+      "symbols": [
+        {
+          "end": 71,
+          "start": 55,
+          "symbol": "format_console_text"
+        },
+        {
+          "end": 88,
+          "start": 74,
+          "symbol": "safe_console_print"
+        },
+        {
+          "end": 1411,
+          "start": 91,
+          "symbol": "IntradayBotEngine"
+        },
+        {
+          "end": 164,
+          "start": 104,
+          "symbol": "IntradayBotEngine.__init__"
+        },
+        {
+          "end": 168,
+          "start": 166,
+          "symbol": "IntradayBotEngine._scanner_scope"
+        },
+        {
+          "end": 184,
+          "start": 170,
+          "symbol": "IntradayBotEngine.trusted_context_identities"
+        },
+        {
+          "end": 191,
+          "start": 186,
+          "symbol": "IntradayBotEngine.import_context"
+        },
+        {
+          "end": 215,
+          "start": 193,
+          "symbol": "IntradayBotEngine.enrich_context"
+        },
+        {
+          "end": 233,
+          "start": 217,
+          "symbol": "IntradayBotEngine._attach_context"
+        },
+        {
+          "end": 241,
+          "start": 235,
+          "symbol": "IntradayBotEngine._load_zone_state"
+        },
+        {
+          "end": 249,
+          "start": 244,
+          "symbol": "IntradayBotEngine.mitigated_order_blocks"
+        },
+        {
+          "end": 266,
+          "start": 251,
+          "symbol": "IntradayBotEngine._assess_scan_candles"
+        },
+        {
+          "end": 285,
+          "start": 268,
+          "symbol": "IntradayBotEngine._freshness_status"
+        },
+        {
+          "end": 304,
+          "start": 287,
+          "symbol": "IntradayBotEngine._fetch_scan_candles"
+        },
+        {
+          "end": 323,
+          "start": 306,
+          "symbol": "IntradayBotEngine._require_current_scan_data"
+        },
+        {
+          "end": 328,
+          "start": 325,
+          "symbol": "IntradayBotEngine._now_ist"
+        },
+        {
+          "end": 343,
+          "start": 330,
+          "symbol": "IntradayBotEngine.close"
+        },
+        {
+          "end": 349,
+          "start": 345,
+          "symbol": "IntradayBotEngine.__del__"
+        },
+        {
+          "end": 543,
+          "start": 351,
+          "symbol": "IntradayBotEngine.get_broker_status"
+        },
+        {
+          "end": 572,
+          "start": 546,
+          "symbol": "IntradayBotEngine._compute_universe_breadth"
+        },
+        {
+          "end": 589,
+          "start": 574,
+          "symbol": "IntradayBotEngine._replay_cash_result"
+        },
+        {
+          "end": 593,
+          "start": 591,
+          "symbol": "IntradayBotEngine.resume_cash_scan"
+        },
+        {
+          "end": 1411,
+          "start": 595,
+          "symbol": "IntradayBotEngine.run_single_scan"
+        },
+        {
+          "end": 1554,
+          "start": 1414,
+          "symbol": "MarketScanScheduler"
+        },
+        {
+          "end": 1438,
+          "start": 1426,
+          "symbol": "MarketScanScheduler.__init__"
+        },
+        {
+          "end": 1449,
+          "start": 1440,
+          "symbol": "MarketScanScheduler.is_market_session_open"
+        },
+        {
+          "end": 1492,
+          "start": 1451,
+          "symbol": "MarketScanScheduler.run_scheduled_cycle"
+        },
+        {
+          "end": 1504,
+          "start": 1494,
+          "symbol": "MarketScanScheduler._loop"
+        },
+        {
+          "end": 1508,
+          "start": 1506,
+          "symbol": "MarketScanScheduler.is_running"
+        },
+        {
+          "end": 1528,
+          "start": 1510,
+          "symbol": "MarketScanScheduler.start"
+        },
+        {
+          "end": 1536,
+          "start": 1530,
+          "symbol": "MarketScanScheduler.stop"
+        },
+        {
+          "end": 1554,
+          "start": 1538,
+          "symbol": "MarketScanScheduler.get_status"
+        }
+      ]
+    },
+    "server.py": {
+      "sha256": "2034c45351c72b62923a963c42ffac691fe43296fd72951591e719c39e3b909f",
+      "symbols": [
+        {
+          "end": 39,
+          "start": 28,
+          "symbol": "TradePulseThreadingHTTPServer"
+        },
+        {
+          "end": 68,
+          "start": 52,
+          "symbol": "_parse_int_param"
+        },
+        {
+          "end": 75,
+          "start": 71,
+          "symbol": "_get_str_param"
+        },
+        {
+          "end": 1186,
+          "start": 78,
+          "symbol": "DashboardRequestHandler"
+        },
+        {
+          "end": 103,
+          "start": 102,
+          "symbol": "DashboardRequestHandler.log_message"
+        },
+        {
+          "end": 108,
+          "start": 105,
+          "symbol": "DashboardRequestHandler._ensure_initialized"
+        },
+        {
+          "end": 126,
+          "start": 110,
+          "symbol": "DashboardRequestHandler._send_json"
+        },
+        {
+          "end": 190,
+          "start": 128,
+          "symbol": "DashboardRequestHandler._try_serve_approved_public_asset"
+        },
+        {
+          "end": 277,
+          "start": 192,
+          "symbol": "DashboardRequestHandler._handle_health"
+        },
+        {
+          "end": 316,
+          "start": 279,
+          "symbol": "DashboardRequestHandler._handle_scan"
+        },
+        {
+          "end": 370,
+          "start": 318,
+          "symbol": "DashboardRequestHandler._handle_signals"
+        },
+        {
+          "end": 399,
+          "start": 372,
+          "symbol": "DashboardRequestHandler._handle_scans"
+        },
+        {
+          "end": 430,
+          "start": 401,
+          "symbol": "DashboardRequestHandler._handle_cash_lineage"
+        },
+        {
+          "end": 462,
+          "start": 432,
+          "symbol": "DashboardRequestHandler._handle_oi_snapshots"
+        },
+        {
+          "end": 496,
+          "start": 464,
+          "symbol": "DashboardRequestHandler._handle_oi_baselines"
+        },
+        {
+          "end": 505,
+          "start": 499,
+          "symbol": "DashboardRequestHandler._get_query_param"
+        },
+        {
+          "end": 543,
+          "start": 507,
+          "symbol": "DashboardRequestHandler._handle_historical_datasets"
+        },
+        {
+          "end": 570,
+          "start": 545,
+          "symbol": "DashboardRequestHandler._handle_historical_readiness"
+        },
+        {
+          "end": 608,
+          "start": 572,
+          "symbol": "DashboardRequestHandler._handle_backtest_eligibility"
+        },
+        {
+          "end": 642,
+          "start": 610,
+          "symbol": "DashboardRequestHandler._handle_backtest_runs"
+        },
+        {
+          "end": 673,
+          "start": 644,
+          "symbol": "DashboardRequestHandler._handle_backtest_run_detail"
+        },
+        {
+          "end": 795,
+          "start": 675,
+          "symbol": "DashboardRequestHandler._handle_post_backtest"
+        },
+        {
+          "end": 835,
+          "start": 797,
+          "symbol": "DashboardRequestHandler._handle_paper_portfolio"
+        },
+        {
+          "end": 865,
+          "start": 837,
+          "symbol": "DashboardRequestHandler._handle_contract_inspection"
+        },
+        {
+          "end": 874,
+          "start": 867,
+          "symbol": "DashboardRequestHandler._handle_config"
+        },
+        {
+          "end": 900,
+          "start": 876,
+          "symbol": "DashboardRequestHandler._handle_operational_read"
+        },
+        {
+          "end": 932,
+          "start": 902,
+          "symbol": "DashboardRequestHandler._context_body"
+        },
+        {
+          "end": 956,
+          "start": 934,
+          "symbol": "DashboardRequestHandler._handle_context_import"
+        },
+        {
+          "end": 980,
+          "start": 958,
+          "symbol": "DashboardRequestHandler._handle_context_enrich"
+        },
+        {
+          "end": 1002,
+          "start": 982,
+          "symbol": "DashboardRequestHandler._handle_context"
+        },
+        {
+          "end": 1114,
+          "start": 1004,
+          "symbol": "DashboardRequestHandler._dispatch_get_or_head"
+        },
+        {
+          "end": 1117,
+          "start": 1116,
+          "symbol": "DashboardRequestHandler.do_GET"
+        },
+        {
+          "end": 1120,
+          "start": 1119,
+          "symbol": "DashboardRequestHandler.do_HEAD"
+        },
+        {
+          "end": 1141,
+          "start": 1122,
+          "symbol": "DashboardRequestHandler.do_OPTIONS"
+        },
+        {
+          "end": 1166,
+          "start": 1143,
+          "symbol": "DashboardRequestHandler.do_POST"
+        },
+        {
+          "end": 1186,
+          "start": 1168,
+          "symbol": "DashboardRequestHandler._allow_local_request"
+        },
+        {
+          "end": 1252,
+          "start": 1189,
+          "symbol": "configure_server_runtime"
+        },
+        {
+          "end": 1263,
+          "start": 1255,
+          "symbol": "create_http_server"
+        },
+        {
+          "end": 1283,
+          "start": 1266,
+          "symbol": "run_server"
+        }
+      ]
+    },
+    "storage.py": {
+      "sha256": "4635a221183905a0e9de802aae3e000f9b8dc53550cc21ed5d461c81d0cfb06f",
+      "symbols": [
+        {
+          "end": 32,
+          "start": 31,
+          "symbol": "PersistenceError"
+        },
+        {
+          "end": 36,
+          "start": 35,
+          "symbol": "PersistenceValidationError"
+        },
+        {
+          "end": 58,
+          "start": 39,
+          "symbol": "_BorrowedScanConnection"
+        },
+        {
+          "end": 42,
+          "start": 41,
+          "symbol": "_BorrowedScanConnection.__init__"
+        },
+        {
+          "end": 45,
+          "start": 44,
+          "symbol": "_BorrowedScanConnection.__getattr__"
+        },
+        {
+          "end": 49,
+          "start": 47,
+          "symbol": "_BorrowedScanConnection._reject_transaction_control"
+        },
+        {
+          "end": 54,
+          "start": 53,
+          "symbol": "_BorrowedScanConnection.__enter__"
+        },
+        {
+          "end": 58,
+          "start": 56,
+          "symbol": "_BorrowedScanConnection.__exit__"
+        },
+        {
+          "end": 87,
+          "start": 61,
+          "symbol": "resolve_sqlite_path"
+        },
+        {
+          "end": 100,
+          "start": 90,
+          "symbol": "_coerce_to_date"
+        },
+        {
+          "end": 111,
+          "start": 103,
+          "symbol": "is_nse_trading_day"
+        },
+        {
+          "end": 127,
+          "start": 114,
+          "symbol": "resolve_effective_trading_session_date"
+        },
+        {
+          "end": 145,
+          "start": 130,
+          "symbol": "resolve_prior_trading_session_date"
+        },
+        {
+          "end": 169,
+          "start": 148,
+          "symbol": "count_trading_sessions_between"
+        },
+        {
+          "end": 177,
+          "start": 172,
+          "symbol": "compute_signal_dedup_key"
+        },
+        {
+          "end": 191,
+          "start": 183,
+          "symbol": "is_closing_session_timestamp"
+        },
+        {
+          "end": 213,
+          "start": 194,
+          "symbol": "compute_oi_baseline_dedup_key"
+        },
+        {
+          "end": 224,
+          "start": 219,
+          "symbol": "_close_all_active_sqlite_stores"
+        },
+        {
+          "end": 4189,
+          "start": 230,
+          "symbol": "SQLitePersistenceStore"
+        },
+        {
+          "end": 258,
+          "start": 250,
+          "symbol": "SQLitePersistenceStore.__init__"
+        },
+        {
+          "end": 296,
+          "start": 260,
+          "symbol": "SQLitePersistenceStore._get_connection"
+        },
+        {
+          "end": 305,
+          "start": 298,
+          "symbol": "SQLitePersistenceStore._close_if_file"
+        },
+        {
+          "end": 320,
+          "start": 307,
+          "symbol": "SQLitePersistenceStore.close"
+        },
+        {
+          "end": 323,
+          "start": 322,
+          "symbol": "SQLitePersistenceStore.__enter__"
+        },
+        {
+          "end": 326,
+          "start": 325,
+          "symbol": "SQLitePersistenceStore.__exit__"
+        },
+        {
+          "end": 332,
+          "start": 328,
+          "symbol": "SQLitePersistenceStore.__del__"
+        },
+        {
+          "end": 819,
+          "start": 334,
+          "symbol": "SQLitePersistenceStore.initialize_schema"
+        },
+        {
+          "end": 822,
+          "start": 821,
+          "symbol": "SQLitePersistenceStore._lineage_checkpoint"
+        },
+        {
+          "end": 831,
+          "start": 825,
+          "symbol": "SQLitePersistenceStore.lineage_read"
+        },
+        {
+          "end": 856,
+          "start": 834,
+          "symbol": "SQLitePersistenceStore.scan_result_transaction"
+        },
+        {
+          "end": 860,
+          "start": 858,
+          "symbol": "SQLitePersistenceStore.prepare_cash_scan"
+        },
+        {
+          "end": 864,
+          "start": 862,
+          "symbol": "SQLitePersistenceStore.load_cash_scan"
+        },
+        {
+          "end": 871,
+          "start": 866,
+          "symbol": "SQLitePersistenceStore.pending_cash_scans"
+        },
+        {
+          "end": 875,
+          "start": 873,
+          "symbol": "SQLitePersistenceStore.finish_cash_scan"
+        },
+        {
+          "end": 878,
+          "start": 877,
+          "symbol": "SQLitePersistenceStore._notification_checkpoint"
+        },
+        {
+          "end": 882,
+          "start": 880,
+          "symbol": "SQLitePersistenceStore.enqueue_notification_preview"
+        },
+        {
+          "end": 886,
+          "start": 884,
+          "symbol": "SQLitePersistenceStore.preview_notification"
+        },
+        {
+          "end": 890,
+          "start": 888,
+          "symbol": "SQLitePersistenceStore.list_notification_outbox"
+        },
+        {
+          "end": 893,
+          "start": 892,
+          "symbol": "SQLitePersistenceStore._context_checkpoint"
+        },
+        {
+          "end": 898,
+          "start": 895,
+          "symbol": "SQLitePersistenceStore.import_context"
+        },
+        {
+          "end": 902,
+          "start": 900,
+          "symbol": "SQLitePersistenceStore.list_context_ingestions"
+        },
+        {
+          "end": 906,
+          "start": 904,
+          "symbol": "SQLitePersistenceStore.enrich_scan_context"
+        },
+        {
+          "end": 910,
+          "start": 908,
+          "symbol": "SQLitePersistenceStore.load_scan_context"
+        },
+        {
+          "end": 914,
+          "start": 912,
+          "symbol": "SQLitePersistenceStore.enqueue_context_alert"
+        },
+        {
+          "end": 921,
+          "start": 916,
+          "symbol": "SQLitePersistenceStore.list_context_alert_decisions"
+        },
+        {
+          "end": 953,
+          "start": 924,
+          "symbol": "SQLitePersistenceStore.paper_transaction"
+        },
+        {
+          "end": 957,
+          "start": 955,
+          "symbol": "SQLitePersistenceStore.list_paper_accounts"
+        },
+        {
+          "end": 990,
+          "start": 959,
+          "symbol": "SQLitePersistenceStore.query_paper_accounts"
+        },
+        {
+          "end": 994,
+          "start": 992,
+          "symbol": "SQLitePersistenceStore.get_paper_portfolio_report"
+        },
+        {
+          "end": 998,
+          "start": 996,
+          "symbol": "SQLitePersistenceStore.get_paper_session_report"
+        },
+        {
+          "end": 1015,
+          "start": 1000,
+          "symbol": "SQLitePersistenceStore.pending_paper_decisions"
+        },
+        {
+          "end": 1022,
+          "start": 1018,
+          "symbol": "SQLitePersistenceStore._paper_collections"
+        },
+        {
+          "end": 1088,
+          "start": 1024,
+          "symbol": "SQLitePersistenceStore.query_paper_ledger"
+        },
+        {
+          "end": 1102,
+          "start": 1090,
+          "symbol": "SQLitePersistenceStore.ingest_contract_master_bytes"
+        },
+        {
+          "end": 1105,
+          "start": 1104,
+          "symbol": "SQLitePersistenceStore._contract_cache_checkpoint"
+        },
+        {
+          "end": 1109,
+          "start": 1107,
+          "symbol": "SQLitePersistenceStore.refresh_contract_cache"
+        },
+        {
+          "end": 1113,
+          "start": 1111,
+          "symbol": "SQLitePersistenceStore.contract_cache_status"
+        },
+        {
+          "end": 1117,
+          "start": 1115,
+          "symbol": "SQLitePersistenceStore.inspect_cached_contract"
+        },
+        {
+          "end": 1140,
+          "start": 1119,
+          "symbol": "SQLitePersistenceStore.get_contract_master_candidate"
+        },
+        {
+          "end": 1149,
+          "start": 1142,
+          "symbol": "SQLitePersistenceStore.list_contract_master_candidates"
+        },
+        {
+          "end": 1153,
+          "start": 1151,
+          "symbol": "SQLitePersistenceStore.inspect_contract_resolution"
+        },
+        {
+          "end": 1171,
+          "start": 1155,
+          "symbol": "SQLitePersistenceStore.ingest_instrument_master_bytes"
+        },
+        {
+          "end": 1192,
+          "start": 1173,
+          "symbol": "SQLitePersistenceStore.ingest_instrument_master_file"
+        },
+        {
+          "end": 1218,
+          "start": 1194,
+          "symbol": "SQLitePersistenceStore.get_instrument_master_archive"
+        },
+        {
+          "end": 1232,
+          "start": 1220,
+          "symbol": "SQLitePersistenceStore.list_instrument_master_archives"
+        },
+        {
+          "end": 1253,
+          "start": 1234,
+          "symbol": "SQLitePersistenceStore.qualify_instrument_master_archive"
+        },
+        {
+          "end": 1263,
+          "start": 1255,
+          "symbol": "SQLitePersistenceStore.inspect_archived_instrument_identity"
+        },
+        {
+          "end": 1278,
+          "start": 1265,
+          "symbol": "SQLitePersistenceStore.resolve_archived_instrument_identity"
+        },
+        {
+          "end": 1290,
+          "start": 1280,
+          "symbol": "SQLitePersistenceStore._save_live_acceptance_evidence"
+        },
+        {
+          "end": 1300,
+          "start": 1292,
+          "symbol": "SQLitePersistenceStore.load_live_acceptance_evidence"
+        },
+        {
+          "end": 1309,
+          "start": 1302,
+          "symbol": "SQLitePersistenceStore._revoke_live_acceptance_evidence"
+        },
+        {
+          "end": 1360,
+          "start": 1311,
+          "symbol": "SQLitePersistenceStore.check_health"
+        },
+        {
+          "end": 1558,
+          "start": 1365,
+          "symbol": "SQLitePersistenceStore._validate_single_baseline_record"
+        },
+        {
+          "end": 1715,
+          "start": 1560,
+          "symbol": "SQLitePersistenceStore.save_oi_baseline_records"
+        },
+        {
+          "end": 1786,
+          "start": 1717,
+          "symbol": "SQLitePersistenceStore.save_paired_strike_baselines"
+        },
+        {
+          "end": 1979,
+          "start": 1788,
+          "symbol": "SQLitePersistenceStore.import_prior_oi_baseline_file"
+        },
+        {
+          "end": 2313,
+          "start": 1981,
+          "symbol": "SQLitePersistenceStore.load_prior_session_oi_baseline"
+        },
+        {
+          "end": 2414,
+          "start": 2315,
+          "symbol": "SQLitePersistenceStore.query_oi_baselines"
+        },
+        {
+          "end": 2429,
+          "start": 2420,
+          "symbol": "SQLitePersistenceStore._zone_scope"
+        },
+        {
+          "end": 2448,
+          "start": 2431,
+          "symbol": "SQLitePersistenceStore.load_mitigated_order_blocks"
+        },
+        {
+          "end": 2478,
+          "start": 2450,
+          "symbol": "SQLitePersistenceStore.save_mitigated_order_blocks"
+        },
+        {
+          "end": 2592,
+          "start": 2483,
+          "symbol": "SQLitePersistenceStore.save_signal"
+        },
+        {
+          "end": 2730,
+          "start": 2594,
+          "symbol": "SQLitePersistenceStore.query_signals"
+        },
+        {
+          "end": 2962,
+          "start": 2735,
+          "symbol": "SQLitePersistenceStore.save_oi_snapshot"
+        },
+        {
+          "end": 3049,
+          "start": 2964,
+          "symbol": "SQLitePersistenceStore.query_oi_snapshots"
+        },
+        {
+          "end": 3108,
+          "start": 3054,
+          "symbol": "SQLitePersistenceStore.record_scan_run"
+        },
+        {
+          "end": 3133,
+          "start": 3110,
+          "symbol": "SQLitePersistenceStore.save_scan_evaluations"
+        },
+        {
+          "end": 3140,
+          "start": 3135,
+          "symbol": "SQLitePersistenceStore.load_scan_evaluations"
+        },
+        {
+          "end": 3211,
+          "start": 3142,
+          "symbol": "SQLitePersistenceStore.query_scan_runs"
+        },
+        {
+          "end": 3420,
+          "start": 3217,
+          "symbol": "SQLitePersistenceStore.save_historical_candle_dataset"
+        },
+        {
+          "end": 3529,
+          "start": 3422,
+          "symbol": "SQLitePersistenceStore.import_historical_candles_file"
+        },
+        {
+          "end": 3587,
+          "start": 3531,
+          "symbol": "SQLitePersistenceStore.get_historical_ingestion_watermark"
+        },
+        {
+          "end": 3678,
+          "start": 3589,
+          "symbol": "SQLitePersistenceStore.query_historical_datasets"
+        },
+        {
+          "end": 3784,
+          "start": 3680,
+          "symbol": "SQLitePersistenceStore.query_historical_candles"
+        },
+        {
+          "end": 3788,
+          "start": 3786,
+          "symbol": "SQLitePersistenceStore.query_historical_candle_page"
+        },
+        {
+          "end": 3792,
+          "start": 3790,
+          "symbol": "SQLitePersistenceStore.read_historical_snapshot"
+        },
+        {
+          "end": 3982,
+          "start": 3797,
+          "symbol": "SQLitePersistenceStore.save_backtest_run"
+        },
+        {
+          "end": 4093,
+          "start": 3984,
+          "symbol": "SQLitePersistenceStore.query_backtest_runs"
+        },
+        {
+          "end": 4189,
+          "start": 4095,
+          "symbol": "SQLitePersistenceStore.get_backtest_run_detail"
+        }
+      ]
+    },
+    "strategies.py": {
+      "sha256": "2f0abdaeafd4545896a5fdbbd123122afecb572442d6507f59c2173f91e10270",
+      "symbols": [
+        {
+          "end": 75,
+          "start": 16,
+          "symbol": "TradeSignal"
+        },
+        {
+          "end": 72,
+          "start": 49,
+          "symbol": "TradeSignal.__post_init__"
+        },
+        {
+          "end": 75,
+          "start": 74,
+          "symbol": "TradeSignal.to_dict"
+        },
+        {
+          "end": 92,
+          "start": 78,
+          "symbol": "normalize_state_scope"
+        },
+        {
+          "end": 128,
+          "start": 95,
+          "symbol": "validate_trade_signal"
+        },
+        {
+          "end": 148,
+          "start": 131,
+          "symbol": "rank_signal_candidates"
+        },
+        {
+          "end": 164,
+          "start": 156,
+          "symbol": "_evaluation_value"
+        },
+        {
+          "end": 175,
+          "start": 167,
+          "symbol": "_evaluation_check"
+        },
+        {
+          "end": 183,
+          "start": 178,
+          "symbol": "_evaluation_warmup"
+        },
+        {
+          "end": 193,
+          "start": 186,
+          "symbol": "_evaluation_session_start"
+        },
+        {
+          "end": 227,
+          "start": 196,
+          "symbol": "signal_risk_reward"
+        },
+        {
+          "end": 240,
+          "start": 230,
+          "symbol": "_trace_supported"
+        },
+        {
+          "end": 293,
+          "start": 243,
+          "symbol": "evaluate_strategy_detailed"
+        },
+        {
+          "end": 324,
+          "start": 296,
+          "symbol": "signal_state_identity"
+        },
+        {
+          "end": 467,
+          "start": 327,
+          "symbol": "compute_setup_quality_score"
+        },
+        {
+          "end": 523,
+          "start": 470,
+          "symbol": "parse_ist_timestamp"
+        },
+        {
+          "end": 529,
+          "start": 526,
+          "symbol": "format_ist_timestamp"
+        },
+        {
+          "end": 536,
+          "start": 532,
+          "symbol": "is_within_nse_session"
+        },
+        {
+          "end": 629,
+          "start": 539,
+          "symbol": "validate_candles"
+        },
+        {
+          "end": 691,
+          "start": 632,
+          "symbol": "aggregate_intraday_candles"
+        },
+        {
+          "end": 700,
+          "start": 694,
+          "symbol": "filter_completed_candles"
+        },
+        {
+          "end": 784,
+          "start": 703,
+          "symbol": "validate_option_chain_for_strategy"
+        },
+        {
+          "end": 802,
+          "start": 787,
+          "symbol": "calculate_indian_statutory_charges"
+        },
+        {
+          "end": 904,
+          "start": 805,
+          "symbol": "size_position"
+        },
+        {
+          "end": 919,
+          "start": 907,
+          "symbol": "compute_ema"
+        },
+        {
+          "end": 970,
+          "start": 922,
+          "symbol": "compute_rsi"
+        },
+        {
+          "end": 1001,
+          "start": 973,
+          "symbol": "compute_atr"
+        },
+        {
+          "end": 1025,
+          "start": 1004,
+          "symbol": "compute_session_vwap"
+        },
+        {
+          "end": 1055,
+          "start": 1028,
+          "symbol": "compute_supertrend"
+        },
+        {
+          "end": 1267,
+          "start": 1062,
+          "symbol": "evaluate_order_block_fvg"
+        },
+        {
+          "end": 1439,
+          "start": 1273,
+          "symbol": "evaluate_vwap_pullback"
+        },
+        {
+          "end": 1612,
+          "start": 1445,
+          "symbol": "evaluate_option_apex_oi_shift"
+        },
+        {
+          "end": 1781,
+          "start": 1618,
+          "symbol": "evaluate_orb_breakout"
+        },
+        {
+          "end": 1958,
+          "start": 1787,
+          "symbol": "evaluate_supertrend_pullback"
+        }
+      ]
+    },
+    "strategy_evidence.py": {
+      "sha256": "cdaa9425c92071fce1ccac230d56396831d6764f080aca7dae970dcabeb1ac06",
+      "symbols": [
+        {
+          "end": 128,
+          "start": 100,
+          "symbol": "strategy_evidence"
+        }
+      ]
+    }
+  },
+  "kind": "STATIC_SOURCE_LOCATORS_NOT_EXECUTION",
+  "recorded_at": "2026-10-25T01:57:44.151512+00:00"
+}

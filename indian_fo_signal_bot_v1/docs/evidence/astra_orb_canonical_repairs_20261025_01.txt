@@ -1,0 +1,35 @@
+test_corrupt_offpage_decision_blocks_handoff_without_effects (test_continuous_acceptance.TestPaperOperationalAcceptance.test_corrupt_offpage_decision_blocks_handoff_without_effects) ... ok
+test_empty_corrupt_and_invalid_session_exports_fail_safely (test_continuous_acceptance.TestPaperOperationalAcceptance.test_empty_corrupt_and_invalid_session_exports_fail_safely) ... ok
+test_eod_statement_is_reproducible_and_excludes_later_session_pnl (test_continuous_acceptance.TestPaperOperationalAcceptance.test_eod_statement_is_reproducible_and_excludes_later_session_pnl) ... ok
+test_freeze_and_denied_late_repair_are_audited_without_financial_effects (test_continuous_acceptance.TestPaperOperationalAcceptance.test_freeze_and_denied_late_repair_are_audited_without_financial_effects) ... ok
+test_inventory_has_bounded_stable_pages_and_cross_cursor_rejection (test_continuous_acceptance.TestPaperOperationalAcceptance.test_inventory_has_bounded_stable_pages_and_cross_cursor_rejection) ... ok
+test_legacy_queued_candidates_are_rejected_in_bounded_chronological_batches (test_continuous_acceptance.TestPaperOperationalAcceptance.test_legacy_queued_candidates_are_rejected_in_bounded_chronological_batches) ... ok
+test_oversized_identity_cannot_commit_a_record_its_own_reader_rejects (test_continuous_acceptance.TestPaperOperationalAcceptance.test_oversized_identity_cannot_commit_a_record_its_own_reader_rejects) ... ok
+test_recovery_audit_insert_failure_rolls_back_and_retry_is_safe (test_continuous_acceptance.TestPaperOperationalAcceptance.test_recovery_audit_insert_failure_rolls_back_and_retry_is_safe) ... ok
+test_recovery_rejects_other_accounts_pre_eod_and_closed_positions (test_continuous_acceptance.TestPaperOperationalAcceptance.test_recovery_rejects_other_accounts_pre_eod_and_closed_positions) ... ok
+test_recovery_waits_until_publication_deadline_and_rejects_corrupt_audit (test_continuous_acceptance.TestPaperOperationalAcceptance.test_recovery_waits_until_publication_deadline_and_rejects_corrupt_audit) ... ok
+test_restart_does_not_rewrite_order_sequence_for_existing_events (test_continuous_acceptance.TestPaperOperationalAcceptance.test_restart_does_not_rewrite_order_sequence_for_existing_events) ... ok
+test_unresolved_export_keeps_real_mark_reservation_and_no_fabricated_exit (test_continuous_acceptance.TestPaperOperationalAcceptance.test_unresolved_export_keeps_real_mark_reservation_and_no_fabricated_exit) ... ok
+test_wire_session_and_inventory_routes_are_bounded_and_read_only (test_continuous_acceptance.TestPaperOperationalAcceptance.test_wire_session_and_inventory_routes_are_bounded_and_read_only) ... ok
+test_restore_reopens_real_store_reconciles_cash_paper_and_outbox (test_release_operations.TestApplicationRestore.test_restore_reopens_real_store_reconciles_cash_paper_and_outbox) ... [2026-10-25 18:41:14,762] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_7bc631f3 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 18:41:14,801] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_7bc631f3 in 51.17ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 18:41:14,810] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_7bc631f3 with exact cash input linkage
+[2026-10-25 18:41:14,958] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_212d5c3b via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 18:41:14,990] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_212d5c3b in 45.39ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 18:41:14,996] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_212d5c3b with exact cash input linkage
+ok
+test_sqlite_integrity_alone_cannot_pass_tampered_application_restore (test_release_operations.TestApplicationRestore.test_sqlite_integrity_alone_cannot_pass_tampered_application_restore) ... [2026-10-25 18:41:15,797] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_7542fe21 via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 18:41:15,828] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_7542fe21 in 44.77ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-25 18:41:15,859] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_7542fe21 with exact cash input linkage
+[2026-10-25 18:41:15,949] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_5ac0ed4c via Angel One SmartAPI (mode=LIVE)
+[2026-10-25 18:41:15,976] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_5ac0ed4c in 39.51ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-25 18:41:15,982] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_5ac0ed4c with exact cash input linkage
+ok
+test_bundle_detects_changed_source_bytes_with_original_manifest (test_release_operations.TestReleaseBundle.test_bundle_detects_changed_source_bytes_with_original_manifest) ... ok
+test_bundle_rejects_corrupt_content_and_undeclared_paths (test_release_operations.TestReleaseBundle.test_bundle_rejects_corrupt_content_and_undeclared_paths) ... ok
+test_reproducible_bundle_excludes_private_state_and_runs_bootstrap (test_release_operations.TestReleaseBundle.test_reproducible_bundle_excludes_private_state_and_runs_bootstrap) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 11.713s
+
+OK

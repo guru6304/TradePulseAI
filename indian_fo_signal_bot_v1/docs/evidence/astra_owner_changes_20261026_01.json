@@ -1,0 +1,38 @@
+{
+  "external_source": {
+    "brokers.py": {
+      "observed_hash": "a3d8de20e3f985e5a2380013bb6e27c4ecf6c51bf90a28f28fd1194a2f8d4ba7",
+      "prior_hash": "d162e3819e2281e44e8877ed12fb1fcf70da9405de3b908b5c241c6dcf458b98"
+    },
+    "config.py": {
+      "observed_hash": "5dc2055ea9b6743769388980094b3af661c9361eab7a59b1caf6065c1bf8e9af",
+      "prior_hash": "8e37fe37d1aaab8a31189da9449693c958e218027626567f9b0185799c1b5a17"
+    },
+    "verify_live_quick.py": {
+      "observed_hash": "45286341b70c855cd736ad5d34183ee1ba7a59ede0c4c09a253aea7b1b960114",
+      "prior_hash": null
+    }
+  },
+  "live_helper_execution": "NOT_RUN",
+  "live_helper_release": "EXPLICITLY_EXCLUDED_LOCAL_OPERATOR_SCRIPT",
+  "operational_databases": "NOT_OPENED_CONTENTS_UNATTESTED",
+  "original_documents_unchanged": true,
+  "owner_confirmation": "Yes?preserve those changes",
+  "prior_document_count": 522,
+  "provider_requests_by_this_task": 0,
+  "recorded_at": "2026-10-26T16:49:51.698769+00:00",
+  "runtime_settings": "NOT_ACTIVATED_TESTS_USE_ISOLATED_DEFAULTS",
+  "saved_config": {
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\.env": {
+      "baseline_hash": "e44f8dfd6e385c21434ec68bf0e0a9260893a641ba2fab02174084c79492b194",
+      "observed_hash": "e44f8dfd6e385c21434ec68bf0e0a9260893a641ba2fab02174084c79492b194",
+      "unchanged_since_baseline": true
+    },
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.env": {
+      "baseline_hash": "3da6fa0e4d01f79c49d3d03b16374de21bb7b0b770385a31db9241ca12f68bfc",
+      "observed_hash": "ba34d03a366f005ff76cdadff6082c7fbca384426d736ab63e94a1f0643e59b6",
+      "unchanged_since_baseline": false
+    }
+  },
+  "scope": "OWNER_CONFIRMED_SEPARATE_WORK_PRESERVED_NOT_ACCEPTED_AS_LIVE_EVIDENCE"
+}
