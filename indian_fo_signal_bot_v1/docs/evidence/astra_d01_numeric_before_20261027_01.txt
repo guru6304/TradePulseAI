@@ -1,0 +1,60 @@
+test_nonzero_iv_underflow_rejects_while_smallest_positive_float_survives (test_option_observations.TestOptionObservations.test_nonzero_iv_underflow_rejects_while_smallest_positive_float_survives) ... FAIL
+test_excessive_exponents_and_numeric_strings_raise_observation_errors (test_option_observations.TestOptionObservations.test_excessive_exponents_and_numeric_strings_raise_observation_errors) ... 
+  test_excessive_exponents_and_numeric_strings_raise_observation_errors (test_option_observations.TestOptionObservations.test_excessive_exponents_and_numeric_strings_raise_observation_errors) (value='1e999999999') ... ERROR
+  test_excessive_exponents_and_numeric_strings_raise_observation_errors (test_option_observations.TestOptionObservations.test_excessive_exponents_and_numeric_strings_raise_observation_errors) (value='1e-999999999') ... FAIL
+
+======================================================================
+ERROR: test_excessive_exponents_and_numeric_strings_raise_observation_errors (test_option_observations.TestOptionObservations.test_excessive_exponents_and_numeric_strings_raise_observation_errors) (value='1e999999999')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 197, in test_excessive_exponents_and_numeric_strings_raise_observation_errors
+    self.assert_rejected(payload, endpoint=ANGEL_GREEKS)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 96, in assert_rejected
+    self.parse(*args, **kwargs)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 91, in parse
+    return parse_option_capture(raw if raw is not None else json.dumps(payload).encode(),
+        endpoint=endpoint, request=request, master=master, provenance=provenance, **arguments)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 332, in parse_option_capture
+    append(identity, spot, ["data", i], _maps(row, mapping, ["data", i]))
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 254, in append
+    fields=_fields(sources), source_time=None, source_time_status="UNAVAILABLE_SOURCE_TIME",
+           ~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 206, in _fields
+    raw_value=raw, numeric_value=None if raw is None else _number(raw, count=field in COUNTS, signed=field in SIGNED),
+                                                          ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 83, in _number
+    or (positive and numeric <= 0) or abs(numeric) > 2**53 - 1
+                                      ~~~^^^^^^^^^
+decimal.Overflow: [<class 'decimal.Overflow'>]
+
+======================================================================
+FAIL: test_nonzero_iv_underflow_rejects_while_smallest_positive_float_survives (test_option_observations.TestOptionObservations.test_nonzero_iv_underflow_rejects_while_smallest_positive_float_survives)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 190, in test_nonzero_iv_underflow_rejects_while_smallest_positive_float_survives
+    self.assert_rejected(payload)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 95, in assert_rejected
+    with self.assertRaises(ObservationError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: ObservationError not raised
+
+======================================================================
+FAIL: test_excessive_exponents_and_numeric_strings_raise_observation_errors (test_option_observations.TestOptionObservations.test_excessive_exponents_and_numeric_strings_raise_observation_errors) (value='1e-999999999')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 197, in test_excessive_exponents_and_numeric_strings_raise_observation_errors
+    self.assert_rejected(payload, endpoint=ANGEL_GREEKS)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 95, in assert_rejected
+    with self.assertRaises(ObservationError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: ObservationError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.019s
+
+FAILED (failures=2, errors=1)

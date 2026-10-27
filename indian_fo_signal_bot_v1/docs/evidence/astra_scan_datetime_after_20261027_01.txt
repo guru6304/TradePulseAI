@@ -1,0 +1,40 @@
+test_each_distinct_input_is_normalized_once_and_all_references_match (test_astra_scan_references.TestAstraScanReferences.test_each_distinct_input_is_normalized_once_and_all_references_match) ... [2026-10-27 07:54:40,490] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_7d6506d4 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:40,534] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_7d6506d4 in 54.16ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+ok
+test_evaluator_input_mutation_invalidates_metadata_reuse (test_astra_scan_references.TestAstraScanReferences.test_evaluator_input_mutation_invalidates_metadata_reuse) ... [2026-10-27 07:54:40,605] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_13e2ea75 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:40,640] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_13e2ea75 in 35.13ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+ok
+test_returned_metadata_is_independent_and_next_scan_rebuilds_it (test_astra_scan_references.TestAstraScanReferences.test_returned_metadata_is_independent_and_next_scan_rebuilds_it) ... [2026-10-27 07:54:40,652] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_39b5d9ea via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:40,689] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_39b5d9ea in 36.74ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+[2026-10-27 07:54:40,696] [INFO] [tradepulse.scanner] Starting scan scan_20261016_104000_decf0287 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:40,731] [INFO] [tradepulse.scanner] Completed scan scan_20261016_104000_decf0287 in 36.07ms: status=COMPLETED, signals=1, persisted=0, duplicates=1, persistence=OK
+ok
+test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint (test_astra_scan_references.TestAstraScanReferences.test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint) ... [2026-10-27 07:54:40,748] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_b840bd0f via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:40,801] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_b840bd0f in 53.54ms: status=COMPLETED, signals=2, persisted=2, duplicates=0, persistence=OK
+ok
+test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject (test_astra_evaluation_reads.TestAstraEvaluationReads.test_rehashed_invalid_references_inside_arbitrary_nested_extensions_reject) ... [2026-10-27 07:54:40,817] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_36914115 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:41,728] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_36914115 in 912.27ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only (test_astra_evaluation_reads.TestAstraEvaluationReads.test_scalar_heavy_real_evaluation_traversal_is_container_bounded_and_read_only) ... [2026-10-27 07:54:41,973] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_6c8ee2e6 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:42,581] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_6c8ee2e6 in 609.39ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+EVALUATION_TRAVERSAL containers=3844 scalars=33628 reference_calls=3844
+ok
+test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked (test_astra_evaluation_reads.TestAstraEvaluationReads.test_valid_nested_reference_then_later_rehashed_corruption_is_rechecked) ... [2026-10-27 07:54:42,652] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_6fd2e6a4 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:43,214] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_6fd2e6a4 in 561.71ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_promise_all_burst_across_all_dashboard_endpoints) ... [2026-10-27 07:54:43,364] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_24c39b2d via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:43,891] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_24c39b2d in 527.45ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+[2026-10-27 07:54:45,766] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_afb8d4c0 via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:46,488] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_afb8d4c0 in 721.21ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_p1f_concurrent_reads_do_not_block_during_active_slow_scan_and_overlap_returns_409 (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_concurrent_reads_do_not_block_during_active_slow_scan_and_overlap_returns_409) ... [2026-10-27 07:54:47,867] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_2c53025c via NSE Slow Simulation Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:47,881] [WARNING] [tradepulse.scanner] Scan scan_20261016_103500_78baf2d0 skipped because another scan is already in progress.
+[2026-10-27 07:54:48,504] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_2c53025c in 638.50ms: status=COMPLETED, signals=16, persisted=16, duplicates=0, persistence=OK
+ok
+test_p1f_private_file_disclosure_remains_blocked_under_concurrent_requests (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_private_file_disclosure_remains_blocked_under_concurrent_requests) ... ok
+test_p1f_server_uses_threading_http_server_and_base_request_handler (test_bot.TestIndianFOSignalBotPhase1F.test_p1f_server_uses_threading_http_server_and_base_request_handler) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 9.021s
+
+OK

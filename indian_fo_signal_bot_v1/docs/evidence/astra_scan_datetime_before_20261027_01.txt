@@ -1,0 +1,25 @@
+test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint (test_astra_scan_references.TestAstraScanReferences.test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint) ... [2026-10-27 07:54:20,748] [INFO] [tradepulse.scanner] Starting scan scan_20261016_103500_cc96b04f via Bidirectional Fixture Test Adapter (SIMULATED) (mode=SIMULATED)
+[2026-10-27 07:54:20,769] [ERROR] [tradepulse.scanner] Order Block evaluation error on RELIANCE: Object of type datetime is not JSON serializable
+[2026-10-27 07:54:20,776] [ERROR] [tradepulse.scanner] Strategy evaluate_vwap_pullback error on RELIANCE: Object of type datetime is not JSON serializable
+[2026-10-27 07:54:20,781] [ERROR] [tradepulse.scanner] Strategy evaluate_orb_breakout error on RELIANCE: Object of type datetime is not JSON serializable
+[2026-10-27 07:54:20,788] [ERROR] [tradepulse.scanner] Strategy evaluate_supertrend_pullback error on RELIANCE: Object of type datetime is not JSON serializable
+[2026-10-27 07:54:20,789] [INFO] [tradepulse.scanner] Completed scan scan_20261016_103500_cc96b04f in 64.24ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+FAIL
+
+======================================================================
+FAIL: test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint (test_astra_scan_references.TestAstraScanReferences.test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_scan_references.py", line 118, in test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint
+    self.assertEqual(scan['scan_status'], 'COMPLETED')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'COMPLETED_EMPTY' != 'COMPLETED'
+- COMPLETED_EMPTY
+?          ------
++ COMPLETED
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.147s
+
+FAILED (failures=1)

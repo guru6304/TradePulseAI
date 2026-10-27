@@ -1,0 +1,24 @@
+{
+  "bound_files": 109,
+  "canonical": "master_astra_rank_history_20261027_01.json",
+  "canonical_sha256": "69ae493b1d06e4fed2a3506216de2f4011182dd0730ec78ef76f5eb871b365b8",
+  "checks": {
+    "bound_files_match": true,
+    "current_source_matches": true,
+    "master_has_18_sections": true,
+    "owner_saved_config_preserved": true,
+    "owner_source_preserved": true
+  },
+  "closeout": "astra_rank_closeout_20261027_02.json",
+  "closeout_sha256": "4c5a9148d35eb8572c8abaefb4a11836efdea2dda03c38553694803c778e0c56",
+  "compiled": 97,
+  "current_scope": "OFFLINE_CASH_RANKING_AND_LATENCY_INTEGRITY_SLICE",
+  "kind": "CURRENT_SOURCE_AND_CLOSEOUT_INTEGRITY_VALIDATION_NOT_NEW_TEST_RUN",
+  "mission_complete": false,
+  "next_task": "D01.2",
+  "node": 38,
+  "python": 1128,
+  "recorded_at": "2026-10-27T02:34:47.682341+00:00",
+  "source_files": 102,
+  "status": "PASS"
+}

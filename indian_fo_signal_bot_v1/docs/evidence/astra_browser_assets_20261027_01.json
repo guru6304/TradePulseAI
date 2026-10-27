@@ -1,0 +1,49 @@
+{
+  "assets": [],
+  "completed_at": "2026-10-27T12:49:52.160481+00:00",
+  "errors": [
+    {
+      "error_type": "URLError",
+      "role": "font_stylesheet",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "error_type": "URLError",
+      "role": "tailwind_3.4.17",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "error_type": "URLError",
+      "role": "chart_4.4.1",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "error_type": "URLError",
+      "role": "tailwind_MIT",
+      "url": "https://raw.githubusercontent.com/tailwindlabs/tailwindcss/v3.4.17/LICENSE"
+    },
+    {
+      "error_type": "URLError",
+      "role": "chart_MIT",
+      "url": "https://raw.githubusercontent.com/chartjs/Chart.js/v4.4.1/LICENSE.md"
+    },
+    {
+      "error_type": "URLError",
+      "role": "inter_OFL",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt"
+    },
+    {
+      "error_type": "URLError",
+      "role": "jetbrainsmono_OFL",
+      "url": "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/OFL.txt"
+    }
+  ],
+  "helper_sha256": "48ccfc31d1bd04797062aa85646d7687501f51b6892a6db6f5906dc5b588e769",
+  "html_sha256": "d1cf81c4e65d97cbdaa3bcf73955a8158ce94b54926726bf21ef623d82913dc6",
+  "licenses": [],
+  "schema_version": "tradepulse.public-ui-assets.v1",
+  "scope": "PUBLIC_UI_ASSETS_ONLY_NO_PROVIDER_REQUESTS",
+  "started_at": "2026-10-27T12:49:47.901631+00:00",
+  "status": "FAIL",
+  "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36"
+}

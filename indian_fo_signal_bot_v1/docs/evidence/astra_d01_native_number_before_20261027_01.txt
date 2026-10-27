@@ -1,0 +1,36 @@
+test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) ... 
+  test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) (replacement='"iv": 1e-999') ... FAIL
+  test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) (replacement='"volume": 1.00000000000000001') ... FAIL
+  test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) (replacement='"oi": 1e-999') ... FAIL
+
+======================================================================
+FAIL: test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) (replacement='"iv": 1e-999')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 311, in test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts
+    with self.assertRaises(ObservationError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: ObservationError not raised
+
+======================================================================
+FAIL: test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) (replacement='"volume": 1.00000000000000001')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 311, in test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts
+    with self.assertRaises(ObservationError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: ObservationError not raised
+
+======================================================================
+FAIL: test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts (test_option_observations.TestOptionObservations.test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts) (replacement='"oi": 1e-999')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 311, in test_native_json_numeric_precision_cannot_hide_zero_or_fractional_counts
+    with self.assertRaises(ObservationError):
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+AssertionError: ObservationError not raised
+
+----------------------------------------------------------------------
+Ran 1 test in 0.016s
+
+FAILED (failures=3)

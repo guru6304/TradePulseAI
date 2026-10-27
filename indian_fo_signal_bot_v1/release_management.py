@@ -67,6 +67,8 @@ class ReleasePackager:
         "notification_outbox.py",
         "publisher_trust.py",
         "option_execution.py",
+        "option_observations.py",
+        "benchmark_observations.py",
         "historical_study.py",
         "dhan_feed.py",
         "dhan_feed_control.py",

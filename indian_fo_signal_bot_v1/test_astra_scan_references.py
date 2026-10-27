@@ -101,3 +101,21 @@ class TestAstraScanReferences(unittest.TestCase):
         for name in ('strat_2_vwap_pullback', 'strat_4_orb_filtered', 'strat_5_supertrend_pullback'):
             self.assertEqual(traces[name]['source_reference']['candle_digest'], expected[0])
         self.assertTrue(all(row['actionable'] is False for row in scan['candidate_evaluations']))
+
+    def test_supported_datetime_input_uses_normalization_without_raw_json_fingerprint(self):
+        from candle_lineage import digest
+        from strategies import filter_completed_candles, parse_ist_timestamp
+        fetch = self.scanner.fetch_candles
+        expected = []
+        def datetime_input(*args, **kwargs):
+            rows = fetch(*args, **kwargs)
+            for row in rows:
+                row['timestamp'] = parse_ist_timestamp(row['timestamp'])
+            expected.append(digest(filter_completed_candles(rows, interval_min=5, now=self.now)))
+            return rows
+        with patch.object(self.scanner, 'fetch_candles', side_effect=datetime_input):
+            scan = self.engine.run_single_scan()
+        self.assertEqual(scan['scan_status'], 'COMPLETED')
+        self.assertEqual(len(scan['strategy_evaluations']), 4)
+        for row in scan['strategy_evaluations'] + scan['candidate_evaluations']:
+            self.assertEqual(row['source_reference']['candle_digest'], expected[0])

@@ -1,0 +1,11 @@
+{
+  "closeout_sha256": "ad58eb5570e96d189b1d4c429b4d850cbdf3bbad61a81051df16d757bf2b3899",
+  "current_receipt_validated": true,
+  "files": 35,
+  "new_tests_executed": false,
+  "preserved_documents": 727,
+  "recorded_at": "2026-10-27T08:44:34.679331+00:00",
+  "scope": "D01_PURE_OBSERVATION_OFFLINE_SLICE_NOT_MISSION_ACCEPTANCE",
+  "source_files": 106,
+  "status": "PASS"
+}

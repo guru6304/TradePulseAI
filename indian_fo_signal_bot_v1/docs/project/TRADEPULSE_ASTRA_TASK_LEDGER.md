@@ -6,8 +6,8 @@ Mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1. States describe scoped evidence on
 |---|---|---|---|---|
 |A01|1/6|Baseline recovery|VERIFIED_COMPLETE|Original Phase6 source proof validated; baseline retained|
 |A02|1/6|Persistent checkpoint system|VERIFIED_COMPLETE|Current checkpoint/progress/ledger; update at each unit|
-|A03|6|Historical release/receipt and preservation checks|VERIFIED_COMPLETE|Old archives match original source;522 old documents/env/BRD preserved|
-|B01|6|Strategy-specific automatic paper lifecycle|PARTIAL_VERIFIED|ORB offline slice verified; other strategy/contract triggers unavailable|
+|A03|6|Historical release/receipt and preservation checks|VERIFIED_COMPLETE|Old archives/522 documents/BRD preserved; root env matches baseline, app env matches separately confirmed owner change|
+|B01|6|Strategy-specific automatic paper lifecycle|IN_PROGRESS|ORB offline slice verified; other strategy/contract triggers unavailable|
 |B01.1|6|Premature fill reproduction|VERIFIED_COMPLETE|entry100/high99/fill98 synthetic reproduction retained|
 |B01.2|6|ORB future contract and atomic guard|VERIFIED_COMPLETE|28 new tests plus canonical; explicit experimental rule, no empirical promotion|
 |B01.3|6|Legacy automatic rejection and preserved recovery|VERIFIED_COMPLETE|No new legacy automatic entries; manual accounting and committed recovery tested|
@@ -15,19 +15,27 @@ Mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1. States describe scoped evidence on
 |B02|5/6|GET/HEAD scan mutation prohibition|VERIFIED_COMPLETE|Before fail; focused + final canonical pass; POST remains explicit|
 |C01|2|Exact declared study session coverage|VERIFIED_COMPLETE|Before failures;23 focused and canonical pass|
 |C02|2/4/5|Descriptive strategy evidence metadata|VERIFIED_COMPLETE|Scanner/history/UI integration; no promotion authority|
-|C03|4|Dynamic opportunity rank history|IN_PROGRESS|Integrated retained rank/API/UI; focused 105 Python and 38 Node PASS; canonical pending|
-|C03.1|4|Deterministic prototype and expiry|VERIFIED_COMPLETE|8 tests including rank reversal, ties, source revisions and exact expiry|
-|C03.2|4/5|Retained source validation/persistence/API/UI|IN_PROGRESS|Implemented; adversarial review repaired; boundary checks and canonical current-source proof pending|
-|D01|2/3|Broker/F&O capability matrix and normalized contracts|IN_PROGRESS|Official docs checked; endpoint/entitlement-specific fixture interfaces pending|
-|E01|5/6|Truthful displays and bounded paper journal|VERIFIED_COMPLETE|32 Node tests; narrow renderer/read safety scope only|
-|E01.2|5|Browser/mobile/accessibility/pagination acceptance|NOT_STARTED|No new actual-browser evidence|
+|C03|4|Dynamic opportunity rank history|VERIFIED_COMPLETE|Offline cash priority scope; authentic market/empirical factors separate|
+|C03.1|4|Deterministic builder and expiry|VERIFIED_COMPLETE|9 tests; direction identity and exact expiry; canonical|
+|C03.2|4/5|Retained source validation/persistence/API/UI|VERIFIED_COMPLETE|18 rank-history tests; focused 62 plus full canonical; current/history distinction|
+|D01|2/3|Broker/F&O capability matrix and normalized contracts|IN_PROGRESS|D01.1/2 inventory and pure endpoint fixtures verified; qualified runtime admission and genuine data remain pending|
+|E01|5/6|Truthful displays and bounded paper journal|VERIFIED_COMPLETE|38 current Node tests; narrow renderer/read safety scope, actual-browser scope separately listed|
+|E01.2|5|Browser/mobile/accessibility/pagination acceptance|IN_PROGRESS|Chrome/Edge DOM/keyboard PASS36 each; production-assets styling/full accessibility/paging pending|
 |E02|1/6|Independent adversarial review|IN_PROGRESS|Scoped read-only review completed; paper and full product remain pending|
 |E02.1|4|Rank expiry review finding|VERIFIED_COMPLETE|Reproduced fail then exact-boundary pass, canonical bound|
 |F01|6|Commercialization/data-rights/regulatory blueprint|IN_PROGRESS|Dated official questions and hypotheses documented; actual launch/counsel/vendor decisions pending|
 |F02|6|Verification and final release|IN_PROGRESS|Current slice verified; full mission release pending|
-|F02.1|6|Current-slice canonical and preserved history|VERIFIED_COMPLETE|1088Python/32Node/90compile; source/log/preservation check PASS|
-|F02.2|6|Whole mission final package|NOT_STARTED|B01/C03/remaining engineering and review; no new ZIP|
+|F02.1|6|Current-slice canonical and preserved history|VERIFIED_COMPLETE|1184 Python/38 Node/101 compile; current D01 source/log/handoff bindings|
+|F02.2|6|Whole mission final package|NOT_STARTED|D01, broader B01, browser and independent product review remain; no new ZIP|
 |F03|All|18-section portable master report|VERIFIED_COMPLETE|Partial status explicit; must update after future source changes|
 |X01|2|Empirical/OOS acceptance|BLOCKED|Qualified original history, rights/trust/date/universe and frozen study|
 |X02|3|Genuine scanner-consumed completed live candles|BLOCKED|New exact authorization and actual accepted observation evidence|
 |X03|6|Customer/public launch|BLOCKED|Counsel/data rights/security/operating readiness and separate approval|
+|D01.1|2/3|Neutral point-in-time contract inventory|VERIFIED_COMPLETE|Source and official public-schema inventory retained; no runtime/entitlement claim|
+|D01.2|2/3|Pure observation validator and offline endpoint fixtures|VERIFIED_COMPLETE|56 new tests plus current canonical; no runtime/provider/research admission|
+|E01.3|5/6|Context batching and health read integrity|VERIFIED_COMPLETE|11 batch and3 health regressions; combined104 and full canonical; transaction-local validation, no production latency claim|
+|E01.5|5/6|Exact source metadata reuse and bounded evaluation traversal|VERIFIED_COMPLETE|4 scanner and3 nested-reference tests; combined129/final11/canonical; independent scanner review|
+|E01.4|5/6|Production latency acceptance|NOT_STARTED|Instrumented after-probe failed3s health limit; current canonical passes original limits; controlled operating measurements pending|
+|E01.2a|5|Actual browser DOM and keyboard|VERIFIED_COMPLETE|Chrome36/36 and Edge36/36; two viewports, fixture GET-only; external assets omitted|
+
+|E01.2b|5|Production-assets visual/mobile/accessibility acceptance|IN_PROGRESS|Next: inspect existing external assets/browser harness, retain reproducible offline checks; no provider activation|

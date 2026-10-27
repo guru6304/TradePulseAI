@@ -121,3 +121,46 @@ combined downgrade, direction identity and backward wall-clock expiry were
 reproduced before repair and confirmed by read-back after repair. Historical
 failures and drafts remain preserved. Final ordering/predecessor boundary checks
 and canonical current-source proof remain pending; no operational/provider actions.
+
+## 2026-10-27 ? recovered final C03 verification
+
+- Preserved canonical03 FAIL1118/1121 (two HTTP timing failures and local-helper inventory mismatch). No timeout limits changed.
+- Owner confirmed separate broker/config/app-env/live-helper changes; exact hashes retained. Original522 documents and root env match baseline; app env differs by owner change and is preserved. External HEAD now4030b39; no Git writes here.
+- Explicit local-helper release exclusion PASS17. Scanner-reference before02 FAIL1/PASS2, correction uses exact raw content and separate returned metadata. Initial missing import and nonexistent test-module failure retained; corrected.
+- Evaluation traversal clean before03 FAIL1/PASS2; after01 PASS3, recursive calls37472 to3844 while nested arbitrary references still reject corruption.
+- Combined latency/integrity/release PASS129. Datetime cache compatibility before FAIL1; fallback correction followed by final scanner/evaluation/HTTP PASS11. Independent scanner/release review complete; traversal author and coordinator review distinguished.
+- Source-bound ranking demo20261027_01 PASS1 with two actual fixture views. Canonical astra_rank_history_20261027_01 running against frozen source; acceptance/closeout pending result. No provider, real order, send or operational DB actions.
+
+## C03 verified boundary — 2026-10-27T02:32:51.196682+00:00
+
+Current canonical PASS 1128 Python/38 Node/97 compile.
+Independent append-gap finding reproduced (2 pass/1 fail), repaired with latest
+committed-input selection; focused62/62 and canonical PASS. Indexed lookup and
+result-mode hiding covered. First two canonicals each1106/1107 had different HTTP
+timeouts. Deterministic redundant context/health-read regressions reproduced and
+repaired with transaction-local batching; combined integration104/104 passes and
+independent scoped review found no material issue. Instrumented after-probe still
+FAIL3/4 on health3.44s>3s. Final canonical passes unchanged timeout limits; no
+production latency guarantee. Chrome/Edge each36 DOM/keyboard checks pass; full
+visual styling absent. Integrated demo20261027_01 retains TCS78/INFY63 then69/81 against
+current source. D01.1 inventory done, D01.2 validator is next.
+Previous receipts/handoff retained;522 old docs, BRD and historical archives
+preserved. Owner-confirmed source/app-env changes are separately hash-bound. No operational/provider/Git actions and no new release archive.
+
+
+2026-10-27 D01.2 started from the verified C03 checkpoint. Prior handoff bytes,
+source and preserved document/config hashes archived in astra_d01_baseline_20261027_01.json.
+Pure transport-free endpoint and benchmark fixtures delegated; no provider activation.
+
+
+2026-10-27T08:44:20.480013+00:00 — D01.2 VERIFIED_COMPLETE in bounded offline scope. Two pure modules,
+56 tests; 1184 Python/38 Node/101 compile full canonical PASS.
+Numerical underflow/JSON precision and malformed-offset findings reproduced,
+repaired and retained; no guessed units/clocks or snapshot replay promotion.
+Preservation/current handoff: astra_d01_closeout_20261027_01.json.
+Next: E01.2b: retain versioned production UI assets and extend the existing CDP harness to render unchanged dashboard HTML with verified local assets for visual/mobile/accessibility checks, using astra_browser_production_assets_plan_20261027_01.md; no provider calls.
+
+
+2026-10-27T08:47:56.852237+00:00 — E01.2b started from verified D01.2. Source/35 closeout bindings
+and owner changes validated, prior handoff archived. No repeated baseline audit.
+New actual-assets harness delegated; before/fix/after visual and semantic checks pending.

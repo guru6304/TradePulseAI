@@ -72,13 +72,14 @@ def main():
             path = evidence / artifact["file"]
             assert path.parent == evidence and sha(path) == artifact["sha256"]
             extra_paths.append(path)
-    demo_path = evidence / "astra_rank_integrated_demo_20261026_04.json"
+    demo_path = evidence / "astra_rank_integrated_demo_20261027_01.json"
     demo = json.loads(demo_path.read_text(encoding="utf-8"))
     assert demo["status"] == "PASS" and demo["exit_code"] == 0 and all(demo["checks"].values())
     assert demo["source_before"] == demo["source_after"] == proof["source_after"]
     assert sha(APP / demo["helper"]) == demo["helper_sha256"]
     extra_paths += [demo_path, APP / demo["helper"], APP / "docs/reports/astra_d01_contract_inventory_20261026_01.md",
-                    APP / "docs/reports/astra_context_health_review_20261026_01.md"]
+                    APP / "docs/reports/astra_context_health_review_20261026_01.md",
+                    APP / "docs/reports/astra_reference_cache_review_20261027_01.md"]
     supplements = [(APP / name).resolve() for name in args.supplement]
     assert all(path.is_file() and path.is_relative_to(APP / "docs") for path in supplements)
     assert all(path.is_file() for path in extra_paths)
@@ -159,7 +160,7 @@ omitted, so full visual/mobile acceptance and product/security review remain ope
     content = content.replace("SQLite operational schema and data\nwere not migrated by this slice.",
         "The additive rank table/index migration was tested only in isolated fixtures;\noperational SQLite schema and data were not opened or migrated by this slice.")
     content = content.replace("Exact final hashes and historical archive checks are in the new\nastra_preservation receipt.",
-        "C03 additionally adds rank_history.py/test_astra_rank_history.py, changes storage.py\nand scanner/lineage/server/UI integration, and registers release/test modules. The\nHTTP recovery also changes notification_outbox.py/readiness_policy.py and adds\ntest_astra_context_batch.py/test_astra_health_reads.py. Exact current hashes and\nhistorical archive checks are in astra_rank_preservation_" + args.stage + ".json.")
+        "C03 additionally adds rank_history.py/test_astra_rank_history.py, changes storage.py\nand scanner/lineage/server/UI integration, and registers release/test modules. The\nHTTP recovery also changes notification_outbox.py/readiness_policy.py and adds\ntest_astra_context_batch.py/test_astra_health_reads.py plus scanner-reference and\nevaluation-read regression modules. Exact source reuse and container traversal\npreserve identity, strategy, freshness and nested reference validation. Exact current hashes and\nhistorical archive checks are in astra_rank_preservation_" + args.stage + ".json.")
     section(6, "Dynamic ranking specification and integrated evidence", """
 `opportunity_ranking.build_snapshot/current_view` uses rule quality descending,
 actual gross T1 reward/risk descending, then deterministic identity ties. Policy
@@ -209,13 +210,13 @@ profile/code archive, source/score forgery, required-history downgrade, deleted
 latest append, predecessor corruption, rollback, indexed lookup and read-only
 HTTP/renderer failure handling. This is software acceptance, not observed edge.
 
-Retained integrated demo `astra_rank_integrated_demo_20261026_04.json` executes
+Retained integrated demo `astra_rank_integrated_demo_20261027_01.json` executes
 that real scanner fixture: TCS quality78 to69; INFY63 to81. Initial TCS/INFY order
 becomes INFY/TCS with previous ranks2/1 and SCORE_COMPONENT_CHANGED. Gross T1 RR
 is approximately1.6 in both examples. This artifact contains no genuine market data.
 """)
     content = content.replace("## 7. Options, volume, depth and Greeks assessment\n",
-        "## 7. Options, volume, depth and Greeks assessment\n\nD01.1 inventory is now complete in [the focused contract report](../reports/astra_d01_contract_inventory_20261026_01.md), accessed2026-10-26. Existing exact-contract identity and historical quote/depth replay are reusable. The inspected live chain flatteners discard fields and default some missing Greeks/IV to zero; source clocks and endpoint unit policies remain incomplete. This is an inspected integration boundary, not a new runtime acceptance. Next D01.2 must preserve raw units/presence/clock provenance and keep missing normalization unavailable. Official examples do not establish a cross-endpoint IV scale conversion. No adapter behavior changed in C03.\n")
+        "## 7. Options, volume, depth and Greeks assessment\n\nD01.1 inventory is now complete in [the focused contract report](../reports/astra_d01_contract_inventory_20261026_01.md), accessed2026-10-26. Existing exact-contract identity and historical quote/depth replay are reusable. The inspected live chain flatteners discard fields and default some missing Greeks/IV to zero; source clocks and endpoint unit policies remain incomplete. This is an inspected integration boundary, not a new runtime acceptance. Next D01.2 must preserve raw units/presence/clock provenance and keep missing normalization unavailable. Official examples do not establish a cross-endpoint IV scale conversion. C03 did not change adapters; separately confirmed owner edits are listed in section2.\n")
     content = content.replace("|R01 prototype coverage boundary|New rank history is standalone. Net friction, source authenticity and sector correlation are unavailable, not imputed. No runtime integration claim.|",
         "|R01 coverage boundary|Cash rank history/API/UI integrated offline. Net friction, publisher authenticity, sector correlation and exact option fitness remain unavailable.|")
     content = content.replace("|R02 medium stale current priority, corrected|",
@@ -285,6 +286,14 @@ even inside arbitrary extension/list fields. New regressions verify unchanged
 payloads, raw-input mutation invalidation and later rehashed source corruption.
 Initial scanner-after failures from a missing copy import and a mistyped test
 module are retained, corrected, and superseded by actual successful checks.
+Combined latency/integrity/release integration passed129/129. Review then found
+raw datetime input could fail the optional fingerprint; a retained failing test
+was corrected by bypassing metadata reuse when raw JSON fingerprinting fails.
+The final focused scanner/evaluation/HTTP run passed11/11 (4 scanner,3 traversal,
+4 original concurrent HTTP tests). Independent scanner/release review found no
+remaining material issue. The traversal author owns its3 tests; coordinator
+review is separate. Recursion dropped37472 to3844 calls with all nested-reference
+checks retained. This is bounded work reduction, not production SLO acceptance.
 
 Actual browsers: astra_browser_chrome_20261026_02 and astra_browser_edge_20261026_01
 each PASS36, exit0. Desktop1440x1000 and mobile390x844: DOMContentLoaded, literal
@@ -296,7 +305,7 @@ Chart/Tailwind stubbed; screenshots are diagnostic DOM evidence, not visual/mobi
 layout approval. Initial Chrome _01 FAIL retained; the harness's async Enter wait
 was corrected without production changes. Browser receipt/artifact hashes checked.
 
-Integrated demo _04 PASS1/1, two source-bound views, unchanged current source
+Integrated demo20261027_01 PASS1/1, two source-bound views, unchanged current source
 snapshot matching the canonical receipt. Earlier _02 matched the prior97-file
 snapshot; its first sandbox SQLite failure remains preserved. D01.1 read-only inventory
 reconfirmed public schemas and documents exact unresolved units/clocks; no provider
@@ -350,6 +359,10 @@ ORB/ranking implementations. All new test stages/evidence must use unique names.
 Resume: `CONTINUE FROM CHECKPOINT. Preserve verified B01 ORB and C03 rank history;
 resume the exact active D01/E01.2 step, with no provider calls, real orders or sends.`
 """)
+    import subprocess
+    head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=APP, text=True).strip()
+    content = content.replace("Branch main; starting HEAD `fcdbadb`,", "Current externally advanced HEAD `" + head + "`; this task made no Git writes.\nBranch main; starting HEAD `fcdbadb`,")
+    assert len(re.findall(r"^## \d+\. ", content, re.M)) == 18
     paths[0].write_text(content, encoding="utf-8")
     paths[1].write_text(f"""# TradePulse Astra execution checkpoint
 
@@ -366,7 +379,8 @@ rollback, expired/history, combined downgrade and deleted-latest append checks p
 Local integrity is not market authenticity or empirical strategy acceptance.
 B01 ORB future-trigger software remains covered; other strategy/F&O policies absent.
 
-Current files include rank_history.py, opportunity_ranking.py, scanner_engine.py,
+Branch main; externally advanced HEAD {head}. Current files include rank_history.py,
+opportunity_ranking.py, scanner_engine.py,
 candle_lineage.py, storage.py, server.py, notification_outbox.py, readiness_policy.py,
 public/index.html, new and existing tests,
 release/test registration. Four mutable handoff documents were updated; prior
@@ -375,7 +389,10 @@ running at this verified boundary. This task made no provider/env/operational DB
 mutation. Owner-confirmed broker/config/app-env/live-helper edits are preserved;
 app env no longer matches the original baseline. See astra_owner_changes_20261026_01.json.
 
-Context/health combined regression PASS104;11 new context tests and3 health tests.
+Context/health combined regression PASS104; later combined integration PASS129.
+Final scanner/evaluation/HTTP compatibility PASS11. Four scanner-reference and
+three container-traversal tests are registered in the full canonical suite.
+Current external HEAD is {head}; no Git writes by this task.
 Instrumented after-probe FAIL3/4 (health3.44s versus3s); no latency limits changed.
 Final canonical above passes, but this does not establish a production latency SLO.
 
@@ -390,7 +407,7 @@ Resume instruction: CONTINUE FROM CHECKPOINT.
 
 """ + previous[NAMES[1]], encoding="utf-8")
     with paths[2].open("a", encoding="utf-8") as stream:
-        stream.write(f"\n## C03 verified boundary — {now}\n\nCurrent canonical PASS {count} Python/{node} Node/{compiled} compile.\nIndependent append-gap finding reproduced (2 pass/1 fail), repaired with latest\ncommitted-input selection; focused62/62 and canonical PASS. Indexed lookup and\nresult-mode hiding covered. First two canonicals each1106/1107 had different HTTP\ntimeouts. Deterministic redundant context/health-read regressions reproduced and\nrepaired with transaction-local batching; combined integration104/104 passes and\nindependent scoped review found no material issue. Instrumented after-probe still\nFAIL3/4 on health3.44s>3s. Final canonical passes unchanged timeout limits; no\nproduction latency guarantee. Chrome/Edge each36 DOM/keyboard checks pass; full\nvisual styling absent. Integrated demo _04 retains TCS78/INFY63 then69/81 against\ncurrent source. D01.1 inventory done, D01.2 validator is next.\nPrevious receipts/handoff retained;522 old docs, BRD and historical archives\npreserved. Owner-confirmed source/app-env changes are separately hash-bound. No operational/provider/Git actions and no new release archive.\n")
+        stream.write(f"\n## C03 verified boundary — {now}\n\nCurrent canonical PASS {count} Python/{node} Node/{compiled} compile.\nIndependent append-gap finding reproduced (2 pass/1 fail), repaired with latest\ncommitted-input selection; focused62/62 and canonical PASS. Indexed lookup and\nresult-mode hiding covered. First two canonicals each1106/1107 had different HTTP\ntimeouts. Deterministic redundant context/health-read regressions reproduced and\nrepaired with transaction-local batching; combined integration104/104 passes and\nindependent scoped review found no material issue. Instrumented after-probe still\nFAIL3/4 on health3.44s>3s. Final canonical passes unchanged timeout limits; no\nproduction latency guarantee. Chrome/Edge each36 DOM/keyboard checks pass; full\nvisual styling absent. Integrated demo20261027_01 retains TCS78/INFY63 then69/81 against\ncurrent source. D01.1 inventory done, D01.2 validator is next.\nPrevious receipts/handoff retained;522 old docs, BRD and historical archives\npreserved. Owner-confirmed source/app-env changes are separately hash-bound. No operational/provider/Git actions and no new release archive.\n")
     replacements = {
         "B01": "|B01|6|Strategy-specific automatic paper lifecycle|IN_PROGRESS|ORB offline slice verified; other strategy/contract triggers unavailable|",
         "C03": "|C03|4|Dynamic opportunity rank history|VERIFIED_COMPLETE|Offline cash priority scope; authentic market/empirical factors separate|",
@@ -408,6 +425,7 @@ Resume instruction: CONTINUE FROM CHECKPOINT.
     lines.extend(["|D01.1|2/3|Neutral point-in-time contract inventory|VERIFIED_COMPLETE|Source and official public-schema inventory retained; no runtime/entitlement claim|",
                   "|D01.2|2/3|Pure observation validator and offline endpoint fixtures|NOT_STARTED|Exact next task; preserve raw units/clocks/presence, reuse dated identity; no provider activation|",
                   "|E01.3|5/6|Context batching and health read integrity|VERIFIED_COMPLETE|11 batch and3 health regressions; combined104 and full canonical; transaction-local validation, no production latency claim|",
+                  "|E01.5|5/6|Exact source metadata reuse and bounded evaluation traversal|VERIFIED_COMPLETE|4 scanner and3 nested-reference tests; combined129/final11/canonical; independent scanner review|",
                   "|E01.4|5/6|Production latency acceptance|NOT_STARTED|Instrumented after-probe failed3s health limit; current canonical passes original limits; controlled operating measurements pending|",
                   "|E01.2a|5|Actual browser DOM and keyboard|VERIFIED_COMPLETE|Chrome36/36 and Edge36/36; two viewports, fixture GET-only; external assets omitted|"])
     paths[3].write_text("\n".join(lines) + "\n", encoding="utf-8")

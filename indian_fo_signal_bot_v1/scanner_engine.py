@@ -846,9 +846,15 @@ class IntradayBotEngine:
             source_references = {}
             def source_reference(symbol):
                 raw = all_candles_map.get(symbol, [])
-                raw_digest = digest(raw)
+                try:
+                    raw_digest = digest(raw)
+                except (TypeError, ValueError):
+                    # The candle validator also accepts datetime/numeric inputs
+                    # which are not raw JSON. Preserve that contract without
+                    # caching; normalized source evidence still must serialize.
+                    raw_digest = None
                 cached = source_references.get(symbol)
-                if cached is not None and cached[0] == raw_digest:
+                if raw_digest is not None and cached is not None and cached[0] == raw_digest:
                     return copy.deepcopy(cached[1])
                 rows = filter_completed_candles(raw, interval_min=5, now=now_val)
                 batches = durable_work["snapshot"]["batches"] if durable_work else []
@@ -860,7 +866,8 @@ class IntradayBotEngine:
                 # Only metadata for exact input content in this scan is reused.
                 # Evaluators still validate candles; mutable overrides invalidate
                 # the cache, and callers cannot modify another trace's reference.
-                source_references[symbol] = (raw_digest, reference)
+                if raw_digest is not None:
+                    source_references[symbol] = (raw_digest, reference)
                 return copy.deepcopy(reference)
 
             def evaluate(strategy_id, evaluator, **arguments):

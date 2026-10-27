@@ -1,0 +1,41 @@
+test_crossed_unsorted_duplicate_price_and_fractional_depth_reject (test_option_observations.TestOptionDepthObservations.test_crossed_unsorted_duplicate_price_and_fractional_depth_reject) ... ok
+test_depth_level_limit_and_input_immutability (test_option_observations.TestOptionDepthObservations.test_depth_level_limit_and_input_immutability) ... ok
+test_explicit_synthetic_units_report_depth_sums_without_fill_claim (test_option_observations.TestOptionDepthObservations.test_explicit_synthetic_units_report_depth_sums_without_fill_claim) ... ok
+test_unknown_or_unverified_quantity_units_never_compute_coverage (test_option_observations.TestOptionDepthObservations.test_unknown_or_unverified_quantity_units_never_compute_coverage) ... ok
+test_explicit_synthetic_prior_close_requires_exact_baseline_session_and_time (test_option_observations.TestOptionOIObservations.test_explicit_synthetic_prior_close_requires_exact_baseline_session_and_time) ... ok
+test_mismatched_contract_revision_expiry_or_units_cannot_join (test_option_observations.TestOptionOIObservations.test_mismatched_contract_revision_expiry_or_units_cannot_join) ... ok
+test_oi_boolean_fractional_and_negative_values_do_not_enter_arithmetic (test_option_observations.TestOptionOIObservations.test_oi_boolean_fractional_and_negative_values_do_not_enter_arithmetic) ... ok
+test_stale_current_future_availability_and_intraday_misalignment_reject (test_option_observations.TestOptionOIObservations.test_stale_current_future_availability_and_intraday_misalignment_reject) ... ok
+test_synthetic_same_unit_intraday_arithmetic_is_non_actionable_and_immutable (test_option_observations.TestOptionOIObservations.test_synthetic_same_unit_intraday_arithmetic_is_non_actionable_and_immutable) ... ok
+test_unverified_sources_unknown_units_or_baseline_kind_never_compute_delta (test_option_observations.TestOptionOIObservations.test_unverified_sources_unknown_units_or_baseline_kind_never_compute_delta) ... ok
+test_absent_null_and_observed_zero_remain_distinct (test_option_observations.TestOptionObservations.test_absent_null_and_observed_zero_remain_distinct) ... ok
+test_actual_option_execution_rejects_snapshot_even_with_replay_labels (test_option_observations.TestOptionObservations.test_actual_option_execution_rejects_snapshot_even_with_replay_labels) ... ok
+test_angel_exact_echo_terms_and_unique_contracts_are_required (test_option_observations.TestOptionObservations.test_angel_exact_echo_terms_and_unique_contracts_are_required) ... ok
+test_angel_numeric_strings_and_signed_greeks_keep_raw_values (test_option_observations.TestOptionObservations.test_angel_numeric_strings_and_signed_greeks_keep_raw_values) ... ok
+test_boolean_nonfinite_malformed_negative_and_fractional_counts_reject (test_option_observations.TestOptionObservations.test_boolean_nonfinite_malformed_negative_and_fractional_counts_reject) ... ok
+test_capture_is_deterministic_does_not_mutate_inputs_or_infer_source_time (test_option_observations.TestOptionObservations.test_capture_is_deterministic_does_not_mutate_inputs_or_infer_source_time) ... ok
+test_chain_wrong_underlying_expiry_strike_token_and_leg_side_reject (test_option_observations.TestOptionObservations.test_chain_wrong_underlying_expiry_strike_token_and_leg_side_reject) ... ok
+test_duplicate_chain_rows_and_v3_unsolicited_or_duplicate_tokens_reject (test_option_observations.TestOptionObservations.test_duplicate_chain_rows_and_v3_unsolicited_or_duplicate_tokens_reject) ... ok
+test_endpoint_iv_magnitudes_are_never_guessed_into_a_common_scale (test_option_observations.TestOptionObservations.test_endpoint_iv_magnitudes_are_never_guessed_into_a_common_scale) ... ok
+test_expired_and_not_yet_effective_master_contracts_reject (test_option_observations.TestOptionObservations.test_expired_and_not_yet_effective_master_contracts_reject) ... ok
+test_master_normalized_fact_or_bytes_tamper_and_wrong_provider_reject (test_option_observations.TestOptionObservations.test_master_normalized_fact_or_bytes_tamper_and_wrong_provider_reject) ... ok
+test_missing_naive_future_or_reversed_local_clocks_reject (test_option_observations.TestOptionObservations.test_missing_naive_future_or_reversed_local_clocks_reject) ... ok
+test_native_chain_preserves_exact_identities_raw_binding_and_unavailable_units (test_option_observations.TestOptionObservations.test_native_chain_preserves_exact_identities_raw_binding_and_unavailable_units) ... FAIL
+test_raw_duplicate_fields_malformed_encoding_and_byte_limit_reject (test_option_observations.TestOptionObservations.test_raw_duplicate_fields_malformed_encoding_and_byte_limit_reject) ... ok
+test_received_exchange_date_not_utc_calendar_date_resolves_master (test_option_observations.TestOptionObservations.test_received_exchange_date_not_utc_calendar_date_resolves_master) ... ok
+test_v3_nested_tokens_resolve_and_cp_is_previous_price_not_previous_oi (test_option_observations.TestOptionObservations.test_v3_nested_tokens_resolve_and_cp_is_previous_price_not_previous_oi) ... ok
+test_v3_partial_scope_reports_missing_identifiers_without_fabricating_rows (test_option_observations.TestOptionObservations.test_v3_partial_scope_reports_missing_identifiers_without_fabricating_rows) ... ok
+
+======================================================================
+FAIL: test_native_chain_preserves_exact_identities_raw_binding_and_unavailable_units (test_option_observations.TestOptionObservations.test_native_chain_preserves_exact_identities_raw_binding_and_unavailable_units)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 121, in test_native_chain_preserves_exact_identities_raw_binding_and_unavailable_units
+    self.assertTrue(field["raw_path"])
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+AssertionError: None is not true
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.074s
+
+FAILED (failures=1)

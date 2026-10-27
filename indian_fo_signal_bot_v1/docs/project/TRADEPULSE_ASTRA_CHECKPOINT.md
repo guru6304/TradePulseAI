@@ -1,4 +1,144 @@
+# E01.2b active checkpoint — 2026-10-27T08:47:56.852237+00:00
+
+Phase5 production-assets browser/mobile/accessibility verification IN_PROGRESS.
+D01.2 proof1184 Python/38 Node/101 compile and closeout validated before edits; no new tests yet.
+Root owns asset acquisition, baseline, later public/index.html and test_cash_dashboard.js fixes.
+rank_ui owns only new astra_browser_assets_verify_20261027_01.py; rank_review read-only.
+Next: retain exact public CDN/font assets and licenses, run new isolated browser harness
+against unchanged production HTML, reproduce failures before minimal repairs.
+No provider/env/operational DB/order/send/Git actions. All prior handoff bytes preserved
+in astra_e01_baseline_20261027_01.json. Public dependency downloads are separately recorded.
+
+## Historical verified checkpoint
+
+# TradePulse Astra checkpoint — verified D01.2 boundary
+
+Updated UTC: 2026-10-27T08:44:20.480013+00:00; timezone Asia/Kolkata; mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1.
+Phase2/3 D01.2 VERIFIED_COMPLETE for pure offline observations; master mission INCOMPLETE.
+Last completed: current-source canonical master_astra_d01_20261027_01.json, PASS 1184 Python/38 Node/101 compile,
+followed by preservation/handoff binding. No background command or partial implementation.
+Branch main; HEAD 4030b39c97a78b9ab3e8885a13d80e193dfcc73e; no Git writes. Source additions: option_observations.py,
+benchmark_observations.py and their tests; release_management.py/test_bot.py registration.
+Prior code, owner-confirmed source/env/helper and 727 documents preserved.
+No provider/env/operational DB/order/send/Git action; local helper not run/imported.
+
+Final focused56/56; prior integration108/108. Initial raw-path assertion,
+sandbox temp-access, string underflow/exponent, native precision and invalid offset failures
+are retained in astra_d01_* evidence. Production-independent review declares option-test
+authorship. Exact source/log/bindings: astra_d01_closeout_20261027_01.json.
+Missing source clocks, unit policies, publisher/date authority, benchmark master/calendar,
+entitlement and genuine observations prevent runtime/research admission. Broader B01 and
+production latency/visual/accessibility/security/commercial acceptance remain open.
+
+Single exact next action: E01.2b: retain versioned production UI assets and extend the existing CDP harness to render unchanged dashboard HTML with verified local assets for visual/mobile/accessibility checks, using astra_browser_production_assets_plan_20261027_01.md; no provider calls.
+No additional credentials or owner approval is needed for that offline work.
+Resume instruction: CONTINUE FROM CHECKPOINT.
+
+## Historical checkpoint text (superseded for current-source proof)
+
+# D01.2 canonical verification running — 2026-10-27
+
+Source is frozen. Full offline stage astra_d01_20261027_01 is running in exec session2436.
+Inspect that session and receipt before any source edits or rerun. Final focused56/56 and
+existing-contract integration108/108 passed. Production review and native numeric after
+diagnostic6/6 passed; reviewer authored option tests, not production. New parser/benchmark
+modules and tests are registered. No provider/env/operational DB/Git mutation.
+Next: finish full canonical, then run prepared astra_d01_closeout.py only if PASS,
+validate current bindings, and move to E01.2b production-assets browser acceptance.
+No new D01 canonical PASS is claimed until receipt finishes.
+
+## Earlier checkpoint
+
+# D01.2 active checkpoint — 2026-10-27
+
+Mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1; Phase2/3 D01.2 IN_PROGRESS.
+C03 final proof remains a retained historical boundary:1128 Python/38 Node/97 compile.
+No new D01 tests have run. Root owns option_observations.py and registration;
+rank_store owns test_option_observations.py; rank_ui owns benchmark_observations.py
+and test_benchmark_observations.py. rank_review will review independently.
+Saved owner changes preserved; no provider/env/operational DB/Git actions.
+Next: finish bounded pure parser and benchmark alignment, then focused integration.
+Prior handoff bytes and source preserved in astra_d01_baseline_20261027_01.json.
+
+## Historical checkpoint (superseded for current-source proof after new edits)
+
 # TradePulse Astra execution checkpoint
+
+## Current verified C03 boundary — 2026-10-27T02:32:51.196682+00:00
+
+Mission incomplete. Phase4/5 task C03.2 VERIFIED_COMPLETE within offline cash
+candidate priority scope. Latest canonical master_astra_rank_history_20261027_01.json: PASS 1128 Python,
+38 Node, 97 compiled files, zero failures/errors/skips/unraisables.
+Source/log validation and preservation PASS; source hashes in the receipt.
+Corrected handoff bindings: astra_rank_closeout_20261027_02.json; prior01 retained.
+Handoff refined UTC: 2026-10-27T02:34:09.357003+00:00
+
+Actual retained scanner/evaluator inputs feed atomic rank history and bounded
+read-only API/UI. TCS/INFY reversal fixture, directional identity, source corruption,
+rollback, expired/history, combined downgrade and deleted-latest append checks pass.
+Local integrity is not market authenticity or empirical strategy acceptance.
+B01 ORB future-trigger software remains covered; other strategy/F&O policies absent.
+
+Branch main; externally advanced HEAD 4030b39c97a78b9ab3e8885a13d80e193dfcc73e. Current files include rank_history.py,
+opportunity_ranking.py, scanner_engine.py,
+candle_lineage.py, storage.py, server.py, notification_outbox.py, readiness_policy.py,
+public/index.html, new and existing tests,
+release/test registration. Four mutable handoff documents were updated; prior
+text is preserved in astra_handoff_before_rank_20261027_01.json. No commands are
+running at this verified boundary. This task made no provider/env/operational DB/Git
+mutation. Owner-confirmed broker/config/app-env/live-helper edits are preserved;
+app env no longer matches the original baseline. See astra_owner_changes_20261026_01.json.
+
+Context/health combined regression PASS104; later combined integration PASS129.
+Final scanner/evaluation/HTTP compatibility PASS11. Four scanner-reference and
+three container-traversal tests are registered in the full canonical suite.
+Current external HEAD is 4030b39c97a78b9ab3e8885a13d80e193dfcc73e; no Git writes by this task.
+Instrumented after-probe FAIL3/4 (health3.44s versus3s); no latency limits changed.
+Final canonical above passes, but this does not establish a production latency SLO.
+
+Next task D01.2: implement pure bounded option/Greeks/benchmark observation
+validators and offline endpoint fixtures from completed D01.1 inventory. Actual
+Chrome/Edge DOM/keyboard checks each PASS36; full external-asset visual/mobile and
+accessibility acceptance and broader B01 lifecycle remain eligible work.
+Read the current task ledger and master report; do not repeat the baseline audit.
+Resume instruction: CONTINUE FROM CHECKPOINT.
+
+## Historical checkpoint text (superseded for current-source proof)
+
+# TradePulse Astra execution checkpoint
+
+## Final C03 verification running — 2026-10-27
+
+Current mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1, phases4/5/6, C03.2 and
+E01 latency/integrity recovery. Root owns final integration. All source frozen.
+Canonical astra_rank_history_20261027_01 runs in exec session53831; inspect it
+before any source edits or rerun. It includes1128 expected Python cases; actual
+receipt determines totals. No PASS claim until it finishes successfully.
+
+Last completed: combined latency/integrity/release integration PASS129/129;
+datetime compatibility before FAIL1/1, repaired with optional raw fingerprint
+fallback, final scanner/evaluation/HTTP PASS11/11. Scanner normalization7->2 for
+one-stock fixture; evaluation recursion37472->3844 with nested source validation.
+Agent's traversal after01 PASS3/3 recovered after limit; root reviewed its4-line
+change. Independent scanner/release review retained at
+docs/reports/astra_reference_cache_review_20261027_01.md. No reviewer-global signoff.
+Integrated rank demo20261027_01 PASS1, two views, current source binding.
+
+HEAD externally advanced to4030b39c97a78b9ab3e8885a13d80e193dfcc73e; no Git writes
+by this task. Owner-confirmed broker/config/app-env/live-helper changes remain
+hash-matching astra_owner_changes_20261026_01.json. Original root env matches;
+app env differs from baseline but remains untouched here. Live helper preserved,
+never run, excluded only by exact name from release packaging. No provider/send/
+real-order/operational DB actions. Both new test modules registered in test_bot.
+
+Prepared docs/evidence/astra_rank_closeout.py updated for current demo, owner
+change provenance, failed canonicals/probe,129/11 checks and18-section report.
+Not executed. After canonical PASS: run closeout with receipt
+master_astra_rank_history_20261027_01.json, stage20261027_01, binding all failure,
+focused and independent review artifacts; inspect output and validate-only.
+Then D01.2 pure observation validator is next eligible engineering task.
+If canonical fails, retain it and fix only the actual failure. Prior notes below
+are historical; no completed work should restart.
 
 ## Active canonical recovery — 2026-10-26, latest state
 

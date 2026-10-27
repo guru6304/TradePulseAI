@@ -1,0 +1,116 @@
+{
+  "case_count": 6,
+  "cases": [
+    {
+      "accepted": false,
+      "error_code": "INVALID_NUMERIC_VALUE",
+      "exception_type": "ObservationError",
+      "expected_acceptance": false,
+      "expected_behavior": true,
+      "field": "iv",
+      "name": "nonzero_iv_underflow",
+      "native_json_numeric_literal": "1e-999",
+      "raw_sha256": "d9279146b2b260312899c869bfc591f670e4fd0f04521cc798c26b33594bf483"
+    },
+    {
+      "accepted": false,
+      "error_code": "JSON_NUMBER_PRECISION_LOSS",
+      "exception_type": "ObservationError",
+      "expected_acceptance": false,
+      "expected_behavior": true,
+      "field": "volume",
+      "name": "fractional_volume_rounded_to_one",
+      "native_json_numeric_literal": "1.00000000000000001",
+      "raw_sha256": "35797acb49fbc187603cc5ad95482a50b174e6973c173fb4f89539124112b9d7"
+    },
+    {
+      "accepted": false,
+      "error_code": "JSON_NUMBER_PRECISION_LOSS",
+      "exception_type": "ObservationError",
+      "expected_acceptance": false,
+      "expected_behavior": true,
+      "field": "oi",
+      "name": "large_fractional_oi_rounded_to_integer",
+      "native_json_numeric_literal": "9007199254740990.5",
+      "raw_sha256": "2ac7cea395e92318dbeaff5e5b1ace928847315e0056bc7851a87433fe02d24f"
+    },
+    {
+      "accepted": false,
+      "error_code": "INVALID_NUMERIC_VALUE",
+      "exception_type": "ObservationError",
+      "expected_acceptance": false,
+      "expected_behavior": true,
+      "field": "iv",
+      "name": "native_float_overflow",
+      "native_json_numeric_literal": "1e309",
+      "raw_sha256": "f3c98f20b94b3dbf7110b7aa2a7e6ec67942a49b426b960a33ca140c10081f81"
+    },
+    {
+      "accepted": true,
+      "actionable": false,
+      "eligible": false,
+      "expected_acceptance": true,
+      "expected_behavior": true,
+      "field": "iv",
+      "name": "ordinary_decimal_control",
+      "native_json_numeric_literal": "0.1",
+      "observed_field": {
+        "normalized_value": null,
+        "numeric_value": 0.1,
+        "presence": "OBSERVED",
+        "raw_path": [
+          "data",
+          0,
+          "call_options",
+          "option_greeks",
+          "iv"
+        ],
+        "raw_value": 0.1,
+        "unit_status": "UNAVAILABLE_UNIT_CONTRACT"
+      },
+      "raw_sha256": "e3cd6a7ba8c2db72276345047258297dadaf5384e8528ae5fbd35c0007f2d1fe"
+    },
+    {
+      "accepted": true,
+      "actionable": false,
+      "eligible": false,
+      "expected_acceptance": true,
+      "expected_behavior": true,
+      "field": "iv",
+      "name": "smallest_positive_float_control",
+      "native_json_numeric_literal": "5e-324",
+      "observed_field": {
+        "normalized_value": null,
+        "numeric_value": 5e-324,
+        "presence": "OBSERVED",
+        "raw_path": [
+          "data",
+          0,
+          "call_options",
+          "option_greeks",
+          "iv"
+        ],
+        "raw_value": 5e-324,
+        "unit_status": "UNAVAILABLE_UNIT_CONTRACT"
+      },
+      "raw_sha256": "82397004064383cdf4839a5e5ccc66e7817a730000d4b9ca8c35726e80ba3bec"
+    }
+  ],
+  "expected_behavior_count": 6,
+  "reviewer_authored_option_tests": true,
+  "reviewer_authored_production_modules": false,
+  "schema_version": "tradepulse.authored-numeric-diagnostic.v1",
+  "scope": "SYNTHETIC_FIXTURE_ONLY_NOT_PROVIDER_OR_EXECUTION_ACCEPTANCE",
+  "source_sha256_after": {
+    "benchmark_observations.py": "4f749f4d112a94a18ba9ae810d17a01b5fe71d4ee4d5b2d17a5300e9538f66fa",
+    "option_observations.py": "7133afeb3331ab8bf84490d97c55c1f41df6c7b7afda34f416f36a551a1eda48",
+    "test_option_observations.py": "4eeac0c460d3195fe937a72c93ed51200907b06f9f0dd19d32e4b2c0b8f676d5"
+  },
+  "source_sha256_before": {
+    "benchmark_observations.py": "4f749f4d112a94a18ba9ae810d17a01b5fe71d4ee4d5b2d17a5300e9538f66fa",
+    "option_observations.py": "7133afeb3331ab8bf84490d97c55c1f41df6c7b7afda34f416f36a551a1eda48",
+    "test_option_observations.py": "4eeac0c460d3195fe937a72c93ed51200907b06f9f0dd19d32e4b2c0b8f676d5"
+  },
+  "source_unchanged": true,
+  "status": "PASS"
+}
