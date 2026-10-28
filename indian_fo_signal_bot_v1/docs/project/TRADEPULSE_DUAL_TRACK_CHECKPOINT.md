@@ -16,6 +16,15 @@
   - Implemented `rank_transitions.py`: deterministic factor deltas, narrative generation, TCS #1 at 10:00 -> INFY #1 at 10:10 reversal demonstration, and immediate removal of disqualified leaders (`NO_LINGERING_LEADER`).
   - Created `test_astra_wave1_radar_and_transitions.py` (8/8 tests pass). Total unique unit tests increased to 1,200 (100% PASS).
   - Registered `market_radar.py` and `rank_transitions.py` in `release_management.py:CORE_MODULES`. All 19 release tests pass.
+- **Wave 2 (UI Experience & Live Data Surfacing)**: `VERIFIED_COMPLETE`
+  - Exposed `GET /api/radar` and `GET /api/radar-transitions` in `server.py` with read-safety (405 on POST) and no-store caching.
+  - Enhanced `public/index.html` with:
+    1. Market Radar 1m Observation Layer section displaying breadth, advance/decline ratio, sentiment badge, leading sector, and top 5 normalized open movement strength cards.
+    2. Opportunity X-Ray & Factor Deltas section displaying 5m completed candle structure, factor deltas (`delta_composite_score`, `delta_confluence_count`, `delta_target1_rr`, `delta_rule_quality`), plain-English explanation narrative (*"Why #1 Now over #2"*), and disqualified leader dropout alerts (`NO_LINGERING_LEADER`).
+  - Automated headless Chrome verification probe across all 4 responsive viewports passed (138/138 checks, zero clipping, receipt: `astra_browser_assets_astra_browser_20261028_03.json`).
+  - Node.js dashboard contract suite passed (40/40 tests).
+  - Created `test_astra_wave2_server_and_ui.py` (10/10 tests pass).
+  - Canonical offline test suite increased from 1,200 to **1,210 unique tests (100% PASS)**.
 
 ---
 
@@ -28,6 +37,6 @@
 ---
 
 ## 3. Exactly One Next Action After Interruption
-👉 **Execute Wave 2: Implement the Opportunity X-Ray chart data model and factor delta visualization binding in `server.py` and `public/index.html` to display the Radar breadth map and interactive 5m candle zone drilldowns with reproducible browser test verification.**
+👉 **Execute Wave 3: Comparative Benchmarking, Edge-Case Auditing & Final Verification Handoff. Run full verification suites, generate final evidence receipts, and seal the dual-track mission report.**
 
 **Resume Command:** `CONTINUE FROM CHECKPOINT`

@@ -59,7 +59,7 @@ function dashboard(options = {}) {
   assert.ok(script, 'actual dashboard inline script must exist');
   const end = script.lastIndexOf('})();');
   assert.ok(end > 0, 'dashboard closure must exist');
-  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports, renderScanRunsTable, renderOpportunityRankings, loadOpportunityRankings, renderPaperJournal: typeof renderPaperJournal === "function" ? renderPaperJournal : null, loadPaperJournal: typeof loadPaperJournal === "function" ? loadPaperJournal : null };\n';
+  const hooks = '\n globalThis.hooks = { state, apiClient, renderSignalCards, renderSelectedSignalInspector, renderHeaderHealth, renderSystemHealthTab, loadHealthAndConfig, loadSignals, loadStoredReports, renderStoredReports, renderScanRunsTable, renderOpportunityRankings, loadOpportunityRankings, renderPaperJournal: typeof renderPaperJournal === "function" ? renderPaperJournal : null, loadPaperJournal: typeof loadPaperJournal === "function" ? loadPaperJournal : null, renderMarketRadar: typeof renderMarketRadar === "function" ? renderMarketRadar : null, loadMarketRadar: typeof loadMarketRadar === "function" ? loadMarketRadar : null, renderRadarTransitions: typeof renderRadarTransitions === "function" ? renderRadarTransitions : null, loadRadarTransitions: typeof loadRadarTransitions === "function" ? loadRadarTransitions : null };\n';
   vm.runInContext(script.slice(0, end) + hooks + script.slice(end), context, { timeout: 1000 });
   return { ...context.hooks, charts, timers, node: id => document.getElementById(id) };
 }
@@ -688,6 +688,89 @@ test('a backward client clock jump cannot extend the server ranking validity', a
   view.apiClient.getOpportunityRankings = async () => rankingPayload();
   await view.loadOpportunityRankings();
   assert.ok(view.timers.at(-1).delay <= 55001, 'clock jump cannot add lifetime');
+});
+
+test('market radar renders breadth, sentiment, and normalized strength rows safely', () => {
+  const view = dashboard();
+  const mockRadar = {
+    schema_version: 'tradepulse.market-radar.v1',
+    breadth: {
+      advances: 35,
+      declines: 15,
+      advance_decline_ratio: 2.33,
+      market_sentiment: 'BULLISH_DOMINANT',
+      leading_sector: 'IT',
+      leading_sector_avg_score: 84.5
+    },
+    rows: [
+      {
+        symbol: 'TCS',
+        sector: 'IT',
+        open: 3500.0,
+        current_price: 3560.0,
+        change_percent: 1.71,
+        normalized_score: 84.5,
+        direction: 'BULLISH'
+      },
+      {
+        symbol: 'RELIANCE',
+        sector: 'ENERGY',
+        open: 2800.0,
+        current_price: 2780.0,
+        change_percent: -0.71,
+        normalized_score: 35.0,
+        direction: 'BEARISH'
+      }
+    ]
+  };
+  view.renderMarketRadar(mockRadar);
+  assert.match(view.node('radarBreadthText').textContent, /35 Adv \/ 15 Dec \(2.33x\)/);
+  assert.match(view.node('radarLeadingSector').textContent, /IT \(84.5\)/);
+  assert.match(view.node('radarSentimentBadge').textContent, /BULLISH DOMINANT/);
+  const containerText = view.node('marketRadarContainer').textContent;
+  assert.match(containerText, /TCS/);
+  assert.match(containerText, /84.5 \/ 100/);
+  assert.match(containerText, /RELIANCE/);
+});
+
+test('radar transitions render factor deltas, narrative, and dropout notice safely', () => {
+  const view = dashboard();
+  const mockReport = {
+    schema_version: 'tradepulse.rank-transition-audit.v1',
+    current_leader: 'INFY',
+    prior_leader: 'TCS',
+    leader_swapped: true,
+    transitions_count: 1,
+    dropouts_count: 1,
+    transitions: [
+      {
+        symbol: 'INFY',
+        current_rank: 1,
+        prior_rank: 2,
+        explanation_narrative: 'INFY overtook TCS for rank #1 driven by +1 strategy confluence signal, +0.35 R:R improvement.',
+        factor_deltas: {
+          delta_composite_score: 12.5,
+          delta_confluence_count: 1,
+          delta_target1_rr: 0.35,
+          delta_rule_quality: 5.0
+        }
+      }
+    ],
+    dropouts: [
+      {
+        symbol: 'WIPRO',
+        prior_rank: 5,
+        explanation: 'WIPRO (prior rank #5) disqualified and removed immediately from actionable list.'
+      }
+    ]
+  };
+  view.renderRadarTransitions(mockReport);
+  assert.match(view.node('detailRankNarrativeText').textContent, /INFY overtook TCS for rank #1/);
+  assert.equal(view.node('detailDeltaComposite').textContent, '+12.5');
+  assert.equal(view.node('detailDeltaConfluence').textContent, '+1');
+  assert.equal(view.node('detailDeltaRr').textContent, '+0.35');
+  assert.equal(view.node('detailDeltaQuality').textContent, '+5.0');
+  assert.match(view.node('detailDropoutNotice').textContent, /WIPRO \(prior rank #5\) disqualified/);
 });
 
 if (workflowFlag !== -1) {

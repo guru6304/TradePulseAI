@@ -16,25 +16,30 @@
 
 ---
 
-## 2. Wave 0 & Wave 1 Status
+## 2. Wave 0, Wave 1 & Wave 2 Status
 - `Wave 0 (Baseline Integrity & Governance Artifacts)`: `VERIFIED_COMPLETE`
   - All 7 dual-track charter and competitive matrix artifacts established.
 - `Wave 1 (Market Radar & Rank Transitions Engine)`: `VERIFIED_COMPLETE`
   - `market_radar.py`: Implemented normalized open-move baseline comparator (one-sided vs. choppy thresholding via ATR50), sector breadth aggregation, and non-actionable observation labels.
   - `rank_transitions.py`: Implemented factor deltas, plain-English narrative generation, deterministic TCS #1 at 10:00 -> INFY #1 at 10:10 reversal demonstration, and immediate disqualified leader dropout (`NO_LINGERING_LEADER`).
   - Unit tests: 8 / 8 tests pass in `test_astra_wave1_radar_and_transitions.py`.
-  - Canonical test suite total: **1,200 unique unit tests (100% PASS)**.
   - Release packaging: `release_management.py:CORE_MODULES` updated and verified (19 / 19 release tests pass).
+- `Wave 2 (UI Experience & Live Data Surfacing)`: `VERIFIED_COMPLETE`
+  - `server.py`: Exposed `GET /api/radar` and `GET /api/radar-transitions` with read-safety (405 on POST) and no-store caching.
+  - `public/index.html`: Added Market Radar observation panel and Opportunity X-Ray factor-delta drilldown.
+  - Unit tests: 10 / 10 tests pass in `test_astra_wave2_server_and_ui.py`.
+  - Canonical test suite total: **1,210 unique unit tests (100% PASS)**.
+  - Browser tests: 138 / 138 checks pass in `astra_browser_assets_astra_browser_20261028_03.json`.
+  - Node.js dashboard contracts: 40 / 40 checks pass.
 
 ---
 
 ## 3. Top Evidence-Based Gaps Remaining
-1. **Gap 3: Distinct Premium Terminal UI** (Opportunity X-Ray interactive drilldown, dark-first slate/indigo palette).
-2. **Gap 4: Strategy 3 Empirical Backtesting & Data Entitlement** (`BLOCKED_EXTERNAL`).
+1. **Strategy 3 Empirical Backtesting & Data Entitlement** (`BLOCKED_EXTERNAL`).
 
 ---
 
 ## 4. Exactly One Next Action
-👉 **Execute Wave 2: Implement the Opportunity X-Ray chart data model and factor delta visualization binding in `server.py` and `public/index.html` to display the Radar breadth map and interactive 5m candle zone drilldowns with reproducible browser test verification.**
+👉 **Execute Wave 3: Comparative Benchmarking, Edge-Case Auditing & Final Verification Handoff. Run full verification suites, generate final evidence receipts, and seal the dual-track mission report.**
 
 **Resume Instruction:** `CONTINUE FROM CHECKPOINT`

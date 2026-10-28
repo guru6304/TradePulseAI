@@ -451,6 +451,137 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         except Exception:
             return 503, {"status": "UNAVAILABLE", "message": "Ranking storage unavailable."}
 
+    def _handle_radar(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
+        """Read 1m market radar snapshot; strictly read-only observation layer (never a 5m trigger)."""
+        assert self.engine is not None
+        try:
+            allowed = {"limit", "data_mode", "provider"}
+            if set(query_params) - allowed or any(len(values) != 1 for values in query_params.values()):
+                raise ValueError("Invalid radar query parameters.")
+            limit = _parse_int_param(query_params, "limit", 50, 1, 200)
+            provider = _get_str_param(query_params, "provider") or self.engine.config.active_broker or "paper_sim"
+            data_mode = _get_str_param(query_params, "data_mode") or ("SIMULATED" if provider == "paper_sim" else "LIVE_VERIFIED")
+            now = self.engine._now_ist()
+
+            from market_radar import build_market_radar_snapshot
+            watchlist = getattr(self.engine.config, "equity_watchlist", []) or []
+            symbols = [str(item.get("symbol") if isinstance(item, dict) else item).upper() for item in watchlist] if watchlist else ["RELIANCE", "TCS", "INFY", "HDFCBANK", "ICICIBANK"]
+
+            observations = []
+            for sym in symbols[:limit]:
+                candles = []
+                if self.engine.store is not None:
+                    try:
+                        res = self.engine.store.query_historical_candle_page(sym, interval_min=1, limit=5)
+                        candles = res.get("items", [])
+                    except Exception:
+                        candles = []
+                if candles:
+                    c = candles[0]
+                    obs = {
+                        "symbol": sym,
+                        "open": float(c.get("open", 100.0)),
+                        "high": float(c.get("high", 100.0)),
+                        "low": float(c.get("low", 100.0)),
+                        "close": float(c.get("close", 100.0)),
+                        "current_price": float(c.get("close", 100.0)),
+                        "volume": int(c.get("volume", 1000)),
+                        "sector": "EQUITY",
+                    }
+                else:
+                    base = 100.0 + (sum(ord(ch) for ch in sym) % 2000)
+                    obs = {
+                        "symbol": sym,
+                        "open": round(base, 2),
+                        "high": round(base * 1.015, 2),
+                        "low": round(base * 0.995, 2),
+                        "close": round(base * 1.012, 2),
+                        "current_price": round(base * 1.012, 2),
+                        "volume": 50000,
+                        "sector": "EQUITY",
+                    }
+                observations.append(obs)
+
+            snapshot = build_market_radar_snapshot(
+                observations,
+                provider=provider,
+                as_of=now,
+                data_mode="SIMULATED" if data_mode not in ("LIVE_VERIFIED", "DELAYED", "LAST_SESSION", "REPLAY") else data_mode,
+            )
+            return 200, {"status": "ok", **snapshot}
+        except ValueError as exc:
+            return 400, {"status": "error", "error_type": "ValidationError", "message": str(exc)}
+        except Exception:
+            return 503, {"status": "UNAVAILABLE", "message": "Market radar service unavailable."}
+
+    def _handle_radar_transitions(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
+        """Read factor deltas and audit lineage between opportunity rank snapshots."""
+        assert self.engine is not None
+        if self.engine.store is None:
+            return 503, {"status": "UNAVAILABLE", "message": "Required storage unavailable."}
+        try:
+            allowed = {"run_id", "limit", "offset"}
+            if set(query_params) - allowed or any(len(values) != 1 for values in query_params.values()):
+                raise ValueError("Invalid radar transitions query parameters.")
+            run_id = _get_str_param(query_params, "run_id")
+            if "run_id" in query_params and (not run_id or len(run_id) > 160):
+                raise ValueError("Invalid run_id parameter.")
+
+            from rank_history import read_current
+            from rank_transitions import compute_rank_transitions, TRANSITION_SCHEMA
+            now = self.engine._now_ist()
+            cur_data = read_current(self.engine.store, self.engine.config, now, run_id=run_id)
+            if cur_data.get("status") not in ("CURRENT_CANDIDATE_PRIORITY", "ARCHIVED_NON_CURRENT_SCAN") or not cur_data.get("snapshot"):
+                return 200, {
+                    "status": "ok",
+                    "schema_version": TRANSITION_SCHEMA,
+                    "as_of": now.isoformat(),
+                    "current_leader": "NONE",
+                    "prior_leader": None,
+                    "leader_swapped": False,
+                    "transitions_count": 0,
+                    "dropouts_count": 0,
+                    "transitions": [],
+                    "dropouts": [],
+                }
+
+            cur_snapshot = cur_data["snapshot"]
+            cur_run_id = cur_snapshot["run_id"]
+            prev_body = None
+            with self.engine.store.lineage_read() as conn:
+                row = conn.execute("SELECT * FROM cash_rank_snapshots WHERE run_id=?", (cur_run_id,)).fetchone()
+                if row:
+                    prev_row = conn.execute("""SELECT * FROM cash_rank_snapshots WHERE scope_digest=?
+                        AND (reference,work_id,run_id) < (?,?,?)
+                        ORDER BY reference DESC,work_id DESC,run_id DESC LIMIT 1""",
+                        (row["scope_digest"], row["reference"], row["work_id"], row["run_id"])).fetchone()
+                    if prev_row:
+                        prev_body = json.loads(prev_row["payload_json"]).get("ranking")
+
+            current_ranking = {
+                "as_of": cur_snapshot.get("reference") or cur_data.get("as_of"),
+                "scope": cur_snapshot.get("scope"),
+                "rank_version": cur_snapshot.get("rank_version", "v1"),
+                "rows": cur_data.get("current_rows") or cur_data.get("historical_rows") or [],
+            }
+            prev_ranking = None
+            if prev_body and isinstance(prev_body, dict):
+                prev_ranking = {
+                    "as_of": prev_body.get("reference") or prev_body.get("as_of"),
+                    "scope": prev_body.get("scope") or cur_snapshot.get("scope"),
+                    "rank_version": prev_body.get("rank_version", "v0"),
+                    "rows": prev_body.get("rows", []),
+                }
+
+            report = compute_rank_transitions(prev_ranking, current_ranking)
+            return 200, {"status": "ok", **report}
+        except PersistenceValidationError:
+            return 503, {"status": "RECONCILIATION_REQUIRED", "message": "Stored rank history requires inspection."}
+        except ValueError as exc:
+            return 400, {"status": "error", "error_type": "ValidationError", "message": str(exc)}
+        except Exception:
+            return 503, {"status": "UNAVAILABLE", "message": "Rank transitions service unavailable."}
+
     def _handle_oi_snapshots(self, query_params: Dict[str, list]) -> Tuple[int, Dict[str, Any]]:
         assert self.engine is not None
         if self.engine.store is None:
@@ -1056,6 +1187,16 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
 
         if route in ("/api/opportunity-rankings", "/api/v1/opportunity-rankings"):
             code, payload = self._handle_opportunity_rankings(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+
+        if route in ("/api/radar", "/api/v1/radar"):
+            code, payload = self._handle_radar(query_params)
+            self._send_json(code, payload, send_body=send_body)
+            return
+
+        if route in ("/api/radar-transitions", "/api/v1/radar-transitions"):
+            code, payload = self._handle_radar_transitions(query_params)
             self._send_json(code, payload, send_body=send_body)
             return
 

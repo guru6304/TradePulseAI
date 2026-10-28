@@ -152,6 +152,27 @@
         <p class="text-xs text-slate-400">Qualified cash setups ranked by rule quality and actual target risk/reward. Paper entry still requires its own trigger.</p>
         <div id="opportunityRankingsContainer" class="text-sm space-y-2" aria-live="polite">Priority unavailable until stored evidence is read.</div>
       </section>
+
+      <!-- Market Radar (1m Cadence Observation Layer) -->
+      <section class="glass-card rounded-xl p-4 space-y-3" aria-label="Market Radar Observation Layer">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-2">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 class="font-bold text-white text-sm">Market Radar (1m Observation Layer)</h2>
+            <span id="radarSentimentBadge" class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 mono">--</span>
+            <span class="text-[10px] text-amber-400 font-semibold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20 mono">NON-ACTIONABLE</span>
+          </div>
+          <div class="text-xs text-slate-400 flex items-center gap-3 flex-wrap">
+            <span>Breadth: <strong id="radarBreadthText" class="mono text-white">--</strong></span>
+            <span>Leading Sector: <strong id="radarLeadingSector" class="mono text-cyan-400">--</strong></span>
+          </div>
+        </div>
+        <p class="text-[11px] text-slate-400">
+          Normalized day-open directional movement vs ATR50 baseline. One direction must exceed 2&times; opposite excursion. <strong>Provisional observation only &mdash; never a 5m strategy trigger.</strong>
+        </p>
+        <div id="marketRadarContainer" class="text-xs grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2" aria-live="polite">
+          <div class="text-slate-500 col-span-full">Radar observations loading...</div>
+        </div>
+      </section>
       <!-- Filter, Pagination & Capital Sizing Toolbar -->
       <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-3">
         <div class="flex flex-wrap items-end gap-2.5">
@@ -305,6 +326,36 @@
                 Deterministic evidence score (RVOL, VWAP alignment, ATR displacement, breadth). <strong>Not</strong> a calibrated probability of winning.
               </p>
               <div id="detailScoreBreakdown" class="grid grid-cols-2 gap-1.5 text-[11px] mono text-slate-300 pt-1 border-t border-slate-800/80"></div>
+            </div>
+
+            <!-- Opportunity X-Ray & Factor-Delta Rank Explanation -->
+            <div class="p-3 rounded-lg bg-slate-900/90 border border-slate-800 text-xs space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-300 font-semibold">Opportunity X-Ray (5m Completed Structure):</span>
+                <span id="detailRankNarrativeBadge" class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mono">5m Levels</span>
+              </div>
+              <p id="detailRankNarrativeText" class="text-[11px] text-slate-300 italic bg-slate-950/70 p-2 rounded border border-slate-800/80 leading-relaxed">
+                Select a candidate card or view transitions to inspect factor delta explanations.
+              </p>
+              <div id="detailFactorDeltasGrid" class="grid grid-cols-2 gap-1.5 text-[11px] mono text-slate-300 pt-1 border-t border-slate-800/80">
+                <div class="flex items-center justify-between bg-slate-950/60 px-2 py-1 rounded border border-slate-800/80">
+                  <span class="text-slate-400">Composite Δ:</span>
+                  <span id="detailDeltaComposite" class="text-slate-200 font-semibold">--</span>
+                </div>
+                <div class="flex items-center justify-between bg-slate-950/60 px-2 py-1 rounded border border-slate-800/80">
+                  <span class="text-slate-400">Confluence Δ:</span>
+                  <span id="detailDeltaConfluence" class="text-slate-200 font-semibold">--</span>
+                </div>
+                <div class="flex items-center justify-between bg-slate-950/60 px-2 py-1 rounded border border-slate-800/80">
+                  <span class="text-slate-400">Target1 R:R Δ:</span>
+                  <span id="detailDeltaRr" class="text-slate-200 font-semibold">--</span>
+                </div>
+                <div class="flex items-center justify-between bg-slate-950/60 px-2 py-1 rounded border border-slate-800/80">
+                  <span class="text-slate-400">Quality Δ:</span>
+                  <span id="detailDeltaQuality" class="text-slate-200 font-semibold">--</span>
+                </div>
+              </div>
+              <div id="detailDropoutNotice" class="hidden p-2 rounded bg-rose-950/40 border border-rose-500/30 text-[10px] text-rose-300"></div>
             </div>
 
             <!-- Position Sizing, Statutory Charges & Rationale Box -->
@@ -818,6 +869,8 @@
         getConfig: function() { return this.request('GET', '/api/config', null, 6000); },
         getSignals: function(params) { return this.request('GET', '/api/signals', params, 8000); },
         getOpportunityRankings: function(params) { return this.request('GET', '/api/opportunity-rankings', params, 8000); },
+        getMarketRadar: function(params) { return this.request('GET', '/api/radar', params, 8000); },
+        getRadarTransitions: function(params) { return this.request('GET', '/api/radar-transitions', params, 8000); },
         getScans: function(params) { return this.request('GET', '/api/scans', params, 8000); },
         getOiSnapshots: function(params) { return this.request('GET', '/api/oi-snapshots', params, 8000); },
         getOiBaselines: function(params) { return this.request('GET', '/api/oi-baselines', params, 8000); },
@@ -853,6 +906,8 @@
         lastRefreshIst: null,
         refreshTimerId: null,
         rankingExpiryTimer: null,
+        marketRadar: null,
+        radarTransitions: null,
         reqSeq: {
           health: 0,
           config: 0,
@@ -1091,6 +1146,166 @@
         } catch (err) {
           if (seq !== state.reqSeq.rankings || health !== state.health) return;
           container.textContent = 'Candidate priority unavailable: retained evidence could not be verified. No cached ranks retained.';
+        }
+      }
+
+      function renderMarketRadar(data) {
+        const container = document.getElementById('marketRadarContainer');
+        if (!container) return;
+        clearChildren(container);
+        if (!data || !data.rows || !data.rows.length) {
+          container.appendChild(el('div', 'text-slate-500 col-span-full', 'No 1m radar observations available.'));
+          return;
+        }
+
+        const breadth = data.breadth || {};
+        const sentimentEl = document.getElementById('radarSentimentBadge');
+        if (sentimentEl) {
+          const sent = String(breadth.market_sentiment || 'BALANCED_RANGE');
+          sentimentEl.textContent = sent.replace('_', ' ');
+          sentimentEl.className = sent.indexOf('BULLISH') !== -1
+            ? 'text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 mono'
+            : sent.indexOf('BEARISH') !== -1
+            ? 'text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30 mono'
+            : 'text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 mono';
+        }
+
+        const breadthEl = document.getElementById('radarBreadthText');
+        if (breadthEl) {
+          breadthEl.textContent = (breadth.advances ?? 0) + ' Adv / ' + (breadth.declines ?? 0) + ' Dec (' + (breadth.advance_decline_ratio ?? 1) + 'x)';
+        }
+
+        const sectorEl = document.getElementById('radarLeadingSector');
+        if (sectorEl) {
+          sectorEl.textContent = (breadth.leading_sector || 'GENERAL') + ' (' + (breadth.leading_sector_avg_score ?? 0) + ')';
+        }
+
+        (data.rows.slice(0, 5)).forEach(function(row) {
+          const card = el('div', 'p-2.5 rounded-lg bg-slate-900/90 border border-slate-800 space-y-1');
+          const topRow = el('div', 'flex items-center justify-between');
+          topRow.appendChild(el('span', 'font-bold text-white mono', row.symbol || '--'));
+          const dirPill = el('span', 'text-[10px] font-bold px-1.5 py-0.5 rounded mono', row.direction || 'NEUTRAL');
+          dirPill.className += row.direction === 'BULLISH'
+            ? ' bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+            : row.direction === 'BEARISH'
+            ? ' bg-rose-500/20 text-rose-300 border border-rose-500/30'
+            : ' bg-slate-800 text-slate-400 border border-slate-700';
+          topRow.appendChild(dirPill);
+          card.appendChild(topRow);
+
+          const midRow = el('div', 'flex items-center justify-between text-[11px] text-slate-400');
+          midRow.appendChild(el('span', '', 'Cur: ₹' + (row.current_price ?? '--')));
+          const chg = row.change_percent ?? 0;
+          const chgEl = el('span', 'mono font-semibold ' + (chg >= 0 ? 'text-emerald-400' : 'text-rose-400'), (chg >= 0 ? '+' : '') + chg.toFixed(2) + '%');
+          midRow.appendChild(chgEl);
+          card.appendChild(midRow);
+
+          const botRow = el('div', 'flex items-center justify-between text-[10px] pt-1 border-t border-slate-800/80 text-slate-400');
+          botRow.appendChild(el('span', '', 'ATR50 Norm Move:'));
+          botRow.appendChild(el('span', 'mono font-bold text-cyan-300', (row.normalized_score ?? 0).toFixed(1) + ' / 100'));
+          card.appendChild(botRow);
+
+          container.appendChild(card);
+        });
+      }
+
+      async function loadMarketRadar() {
+        try {
+          const data = await apiClient.getMarketRadar({limit: 20});
+          state.marketRadar = data;
+          renderMarketRadar(data);
+        } catch (err) {
+          const container = document.getElementById('marketRadarContainer');
+          if (container) {
+            clearChildren(container);
+            container.appendChild(el('div', 'text-amber-400/90 col-span-full', 'Market radar observation unavailable.'));
+          }
+        }
+      }
+
+      function updateFactorDeltaDisplay(symbol) {
+        const narrativeEl = document.getElementById('detailRankNarrativeText');
+        const compEl = document.getElementById('detailDeltaComposite');
+        const confEl = document.getElementById('detailDeltaConfluence');
+        const rrEl = document.getElementById('detailDeltaRr');
+        const qualEl = document.getElementById('detailDeltaQuality');
+
+        if (!state.radarTransitions || !Array.isArray(state.radarTransitions.transitions)) {
+          if (narrativeEl) narrativeEl.textContent = 'Select a candidate card or view transitions to inspect factor delta explanations.';
+          if (compEl) compEl.textContent = '--';
+          if (confEl) confEl.textContent = '--';
+          if (rrEl) rrEl.textContent = '--';
+          if (qualEl) qualEl.textContent = '--';
+          return;
+        }
+
+        const trans = state.radarTransitions.transitions.find(function(t) {
+          return t.symbol === symbol;
+        });
+
+        if (trans) {
+          if (narrativeEl) narrativeEl.textContent = trans.explanation_narrative || 'Rank transition explanation recorded.';
+          const deltas = trans.factor_deltas || {};
+          if (compEl) {
+            const v = deltas.delta_composite_score ?? 0;
+            compEl.textContent = (v >= 0 ? '+' : '') + Number(v).toFixed(1);
+          }
+          if (confEl) {
+            const v = deltas.delta_confluence_count ?? 0;
+            confEl.textContent = (v >= 0 ? '+' : '') + v;
+          }
+          if (rrEl) {
+            const v = deltas.delta_target1_rr ?? 0;
+            rrEl.textContent = (v >= 0 ? '+' : '') + Number(v).toFixed(2);
+          }
+          if (qualEl) {
+            const v = deltas.delta_rule_quality ?? 0;
+            qualEl.textContent = (v >= 0 ? '+' : '') + Number(v).toFixed(1);
+          }
+        } else {
+          if (narrativeEl) narrativeEl.textContent = 'No rank transition recorded for ' + (symbol || 'candidate') + ' in current observation window.';
+          if (compEl) compEl.textContent = '--';
+          if (confEl) confEl.textContent = '--';
+          if (rrEl) rrEl.textContent = '--';
+          if (qualEl) qualEl.textContent = '--';
+        }
+      }
+
+      function renderRadarTransitions(report) {
+        if (!report) return;
+        state.radarTransitions = report;
+
+        const dropoutEl = document.getElementById('detailDropoutNotice');
+        if (dropoutEl) {
+          if (Array.isArray(report.dropouts) && report.dropouts.length > 0) {
+            const d = report.dropouts[0];
+            dropoutEl.textContent = 'Notice: ' + (d.explanation || (d.symbol + ' disqualified and removed immediately.'));
+            dropoutEl.classList.remove('hidden');
+          } else {
+            dropoutEl.textContent = '';
+            dropoutEl.classList.add('hidden');
+          }
+        }
+
+        if (state.selectedSignalKey && state.signals) {
+          const sel = state.signals.find(function(s) {
+            return (s.dedup_key || String(s.id)) === state.selectedSignalKey;
+          });
+          if (sel) {
+            updateFactorDeltaDisplay(sel.symbol);
+          }
+        } else if (Array.isArray(report.transitions) && report.transitions.length > 0) {
+          updateFactorDeltaDisplay(report.transitions[0].symbol);
+        }
+      }
+
+      async function loadRadarTransitions() {
+        try {
+          const report = await apiClient.getRadarTransitions();
+          renderRadarTransitions(report);
+        } catch (err) {
+          const narrativeEl = document.getElementById('detailRankNarrativeText');
+          if (narrativeEl) narrativeEl.textContent = 'Rank transitions unavailable.';
         }
       }
 
@@ -1788,6 +2003,18 @@
         document.getElementById('detailTimestampAndBroker').textContent = '--';
         document.getElementById('detailRationale').textContent = 'No signal selected.';
         document.getElementById('detailContext').textContent = 'Context unavailable: no stored candidate selected.';
+        const narrativeEl = document.getElementById('detailRankNarrativeText');
+        if (narrativeEl) narrativeEl.textContent = 'Select a candidate card or view transitions to inspect factor delta explanations.';
+        const compEl = document.getElementById('detailDeltaComposite');
+        if (compEl) compEl.textContent = '--';
+        const confEl = document.getElementById('detailDeltaConfluence');
+        if (confEl) confEl.textContent = '--';
+        const rrEl = document.getElementById('detailDeltaRr');
+        if (rrEl) rrEl.textContent = '--';
+        const qualEl = document.getElementById('detailDeltaQuality');
+        if (qualEl) qualEl.textContent = '--';
+        const dropoutEl = document.getElementById('detailDropoutNotice');
+        if (dropoutEl) { dropoutEl.textContent = ''; dropoutEl.classList.add('hidden'); }
         if (priceChartInstance) {
           priceChartInstance.destroy();
           priceChartInstance = null;
@@ -1872,6 +2099,7 @@
           ' | Displayed entry is a strategy reference; a future paper trigger needs its own versioned rule.';
         renderCandidateContext(document.getElementById('detailContext'), sig.context,
           sig.context_metadata || sig.context, sig.candidate_evaluation, sig.context_alert_decision);
+        updateFactorDeltaDisplay(sig.symbol);
 
         // Plot verified signal price levels on #signalPriceChart
         const ctx = document.getElementById('signalPriceChart').getContext('2d');
@@ -2371,9 +2599,11 @@
           loadSignals(),
           loadScanRuns(),
           refreshHeaderIndexPills(),
-          loadOiSnapshots()
+          loadOiSnapshots(),
+          loadMarketRadar()
         ]);
         await loadOpportunityRankings();
+        await loadRadarTransitions();
       }
 
       async function triggerManualScan() {

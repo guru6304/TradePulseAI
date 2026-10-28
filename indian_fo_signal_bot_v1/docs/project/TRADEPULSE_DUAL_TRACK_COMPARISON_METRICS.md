@@ -25,11 +25,12 @@
 
 | Suite / Test Group | Tests Run | Tests Passed | Failures | Errors | Skipped | Status |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Canonical Python Offline Suite** | `1,192` | `1,192` | `0` | `0` | `0` | `PASS` |
-| **Node.js Dashboard Contract Suite** | `38` | `38` | `0` | `0` | `0` | `PASS` |
-| **Python Syntax & Bytecode Compilation** | `101` files | `101` files | `0` | `0` | `0` | `PASS` |
+| **Canonical Python Offline Suite** | `1,210` | `1,210` | `0` | `0` | `0` | `PASS` |
+| **Node.js Dashboard Contract Suite** | `40` | `40` | `0` | `0` | `0` | `PASS` |
+| **Python Syntax & Bytecode Compilation** | `103` files | `103` files | `0` | `0` | `0` | `PASS` |
 | **Multi-Strategy Prospective Triggers** | `14` | `14` | `0` | `0` | `0` | `PASS` |
-| **Confluence & Dynamic Ranking** | `27` | `27` | `0` | `0` | `0` | `PASS` |
+| **Confluence, Radar & Dynamic Ranking** | `45` | `45` | `0` | `0` | `0` | `PASS` |
+| **Wave 2 Server & UI DOM Contracts** | `10` | `10` | `0` | `0` | `0` | `PASS` |
 | **Headless Chrome Responsive Viewports** | `138` checks | `138` checks | `0` | `0` | `0` | `PASS` |
 | **Release Management & Recovery Drills** | `5` | `5` | `0` | `0` | `0` | `PASS` |
 

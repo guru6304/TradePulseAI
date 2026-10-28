@@ -195,6 +195,21 @@ def run(receipt, browser, prefix):
                         failures.append("DELAYED_RANK_RELEASE_TIMEOUT")
             elif path in ("/api/scans", "/api/oi-snapshots", "/api/oi-baselines", "/api/backtest-runs"):
                 body = encoded(dict(items=[], total_count=0))
+            elif path == "/api/radar":
+                body = encoded(dict(status="ok", schema_version="tradepulse.market-radar.v1",
+                    breadth=dict(advances=32, declines=18, unchanged=0, advance_decline_ratio=1.78,
+                                market_sentiment="BULLISH_DOMINANT", leading_sector="IT", leading_sector_avg_score=78.5),
+                    rows=[dict(symbol="RELIANCE", sector="ENERGY", open=100.0, current_price=101.5, change_percent=1.5,
+                               normalized_score=82.0, direction="BULLISH")]))
+            elif path == "/api/radar-transitions":
+                body = encoded(dict(status="ok", schema_version="tradepulse.rank-transition-audit.v1",
+                    current_leader="RELIANCE", prior_leader=None, leader_swapped=False,
+                    transitions_count=1, dropouts_count=0,
+                    transitions=[dict(symbol="RELIANCE", prior_rank=None, current_rank=1,
+                                      explanation_narrative="RELIANCE newly entered rankings at #1 with composite score 88.5.",
+                                      factor_deltas=dict(delta_composite_score=0.0, delta_confluence_count=0,
+                                                         delta_target1_rr=0.0, delta_rule_quality=0.0))],
+                    dropouts=[]))
             elif path == "/api/notification-outbox":
                 body = encoded(dict(items=[], counts={}))
             elif path == "/favicon.ico":
