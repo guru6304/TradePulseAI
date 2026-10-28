@@ -7,16 +7,15 @@
 
 ---
 
-## 1. Verified Milestone Completed
+## 1. Verified Milestones Completed
 - **Wave 0 (Baseline Integrity & Governance)**: `VERIFIED_COMPLETE`
-- Previous Astra Master mission verified finished and no longer mutating files.
-- Baseline frozen at `a6b239f21bc4aba0e89fec5d5fab4fc4052d0be9` on `origin/development`.
-- 1,192 Python unit tests, 38 Node.js tests, 101 compilation checks, and 138 browser CDP checks passing with zero failures (`master_astra_full_20261028_02.json`).
-- Dual-Track governance files established:
-  - `TRADEPULSE_DUAL_TRACK_HANDOFF.md`
-  - `TRADEPULSE_DUAL_TRACK_ACCEPTANCE_MATRIX.md`
-  - `TRADEPULSE_DUAL_TRACK_COMPARISON_METRICS.md`
-  - `TRADEPULSE_DUAL_TRACK_CHECKPOINT.md`
+  - Previous Astra Master mission verified finished and no longer mutating files.
+  - Dual-Track governance files established and pushed to `origin/development`.
+- **Wave 1 (Market Radar & Factor-Delta Rank Transitions)**: `VERIFIED_COMPLETE`
+  - Implemented `market_radar.py`: normalized day-open movement strength vs ATR50 comparator baseline, sector breadth (advances/declines), and strict non-actionable observation labeling.
+  - Implemented `rank_transitions.py`: deterministic factor deltas, narrative generation, TCS #1 at 10:00 -> INFY #1 at 10:10 reversal demonstration, and immediate removal of disqualified leaders (`NO_LINGERING_LEADER`).
+  - Created `test_astra_wave1_radar_and_transitions.py` (8/8 tests pass). Total unique unit tests increased to 1,200 (100% PASS).
+  - Registered `market_radar.py` and `rank_transitions.py` in `release_management.py:CORE_MODULES`. All 19 release tests pass.
 
 ---
 
@@ -29,6 +28,6 @@
 ---
 
 ## 3. Exactly One Next Action After Interruption
-👉 **Execute Wave 1: Implement the explicit 1-minute Market Radar normalized open-move baseline comparator (`market_radar.py`) and granular factor-delta rank transition explanations (`rank_transitions.py`) with reproducible test demonstrations.**
+👉 **Execute Wave 2: Implement the Opportunity X-Ray chart data model and factor delta visualization binding in `server.py` and `public/index.html` to display the Radar breadth map and interactive 5m candle zone drilldowns with reproducible browser test verification.**
 
 **Resume Command:** `CONTINUE FROM CHECKPOINT`

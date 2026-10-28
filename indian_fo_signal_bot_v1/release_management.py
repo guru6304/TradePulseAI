@@ -77,6 +77,8 @@ class ReleasePackager:
         "angel_history_capture.py",
         "context_data.py",
         "context_workflow.py",
+        "market_radar.py",
+        "rank_transitions.py",
     ]
 
     REQUIRED_ASSETS = [

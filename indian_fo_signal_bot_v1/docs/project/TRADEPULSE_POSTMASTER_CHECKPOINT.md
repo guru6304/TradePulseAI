@@ -16,25 +16,25 @@
 
 ---
 
-## 2. Wave 0 Status (Baseline Integrity & Governance Artifacts)
-- `TRADEPULSE_DUAL_TRACK_HANDOFF.md` — `CREATED`
-- `TRADEPULSE_DUAL_TRACK_ACCEPTANCE_MATRIX.md` — `CREATED`
-- `TRADEPULSE_DUAL_TRACK_COMPARISON_METRICS.md` — `CREATED`
-- `TRADEPULSE_DUAL_TRACK_CHECKPOINT.md` — `CREATED`
-- `TRADEPULSE_COMPETITIVE_GAP_MATRIX.md` — `CREATED`
-- `TRADEPULSE_PREMIUM_UI_SPEC.md` — `CREATED`
-- `TRADEPULSE_POSTMASTER_CHECKPOINT.md` — `CREATED`
+## 2. Wave 0 & Wave 1 Status
+- `Wave 0 (Baseline Integrity & Governance Artifacts)`: `VERIFIED_COMPLETE`
+  - All 7 dual-track charter and competitive matrix artifacts established.
+- `Wave 1 (Market Radar & Rank Transitions Engine)`: `VERIFIED_COMPLETE`
+  - `market_radar.py`: Implemented normalized open-move baseline comparator (one-sided vs. choppy thresholding via ATR50), sector breadth aggregation, and non-actionable observation labels.
+  - `rank_transitions.py`: Implemented factor deltas, plain-English narrative generation, deterministic TCS #1 at 10:00 -> INFY #1 at 10:10 reversal demonstration, and immediate disqualified leader dropout (`NO_LINGERING_LEADER`).
+  - Unit tests: 8 / 8 tests pass in `test_astra_wave1_radar_and_transitions.py`.
+  - Canonical test suite total: **1,200 unique unit tests (100% PASS)**.
+  - Release packaging: `release_management.py:CORE_MODULES` updated and verified (19 / 19 release tests pass).
 
 ---
 
-## 3. Top Three Evidence-Based Gaps to Execute
-1. **Gap 1: Two-Layer Architecture** (Market Radar 1m Observation vs. Qualified 5m Actionable Strategy Opportunities).
-2. **Gap 2: Factor-Delta Explanations & Rank Reversal Audit** (TCS vs INFY deterministic demonstration with immediate removal of disqualified setups).
-3. **Gap 3: Distinct Premium Terminal UI** (Opportunity X-Ray interactive drilldown, dark-first slate/indigo palette).
+## 3. Top Evidence-Based Gaps Remaining
+1. **Gap 3: Distinct Premium Terminal UI** (Opportunity X-Ray interactive drilldown, dark-first slate/indigo palette).
+2. **Gap 4: Strategy 3 Empirical Backtesting & Data Entitlement** (`BLOCKED_EXTERNAL`).
 
 ---
 
 ## 4. Exactly One Next Action
-👉 **Execute Wave 1: Implement the explicit 1-minute Market Radar normalized open-move baseline comparator (`market_radar.py`) and granular factor-delta rank transition explanations (`rank_transitions.py`) with reproducible test demonstrations.**
+👉 **Execute Wave 2: Implement the Opportunity X-Ray chart data model and factor delta visualization binding in `server.py` and `public/index.html` to display the Radar breadth map and interactive 5m candle zone drilldowns with reproducible browser test verification.**
 
 **Resume Instruction:** `CONTINUE FROM CHECKPOINT`
