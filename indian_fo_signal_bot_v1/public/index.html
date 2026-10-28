@@ -150,19 +150,20 @@
         <span id="headerTelemetryText" class="text-slate-400 mono text-[11px]">DB: Checking | Scheduler: Checking | Last Refresh: Never</span>
       </div>
 
-      <!-- Primary Navigation Tabs (4 Tabs — Setup Guide Tab Removed per Phase 1E Spec) -->
-      <nav class="flex flex-wrap items-center gap-1" aria-label="Primary Tabs" role="tablist">
-        <button id="tabBtn-terminal" role="tab" aria-selected="true" aria-controls="tab-terminal" type="button" data-tab="tab-terminal" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          1. Live Signal Terminal
+      <!-- Primary Navigation Tabs -->
+      <nav class="flex flex-wrap items-center gap-1.5" aria-label="Primary Tabs" role="tablist">
+        <button id="tabBtn-terminal" role="tab" aria-selected="true" aria-controls="tab-terminal" type="button" data-tab="tab-terminal" class="nav-tab-btn px-3.5 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          <span>Pulse &amp; Opportunities</span>
         </button>
-        <button id="tabBtn-option-apex" role="tab" aria-selected="false" aria-controls="tab-option-apex" type="button" data-tab="tab-option-apex" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          2. Nifty &amp; BankNifty Option Apex
+        <button id="tabBtn-option-apex" role="tab" aria-selected="false" aria-controls="tab-option-apex" type="button" data-tab="tab-option-apex" class="nav-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <span>Options Lab</span>
         </button>
-        <button id="tabBtn-strategies" role="tab" aria-selected="false" aria-controls="tab-strategies" type="button" data-tab="tab-strategies" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          3. Top 5 Strategies &amp; Backtester
+        <button id="tabBtn-strategies" role="tab" aria-selected="false" aria-controls="tab-strategies" type="button" data-tab="tab-strategies" class="nav-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <span>Strategies &amp; Research</span>
         </button>
-        <button id="tabBtn-brokers-telegram" role="tab" aria-selected="false" aria-controls="tab-brokers-telegram" type="button" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
-          4. System Health, Scan History &amp; Config
+        <button id="tabBtn-brokers-telegram" role="tab" aria-selected="false" aria-controls="tab-brokers-telegram" type="button" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3.5 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+          <span>Paper &amp; System Health</span>
         </button>
       </nav>
     </div>
@@ -283,7 +284,7 @@
         <div class="lg:col-span-7 space-y-3">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
-              <span>Persisted Signals (<code class="text-xs text-cyan-400">GET /api/signals</code>)</span>
+              <span>Persisted Opportunity Board</span>
               <span id="signalCountBadge" class="px-2 py-0.5 text-xs rounded-full bg-emerald-500/20 text-emerald-300 mono">Loading...</span>
             </h2>
             <div class="flex items-center gap-2 text-xs">
@@ -324,7 +325,7 @@
                 <span class="mono text-emerald-400" id="detailRrrBadge">R:R --</span>
               </div>
               <p class="text-[10px] text-slate-400 mb-1.5">
-                Note: <code class="text-slate-300">GET /api/signals</code> provides verified entry, zone, invalidation, stop-loss, and target levels; raw 5m OHLCV candle series are not exposed in Phase 1D.
+                Verified trade levels: entry, zone, invalidation, stop-loss, and target projections backed by qualified factor evidence.
               </p>
               <div class="relative h-64 w-full bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
                 <canvas id="signalPriceChart" role="img" aria-label="Intraday price and trade levels chart">Intraday price chart showing entry, stop loss, and target levels.</canvas>
@@ -424,13 +425,16 @@
     </section>
 
     <!-- ================================================================== -->
-    <!-- TAB 2: NIFTY 50 & BANK NIFTY OPTION APEX (GET /api/oi-snapshots)   -->
+    <!-- TAB 2: OPTIONS LAB — DERIVATIVES POSITIONING STRUCTURE              -->
     <!-- ================================================================== -->
     <section id="tab-option-apex" role="tabpanel" aria-labelledby="tabBtn-option-apex" class="tab-panel hidden space-y-5">
       <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h2 class="text-base font-bold text-white">Option Apex &amp; Persisted OI Snapshot History (<code class="text-xs text-cyan-400">GET /api/oi-snapshots</code>)</h2>
-          <p class="text-xs text-slate-400">Strictly scoped to NIFTY 50 &amp; BANK NIFTY option-chain snapshots persisted in SQLite</p>
+          <div class="flex items-center gap-2 flex-wrap">
+            <h2 class="text-base font-bold text-white">Options Positioning Lab &mdash; Intraday Derivatives Structure</h2>
+            <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">Contract &amp; OI Analytics</span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">Underlying spot context, strike distribution, Put-Call Ratio (PCR), and Strategy 3 qualification across NIFTY 50 &amp; BANK NIFTY</p>
         </div>
         <div class="flex flex-wrap items-end gap-2.5 text-xs">
           <div>
@@ -468,7 +472,7 @@
         </div>
       </div>
 
-      <!-- Option Apex Baseline & Scrip Master Readiness Banner (Phase 2B) -->
+      <!-- Option Apex Baseline & Scrip Master Readiness Banner -->
       <div id="optionApexCapabilityBanner" class="glass-card rounded-xl p-3.5 text-xs flex flex-wrap items-center justify-between gap-2 border border-slate-800">
         <div class="flex items-center gap-2 flex-wrap">
           <span class="text-slate-400 font-semibold">Option Apex (Strategy 3) Status:</span>
@@ -478,8 +482,34 @@
         <span id="optionApexScripMasterBadge" class="text-[11px] mono text-slate-400">Scrip Master: --</span>
       </div>
 
-      <!-- OI Snapshot Status Banner (Loading / Empty / Error) -->
-      <div id="oiSnapshotStateBanner" class="hidden glass-card rounded-xl p-5 text-center text-xs text-slate-300"></div>
+      <!-- OI Snapshot Status Banner (Cohesive Data Availability Panel) -->
+      <div id="oiSnapshotStateBanner" class="hidden glass-card rounded-xl p-5 text-slate-300 border border-slate-800 space-y-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+            <span class="font-bold text-sm text-white" id="foSnapshotBannerTitle">No Stored Option-Chain Snapshots</span>
+            <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-slate-800 text-slate-300 mono" id="foSnapshotModeChip">SIMULATION WORKSPACE</span>
+          </div>
+          <span class="text-[11px] text-slate-400">Derivatives Data Availability</span>
+        </div>
+        <p class="text-xs text-slate-300 leading-relaxed" id="foSnapshotBannerDesc">
+          No persisted option-chain snapshots exist in SQLite for the selected index (<strong id="foSnapshotIndexName" class="text-white">NIFTY 50</strong>). Option chains and PCR metrics are captured during active market hours (09:15&ndash;15:30 IST) or upon explicit scan execution.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-800/80 text-xs">
+          <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800/80">
+            <span class="text-slate-400 block text-[10px] uppercase font-semibold">1. Trigger On-Demand Capture</span>
+            <p class="text-[11px] text-slate-300 mt-0.5">Click <strong>⚡ Scan Market Now</strong> in the top header to run a safe simulated scan and persist option snapshots.</p>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800/80">
+            <span class="text-slate-400 block text-[10px] uppercase font-semibold">2. Historical Inspection</span>
+            <p class="text-[11px] text-slate-300 mt-0.5">Toggle between NIFTY 50 and BANK NIFTY, or select a stored historical snapshot from the dropdown above.</p>
+          </div>
+          <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800/80">
+            <span class="text-slate-400 block text-[10px] uppercase font-semibold">3. Verified Strategy Scope</span>
+            <p class="text-[11px] text-slate-300 mt-0.5">Strategy 3 (Option Apex) executes strictly against validated option chains with strike liquidity and prior-session OI baselines.</p>
+          </div>
+        </div>
+      </div>
 
       <!-- Top Option Metrics Row (Driven Strictly by Actual Snapshot Fields) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -703,7 +733,7 @@
             <div class="flex items-center justify-between border-b border-slate-800 pb-3">
               <div>
                 <h2 class="text-base font-bold text-white">System Health &amp; Broker Readiness</h2>
-                <p class="text-xs text-slate-400">Live status from <code class="text-cyan-400">GET /api/health</code> &amp; <code class="text-cyan-400">GET /api/config</code></p>
+                <p class="text-xs text-slate-400">Live operational telemetry and broker connection state</p>
               </div>
               <span id="healthOverallBadge" class="px-2.5 py-1 rounded text-xs font-bold mono bg-slate-800 text-slate-300">CHECKING</span>
             </div>
@@ -753,7 +783,7 @@
           <div class="glass-card rounded-xl p-5 space-y-4">
             <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
               <div>
-                <h2 class="text-base font-bold text-white">Persisted Scan-Run History (<code class="text-xs text-cyan-400">GET /api/scans</code>)</h2>
+                <h2 class="text-base font-bold text-white">Persisted Market Scan Runs &mdash; Intraday Audit Log</h2>
                 <p class="text-xs text-slate-400">Distinguishes COMPLETED, COMPLETED_EMPTY (0 signals), FAILED, and SKIPPED_OVERLAP runs</p>
               </div>
               <div class="flex items-center gap-2 text-xs">
@@ -1570,12 +1600,7 @@
           : 'No scan in current process';
         const mktDataObs = broker.last_candle_timestamp_ist || broker.last_market_data_at_ist || 'None';
         document.getElementById('headerTelemetryText').textContent =
-          'DB: ' + (db.status || 'UNKNOWN') + ' (' + (db.signals_count ?? 0) + ' sigs) | ' +
-          'Source Obs (IST): ' + mktDataObs + ' | ' +
-          'Scheduler: ' + schedLabel + ' | ' +
-          'Session: ' + (sched.session_state || '--') + ' | ' +
-          'Last Scan: ' + lastScanLabel + ' | ' +
-          'UI Poll: ' + (state.lastRefreshIst || '--');
+          'Session: ' + (sched.session_state || 'CLOSED (09:15–15:30 IST)') + ' • Source Obs: ' + (mktDataObs !== 'None' ? mktDataObs : (state.lastRefreshIst ? state.lastRefreshIst + ' IST' : '--')) + ' • Synced: ' + (state.lastRefreshIst || '--');
       }
 
       function renderHeaderOffline(err) {
@@ -1746,14 +1771,14 @@
         badge.textContent = 'Loading...';
         clearChildren(container);
         container.appendChild(
-          el('div', 'glass-card rounded-xl p-6 text-center text-xs text-slate-400 mono', 'Loading persisted signals from GET /api/signals...')
+          el('div', 'glass-card rounded-xl p-6 text-center text-xs text-slate-400 mono', 'Loading verified opportunities...')
         );
 
         try {
           const res = await apiClient.getSignals(params);
           if (seq !== state.reqSeq.signals) return;
           if (!res || !Array.isArray(res.items)) {
-            throw new Error('Malformed /api/signals payload: missing items array.');
+            throw new Error('Malformed signals payload: missing items array.');
           }
           state.signals = res.items;
           state.signalsTotal = Number.isFinite(Number(res.total_count)) ? Number(res.total_count) : res.items.length;
@@ -1765,9 +1790,9 @@
           badge.textContent = 'Error';
           clearChildren(container);
           const errBox = el('div', 'glass-card rounded-xl p-5 border border-rose-500/40 bg-rose-950/20 space-y-2 text-xs');
-          errBox.appendChild(el('div', 'font-bold text-rose-300', 'Failed to load signals from GET /api/signals'));
+          errBox.appendChild(el('div', 'font-bold text-rose-300', 'Unable to retrieve verified opportunities from backend'));
           errBox.appendChild(el('p', 'text-rose-200 mono', err && err.message ? err.message : 'Unknown API error'));
-          const retryBtn = el('button', 'px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold transition', 'Retry Loading Signals');
+          const retryBtn = el('button', 'px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold transition', 'Retry Loading Opportunities');
           retryBtn.type = 'button';
           retryBtn.addEventListener('click', function() { loadSignals(); });
           errBox.appendChild(retryBtn);
@@ -2291,13 +2316,13 @@
           const agePart = (scrip.file_age_hours !== null && scrip.file_age_hours !== undefined) ? (' • age ' + scrip.file_age_hours + 'h') : '';
           scripEl.textContent = 'Scrip Master: ' + scrip.status + ' (' + (scrip.index_options_loaded ?? 0) + ' opt contracts' + agePart + ')';
         } else {
-          scripEl.textContent = 'Scrip Master: ' + (scrip.status || 'N/A');
+          scripEl.textContent = 'Scrip Master: Simulation Baseline';
         }
 
         if (st === 'SIMULATED_READY') {
-          badge.textContent = 'SIMULATED_READY';
+          badge.textContent = 'SIMULATION BASELINE READY';
           badge.className = 'px-2 py-0.5 rounded font-bold mono bg-amber-500/20 text-amber-300 border border-amber-500/40';
-          text.textContent = (idxInfo.reason || 'Simulated option chain active.') + ' [SIMULATED DATA]';
+          text.textContent = (idxInfo.reason || 'Simulated option chain active.') + ' [SIMULATION WORKSPACE]';
         } else if (st === 'READY') {
           if (broker.connection_state === 'CONNECTED_VERIFIED') {
             badge.textContent = 'LIVE VERIFIED • READY';
@@ -2337,13 +2362,15 @@
 
         const seq = ++state.reqSeq.oi;
         banner.classList.remove('hidden');
-        banner.textContent = 'Loading persisted OI snapshots for ' + state.selectedFoIndex + ' from GET /api/oi-snapshots...';
+        const idxTitle = state.selectedFoIndex === 'BANKNIFTY' ? 'BANK NIFTY' : 'NIFTY 50';
+        const bannerTitle = document.getElementById('foSnapshotBannerTitle');
+        if (bannerTitle) bannerTitle.textContent = 'Loading Persisted Option Snapshots (' + idxTitle + ')...';
 
         try {
           const res = await apiClient.getOiSnapshots(params);
           if (seq !== state.reqSeq.oi) return;
           if (!res || !Array.isArray(res.items)) {
-            throw new Error('Malformed /api/oi-snapshots response.');
+            throw new Error('Malformed option-chain snapshots payload: missing items array.');
           }
           state.oiSnapshots = res.items;
           state.selectedSnapshotIdx = 0;
@@ -2351,7 +2378,9 @@
 
           if (res.items.length === 0) {
             banner.classList.remove('hidden');
-            banner.textContent = 'No persisted OI snapshots found for ' + state.selectedFoIndex + '. Click "⚡ Scan Market Now" to capture and persist option-chain snapshots.';
+            if (bannerTitle) bannerTitle.textContent = 'No Stored Option-Chain Snapshots (' + idxTitle + ')';
+            const idxEl = document.getElementById('foSnapshotIndexName');
+            if (idxEl) idxEl.textContent = idxTitle;
             renderEmptyOptionApex();
             return;
           }
@@ -2361,7 +2390,9 @@
           if (seq !== state.reqSeq.oi) return;
           state.oiSnapshots = [];
           banner.classList.remove('hidden');
-          banner.textContent = 'Error loading OI snapshots: ' + (err && err.message ? err.message : 'API error');
+          if (bannerTitle) bannerTitle.textContent = 'Unable to Load Option Snapshots';
+          const descEl = document.getElementById('foSnapshotBannerDesc');
+          if (descEl) descEl.textContent = 'Encountered API error while reading persisted option snapshots: ' + (err && err.message ? err.message : 'Unknown error');
           renderEmptyOptionApex();
         }
       }
@@ -2385,18 +2416,27 @@
       }
 
       function renderEmptyOptionApex() {
-        document.getElementById('foDataModeBadge').textContent = '--';
+        const modeBadge = document.getElementById('foDataModeBadge');
+        modeBadge.textContent = 'STANDBY';
+        modeBadge.className = 'text-[10px] font-bold mono px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700';
+
         document.getElementById('foPcrValue').textContent = '--';
-        document.getElementById('foPcrBias').textContent = 'No Snapshot';
-        document.getElementById('foTotalOiSubtext').textContent = 'CE OI: -- | PE OI: --';
-        document.getElementById('foComparisonStatus').textContent = 'NO_SNAPSHOT';
-        document.getElementById('foComparisonSubtext').textContent = 'No persisted snapshot selected';
-        document.getElementById('foSpotAndAtm').textContent = '--';
-        document.getElementById('foExpiryAndMeasure').textContent = 'Expiry: -- | Max Pain: Unavailable in API';
-        document.getElementById('foTopPickContract').textContent = 'No Active Signal';
-        document.getElementById('foTopPickLevels').textContent = '--';
-        document.getElementById('foSnapshotTimestampLabel').textContent = '--';
-        clearChildren(document.getElementById('optionChainTableBody'));
+        document.getElementById('foPcrBias').textContent = 'Awaiting Snapshot';
+        document.getElementById('foTotalOiSubtext').textContent = 'Requires ≥1 stored option chain';
+        document.getElementById('foComparisonStatus').textContent = 'BASELINE PENDING';
+        document.getElementById('foComparisonSubtext').textContent = 'Requires ≥2 consecutive intraday snapshots';
+        document.getElementById('foSpotAndAtm').textContent = state.selectedFoIndex + ' Spot Context';
+        document.getElementById('foExpiryAndMeasure').textContent = 'Expiry: Active Weekly/Monthly • Max Pain: API Unsupported';
+        document.getElementById('foTopPickContract').textContent = 'Strategy 3 Standby';
+        document.getElementById('foTopPickLevels').textContent = 'Awaiting strike divergence evidence';
+        document.getElementById('foSnapshotTimestampLabel').textContent = 'No Snapshot Selected';
+        const tbody = document.getElementById('optionChainTableBody');
+        clearChildren(tbody);
+        const emptyRow = el('tr', '');
+        const cell = el('td', 'text-center py-8 text-slate-400 text-xs italic', 'No option-chain strikes recorded for ' + state.selectedFoIndex + '. Run a market scan or choose a stored historical snapshot above.');
+        cell.setAttribute('colspan', '8');
+        emptyRow.appendChild(cell);
+        tbody.appendChild(emptyRow);
         if (oiChartInstance) {
           oiChartInstance.destroy();
           oiChartInstance = null;

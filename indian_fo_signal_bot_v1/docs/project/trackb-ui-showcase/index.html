@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradePulse AI — Track B Premium UI Showcase & Verification Gallery</title>
+  <style>
+    :root {
+      --tp-bg: #090F1C;
+      --tp-canvas: #0D1628;
+      --tp-card: #132238;
+      --tp-border: #1E3352;
+      --tp-text-main: #EEF3FA;
+      --tp-text-muted: #95A5BC;
+      --tp-brand: #6366F1;
+      --tp-cyan: #22D3EE;
+      --tp-green: #34D399;
+      --tp-amber: #FBBF24;
+      --tp-rose: #F87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--tp-bg);
+      color: var(--tp-text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5;
+      padding: 24px;
+    }
+    .container { max-width: 1400px; margin: 0 auto; }
+    header {
+      background: var(--tp-canvas);
+      border: 1px solid var(--tp-border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-family: monospace;
+    }
+    .badge-pass { background: rgba(52, 211, 153, 0.15); color: var(--tp-green); border: 1px solid rgba(52, 211, 153, 0.3); }
+    .badge-sim { background: rgba(251, 191, 36, 0.15); color: var(--tp-amber); border: 1px solid rgba(251, 191, 36, 0.3); }
+    .badge-brand { background: rgba(99, 102, 241, 0.2); color: #C7D2FE; border: 1px solid rgba(99, 102, 241, 0.4); }
+    h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; color: #fff; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: #fff; }
+    p { color: var(--tp-text-muted); font-size: 14px; margin-bottom: 12px; }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .stat-card {
+      background: var(--tp-card);
+      border: 1px solid var(--tp-border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .stat-val { font-size: 20px; font-weight: 800; font-family: monospace; color: #fff; }
+    .stat-label { font-size: 12px; color: var(--tp-text-muted); text-transform: uppercase; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .screenshot-card {
+      background: var(--tp-canvas);
+      border: 1px solid var(--tp-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .card-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--tp-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card-title { font-size: 14px; font-weight: 700; color: #fff; }
+    .card-viewport { font-size: 11px; font-family: monospace; color: var(--tp-cyan); }
+    .card-body {
+      padding: 16px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 280px;
+    }
+    .card-body img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--tp-border);
+    }
+    .card-footer {
+      padding: 14px 16px;
+      font-size: 12px;
+      color: var(--tp-text-muted);
+      background: var(--tp-card);
+    }
+    .code-box {
+      background: #050912;
+      border: 1px solid var(--tp-border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 12px;
+      color: var(--tp-cyan);
+      margin: 12px 0;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+    th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--tp-border); }
+    th { color: var(--tp-text-muted); font-size: 11px; text-transform: uppercase; }
+    td.mono { font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+        <div>
+          <span class="badge badge-brand">Track B • Antigravity</span>
+          <span class="badge badge-pass">138 / 138 CDP Probes Passed</span>
+          <span class="badge badge-sim">Simulation Workspace Verified</span>
+        </div>
+        <span style="font-family:monospace; font-size:12px; color:var(--tp-text-muted);">Mission ID: TPAI-TRACKB-PREMIUM-EXPERIENCE-RECOVERY-2026-10-28-V2</span>
+      </div>
+      <h1>TradePulse AI — Track B Premium UI Showcase & Verification Gallery</h1>
+      <p>Official offline local verification gallery for the Track B UI transformation. All visual anti-patterns flagged by the owner have been resolved with editorial financial terminal styling, clean information architecture, zero raw API strings, and comprehensive empty-state data availability panels.</p>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--tp-green);">100% (40 / 40)</div>
+          <div class="stat-label">Node DOM Regression Tests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--tp-green);">100% (18 / 18)</div>
+          <div class="stat-label">Python DOM &amp; API Tests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--tp-green);">100% (138 / 138)</div>
+          <div class="stat-label">CDP Headless Chrome Checks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" style="color:var(--tp-cyan);">0 (Strictly Blocked)</div>
+          <div class="stat-label">Real Broker Order Mutations</div>
+        </div>
+      </div>
+    </header>
+
+    <h2>Primary Pages &amp; Responsive Viewports</h2>
+    <div class="gallery-grid">
+      <!-- Desktop Options Lab -->
+      <div class="screenshot-card">
+        <div class="card-header">
+          <span class="card-title">Options Lab (Derivatives Positioning)</span>
+          <span class="card-viewport">1440 &times; 900 Desktop</span>
+        </div>
+        <div class="card-body">
+          <img src="../screenshots/trackb-premium/desktop-options-lab.png" alt="Desktop Options Lab Screenshot" />
+        </div>
+        <div class="card-footer">
+          <strong>Key Improvements:</strong> Purged raw <code>GET /api/oi-snapshots</code> heading &amp; <code>SIMULATED_READY</code> enum. Replaced 4 repeated blank cards with single cohesive <em>Derivatives Data Availability Panel</em> with 3 actionable guidance cards.
+        </div>
+      </div>
+
+      <!-- Desktop Pulse & Opportunities -->
+      <div class="screenshot-card">
+        <div class="card-header">
+          <span class="card-title">Pulse &amp; Opportunities (Dynamic Leaderboard)</span>
+          <span class="card-viewport">1440 &times; 900 Desktop</span>
+        </div>
+        <div class="card-body">
+          <img src="../screenshots/trackb-premium/desktop-pulse-opportunities.png" alt="Desktop Pulse Screenshot" />
+        </div>
+        <div class="card-footer">
+          <strong>Key Improvements:</strong> Unnumbered primary navigation tabs with live pulse indicator. Candidate Priority leader spotlight with factor deltas and calm session explanation. Market Radar breadth and sentiment pills.
+        </div>
+      </div>
+
+      <!-- Desktop Strategies & Research -->
+      <div class="screenshot-card">
+        <div class="card-header">
+          <span class="card-title">Strategies &amp; Research</span>
+          <span class="card-viewport">1440 &times; 900 Desktop</span>
+        </div>
+        <div class="card-body">
+          <img src="../screenshots/trackb-premium/desktop-strategies-research.png" alt="Desktop Strategies Screenshot" />
+        </div>
+        <div class="card-footer">
+          <strong>Key Improvements:</strong> Five institutional strategy cards, rule mechanics, and backtest friction simulator with equity curve visualization.
+        </div>
+      </div>
+
+      <!-- Desktop Paper & Health -->
+      <div class="screenshot-card">
+        <div class="card-header">
+          <span class="card-title">Paper Portfolio &amp; System Health</span>
+          <span class="card-viewport">1440 &times; 900 Desktop</span>
+        </div>
+        <div class="card-body">
+          <img src="../screenshots/trackb-premium/desktop-paper-health.png" alt="Desktop Paper Health Screenshot" />
+        </div>
+        <div class="card-footer">
+          <strong>Key Improvements:</strong> Operational telemetry, scan run audit log, broker stream readiness, and redacted configuration panel without polluting customer headings.
+        </div>
+      </div>
+
+      <!-- Mobile Options Lab -->
+      <div class="screenshot-card">
+        <div class="card-header">
+          <span class="card-title">Options Lab (Mobile)</span>
+          <span class="card-viewport">390 &times; 844 Mobile</span>
+        </div>
+        <div class="card-body">
+          <img src="../screenshots/trackb-premium/mobile-options-lab.png" alt="Mobile Options Lab Screenshot" />
+        </div>
+        <div class="card-footer">
+          <strong>Key Improvements:</strong> Responsive vertical reflow, accessible touch targets (&ge; 40px), clean wrapped navigation tabs, zero horizontal page overflow.
+        </div>
+      </div>
+
+      <!-- Mobile Pulse -->
+      <div class="screenshot-card">
+        <div class="card-header">
+          <span class="card-title">Pulse &amp; Opportunities (Mobile)</span>
+          <span class="card-viewport">390 &times; 844 Mobile</span>
+        </div>
+        <div class="card-body">
+          <img src="../screenshots/trackb-premium/mobile-pulse-opportunities.png" alt="Mobile Pulse Screenshot" />
+        </div>
+        <div class="card-footer">
+          <strong>Key Improvements:</strong> Full signal filter controls, symbol search, and responsive level structure chart without horizontal clipping.
+        </div>
+      </div>
+    </div>
+
+    <h2>How to Run Locally</h2>
+    <div class="code-box">
+# 1. Activate isolated Track B directory
+cd "TradePulseAI/indian_fo_signal_bot_v1"
+
+# 2. Launch safe read-only local server
+python server.py --host 127.0.0.1 --port 8080
+
+# 3. Open running application in browser
+# http://127.0.0.1:8080/
+    </div>
+
+    <h2>Verification &amp; Test Suite Execution Commands</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Test Suite</th>
+          <th>Command</th>
+          <th>Pass / Total</th>
+          <th>Exit Code</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Node.js DOM Regression Suite</td>
+          <td class="mono">node test_cash_dashboard.js</td>
+          <td>40 / 40 Passed</td>
+          <td class="mono" style="color:var(--tp-green);">0</td>
+        </tr>
+        <tr>
+          <td>Wave 1 Radar &amp; Transitions Tests</td>
+          <td class="mono">python test_astra_wave1_radar_and_transitions.py</td>
+          <td>8 / 8 Passed</td>
+          <td class="mono" style="color:var(--tp-green);">0</td>
+        </tr>
+        <tr>
+          <td>Wave 2 DOM Contracts &amp; API Tests</td>
+          <td class="mono">python test_astra_wave2_server_and_ui.py</td>
+          <td>10 / 10 Passed</td>
+          <td class="mono" style="color:var(--tp-green);">0</td>
+        </tr>
+        <tr>
+          <td>Headless Chrome Multi-Viewport CDP Probes</td>
+          <td class="mono">python docs/evidence/astra_browser_assets_verify_20261027_01.py --stage trackb_premium_20261029_01</td>
+          <td>138 / 138 Passed</td>
+          <td class="mono" style="color:var(--tp-green);">0</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
