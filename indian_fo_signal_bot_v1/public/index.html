@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TradePulse Intelligence Terminal — Indian Equity &amp; Nifty/BankNifty F&amp;O Signal Terminal (Phase 1E)</title>
+  <title>TradePulse AI — Institutional Equity &amp; F&amp;O Opportunity Intelligence Terminal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,6 +14,24 @@
       darkMode: 'class',
       theme: {
         extend: {
+          colors: {
+            tp: {
+              bg: '#090F1C',
+              surface: '#101B2D',
+              surfaceRaised: '#152238',
+              surfaceSubtle: '#0D1626',
+              border: '#27354A',
+              borderSubtle: '#1C283A',
+              text: '#EEF3FA',
+              muted: '#9BACBF',
+              brand: '#8B85FF',
+              brandSoft: '#24234B',
+              cyan: '#59C8E7',
+              positive: '#34C7A1',
+              negative: '#F17F90',
+              caution: '#F1C16B'
+            }
+          },
           fontFamily: {
             sans: ['Inter', 'system-ui', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
@@ -23,32 +41,57 @@
     };
   </script>
   <style>
+    :root {
+      --tp-bg: #090F1C;
+      --tp-surface: #101B2D;
+      --tp-surface-raised: #152238;
+      --tp-surface-subtle: #0D1626;
+      --tp-border: #27354A;
+      --tp-border-subtle: #1C283A;
+      --tp-text: #EEF3FA;
+      --tp-muted: #9BACBF;
+      --tp-brand: #8B85FF;
+      --tp-brand-soft: #24234B;
+      --tp-cyan: #59C8E7;
+      --tp-positive: #34C7A1;
+      --tp-negative: #F17F90;
+      --tp-caution: #F1C16B;
+    }
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background-color: #090d16;
-      color: #e2e8f0;
+      background-color: var(--tp-bg);
+      color: var(--tp-text);
       overflow-x: hidden;
     }
-    .mono { font-family: 'JetBrains Mono', monospace; }
+    .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
     .glass-card {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(51, 65, 85, 0.65);
-      backdrop-filter: blur(10px);
+      background: rgba(16, 27, 45, 0.88);
+      border: 1px solid rgba(39, 53, 74, 0.75);
+      backdrop-filter: blur(12px);
+    }
+    .glass-card-elevated {
+      background: rgba(21, 34, 56, 0.95);
+      border: 1px solid rgba(139, 133, 255, 0.35);
+      box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.15);
     }
     .pulse-dot {
       animation: pulseRing 2s infinite;
     }
     @keyframes pulseRing {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 161, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 199, 161, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 161, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pulse-dot { animation: none !important; }
+      * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
     }
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #090d16; }
-    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-track { background: var(--tp-bg); }
+    ::-webkit-scrollbar-thumb { background: var(--tp-border); border-radius: 3px; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#090d16] text-slate-100">
+<body class="min-h-screen flex flex-col bg-[#090F1C] text-[#EEF3FA]">
 
   <!-- Top Institutional Market Breadth, Health & Index Ribbon -->
   <header class="border-b border-slate-800 bg-slate-950/95 sticky top-0 z-30">
@@ -59,8 +102,8 @@
         </div>
         <div>
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="font-bold text-base tracking-tight text-white">TradePulse Intelligence Terminal</span>
-            <span class="text-[11px] font-semibold uppercase px-2 py-0.5 rounded-full bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">Phase 1E Integrated</span>
+            <span class="font-bold text-base tracking-tight text-white">TradePulse AI</span>
+            <span class="text-[11px] font-medium text-indigo-300/80 bg-indigo-950/40 px-2 py-0.5 rounded-full border border-indigo-500/20">Intelligence before action</span>
             <span id="headerDataModeBadge" class="text-[11px] font-bold uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 mono">CHECKING MODE...</span>
           </div>
           <p class="text-xs text-slate-400">NSE Intraday Equity &amp; Nifty 50 / Bank Nifty F&amp;O Signal Terminal (Read-Only Analytics &mdash; No Live Order Execution)</p>
@@ -1074,13 +1117,45 @@
         const container = document.getElementById('opportunityRankingsContainer');
         clearChildren(container);
         if (!data || data.actionable !== false || !data.snapshot) {
-          container.appendChild(el('p', 'text-amber-300', 'Candidate priority unavailable: no qualified retained ranking for this source and universe.'));
+          const emptyPanel = el('div', 'p-5 rounded-xl border border-slate-800/80 bg-slate-900/50 space-y-3.5');
+          const headerRow = el('div', 'flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/60 pb-2.5');
+          const titleBox = el('div', 'flex items-center gap-2');
+          titleBox.appendChild(el('span', 'w-2 h-2 rounded-full bg-slate-500'));
+          titleBox.appendChild(el('h3', 'font-bold text-slate-200 text-sm tracking-tight', 'No Qualified Opportunities Right Now'));
+          headerRow.appendChild(titleBox);
+          headerRow.appendChild(el('span', 'text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-800/90 text-slate-300 border border-slate-700/60 mono', 'GATED • 0 FORCED SIGNALS'));
+          emptyPanel.appendChild(headerRow);
+
+          emptyPanel.appendChild(el('p', 'text-amber-300 text-xs font-medium', 'Candidate priority unavailable: no qualified retained ranking for this source and universe.'));
+
+          const grid = el('div', 'grid grid-cols-1 md:grid-cols-3 gap-3 pt-1 text-xs');
+
+          const col1 = el('div', 'p-3 rounded-lg bg-slate-950/60 border border-slate-800/60 space-y-1');
+          col1.appendChild(el('span', 'text-[10px] font-bold uppercase tracking-wider text-slate-400 block', 'Market Session State'));
+          col1.appendChild(el('span', 'text-slate-200 font-semibold block text-xs', 'NSE Intraday Session Closed'));
+          col1.appendChild(el('p', 'text-[11px] text-slate-400 leading-relaxed', 'Actionable strategy signals require completed 5m candle confirmation during active market hours (09:15–15:30 IST).'));
+          grid.appendChild(col1);
+
+          const col2 = el('div', 'p-3 rounded-lg bg-slate-950/60 border border-slate-800/60 space-y-1');
+          col2.appendChild(el('span', 'text-[10px] font-bold uppercase tracking-wider text-slate-400 block', 'Institutional Gate Logic'));
+          col2.appendChild(el('span', 'text-slate-200 font-semibold block text-xs', '5 Strategy Engines Evaluated'));
+          col2.appendChild(el('p', 'text-[11px] text-slate-400 leading-relaxed', 'Order Block BOS, VWAP Pullback, Option Apex OI, ORB, and Supertrend gates strictly reject sub-threshold setups.'));
+          grid.appendChild(col2);
+
+          const col3 = el('div', 'p-3 rounded-lg bg-slate-950/60 border border-slate-800/60 space-y-1');
+          col3.appendChild(el('span', 'text-[10px] font-bold uppercase tracking-wider text-slate-400 block', 'Next Scheduled Evaluation'));
+          col3.appendChild(el('span', 'text-indigo-300 font-semibold block text-xs', 'Continuous 1m Radar Active'));
+          col3.appendChild(el('p', 'text-[11px] text-slate-400 leading-relaxed', '1m observation radar tracks sector breadth continuously. Click "Scan Market Now" to run an offline simulated scan.'));
+          grid.appendChild(col3);
+
+          emptyPanel.appendChild(grid);
+          container.appendChild(emptyPanel);
           return;
         }
         const snapshot = data.snapshot;
         const fresh = !expired && data.status === 'CURRENT_CANDIDATE_PRIORITY';
         const rows = fresh ? data.current_rows : data.historical_rows;
-        container.appendChild(el('p', fresh ? 'text-cyan-300' : 'text-amber-300', fresh ?
+        container.appendChild(el('p', fresh ? 'text-cyan-300 font-medium' : 'text-amber-300 font-medium', fresh ?
           'Current candidate priority — not an entry instruction or win probability.' :
           'Historical priority only — no current ranks available.'));
         const text = v => typeof v === 'string' && v.trim() ? v : 'unavailable';
@@ -1089,23 +1164,33 @@
           ' | Valid until ' + text(snapshot.valid_until) + ' | Source ' + text((snapshot.scope || {}).provider)));
         if (!Array.isArray(rows) || !rows.length) container.appendChild(el('p', '', fresh ?
           'No qualified cash candidate in the latest scan.' : 'No historical candidate rows in this view.'));
-        (Array.isArray(rows) ? rows.slice(0, 100) : []).forEach(function(row) {
+        (Array.isArray(rows) ? rows.slice(0, 100) : []).forEach(function(row, idx) {
           const scores = row.score_components || {};
-          const card = el('div', 'border border-slate-700 rounded p-3 space-y-1');
-          card.appendChild(el('p', 'font-semibold', (fresh ? 'Rank ' : 'Historical rank ') + number(row.rank) +
+          const isLeader = idx === 0 && fresh;
+          const cardCls = isLeader
+            ? 'border border-indigo-500/40 bg-gradient-to-r from-slate-900/90 to-indigo-950/30 rounded-xl p-4 space-y-2 shadow-lg shadow-indigo-500/5'
+            : 'border border-slate-800 bg-slate-900/70 rounded-xl p-3 space-y-1';
+          const card = el('div', cardCls);
+          if (isLeader) {
+            const leaderBadge = el('div', 'flex items-center gap-2 mb-1');
+            leaderBadge.appendChild(el('span', 'px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-indigo-500/25 text-indigo-300 border border-indigo-500/40 mono', 'Rank #1 Leader'));
+            leaderBadge.appendChild(el('span', 'text-[11px] text-slate-400', 'Top qualified confluence opportunity'));
+            card.appendChild(leaderBadge);
+          }
+          card.appendChild(el('p', 'font-semibold text-slate-100', (fresh ? 'Rank ' : 'Historical rank ') + number(row.rank) +
             ' | ' + text(row.symbol) + ' | ' + text(row.direction) + ' | ' + text(row.strategy_id)));
           let qualityText = 'Quality ' + number(scores.rule_quality);
           if (scores.confluence_count > 1) {
             qualityText += ' (Composite ' + number(scores.composite_score) + ' | Confluence x' + number(scores.confluence_count) + ')';
           }
-          card.appendChild(el('p', '', qualityText + ' | Gross T1 reward/risk ' +
+          card.appendChild(el('p', 'text-xs text-slate-300', qualityText + ' | Gross T1 reward/risk ' +
             number(scores.actual_target1_rr) + ' | Previous rank ' + number(row.previous_rank)));
           const reasons = {NEWLY_QUALIFIED: 'Newly qualified', SCORE_COMPONENT_CHANGED: 'Score inputs changed',
             RELATIVE_ORDER_CHANGED: 'Other candidates changed order', UNCHANGED_PRIORITY: 'Priority unchanged'};
-          card.appendChild(el('p', '', reasons[row.rank_change_reason] || text(row.rank_change_reason)));
+          card.appendChild(el('p', 'text-xs text-indigo-300/90', reasons[row.rank_change_reason] || text(row.rank_change_reason)));
           Object.entries(row.component_changes || {}).slice(0, 10).forEach(function(pair) {
             const change = pair[1] || {};
-            card.appendChild(el('p', 'text-xs', pair[0] + ': ' + number(change.previous) + ' → ' + number(change.current)));
+            card.appendChild(el('p', 'text-xs text-slate-400', pair[0] + ': ' + number(change.previous) + ' → ' + number(change.current)));
           });
           card.appendChild(el('p', 'text-xs text-slate-400', 'Source candle ' + text(row.source_data_watermark)));
           card.appendChild(el('p', 'text-xs text-amber-200', 'Unavailable inputs: ' +
@@ -1116,7 +1201,7 @@
           container.appendChild(el('p', 'text-xs text-amber-200', text(row.symbol) + ' removed from priority: ' + text(row.reason_code)));
         });
         const page = data.pagination || {};
-        container.appendChild(el('p', 'text-xs text-slate-400', 'Showing ' + number(Array.isArray(rows) ? rows.length : 0) +
+        container.appendChild(el('p', 'text-xs text-slate-400 pt-1', 'Showing ' + number(Array.isArray(rows) ? rows.length : 0) +
           ' of ' + number(page.total) + '. Stored candidate evidence; live acceptance and empirical performance remain separate.'));
       }
 
