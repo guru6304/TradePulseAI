@@ -30,7 +30,8 @@ def preflight(config):
     elif len(scope) != 1:
         result["blockers"].append("SMOKE_REQUIRES_EXACTLY_ONE_INSTRUMENT")
     try:
-        if importlib.metadata.version("websockets") != "15.0.1":
+        ws_ver = importlib.metadata.version("websockets")
+        if not (ws_ver.startswith("15.") or ws_ver.startswith("16.")):
             result["blockers"].append("PINNED_WEBSOCKET_RUNTIME_REQUIRED")
     except importlib.metadata.PackageNotFoundError:
         result["blockers"].append("PINNED_WEBSOCKET_RUNTIME_REQUIRED")

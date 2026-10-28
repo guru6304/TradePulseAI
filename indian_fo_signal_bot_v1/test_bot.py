@@ -10354,7 +10354,8 @@ def load_tests(loader, tests, pattern):
                        "test_phase6_paper_lifecycle", "test_phase6_risk_recovery", "test_phase6_performance_validity",
                        "test_astra_http_safety", "test_astra_research", "test_astra_ranking", "test_astra_paper_triggers", "test_astra_rank_history", "test_astra_context_batch", "test_astra_health_reads",
                        "test_astra_scan_references", "test_astra_evaluation_reads",
-                       "test_option_observations", "test_benchmark_observations"):
+                       "test_option_observations", "test_benchmark_observations",
+                       "test_astra_multi_strategy_triggers"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

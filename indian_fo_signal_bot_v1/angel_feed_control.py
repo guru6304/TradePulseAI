@@ -80,7 +80,8 @@ def preflight(config, symbol, master_path=None, provider=None):
     if not config.is_broker_credentials_configured('angelone'):
         result['blockers'].append('ANGEL_CONFIGURATION_MISSING_OR_INVALID')
     try:
-        if importlib.metadata.version('websockets') != '15.0.1':
+        ws_ver = importlib.metadata.version('websockets')
+        if not (ws_ver.startswith('15.') or ws_ver.startswith('16.')):
             raise ValueError()
     except (importlib.metadata.PackageNotFoundError, ValueError):
         result['blockers'].append('PINNED_WEBSOCKET_RUNTIME_REQUIRED')

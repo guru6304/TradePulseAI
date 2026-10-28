@@ -9,16 +9,70 @@ import inspect
 from datetime import timedelta
 
 from candle_lineage import code_fingerprint, digest, load, load_scan_evaluations
-from strategies import evaluate_orb_breakout, format_ist_timestamp, parse_ist_timestamp, signal_state_identity
+from strategies import (
+    evaluate_orb_breakout, evaluate_order_block_fvg, evaluate_vwap_pullback,
+    evaluate_supertrend_pullback, format_ist_timestamp, parse_ist_timestamp, signal_state_identity
+)
 
 
 ORB_FILL_POLICY = "ORB_FOLLOW_THROUGH_CLOSE_V1"
 ORB_RULE_ID = "orb.signal_extreme_completed_close_cross.v1"
 ORB_STRATEGY = "strat_4_orb_filtered"
 
+OB_FILL_POLICY = "OB_FOLLOW_THROUGH_CLOSE_V1"
+OB_RULE_ID = "order_block.signal_extreme_completed_close_cross.v1"
+OB_STRATEGY = "strat_1_order_block"
 
-def strategy_version():
-    return "orb-detection-sha256:" + hashlib.sha256(inspect.getsource(evaluate_orb_breakout).encode()).hexdigest()
+VWAP_FILL_POLICY = "VWAP_FOLLOW_THROUGH_CLOSE_V1"
+VWAP_RULE_ID = "vwap_pullback.signal_extreme_completed_close_cross.v1"
+VWAP_STRATEGY = "strat_2_vwap_pullback"
+
+ST_FILL_POLICY = "ST_FOLLOW_THROUGH_CLOSE_V1"
+ST_RULE_ID = "supertrend_pullback.signal_extreme_completed_close_cross.v1"
+ST_STRATEGY = "strat_5_supertrend_pullback"
+
+PROSPECTIVE_FILL_POLICY = "PROSPECTIVE_FOLLOW_THROUGH_CLOSE_V1"
+
+PROSPECTIVE_FILL_POLICIES = {
+    ORB_FILL_POLICY,
+    OB_FILL_POLICY,
+    VWAP_FILL_POLICY,
+    ST_FILL_POLICY,
+    PROSPECTIVE_FILL_POLICY,
+}
+
+STRATEGY_POLICIES = {
+    ORB_STRATEGY: ORB_FILL_POLICY,
+    OB_STRATEGY: OB_FILL_POLICY,
+    VWAP_STRATEGY: VWAP_FILL_POLICY,
+    ST_STRATEGY: ST_FILL_POLICY,
+}
+
+STRATEGY_RULES = {
+    ORB_STRATEGY: ORB_RULE_ID,
+    OB_STRATEGY: OB_RULE_ID,
+    VWAP_STRATEGY: VWAP_RULE_ID,
+    ST_STRATEGY: ST_RULE_ID,
+}
+
+STRATEGY_PREFIXES = {
+    ORB_STRATEGY: "ORB",
+    OB_STRATEGY: "OB",
+    VWAP_STRATEGY: "VWAP",
+    ST_STRATEGY: "SUPERTREND",
+}
+
+
+def strategy_version(strategy_id=None):
+    if strategy_id is None or strategy_id == ORB_STRATEGY:
+        return "orb-detection-sha256:" + hashlib.sha256(inspect.getsource(evaluate_orb_breakout).encode()).hexdigest()
+    if strategy_id == OB_STRATEGY:
+        return "ob-detection-sha256:" + hashlib.sha256(inspect.getsource(evaluate_order_block_fvg).encode()).hexdigest()
+    if strategy_id == VWAP_STRATEGY:
+        return "vwap-detection-sha256:" + hashlib.sha256(inspect.getsource(evaluate_vwap_pullback).encode()).hexdigest()
+    if strategy_id == ST_STRATEGY:
+        return "supertrend-detection-sha256:" + hashlib.sha256(inspect.getsource(evaluate_supertrend_pullback).encode()).hexdigest()
+    raise ValueError("STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
 
 
 def _require(condition, reason):
@@ -49,8 +103,19 @@ def source_observation(store, conn, run_id, candidate, stamp, cache=None):
         source_authenticity="NOT_ESTABLISHED"), work
 
 
-def build_contract(store, conn, run_id, candidate, square_off_ist, cache=None):
-    _require(candidate.get("strategy_id") == ORB_STRATEGY, "STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
+def build_contract(store, conn, run_id, candidate, square_off_ist, cache=None, policy=None):
+    strat = candidate.get("strategy_id")
+    if policy == ORB_FILL_POLICY:
+        _require(strat == ORB_STRATEGY, "STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
+    elif policy == OB_FILL_POLICY:
+        _require(strat == OB_STRATEGY, "STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
+    elif policy == VWAP_FILL_POLICY:
+        _require(strat == VWAP_STRATEGY, "STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
+    elif policy == ST_FILL_POLICY:
+        _require(strat == ST_STRATEGY, "STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
+    else:
+        _require(strat in STRATEGY_POLICIES, "STRATEGY_FUTURE_TRIGGER_UNAVAILABLE")
+
     _require(candidate.get("segment") == "NSE_EQUITY_INTRADAY", "UNSUPPORTED_PAPER_CONTRACT")
     bar, reference, work = source_observation(store, conn, run_id, candidate, candidate["timestamp"], cache)
     _require(work["result"].get("signals") and candidate in work["result"]["signals"], "TRIGGER_CANDIDATE_SOURCE_MISMATCH")
@@ -61,13 +126,13 @@ def build_contract(store, conn, run_id, candidate, square_off_ist, cache=None):
     _require(len(candidates) == 1, "QUALIFIED_TRIGGER_CANDIDATE_REQUIRED")
     qualified = candidates[0]
     _require(all(qualified.get(key) == candidate.get(key) for key in ("symbol", "strategy_id", "data_mode")),
-             "ORB_CANDIDATE_SCOPE_MISMATCH")
+             "CANDIDATE_SCOPE_MISMATCH")
     _require(qualified.get("status") == "QUALIFIED" and qualified.get("ranking", {}).get("qualified") is True,
              "QUALIFIED_TRIGGER_CANDIDATE_REQUIRED")
     trace = qualified.get("explanation", {}).get("rule_evaluation")
     _require(isinstance(trace, dict) and trace in evaluation["strategy_evaluations"]
-             and trace.get("status") == "DETECTED" and trace.get("strategy_id") == ORB_STRATEGY,
-             "ORB_DETECTION_EVIDENCE_REQUIRED")
+             and trace.get("status") == "DETECTED" and trace.get("strategy_id") == strat,
+             "STRATEGY_DETECTION_EVIDENCE_REQUIRED")
     for owner in (qualified, trace):
         ref = owner.get("source_reference", {})
         _require(owner.get("symbol") == candidate["symbol"] and owner.get("data_mode") == candidate["data_mode"]
@@ -75,27 +140,49 @@ def build_contract(store, conn, run_id, candidate, square_off_ist, cache=None):
                  and ref.get("data_mode") == candidate["data_mode"]
                  and ref.get("instrument_identity") == candidate["instrument_identity"]
                  and ref.get("batch_ids") == [reference["batch_id"]]
-                 and ref.get("candle_timestamps", [None])[-1] == candidate["timestamp"], "ORB_EVALUATION_SCOPE_MISMATCH")
+                 and ref.get("candle_timestamps", [None])[-1] == candidate["timestamp"], "EVALUATION_SCOPE_MISMATCH")
     side = "LONG" if candidate["position_type"] == "LONG_EQUITY_INTRADAY" else "SHORT"
     direction = "bull" if side == "LONG" else "bear"
     checks = {c.get("rule_id"): c for c in trace.get("rule_checks", [])}
-    required = ["orb.opening_bars", "orb." + direction + ".prior",
-                "orb.bull.breakout" if side == "LONG" else "orb.bear.breakdown",
-                "vwap." + direction, "rsi." + direction, "volume.surge", "risk.position_size"]
-    _require(all(checks.get(key, {}).get("status") == "PASS" for key in required), "ORB_RULE_CHECKS_REQUIRED")
-    _require(round(float(bar["close"]), 2) == candidate["entry_price"], "ORB_DECISION_CLOSE_MISMATCH")
-    boundary = checks["orb.bull.breakout" if side == "LONG" else "orb.bear.breakdown"].get("measurements", {}).get("threshold")
-    _require(boundary is not None and round(float(boundary), 2) == candidate["invalidation_level"],
-             "ORB_RANGE_INVALIDATION_MISMATCH")
-    _require(qualified["source_reference"].get("batch_ids") == [reference["batch_id"]], "ORB_EVALUATION_BATCH_MISMATCH")
+
+    if strat == ORB_STRATEGY:
+        required = ["orb.opening_bars", "orb." + direction + ".prior",
+                    "orb.bull.breakout" if side == "LONG" else "orb.bear.breakdown",
+                    "vwap." + direction, "rsi." + direction, "volume.surge", "risk.position_size"]
+        _require(all(checks.get(key, {}).get("status") == "PASS" for key in required), "ORB_RULE_CHECKS_REQUIRED")
+        _require(round(float(bar["close"]), 2) == candidate["entry_price"], "ORB_DECISION_CLOSE_MISMATCH")
+        boundary = checks["orb.bull.breakout" if side == "LONG" else "orb.bear.breakdown"].get("measurements", {}).get("threshold")
+        _require(boundary is not None and round(float(boundary), 2) == candidate["invalidation_level"],
+                 "ORB_RANGE_INVALIDATION_MISMATCH")
+    elif strat == OB_STRATEGY:
+        required = [f"ob.{direction}.origin", f"ob.{direction}.bos", f"ob.{direction}.displacement",
+                    f"ob.{direction}.validity", f"ob.{direction}.first_retest", f"ob.{direction}.retest",
+                    "risk.position_size"]
+        _require(all(checks.get(key, {}).get("status") == "PASS" for key in required), "OB_RULE_CHECKS_REQUIRED")
+        _require(round(float(bar["close"]), 2) == candidate["entry_price"], "OB_DECISION_CLOSE_MISMATCH")
+    elif strat == VWAP_STRATEGY:
+        required = [f"vwap.{direction}.touch", f"vwap.{direction}.reclaim", "volume.surge",
+                    f"rsi.{direction}", "risk.position_size"]
+        _require(all(checks.get(key, {}).get("status") == "PASS" for key in required), "VWAP_RULE_CHECKS_REQUIRED")
+        _require(round(float(bar["close"]), 2) == candidate["entry_price"], "VWAP_DECISION_CLOSE_MISMATCH")
+    elif strat == ST_STRATEGY:
+        required = [f"st.{direction}.direction", f"st.{direction}.established", f"ema.{direction}.current",
+                    f"ema.{direction}.prior", f"vwap.{direction}", f"st.{direction}.pullback",
+                    f"st.{direction}.candle", "volume.surge", "risk.position_size"]
+        _require(all(checks.get(key, {}).get("status") == "PASS" for key in required), "SUPERTREND_RULE_CHECKS_REQUIRED")
+        _require(round(float(bar["close"]), 2) == candidate["entry_price"], "SUPERTREND_DECISION_CLOSE_MISMATCH")
+
+    _require(qualified["source_reference"].get("batch_ids") == [reference["batch_id"]], "EVALUATION_BATCH_MISMATCH")
     threshold = float(bar["high"] if side == "LONG" else bar["low"])
-    contract = dict(schema_version="tradepulse.paper-trigger.v1", rule_id=ORB_RULE_ID,
-        strategy_id=ORB_STRATEGY, strategy_version=strategy_version(), side=side,
+    rule_id = STRATEGY_RULES[strat]
+    chosen_fill_policy = policy if (policy and policy in PROSPECTIVE_FILL_POLICIES and policy != PROSPECTIVE_FILL_POLICY) else STRATEGY_POLICIES[strat]
+    contract = dict(schema_version="tradepulse.paper-trigger.v1", rule_id=rule_id,
+        strategy_id=strat, strategy_version=strategy_version(strat), side=side,
         threshold=threshold, invalidation=candidate["invalidation_level"],
         initial_previous_close=float(bar["close"]), decision_timestamp_ist=candidate["timestamp"],
         candidate_digest=digest(candidate), evaluation_digest=digest(qualified), source_reference=reference,
         expiry_policy="SAME_SESSION_ACCOUNT_SQUARE_OFF_NO_BAR_TTL", square_off_ist=square_off_ist,
-        fill_policy=ORB_FILL_POLICY, fill_assumption="OBSERVED_COMPLETED_CLOSE_PLUS_CONFIGURED_ADVERSE_COST_MODEL",
+        fill_policy=chosen_fill_policy, fill_assumption="OBSERVED_COMPLETED_CLOSE_PLUS_CONFIGURED_ADVERSE_COST_MODEL",
         tick_rounding="NOT_MODELED_NO_QUALIFIED_TICK", lot_assumption="CASH_EQUITY_ONE_SHARE",
         evidence_scope="PROSPECTIVE_PAPER_EXPERIMENT_NO_EMPIRICAL_PROMOTION")
     contract["contract_digest"] = digest(contract)
@@ -109,7 +196,7 @@ def assert_contract(store, conn, decision, config, cache=None):
              "PAPER_TRIGGER_DECISION_IDENTITY_MISMATCH")
     _require(decision.get("account_id") == config.account_id and decision.get("config_hash") == config.config_hash
              and decision.get("candidate_hash") == digest(decision["candidate"]), "PAPER_TRIGGER_DECISION_SCOPE_MISMATCH")
-    expected = build_contract(store, conn, decision["source_scan_run_id"], decision["candidate"], config.square_off_ist, cache)
+    expected = build_contract(store, conn, decision["source_scan_run_id"], decision["candidate"], config.square_off_ist, cache, policy=config.fill_policy)
     _require(decision.get("trigger_contract") == expected, "PAPER_TRIGGER_CONTRACT_INTEGRITY_FAILURE")
     queued = parse_ist_timestamp(decision["queued_at_ist"])
     signal_close = parse_ist_timestamp(decision["candidate"]["timestamp"]) + timedelta(minutes=5)
@@ -146,10 +233,12 @@ def observation_record(store, conn, decision, supplied, source_run_id, now, conf
     crossed = (previous_close <= threshold < original["close"] if contract["side"] == "LONG"
                else previous_close >= threshold > original["close"])
     status = "INVALIDATED" if invalid else "TRIGGERED" if crossed else "WAITING"
+    prefix = STRATEGY_PREFIXES.get(contract["strategy_id"], "ORB")
     return dict(timestamp_ist=format_ist_timestamp(stamp), close=float(original["close"]),
         previous_close=previous_close, threshold=threshold, status=status,
-        reason_code={"INVALIDATED": "SETUP_INVALIDATED_BEFORE_CLOSE_FILL", "TRIGGERED": "ORB_FUTURE_CLOSE_CROSS_CONFIRMED",
-                     "WAITING": "ORB_FUTURE_CLOSE_CROSS_NOT_CONFIRMED"}[status],
+        reason_code={"INVALIDATED": "SETUP_INVALIDATED_BEFORE_CLOSE_FILL",
+                     "TRIGGERED": f"{prefix}_FUTURE_CLOSE_CROSS_CONFIRMED",
+                     "WAITING": f"{prefix}_FUTURE_CLOSE_CROSS_NOT_CONFIRMED"}[status],
         source_reference=reference,
         observed_at_ist=format_ist_timestamp(now), trigger_timestamp_ist=format_ist_timestamp(close_time) if crossed and not invalid else None)
 

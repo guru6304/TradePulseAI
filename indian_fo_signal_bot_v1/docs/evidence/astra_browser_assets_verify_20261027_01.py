@@ -245,11 +245,21 @@ def run(receipt, browser, prefix):
             creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         debugger = profile / "DevToolsActivePort"
         start_limit = time.monotonic() + 10
-        while not debugger.is_file():
-            if process.poll() is not None or time.monotonic() >= start_limit:
+        port = None
+        while time.monotonic() < start_limit:
+            if process.poll() is not None:
                 raise RuntimeError("BROWSER_DEBUGGER_START_FAILED")
-            time.sleep(.025)
-        port = int(debugger.read_text().splitlines()[0])
+            if debugger.is_file():
+                try:
+                    lines = debugger.read_text().splitlines()
+                    if lines and lines[0].strip().isdigit():
+                        port = int(lines[0].strip())
+                        break
+                except (PermissionError, OSError):
+                    pass
+            time.sleep(.05)
+        if port is None:
+            raise RuntimeError("BROWSER_DEBUGGER_START_FAILED")
         with urlopen("http://127.0.0.1:" + str(port) + "/json/list", timeout=3) as response:
             targets = json.loads(response.read(1024 * 1024))
         target = next(row for row in targets if row.get("type") == "page")
@@ -278,7 +288,6 @@ def run(receipt, browser, prefix):
                 "(()=>{const t=document.getElementById('opportunityRankingsContainer').textContent;return t.includes('Quality 0')&&t.includes('Gross T1 reward/risk unavailable')&&t.includes('Previous rank unavailable')&&t.includes('NET_EXECUTABLE_REWARD')&&t.includes('RELATIVE_STRENGTH')&&t.includes('not an entry instruction or win probability');})()"))
             check(label + ".fixture_scope_and_no_invented_quantity", cdp.evaluate(
                 "document.getElementById('headerDataModeBadge').textContent==='OFFLINE FIXTURE' && document.getElementById('signalCardsContainer').textContent.includes('Persisted Qty: unavailable')"))
-            probes(cdp, receipt, prefix, label, width, height)
             cdp.evaluate("document.activeElement.blur(); window.scrollTo(0,0)")
             cdp.key("Tab", "Tab", 9)
             check(label + ".native_tab_reaches_read_only_refresh", cdp.evaluate(
@@ -289,6 +298,7 @@ def run(receipt, browser, prefix):
             check(label + ".native_enter_refreshes_retained_ranking", cdp.wait_for(
                 "document.getElementById('opportunityRankingsContainer').textContent.includes('Current candidate priority') && performance.getEntriesByType('resource').filter(r=>r.name.includes('/api/opportunity-rankings')).length>" + str(prior_rank_reads)))
             check(label + ".refresh_made_new_get_requests", len(requests) > before)
+            probes(cdp, receipt, prefix, label, width, height)
             cdp.evaluate("document.querySelector('[data-tab=tab-option-apex]').focus()")
             check(label + ".option_navigation_focus_target", cdp.evaluate(
                 "document.activeElement.getAttribute('data-tab')==='tab-option-apex'"))

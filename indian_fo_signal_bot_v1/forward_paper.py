@@ -10,7 +10,10 @@ from datetime import datetime, timedelta
 from brokers import assess_live_candle_batch
 from instrument_identity import check_echo
 from paper_portfolio import FORWARD_FILL_POLICY, PaperPortfolio, PaperPortfolioError, _encode, _hash
-from paper_triggers import ORB_FILL_POLICY, build_contract
+from paper_triggers import (
+    ORB_FILL_POLICY, OB_FILL_POLICY, VWAP_FILL_POLICY, ST_FILL_POLICY,
+    PROSPECTIVE_FILL_POLICIES, STRATEGY_PREFIXES, build_contract
+)
 from strategies import TradeSignal, format_ist_timestamp, parse_ist_timestamp, signal_state_identity, validate_candles
 
 
@@ -18,7 +21,7 @@ class ForwardPaperCoordinator:
     MAX_PENDING_PER_HANDOFF = 200
 
     def __init__(self, portfolio, entry_guard=None):
-        if not isinstance(portfolio, PaperPortfolio) or portfolio.config.fill_policy not in (FORWARD_FILL_POLICY, ORB_FILL_POLICY):
+        if not isinstance(portfolio, PaperPortfolio) or portfolio.config.fill_policy not in (FORWARD_FILL_POLICY, *PROSPECTIVE_FILL_POLICIES):
             raise PaperPortfolioError("EXPLICIT_FORWARD_CLOSE_ACCOUNT_REQUIRED")
         self.paper, self.store, self.config = portfolio, portfolio.store, portfolio.config
         self.entry_guard = entry_guard
@@ -39,7 +42,7 @@ class ForwardPaperCoordinator:
                         or data.get("config_hash") != self.config.config_hash
                         or data.get("candidate_hash") != _hash(data["candidate"])):
                     raise PaperPortfolioError("PAPER_RECOVERY_DECISION_CONFLICT")
-                if self.config.fill_policy == ORB_FILL_POLICY:
+                if self.config.fill_policy in PROSPECTIVE_FILL_POLICIES:
                     signal_key = signal_state_identity(data["candidate"])[0]
                     if (data.get("signal_key") != signal_key
                             or candidate_id != _hash([self.config.account_id, signal_key])):
@@ -51,7 +54,7 @@ class ForwardPaperCoordinator:
                         or entry.get("position_id") != effect["position_id"]
                         or self.paper._reconciliation(conn)["status"] != "OK"):
                     raise PaperPortfolioError("PAPER_RECOVERY_EFFECT_CONFLICT")
-                if self.config.fill_policy == ORB_FILL_POLICY and (
+                if self.config.fill_policy in PROSPECTIVE_FILL_POLICIES and (
                         entry.get("candidate_id") != candidate_id
                         or entry.get("trigger_timestamp_ist") != data.get("trigger_timestamp_ist")
                         or entry.get("trigger_contract") != data.get("trigger_contract")
@@ -101,15 +104,16 @@ class ForwardPaperCoordinator:
                             actual = json.loads(actual)
                         if actual != value:
                             raise PaperPortfolioError("PERSISTED_CANDIDATE_CONFLICT")
-                    if self.config.fill_policy != ORB_FILL_POLICY:
+                    if self.config.fill_policy not in PROSPECTIVE_FILL_POLICIES:
                         status, reason = "REJECTED", "LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED"
                     else:
-                        contract = build_contract(self.store, conn, summary["run_id"], data, self.config.square_off_ist)
+                        contract = build_contract(self.store, conn, summary["run_id"], data, self.config.square_off_ist, policy=self.config.fill_policy)
                         close = parse_ist_timestamp(data["timestamp"]) + timedelta(minutes=5)
                         if not 0 <= (self.paper._now() - close).total_seconds() <= self.config.max_mark_age_seconds:
                             status, reason = "REJECTED", "PAPER_TRIGGER_QUEUE_TIME_INVALID"
                         else:
-                            reason = "ORB_FUTURE_CLOSE_CROSS_NOT_CONFIRMED"
+                            prefix = STRATEGY_PREFIXES.get(contract["strategy_id"], "ORB")
+                            reason = f"{prefix}_FUTURE_CLOSE_CROSS_NOT_CONFIRMED"
                 except (ValueError, KeyError, IndexError, TypeError) as exc:
                     status = "REJECTED"
                     reason = exc.reason_code if isinstance(exc, PaperPortfolioError) else str(exc) if isinstance(exc, ValueError) else "INVALID_SCANNER_CANDIDATE"
@@ -210,7 +214,7 @@ class ForwardPaperCoordinator:
             if decision["candidate_hash"] != _hash(data) or decision["config_hash"] != self.config.config_hash:
                 actions.append(self._transition(candidate_id, "REJECTED", "CANDIDATE_DECISION_INTEGRITY_FAILURE"))
                 continue
-            if self.config.fill_policy != ORB_FILL_POLICY:
+            if self.config.fill_policy not in PROSPECTIVE_FILL_POLICIES:
                 actions.append(self._transition(candidate_id, "REJECTED", "LEGACY_AUTOMATIC_TRIGGER_UNSUPPORTED"))
                 continue
             # New paper entries require a strategy-owned prospective contract.

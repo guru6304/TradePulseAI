@@ -58,6 +58,7 @@ def build_snapshot(evaluation, *, provider, as_of, previous=None):
             raise ValueError("RANKING_SCOPE_OR_CHRONOLOGY_CONFLICT")
     candidates, excluded = [], []
     old_rows = {row["opportunity_key"]: row for row in previous["rows"]} if previous else {}
+    validated_candidates = []
     for candidate in evaluation["candidate_evaluations"]:
         if not isinstance(candidate, dict):
             raise ValueError("RANKING_INVALID_CANDIDATE")
@@ -95,13 +96,39 @@ def build_snapshot(evaluation, *, provider, as_of, previous=None):
         if reason:
             excluded.append(dict(candidate_id=candidate.get("candidate_id"), symbol=candidate.get("symbol"), reason_code=reason))
             continue
+        validated_candidates.append((candidate, reference, identity, quality, ratio, watermark))
+
+    # Detect multi-strategy confluence per (symbol, direction) before deduplication
+    symbol_strategies = {}
+    for candidate, _, _, _, _, _ in validated_candidates:
+        direction = "LONG" if candidate["position_type"] == "LONG_EQUITY_INTRADAY" else "SHORT"
+        group_key = (candidate["symbol"], direction)
+        symbol_strategies.setdefault(group_key, set()).add(candidate["strategy_id"])
+
+    for candidate, reference, identity, quality, ratio, watermark in validated_candidates:
+        direction = "LONG" if candidate["position_type"] == "LONG_EQUITY_INTRADAY" else "SHORT"
+        strat_set = symbol_strategies.get((candidate["symbol"], direction), {candidate["strategy_id"]})
+        confluence_count = len(strat_set)
+        confluence_strategies = sorted(list(strat_set))
+        confluence_multiplier = round(1.0 + 0.15 * (confluence_count - 1), 4)
+        composite_score = round(min(100.0, quality * confluence_multiplier), 4)
+
         key = digest([scope, candidate["symbol"], candidate["strategy_id"], candidate["position_type"], identity])
+        score_comp = dict(
+            rule_quality=quality,
+            actual_target1_rr=ratio,
+            confluence_count=confluence_count,
+            confluence_strategies=confluence_strategies,
+            confluence_multiplier=confluence_multiplier,
+            composite_score=composite_score,
+        )
         row = dict(opportunity_key=key, candidate_id=candidate["candidate_id"], symbol=candidate["symbol"],
             strategy_id=candidate["strategy_id"], instrument_identity=deepcopy(identity),
-            position_type=candidate["position_type"], direction="LONG" if candidate["position_type"] == "LONG_EQUITY_INTRADAY" else "SHORT",
+            position_type=candidate["position_type"], direction=direction,
             source_data_watermark=watermark.isoformat(), source_digest=reference["candle_digest"],
-            score_components=dict(rule_quality=quality, actual_target1_rr=ratio),
-            component_versions=dict(rule_quality="EXISTING_EVALUATOR_V1", actual_target1_rr="PRICE_LEVEL_GEOMETRY_V1"),
+            score_components=score_comp,
+            component_versions=dict(rule_quality="EXISTING_EVALUATOR_V1", actual_target1_rr="PRICE_LEVEL_GEOMETRY_V1",
+                confluence="MULTI_STRATEGY_CONFLUENCE_V1"),
             missing_components=["RELATIVE_STRENGTH", "SECTOR", "REGIME", "LIQUIDITY_DEPTH",
                 "OBSERVED_SPREAD", "NET_EXECUTABLE_REWARD", "EMPIRICAL_EDGE"],
             priority_scope="QUALIFIED_SCANNER_CANDIDATE_ONLY", actionable=False)
@@ -112,8 +139,14 @@ def build_snapshot(evaluation, *, provider, as_of, previous=None):
                     (row["source_digest"] != old["source_digest"] or row["score_components"] != old["score_components"])):
                 raise ValueError("RANKING_SOURCE_REVISION_OR_OUT_OF_ORDER")
         candidates.append(row)
-    candidates.sort(key=lambda row: (-row["score_components"]["rule_quality"],
-        -row["score_components"]["actual_target1_rr"], row["symbol"], row["strategy_id"], row["opportunity_key"]))
+    candidates.sort(key=lambda row: (
+        -row["score_components"]["composite_score"],
+        -row["score_components"]["rule_quality"],
+        -row["score_components"]["actual_target1_rr"],
+        row["symbol"],
+        row["strategy_id"],
+        row["opportunity_key"]
+    ))
     rows, symbols = [], set()
     for row in candidates:
         if row["symbol"] in symbols:

@@ -108,17 +108,17 @@
       </div>
 
       <!-- Primary Navigation Tabs (4 Tabs — Setup Guide Tab Removed per Phase 1E Spec) -->
-      <nav class="flex flex-wrap items-center gap-1" aria-label="Primary Tabs">
-        <button type="button" data-tab="tab-terminal" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+      <nav class="flex flex-wrap items-center gap-1" aria-label="Primary Tabs" role="tablist">
+        <button id="tabBtn-terminal" role="tab" aria-selected="true" aria-controls="tab-terminal" type="button" data-tab="tab-terminal" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           1. Live Signal Terminal
         </button>
-        <button type="button" data-tab="tab-option-apex" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button id="tabBtn-option-apex" role="tab" aria-selected="false" aria-controls="tab-option-apex" type="button" data-tab="tab-option-apex" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           2. Nifty &amp; BankNifty Option Apex
         </button>
-        <button type="button" data-tab="tab-strategies" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button id="tabBtn-strategies" role="tab" aria-selected="false" aria-controls="tab-strategies" type="button" data-tab="tab-strategies" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           3. Top 5 Strategies &amp; Backtester
         </button>
-        <button type="button" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button id="tabBtn-brokers-telegram" role="tab" aria-selected="false" aria-controls="tab-brokers-telegram" type="button" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           4. System Health, Scan History &amp; Config
         </button>
       </nav>
@@ -146,7 +146,7 @@
     <!-- ================================================================== -->
     <!-- TAB 1: LIVE SIGNAL TERMINAL (Connected to GET /api/signals)        -->
     <!-- ================================================================== -->
-    <section id="tab-terminal" class="tab-panel space-y-5">
+    <section id="tab-terminal" role="tabpanel" aria-labelledby="tabBtn-terminal" class="tab-panel space-y-5">
       <section class="glass-card rounded-xl p-4 space-y-2" aria-label="Candidate priority">
         <h2 class="font-bold text-white">Candidate priority</h2>
         <p class="text-xs text-slate-400">Qualified cash setups ranked by rule quality and actual target risk/reward. Paper entry still requires its own trigger.</p>
@@ -263,7 +263,7 @@
                 Note: <code class="text-slate-300">GET /api/signals</code> provides verified entry, zone, invalidation, stop-loss, and target levels; raw 5m OHLCV candle series are not exposed in Phase 1D.
               </p>
               <div class="relative h-64 w-full bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
-                <canvas id="signalPriceChart"></canvas>
+                <canvas id="signalPriceChart" role="img" aria-label="Intraday price and trade levels chart">Intraday price chart showing entry, stop loss, and target levels.</canvas>
               </div>
             </div>
 
@@ -332,7 +332,7 @@
     <!-- ================================================================== -->
     <!-- TAB 2: NIFTY 50 & BANK NIFTY OPTION APEX (GET /api/oi-snapshots)   -->
     <!-- ================================================================== -->
-    <section id="tab-option-apex" class="tab-panel hidden space-y-5">
+    <section id="tab-option-apex" role="tabpanel" aria-labelledby="tabBtn-option-apex" class="tab-panel hidden space-y-5">
       <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 class="text-base font-bold text-white">Option Apex &amp; Persisted OI Snapshot History (<code class="text-xs text-cyan-400">GET /api/oi-snapshots</code>)</h2>
@@ -434,7 +434,7 @@
             <span id="foChartMeasureTag" class="text-[10px] mono text-slate-400">--</span>
           </div>
           <div class="relative h-72 w-full">
-            <canvas id="optionOiChart"></canvas>
+            <canvas id="optionOiChart" role="img" aria-label="Options open interest distribution chart">Option Open Interest distribution chart across strikes.</canvas>
           </div>
         </div>
         <div class="lg:col-span-7 glass-card rounded-xl p-4 overflow-x-auto">
@@ -464,7 +464,7 @@
     <!-- ================================================================== -->
     <!-- TAB 3: TOP 5 STRATEGIES BENCHMARK & STATUTORY FRICTION SIMULATOR   -->
     <!-- ================================================================== -->
-    <section id="tab-strategies" class="tab-panel hidden space-y-5">
+    <section id="tab-strategies" role="tabpanel" aria-labelledby="tabBtn-strategies" class="tab-panel hidden space-y-5">
       <div class="glass-card rounded-xl p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -592,7 +592,7 @@
         <div class="lg:col-span-7 glass-card rounded-xl p-4">
           <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Hypothetical Curve: Gross vs Net After Indian Statutory Charges [SIMULATED MODEL]</h3>
           <div class="relative h-72 w-full">
-            <canvas id="backtestEquityChart"></canvas>
+            <canvas id="backtestEquityChart" role="img" aria-label="Strategy backtest equity curve chart">Backtest simulation equity curve visualization.</canvas>
           </div>
         </div>
       </div>
@@ -601,7 +601,7 @@
     <!-- ================================================================== -->
     <!-- TAB 4: SYSTEM HEALTH, SCAN HISTORY & READ-ONLY CONFIG              -->
     <!-- ================================================================== -->
-    <section id="tab-brokers-telegram" class="tab-panel hidden space-y-5">
+    <section id="tab-brokers-telegram" role="tabpanel" aria-labelledby="tabBtn-brokers-telegram" class="tab-panel hidden space-y-5">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <!-- Left 5 Cols: GET /api/health & GET /api/config Read-Only Status -->
         <div class="lg:col-span-5 space-y-4">
@@ -672,7 +672,7 @@
                   <option value="SKIPPED_OVERLAP">SKIPPED_OVERLAP</option>
                   <option value="SKIPPED_OUTSIDE_SESSION">SKIPPED_OUTSIDE_SESSION</option>
                 </select>
-                <button id="btnRefreshScans" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                <button id="btnRefreshScans" type="button" aria-label="Refresh scan history" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
                   &#8635;
                 </button>
               </div>
@@ -1039,7 +1039,11 @@
           const card = el('div', 'border border-slate-700 rounded p-3 space-y-1');
           card.appendChild(el('p', 'font-semibold', (fresh ? 'Rank ' : 'Historical rank ') + number(row.rank) +
             ' | ' + text(row.symbol) + ' | ' + text(row.direction) + ' | ' + text(row.strategy_id)));
-          card.appendChild(el('p', '', 'Quality ' + number(scores.rule_quality) + ' | Gross T1 reward/risk ' +
+          let qualityText = 'Quality ' + number(scores.rule_quality);
+          if (scores.confluence_count > 1) {
+            qualityText += ' (Composite ' + number(scores.composite_score) + ' | Confluence x' + number(scores.confluence_count) + ')';
+          }
+          card.appendChild(el('p', '', qualityText + ' | Gross T1 reward/risk ' +
             number(scores.actual_target1_rr) + ' | Previous rank ' + number(row.previous_rank)));
           const reasons = {NEWLY_QUALIFIED: 'Newly qualified', SCORE_COMPONENT_CHANGED: 'Score inputs changed',
             RELATIVE_ORDER_CHANGED: 'Other candidates changed order', UNCHANGED_PRIORITY: 'Priority unchanged'};
@@ -1612,6 +1616,7 @@
       }
 
       function renderSignalCards() {
+        const preserveFocus = arguments[0];
         const container = document.getElementById('signalCardsContainer');
         const badge = document.getElementById('signalCountBadge');
         const pageInfo = document.getElementById('signalsPaginationInfo');
@@ -1666,6 +1671,7 @@
           const card = el('div', 'signal-card-item glass-card rounded-xl p-3.5 cursor-pointer transition border ' + borderCls);
           card.setAttribute('tabindex', '0');
           card.setAttribute('role', 'button');
+          card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
           card.setAttribute('aria-label', 'Inspect signal ' + (s.instrument_label || s.symbol || ''));
 
           // Top row: Instrument + Direction (with icon) + Segment + Data Mode + Quality Score
@@ -1736,19 +1742,24 @@
           });
           card.appendChild(gridRow);
 
-          function selectCard() {
+          function selectCard(preserveFocus) {
             state.selectedSignalKey = sigKey;
-            renderSignalCards();
+            renderSignalCards(preserveFocus);
           }
-          card.addEventListener('click', selectCard);
+          card.addEventListener('click', function() { selectCard(false); });
           card.addEventListener('keydown', function(ev) {
             if (ev.key === 'Enter' || ev.key === ' ') {
               ev.preventDefault();
-              selectCard();
+              selectCard(true);
             }
           });
           container.appendChild(card);
         });
+
+        if (preserveFocus) {
+          const activeCard = container.querySelector('.signal-card-item[aria-pressed="true"]');
+          if (activeCard) activeCard.focus();
+        }
 
         const selectedSig = items.find(function(s) {
           return (s.dedup_key || String(s.id)) === state.selectedSignalKey;
@@ -2530,6 +2541,7 @@
         });
         document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
           const active = btn.getAttribute('data-tab') === tabId;
+          btn.setAttribute('aria-selected', active ? 'true' : 'false');
           btn.className = active
             ? 'nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500'
             : 'nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500';

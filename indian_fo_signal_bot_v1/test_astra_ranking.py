@@ -118,6 +118,60 @@ class TestAstraRanking(unittest.TestCase):
         self.assertEqual(second["rows"][0]["rank_change_reason"], "NEWLY_QUALIFIED")
         self.assertEqual(second["removals"][0]["symbol"], "TCS")
 
+    def test_multi_strategy_confluence_boosts_composite_score_and_records_confluence_metadata(self):
+        source = evaluation(tcs=80, infy=85)
+        # Add a second strategy for TCS (strat_1_order_block with quality 75)
+        tcs_ob = copy.deepcopy(source["candidate_evaluations"][0])
+        tcs_ob.update(candidate_id="r1TCS_ob", strategy_id="strat_1_order_block",
+                      explanation=dict(setup_quality=75))
+        source["candidate_evaluations"].append(tcs_ob)
+        result = self.build(source)
+
+        # Without confluence, INFY (quality 85) would beat TCS (quality 80).
+        # With 2 strategies, TCS gets 1.15x multiplier: 80 * 1.15 = 92.0 composite score.
+        # INFY has 1 strategy: 85 * 1.0 = 85.0 composite score.
+        # Therefore, TCS outranks INFY!
+        self.assertEqual([row["symbol"] for row in result["rows"]], ["TCS", "INFY"])
+        tcs_row = result["rows"][0]
+        self.assertEqual(tcs_row["rank"], 1)
+        self.assertEqual(tcs_row["score_components"]["confluence_count"], 2)
+        self.assertEqual(tcs_row["score_components"]["confluence_multiplier"], 1.15)
+        self.assertEqual(tcs_row["score_components"]["confluence_strategies"],
+                         ["strat_1_order_block", "strat_4_orb_filtered"])
+        self.assertEqual(tcs_row["score_components"]["composite_score"], 92.0)
+        self.assertEqual(tcs_row["score_components"]["rule_quality"], 80)
+        self.assertEqual(tcs_row["component_versions"]["confluence"], "MULTI_STRATEGY_CONFLUENCE_V1")
+
+        # The runner-up setup for TCS was excluded as redundant symbol setup
+        redundants = [x for x in result["exclusions"] if x["reason_code"] == "REDUNDANT_SYMBOL_SETUP"]
+        self.assertEqual(len(redundants), 1)
+        self.assertEqual(redundants[0]["candidate_id"], "r1TCS_ob")
+
+    def test_multi_strategy_confluence_caps_composite_score_at_100(self):
+        source = evaluation(tcs=95, infy=70)
+        tcs_ob = copy.deepcopy(source["candidate_evaluations"][0])
+        tcs_ob.update(candidate_id="r1TCS_ob", strategy_id="strat_1_order_block",
+                      explanation=dict(setup_quality=95))
+        source["candidate_evaluations"].append(tcs_ob)
+        result = self.build(source)
+        # 95 * 1.15 = 109.25, capped at 100.0
+        self.assertEqual(result["rows"][0]["score_components"]["composite_score"], 100.0)
+
+    def test_opposing_directions_on_same_symbol_do_not_conflate(self):
+        source = evaluation(tcs=80, infy=70)
+        tcs_short = copy.deepcopy(source["candidate_evaluations"][0])
+        tcs_short.update(candidate_id="r1TCS_short", strategy_id="strat_1_order_block",
+                         position_type="SHORT_EQUITY_INTRADAY", explanation=dict(setup_quality=75))
+        source["candidate_evaluations"].append(tcs_short)
+        result = self.build(source)
+        # LONG TCS has 1 strategy, SHORT TCS has 1 strategy -> confluence_count is 1 for both
+        tcs_row = result["rows"][0]
+        self.assertEqual(tcs_row["symbol"], "TCS")
+        self.assertEqual(tcs_row["score_components"]["confluence_count"], 1)
+        self.assertEqual(tcs_row["score_components"]["confluence_multiplier"], 1.0)
+        self.assertEqual(tcs_row["score_components"]["composite_score"], 80.0)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
