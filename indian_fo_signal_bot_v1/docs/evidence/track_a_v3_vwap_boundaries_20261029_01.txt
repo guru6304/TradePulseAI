@@ -1,0 +1,64 @@
+test_qualified_pending_evidence_survives_restart_before_entry (test_astra_vwap_execution.TestAstraVWAPExecution.test_qualified_pending_evidence_survives_restart_before_entry) ... [2026-10-29 18:17:41,147] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_3c9c2a0a via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:41,178] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_3c9c2a0a in 44.23ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:41,193] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_3c9c2a0a with exact cash input linkage
+[2026-10-29 18:17:41,319] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_579ff1a4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:41,349] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_579ff1a4 in 40.56ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:41,376] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_579ff1a4 with exact cash input linkage
+ok
+test_risk_exposure_gate_rejects_qualified_trigger_without_reservation (test_astra_vwap_execution.TestAstraVWAPExecution.test_risk_exposure_gate_rejects_qualified_trigger_without_reservation) ... [2026-10-29 18:17:41,754] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_af62f740 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:41,781] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_af62f740 in 39.62ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:41,796] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_af62f740 with exact cash input linkage
+[2026-10-29 18:17:41,864] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_f5647116 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:41,894] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_f5647116 in 41.08ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:41,961] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_f5647116 with exact cash input linkage
+ok
+test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger (test_astra_vwap_execution.TestAstraVWAPExecution.test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger) ... [2026-10-29 18:17:42,293] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_863ff636 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:42,320] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_863ff636 in 37.43ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:42,334] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_863ff636 with exact cash input linkage
+[2026-10-29 18:17:42,405] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_ffd47ef5 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:42,434] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_ffd47ef5 in 38.50ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:42,459] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_ffd47ef5 with exact cash input linkage
+[2026-10-29 18:17:42,803] [INFO] [tradepulse.scanner] Starting scan scan_20261016_122005_7ffb2c95 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:42,833] [INFO] [tradepulse.scanner] Staged scan scan_20261016_122005_7ffb2c95 in 39.49ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:42,865] [INFO] [tradepulse.scanner] Committed scan scan_20261016_122005_7ffb2c95 with exact cash input linkage
+
+  test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger (test_astra_vwap_execution.TestAstraVWAPExecution.test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger) (side='LONG') ... FAIL
+[2026-10-29 18:17:43,002] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_c2fdbf52 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:43,029] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_c2fdbf52 in 36.70ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:43,045] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_c2fdbf52 with exact cash input linkage
+[2026-10-29 18:17:43,115] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_af33d9f3 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:43,144] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_af33d9f3 in 37.83ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:43,168] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_af33d9f3 with exact cash input linkage
+[2026-10-29 18:17:43,510] [INFO] [tradepulse.scanner] Starting scan scan_20261016_122005_229b4790 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:17:43,542] [INFO] [tradepulse.scanner] Staged scan scan_20261016_122005_229b4790 in 42.15ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:17:43,573] [INFO] [tradepulse.scanner] Committed scan scan_20261016_122005_229b4790 with exact cash input linkage
+  test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger (test_astra_vwap_execution.TestAstraVWAPExecution.test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger) (side='SHORT') ... FAIL
+
+======================================================================
+FAIL: test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger (test_astra_vwap_execution.TestAstraVWAPExecution.test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger) (side='LONG')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_execution.py", line 271, in test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger
+    self.assertEqual(report["positions"][0]["exit_reason"], "EOD_SQUARE_OFF")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'EOD' != 'EOD_SQUARE_OFF'
+- EOD
++ EOD_SQUARE_OFF
+
+
+======================================================================
+FAIL: test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger (test_astra_vwap_execution.TestAstraVWAPExecution.test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger) (side='SHORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_execution.py", line 271, in test_filled_position_closes_at_eod_with_costs_and_reconciled_ledger
+    self.assertEqual(report["positions"][0]["exit_reason"], "EOD_SQUARE_OFF")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'EOD' != 'EOD_SQUARE_OFF'
+- EOD
++ EOD_SQUARE_OFF
+
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.631s
+
+FAILED (failures=2)

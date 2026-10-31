@@ -1,0 +1,240 @@
+{
+  "case_count": 8,
+  "cases": [
+    {
+      "actionable": false,
+      "comparison_status": "SYNTHETIC_MECHANICS_ONLY",
+      "contract_satisfied": true,
+      "delta": 200,
+      "eligible": false,
+      "historical_replay_allowed": false,
+      "identity_validator": [],
+      "input_sha256": "45a18d03b5c6c42bab088fb01e1ec8f3fde3cde1eaa11eff3db3e1e387ffae6b",
+      "inputs_unchanged": true,
+      "mutated_inputs": [],
+      "mutation": "NONE",
+      "name": "active_control",
+      "returned": true,
+      "status_value": null
+    },
+    {
+      "contract_satisfied": false,
+      "error_code": null,
+      "exception_type": "KeyError",
+      "identity_validator": [
+        {
+          "input": "current",
+          "returned_status": "UNKNOWN"
+        }
+      ],
+      "input_sha256": "a9f15f026c8b50eb456594319dbb6fba5c4df9d85147f8e3500ec13394f41909",
+      "inputs_unchanged": true,
+      "missing_key": "contract_status",
+      "mutated_inputs": [
+        "current"
+      ],
+      "mutation": "REMOVE_CONTRACT_STATUS",
+      "name": "missing_current_status",
+      "returned": false,
+      "status_value": null
+    },
+    {
+      "contract_satisfied": false,
+      "error_code": null,
+      "exception_type": "KeyError",
+      "identity_validator": [
+        {
+          "input": "baseline",
+          "returned_status": "UNKNOWN"
+        }
+      ],
+      "input_sha256": "bf9df6b57386570fca3d629aa4c2cd5a8139eefc624f3c0505f75990ba88ff5a",
+      "inputs_unchanged": true,
+      "missing_key": "contract_status",
+      "mutated_inputs": [
+        "baseline"
+      ],
+      "mutation": "REMOVE_CONTRACT_STATUS",
+      "name": "missing_baseline_status",
+      "returned": false,
+      "status_value": null
+    },
+    {
+      "contract_satisfied": false,
+      "error_code": null,
+      "exception_type": "KeyError",
+      "identity_validator": [
+        {
+          "input": "current",
+          "returned_status": "UNKNOWN"
+        },
+        {
+          "input": "baseline",
+          "returned_status": "UNKNOWN"
+        }
+      ],
+      "input_sha256": "ce163115540810c8c0ec1d71217d84288403e9a08d302c5cce894db3c18ad221",
+      "inputs_unchanged": true,
+      "missing_key": "contract_status",
+      "mutated_inputs": [
+        "current",
+        "baseline"
+      ],
+      "mutation": "REMOVE_CONTRACT_STATUS",
+      "name": "missing_both_statuses",
+      "returned": false,
+      "status_value": null
+    },
+    {
+      "contract_satisfied": true,
+      "error_code": "OI_CONTRACT_NOT_EFFECTIVE",
+      "exception_type": "ObservationError",
+      "identity_validator": [
+        {
+          "input": "current",
+          "returned_status": "UNKNOWN"
+        }
+      ],
+      "input_sha256": "bcd74f9efbabdcafb6ccf4f1cc98d571ef0ed5ce4376e373e24b5621fcbf0666",
+      "inputs_unchanged": true,
+      "missing_key": null,
+      "mutated_inputs": [
+        "current"
+      ],
+      "mutation": "SET_CONTRACT_STATUS",
+      "name": "explicit_unknown_current_status",
+      "returned": false,
+      "status_value": "UNKNOWN"
+    },
+    {
+      "contract_satisfied": true,
+      "error_code": "OI_CONTRACT_NOT_EFFECTIVE",
+      "exception_type": "ObservationError",
+      "identity_validator": [
+        {
+          "input": "baseline",
+          "returned_status": "UNKNOWN"
+        }
+      ],
+      "input_sha256": "127d66914e9464653439114947e020f8cb0eface4661aba3d47661a87dd7f851",
+      "inputs_unchanged": true,
+      "missing_key": null,
+      "mutated_inputs": [
+        "baseline"
+      ],
+      "mutation": "SET_CONTRACT_STATUS",
+      "name": "explicit_unknown_baseline_status",
+      "returned": false,
+      "status_value": "UNKNOWN"
+    },
+    {
+      "contract_satisfied": true,
+      "error_code": "OI_CONTRACT_NOT_EFFECTIVE",
+      "exception_type": "ObservationError",
+      "identity_validator": [
+        {
+          "input": "current",
+          "returned_status": "INACTIVE"
+        }
+      ],
+      "input_sha256": "8d77b0e4988c09886c43f87a1edc04fbb10e240020319b0f3c2686034f7a311b",
+      "inputs_unchanged": true,
+      "missing_key": null,
+      "mutated_inputs": [
+        "current"
+      ],
+      "mutation": "SET_CONTRACT_STATUS",
+      "name": "explicit_inactive_current_status",
+      "returned": false,
+      "status_value": "INACTIVE"
+    },
+    {
+      "contract_satisfied": true,
+      "error_code": "INVALID_OI_IDENTITY",
+      "exception_type": "ObservationError",
+      "identity_validator": [
+        {
+          "exception_type": "IdentityValidationError",
+          "input": "current"
+        }
+      ],
+      "input_sha256": "85e1cbf45bbd058e40d43f656a07d6e481f05ab5fbbc5f59f30c07c20a7de75c",
+      "inputs_unchanged": true,
+      "missing_key": null,
+      "mutated_inputs": [
+        "current"
+      ],
+      "mutation": "SET_CONTRACT_STATUS",
+      "name": "explicit_null_current_status",
+      "returned": false,
+      "status_value": null
+    }
+  ],
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs\\evidence\\astra_d01_contract_status_probe_20261028_01.py"
+  ],
+  "completed_at": "2026-10-28T16:13:03.391534+00:00",
+  "contract_satisfied_count": 5,
+  "diagnostic_execution": "PASS",
+  "environment_files_read": false,
+  "finding": "Missing contract_status normalizes to UNKNOWN, but compare_oi ignores that normalized result and indexes the absent raw key.",
+  "fixture_method_ast_executed": true,
+  "fixture_methods": [
+    {
+      "class_name": "TestOptionObservations",
+      "line": 28,
+      "method": "setUp"
+    },
+    {
+      "class_name": "TestOptionObservations",
+      "line": 36,
+      "method": "make_master"
+    },
+    {
+      "class_name": "TestOptionOIObservations",
+      "line": 384,
+      "method": "setUp"
+    },
+    {
+      "class_name": "TestOptionOIObservations",
+      "line": 396,
+      "method": "compare"
+    }
+  ],
+  "fixture_module_imported": false,
+  "forbidden_io_attempts": [],
+  "full_suite_executed": false,
+  "helper_sha256": "14a1bc51985dbd368a3646899f4a07dce56129aa0d771e9ed837a8378abe0634",
+  "leaked_keyerror_cases": [
+    "missing_current_status",
+    "missing_baseline_status",
+    "missing_both_statuses"
+  ],
+  "minimal_regression": "Delete contract_status separately from current and baseline identity; require ObservationError and immutable inputs. Keep ACTIVE control and explicit UNKNOWN rejection.",
+  "operational_database_accessed": false,
+  "possible_minimal_fix": "Use identity.get('contract_status') for the ACTIVE requirement, or retain validated normalized identity for checks without losing separately required source_revision or changing raw equality/hash semantics.",
+  "production_or_test_changes": false,
+  "provider_requests": 0,
+  "safety_boundary": "The defect raises before delta output; no actionable result or provider access was observed.",
+  "schema_version": "tradepulse.oi-contract-status-diagnostic.v1",
+  "scope": "PURE_AUTHORED_FIXTURE_EXCEPTION_BOUNDARY_NOT_PROVIDER_OR_EXECUTION_ACCEPTANCE",
+  "source_sha256_after": {
+    "config.py": "5dc2055ea9b6743769388980094b3af661c9361eab7a59b1caf6065c1bf8e9af",
+    "instrument_identity.py": "8601eb598fe4adf89c13df8cf1404c98a9623cf1e9def11185df78833fd9c343",
+    "option_observations.py": "7133afeb3331ab8bf84490d97c55c1f41df6c7b7afda34f416f36a551a1eda48",
+    "test_option_observations.py": "4eeac0c460d3195fe937a72c93ed51200907b06f9f0dd19d32e4b2c0b8f676d5"
+  },
+  "source_sha256_before": {
+    "config.py": "5dc2055ea9b6743769388980094b3af661c9361eab7a59b1caf6065c1bf8e9af",
+    "instrument_identity.py": "8601eb598fe4adf89c13df8cf1404c98a9623cf1e9def11185df78833fd9c343",
+    "option_observations.py": "7133afeb3331ab8bf84490d97c55c1f41df6c7b7afda34f416f36a551a1eda48",
+    "test_option_observations.py": "4eeac0c460d3195fe937a72c93ed51200907b06f9f0dd19d32e4b2c0b8f676d5"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-28T16:13:03.298384+00:00",
+  "status": "DEFECT_REPRODUCED"
+}

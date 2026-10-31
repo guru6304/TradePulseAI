@@ -1,0 +1,46 @@
+test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) ... ok
+test_actual_http_pages_head_validation_and_corruption_are_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_pages_head_validation_and_corruption_are_read_only) ... ok
+test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect (test_phase5c_recovery.TestPhase5CRecovery.test_candidate_decision_failure_and_entry_boundaries_roll_back_every_effect) ... [2026-10-29 13:04:58,770] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_6ee5b166 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 13:04:58,853] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_6ee5b166 in 98.05ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 13:04:58,877] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_6ee5b166 with exact cash input linkage
+[2026-10-29 13:04:59,009] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_6550709e via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 13:04:59,038] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_6550709e in 40.11ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-29 13:04:59,062] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_6550709e with exact cash input linkage
+ok
+test_concurrent_mark_exit_and_retry_never_resurrect_closed_position (test_phase5c_recovery.TestPhase5CRecovery.test_concurrent_mark_exit_and_retry_never_resurrect_closed_position) ... ok
+test_coordinator_uses_open_positions_even_when_report_preview_omits_them (test_phase5c_recovery.TestPhase5CRecovery.test_coordinator_uses_open_positions_even_when_report_preview_omits_them) ... ok
+test_corrupt_event_blocks_reconciliation_entry_and_safe_reporting (test_phase5c_recovery.TestPhase5CRecovery.test_corrupt_event_blocks_reconciliation_entry_and_safe_reporting) ... ok
+test_cursor_pages_are_stable_account_scoped_and_pin_append_membership (test_phase5c_recovery.TestPhase5CRecovery.test_cursor_pages_are_stable_account_scoped_and_pin_append_membership) ... ok
+test_eod_exact_delay_boundary_incomplete_and_late_bars (test_phase5c_recovery.TestPhase5CRecovery.test_eod_exact_delay_boundary_incomplete_and_late_bars) ... ok
+test_fresh_later_eod_bar_cannot_replace_missing_required_observation (test_phase5c_recovery.TestPhase5CRecovery.test_fresh_later_eod_bar_cannot_replace_missing_required_observation) ... ok
+test_increasing_ledgers_measure_recovery_reconciliation_summary_and_pages (test_phase5c_recovery.TestPhase5CRecovery.test_increasing_ledgers_measure_recovery_reconciliation_summary_and_pages) ... PHASE5C_BENCHMARK [{"candidate_decisions": 25, "decision_page_ms": 2.744, "events": 100, "first_page_bytes": 237686, "first_page_ms": 6.854, "page_plan": ["SEARCH o USING INDEX idx_paper_ledger_page (account_id=? AND collection=? AND sequence_id>? AND sequence_id<?)", "SEARCH t USING INDEX idx_paper_events_account (account_id=? AND event_id=?) LEFT-JOIN"], "positions": 25, "reconciliation_ms": 7.434, "reconciliation_plan": ["SEARCH paper_events USING INDEX idx_paper_events_position (account_id=? AND position_id=?)"], "startup_ms": 8.299, "summary_bytes": 400353, "summary_ms": 24.129}, {"candidate_decisions": 250, "decision_page_ms": 6.191, "events": 1000, "first_page_bytes": 237897, "first_page_ms": 9.951, "page_plan": ["SEARCH o USING INDEX idx_paper_ledger_page (account_id=? AND collection=? AND sequence_id>? AND sequence_id<?)", "SEARCH t USING INDEX idx_paper_events_account (account_id=? AND event_id=?) LEFT-JOIN"], "positions": 250, "reconciliation_ms": 106.795, "reconciliation_plan": ["SEARCH paper_events USING INDEX idx_paper_events_position (account_id=? AND position_id=?)"], "startup_ms": 12.44, "summary_bytes": 551953, "summary_ms": 101.468}, {"candidate_decisions": 2500, "decision_page_ms": 6.026, "events": 10000, "first_page_bytes": 238028, "first_page_ms": 13.957, "page_plan": ["SEARCH o USING INDEX idx_paper_ledger_page (account_id=? AND collection=? AND sequence_id>? AND sequence_id<?)", "SEARCH t USING INDEX idx_paper_events_account (account_id=? AND event_id=?) LEFT-JOIN"], "positions": 2500, "reconciliation_ms": 864.852, "reconciliation_plan": ["SEARCH paper_events USING INDEX idx_paper_events_position (account_id=? AND position_id=?)"], "startup_ms": 10.889, "summary_bytes": 552767, "summary_ms": 1112.884}]
+ok
+test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) ... ok
+test_mark_event_failure_duplicate_out_of_order_and_conflicting_id (test_phase5c_recovery.TestPhase5CRecovery.test_mark_event_failure_duplicate_out_of_order_and_conflicting_id) ... ok
+test_mark_exit_fee_and_eod_failures_preserve_committed_reservation (test_phase5c_recovery.TestPhase5CRecovery.test_mark_exit_fee_and_eod_failures_preserve_committed_reservation) ... ok
+test_missing_eod_survives_weekend_restart_without_release_or_next_day_fill (test_phase5c_recovery.TestPhase5CRecovery.test_missing_eod_survives_weekend_restart_without_release_or_next_day_fill) ... ok
+test_normal_eod_then_next_session_entry_resets_daily_limits_only (test_phase5c_recovery.TestPhase5CRecovery.test_normal_eod_then_next_session_entry_resets_daily_limits_only) ... ok
+test_open_loss_is_carried_into_next_ist_day_and_calendar_rejects_fixture_holiday (test_phase5c_recovery.TestPhase5CRecovery.test_open_loss_is_carried_into_next_ist_day_and_calendar_rejects_fixture_holiday) ... ok
+test_order_metadata_migrates_existing_rows_and_survives_restart (test_phase5c_recovery.TestPhase5CRecovery.test_order_metadata_migrates_existing_rows_and_survives_restart) ... ok
+test_oversized_or_expanding_persisted_record_never_returns_stuck_empty_cursor (test_phase5c_recovery.TestPhase5CRecovery.test_oversized_or_expanding_persisted_record_never_returns_stuck_empty_cursor) ... ok
+test_page_byte_budget_corruption_and_invalid_queries_fail_closed (test_phase5c_recovery.TestPhase5CRecovery.test_page_byte_budget_corruption_and_invalid_queries_fail_closed) ... ok
+test_postcommit_reporting_exception_recovers_without_double_fill_or_fees (test_phase5c_recovery.TestPhase5CRecovery.test_postcommit_reporting_exception_recovers_without_double_fill_or_fees) ... [2026-10-29 13:05:11,917] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_636f6ccc via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 13:05:11,951] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_636f6ccc in 49.88ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 13:05:11,968] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_636f6ccc with exact cash input linkage
+[2026-10-29 13:05:12,072] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_526c4552 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 13:05:12,127] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_526c4552 in 71.49ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-29 13:05:12,181] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_526c4552 with exact cash input linkage
+ok
+test_realized_daily_loss_resets_at_ist_midnight_lifetime_costs_do_not (test_phase5c_recovery.TestPhase5CRecovery.test_realized_daily_loss_resets_at_ist_midnight_lifetime_costs_do_not) ... ok
+test_restart_before_observation_and_after_receipt_matches_uninterrupted_fill (test_phase5c_recovery.TestPhase5CRecovery.test_restart_before_observation_and_after_receipt_matches_uninterrupted_fill) ... [2026-10-29 13:05:12,841] [INFO] [tradepulse.scanner] Starting scan scan_20261016_114505_afa37232 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 13:05:12,913] [INFO] [tradepulse.scanner] Staged scan scan_20261016_114505_afa37232 in 99.65ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 13:05:12,951] [INFO] [tradepulse.scanner] Committed scan scan_20261016_114505_afa37232 with exact cash input linkage
+[2026-10-29 13:05:13,073] [INFO] [tradepulse.scanner] Starting scan scan_20261016_115005_f394daae via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 13:05:13,125] [INFO] [tradepulse.scanner] Staged scan scan_20261016_115005_f394daae in 70.07ms: status=COMPLETED_EMPTY, signals=0, persisted=0, duplicates=0, persistence=OK
+[2026-10-29 13:05:13,177] [INFO] [tradepulse.scanner] Committed scan scan_20261016_115005_f394daae with exact cash input linkage
+ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 17.132s
+
+OK

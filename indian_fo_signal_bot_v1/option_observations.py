@@ -429,7 +429,7 @@ def _oi_observation(row, decision):
             or not observed <= available <= decision):
         _fail("INVALID_OI_CLOCK")
     if (not identity["valid_from"] <= day <= identity["valid_to"] or identity["expiry"] < day
-            or identity["contract_status"] != "ACTIVE"):
+            or identity.get("contract_status") != "ACTIVE"):
         _fail("OI_CONTRACT_NOT_EFFECTIVE")
     return value, observed, _digest(row)
 

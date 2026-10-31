@@ -164,3 +164,31 @@ Next: E01.2b: retain versioned production UI assets and extend the existing CDP 
 2026-10-27T08:47:56.852237+00:00 — E01.2b started from verified D01.2. Source/35 closeout bindings
 and owner changes validated, prior handoff archived. No repeated baseline audit.
 New actual-assets harness delegated; before/fix/after visual and semantic checks pending.
+
+
+## 2026-10-29 - E01.2b/c and D01.2a verified
+
+Updated UTC2026-10-29T05:19:52.480284+00:00. Current canonical 1185/1185 Python, 40/40 Node, 101 compiled Python files, zero failures/errors/skips/unraisables.
+Assets Chrome 214/214 and Edge 214/214; pagination Chrome 60/60 and Edge 60/60; focused Node40/40.
+Retained pagination50/56 and Node38/40 before failures, then corrected current-page
+empty/error wording. Edge213/214 exposed a focused mobile retry card outside the viewport;
+restoring focus after the full render passes final214 per browser. D01 absent status
+rejects with typed error;32focused/8same-input diagnostic cases pass. Final scoped
+review02 is retained. Only4source paths changed; no provider/env/operationalDB/Git/order/
+send action. Owner dev work preserved. Prior handoffs archived and historical proofs
+kept; broad mission/customer release remains incomplete.
+Next: E01.2d: verify the existing bounded paper journal in the actual browser using an explicit authored fixture account: retained totals/truncation, unsafe text, missing/stale marks, reconciliation failure and failed/late reports; retain GET-only reads and zero financial mutations.
+
+
+## 2026-10-29 - Original master E02.2 and cleanup
+
+Updated UTC2026-10-29T07:48:40.788851+00:00. Owner clarified original master continues, UI revamp deferred. Ledger payload identity fix: before2tests/24failures; after22/22, canonical 1187/1187 Python, 40/40 Node, 101 compiled Python files. Cleanup105files/4,566,808bytes/twoemptydirs;1121docs/274images/config/data preserved. No provider/Git/financial mutation; dev work untouched. Two earlier CSSclass edits remain recorded with deferredUI scope. Next: B01.5a: implement and test an isolated, versioned experimental VWAP cash future-reclaim contract using the existing retained-observation rules, without automatic activation, provider calls or a universal next-bar-close/expiry policy. Use astra_b01_pending_continuation_20261029_01.md.
+
+## B01.5a - 2026-10-29
+Updated UTC: 2026-10-29T09:02:05.209821+00:00
+
+B01.5a VERIFIED_COMPLETE_LIMITED: 1198 Python / 40 Node / 103 compile; 39 focused (11 VWAP +28 ORB). Fresh verification caches: 103 files / 4516743 bytes removed. Prior E02 cleanup105 remains separate retained history, not an aggregate claim.
+
+Isolated experimental cash VWAP build_contract/evaluate_observation evidence only; non-actionable, no accepted automatic fill policy, no capital reservation or position creation. Existing ORB automatic behavior unchanged. Actual retained scanner/detector pipeline and volume boundaries tested; mocked EMA/RSI boundaries are unit numerical checks only. Initial failure was absent-module ModuleNotFoundError; restricted temporary SQLite smoke failure was a sandbox limitation, followed by approved passing runs. No empirical, performance, live, provider admission or customer acceptance. Original mission INCOMPLETE; UI DEFERRED_OWNER_UI_REVAMP, no UI work.
+
+B01.5b NOT_STARTED: explicit opt-in coordinator/portfolio integration with retained-source guards, atomic entry/rollback, direct-enter bypass, concurrency and restart tests. No policy activation or account mutation yet.

@@ -1,0 +1,6 @@
+test_capture (__main__.main.<locals>.Capture.test_capture) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.425s
+
+OK

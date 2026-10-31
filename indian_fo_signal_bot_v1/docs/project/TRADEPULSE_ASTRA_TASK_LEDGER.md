@@ -19,13 +19,13 @@ Mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1. States describe scoped evidence on
 |C03.1|4|Deterministic builder and expiry|VERIFIED_COMPLETE|9 tests; direction identity and exact expiry; canonical|
 |C03.2|4/5|Retained source validation/persistence/API/UI|VERIFIED_COMPLETE|18 rank-history tests; focused 62 plus full canonical; current/history distinction|
 |D01|2/3|Broker/F&O capability matrix and normalized contracts|IN_PROGRESS|D01.1/2 inventory and pure endpoint fixtures verified; qualified runtime admission and genuine data remain pending|
-|E01|5/6|Truthful displays and bounded paper journal|VERIFIED_COMPLETE|38 current Node tests; narrow renderer/read safety scope, actual-browser scope separately listed|
-|E01.2|5|Browser/mobile/accessibility/pagination acceptance|IN_PROGRESS|Chrome/Edge DOM/keyboard PASS36 each; production-assets styling/full accessibility/paging pending|
+|E01|5/6|Truthful displays and bounded paper journal|VERIFIED_COMPLETE|40 current Node tests; limited renderer/read safety scope, browser b/c verified separately; paper-journal browser pending|
+|E01.2|5|Browser/mobile/accessibility acceptance|DEFERRED_OWNER_UI_REVAMP|Owner will rework UI; preserve prior scoped evidence, no further UI work|
 |E02|1/6|Independent adversarial review|IN_PROGRESS|Scoped read-only review completed; paper and full product remain pending|
 |E02.1|4|Rank expiry review finding|VERIFIED_COMPLETE|Reproduced fail then exact-boundary pass, canonical bound|
 |F01|6|Commercialization/data-rights/regulatory blueprint|IN_PROGRESS|Dated official questions and hypotheses documented; actual launch/counsel/vendor decisions pending|
 |F02|6|Verification and final release|IN_PROGRESS|Current slice verified; full mission release pending|
-|F02.1|6|Current-slice canonical and preserved history|VERIFIED_COMPLETE|1184 Python/38 Node/101 compile; current D01 source/log/handoff bindings|
+|F02.1|6|Current-source canonical and preservation|VERIFIED_COMPLETE|1198Python/40Node/103compile; B01.5a source/log/cleanup bindings|
 |F02.2|6|Whole mission final package|NOT_STARTED|D01, broader B01, browser and independent product review remain; no new ZIP|
 |F03|All|18-section portable master report|VERIFIED_COMPLETE|Partial status explicit; must update after future source changes|
 |X01|2|Empirical/OOS acceptance|BLOCKED|Qualified original history, rights/trust/date/universe and frozen study|
@@ -38,4 +38,11 @@ Mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1. States describe scoped evidence on
 |E01.4|5/6|Production latency acceptance|NOT_STARTED|Instrumented after-probe failed3s health limit; current canonical passes original limits; controlled operating measurements pending|
 |E01.2a|5|Actual browser DOM and keyboard|VERIFIED_COMPLETE|Chrome36/36 and Edge36/36; two viewports, fixture GET-only; external assets omitted|
 
-|E01.2b|5|Production-assets visual/mobile/accessibility acceptance|IN_PROGRESS|Next: inspect existing external assets/browser harness, retain reproducible offline checks; no provider activation|
+|E01.2b|5|Production-assets visual/mobile/accessibility acceptance|VERIFIED_COMPLETE_LIMITED|Final assets03 Chrome214/Edge214, four widths/tabs; focus after full render; full contrast/WCAG unavailable|
+|E01.2c|5|Existing signal/scan browser pagination|VERIFIED_COMPLETE_LIMITED|Before50/56+Node38/40; final pagination60 each andNode40; current-page empty/error truthfulness|
+|D01.2a|2/3|Missing OI status typed rejection|VERIFIED_COMPLETE|Before3KeyErrors, focused32/32, same8diagnostic cases, current canonical; no admission authority|
+|E01.2d|5/6|Paper-journal browser acceptance|DEFERRED_OWNER_UI_REVAMP|Pre-stop Chrome52 retained; Edge/full acceptance not established; UI revamp deferred|
+|E02.2|1/6|Ledger read payload account/entity validation|VERIFIED_COMPLETE|Positions/recovery only; before24failures, focused22, current canonical, generic503/noecho/read-only|
+|H01|1/6|Safe project cleanup and layout guide|VERIFIED_COMPLETE|105untracked cache files/4566808bytes +2emptydirs removed;274bound images kept;unknown temp retained|
+|B01.5a|6|Isolated VWAP future-reclaim evidence|VERIFIED_COMPLETE_LIMITED|11 new tests;39 focused; current canonical; no activation|
+|B01.5b|6|Opt-in VWAP coordinator/portfolio integration|NOT_STARTED|Exact next task: atomic guards/rollback/direct-enter/concurrency acceptance; no activation yet|

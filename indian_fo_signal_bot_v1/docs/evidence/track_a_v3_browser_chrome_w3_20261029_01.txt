@@ -1,0 +1,20 @@
+desktop.no_source FAIL 
+desktop.no_source_no_cards PASS 
+desktop.error_distinct FAIL 
+desktop.demo_three FAIL 
+desktop.first_rank FAIL 
+desktop.rank_reversal FAIL 
+desktop.keyboard_search FAIL 
+desktop.search_filter FAIL 
+bounded_run_under_60_seconds PASS 20.979
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser.py", line 315, in main
+    try:run(receipt,args.browser,prefix)
+        ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser.py", line 238, in run
+    cdp.evaluate("document.querySelector('.candidate button').click()")
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser.py", line 104, in evaluate
+    if result.get('exceptionDetails'):raise RuntimeError(str(result['exceptionDetails']))
+                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: {'exceptionId': 2, 'text': 'Uncaught', 'lineNumber': 0, 'columnNumber': 43, 'scriptId': '15', 'stackTrace': {'callFrames': [{'functionName': '', 'scriptId': '15', 'url': '', 'lineNumber': 0, 'columnNumber': 43}]}, 'exception': {'type': 'object', 'subtype': 'error', 'className': 'TypeError', 'description': "TypeError: Cannot read properties of null (reading 'click')\n    at <anonymous>:1:44", 'objectId': '7308778917927435907.2.3'}}

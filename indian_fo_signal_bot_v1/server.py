@@ -5,6 +5,7 @@ import threading
 import sqlite3
 import urllib.parse
 import ipaddress
+import socket
 from http.server import BaseHTTPRequestHandler, HTTPServer, ThreadingHTTPServer
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -37,6 +38,47 @@ class TradePulseThreadingHTTPServer(ThreadingHTTPServer):
     daemon_threads = True
     allow_reuse_address = True
     request_queue_size = 64
+    MAX_CONCURRENT_REQUESTS = 32
+    SOCKET_TIMEOUT_SECONDS = 5
+
+    def __init__(self, *args, **kwargs):
+        self._request_slots = threading.BoundedSemaphore(self.MAX_CONCURRENT_REQUESTS)
+        super().__init__(*args, **kwargs)
+
+    def get_request(self):
+        request, address = super().get_request()
+        request.settimeout(self.SOCKET_TIMEOUT_SECONDS)
+        return request, address
+
+    def process_request(self, request, client_address):
+        if not self._request_slots.acquire(blocking=False):
+            try:
+                # A small bounded drain lets a normal HTTP client receive the
+                # rejection on Windows instead of losing it to close-with-data
+                # TCP reset. No request is parsed or dispatched in this branch.
+                request.settimeout(.05)
+                try:
+                    request.recv(8192)
+                except OSError:
+                    pass
+                request.settimeout(.25)
+                request.sendall(b"HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n")
+            except OSError:
+                pass
+            finally:
+                self.shutdown_request(request)
+            return
+        try:
+            super().process_request(request, client_address)
+        except BaseException:
+            self._request_slots.release()
+            raise
+
+    def process_request_thread(self, request, client_address):
+        try:
+            super().process_request_thread(request, client_address)
+        finally:
+            self._request_slots.release()
 
 
 APPROVED_PUBLIC_CONTENT_TYPES: Dict[str, str] = {
@@ -47,6 +89,31 @@ APPROVED_PUBLIC_CONTENT_TYPES: Dict[str, str] = {
     ".png": "image/png",
     ".ico": "image/x-icon",
 }
+
+READ_RESOURCES = frozenset({
+    "context", "context-alerts", "notification-outbox", "historical-candle-pages",
+    "scan-lineage", "cash-candles", "opportunity-rankings", "paper-accounts",
+    "paper-portfolio", "paper-ledger", "paper-session", "contract-masters", "contract-resolution",
+    "health", "signals", "scans", "oi-snapshots", "oi-baselines", "historical-datasets",
+    "historical-readiness", "backtest-eligibility", "backtest-runs", "config",
+})
+
+
+def _api_resource(route):
+    for prefix in ("/api/v1/", "/api/"):
+        if route.startswith(prefix):
+            return route[len(prefix):]
+    return None
+
+
+def _known_read_resource(resource):
+    if resource in READ_RESOURCES:
+        return True
+    if resource and resource.startswith("backtest-runs/"):
+        identifier = resource[len("backtest-runs/"):]
+        return (0 < len(identifier) <= 256 and identifier.isascii()
+                and all(char.isalnum() or char in "_.:-" for char in identifier))
+    return False
 
 
 def _parse_int_param(
@@ -98,6 +165,50 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
     scheduler: Optional[MarketScanScheduler] = None
     paper_portfolio = None  # Explicit operator/test injection, never created by a GET.
     evidence_scope = None
+    JSON_BODY_TIMEOUT_SECONDS = 5
+    HEADER_TIMEOUT_SECONDS = 5
+
+    def _expire_input(self):
+        self._input_expired = True
+        try:
+            self.connection.shutdown(socket.SHUT_RD)
+        except OSError:
+            pass
+
+    def setup(self):
+        super().setup()
+        self._header_expired = False
+        def expire():
+            self._header_expired = True
+            self._expire_input()
+        self._header_timer = threading.Timer(self.HEADER_TIMEOUT_SECONDS, expire)
+        self._header_timer.daemon = True
+        self._header_timer.start()
+
+    def parse_request(self):
+        try:
+            result = super().parse_request()
+            if result and self._header_expired:
+                self.close_connection = True
+                self._send_json(408, {"status": "error", "reason_code": "REQUEST_HEADER_DEADLINE"})
+                return False
+            return result
+        finally:
+            self._header_timer.cancel()
+
+    def finish(self):
+        timer = getattr(self, "_header_timer", None)
+        if timer is not None:
+            timer.cancel()
+        super().finish()
+
+    def handle_one_request(self):
+        try:
+            super().handle_one_request()
+        except (ConnectionAbortedError, ConnectionResetError, BrokenPipeError):
+            if not getattr(self, "_input_expired", False):
+                raise
+            self.close_connection = True
 
     def log_message(self, format: str, *args: Any) -> None:
         logger.info("%s - %s", self.address_string(), format % args)
@@ -122,7 +233,7 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             self.end_headers()
             if send_body:
                 self.wfile.write(body)
-        except (BrokenPipeError, ConnectionResetError):
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
             logger.debug("Client disconnected before JSON response completed.")
 
     def _try_serve_approved_public_asset(self, raw_path: str, send_body: bool = True) -> bool:
@@ -142,11 +253,11 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         if "\x00" in unquoted or "\\" in unquoted:
             return False
 
-        rel_route = "index.html" if unquoted in ("", "/") else unquoted.lstrip("/")
+        rel_route = "terminal.html" if unquoted in ("", "/") else unquoted.lstrip("/")
         if rel_route.startswith("public/"):
             rel_route = rel_route[len("public/"):]
         if not rel_route:
-            rel_route = "index.html"
+            rel_route = "terminal.html"
 
         segments = [seg for seg in rel_route.split("/") if seg]
         if not segments:
@@ -154,6 +265,10 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         for seg in segments:
             if seg in (".", "..") or seg.startswith("."):
                 return False
+        if len(segments) == 1 and segments[0].lower() == "index.html":
+            # The retained legacy source is a developer parity reference only.
+            # All normal entry aliases serve the new local terminal bundle.
+            segments = ["terminal.html"]
 
         _, ext = os.path.splitext(segments[-1])
         content_type = APPROVED_PUBLIC_CONTENT_TYPES.get(ext.lower())
@@ -182,10 +297,16 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "no-cache")
             self.send_header("X-Content-Type-Options", "nosniff")
+            self.send_header("Referrer-Policy", "no-referrer")
+            self.send_header("X-Frame-Options", "DENY")
+            if content_type.startswith("text/html"):
+                self.send_header("Content-Security-Policy", "default-src 'none'; script-src 'self'; style-src 'self'; "
+                    "connect-src 'self'; img-src 'self'; font-src 'self'; base-uri 'none'; object-src 'none'; "
+                    "frame-ancestors 'none'; form-action 'none'")
             self.end_headers()
             if send_body:
                 self.wfile.write(data)
-        except (BrokenPipeError, ConnectionResetError):
+        except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
             logger.debug("Client disconnected before static asset transfer completed.")
         return True
 
@@ -694,7 +815,7 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
                 "message": str(exc),
             }
 
-    def _handle_post_backtest(self) -> Tuple[int, Dict[str, Any]]:
+    def _handle_post_backtest(self, body=None) -> Tuple[int, Dict[str, Any]]:
         from backtest_engine import (
             BacktestConfig,
             BacktestEligibilityError,
@@ -707,25 +828,12 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         engine = self.engine
         assert engine is not None
         try:
-            content_len = int(self.headers.get("Content-Length", "0") or "0")
-        except ValueError:
-            content_len = 0
-        if content_len <= 0 or content_len > 10 * 1024 * 1024:
+            body = self._json_body(body, max_bytes=10 * 1024 * 1024, prefix="BACKTEST")
+        except (ValueError, TypeError, RecursionError, UnicodeError, OSError):
             return 400, {
                 "status": "error",
                 "error_type": "ValidationError",
-                "message": "POST /api/backtest requires a valid JSON request body.",
-            }
-        try:
-            raw_body = self.rfile.read(content_len).decode("utf-8")
-            body = json.loads(raw_body)
-            if not isinstance(body, dict):
-                raise ValueError("JSON body must be an object.")
-        except Exception as exc:
-            return 400, {
-                "status": "error",
-                "error_type": "ValidationError",
-                "message": f"Invalid JSON request body: {exc}",
+                "message": "POST /api/backtest requires one bounded, finite JSON object with valid framing.",
             }
 
         try:
@@ -921,37 +1029,55 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         except Exception:
             return 503, {"status": "error", "reason_code": "OPERATIONAL_STORAGE_UNAVAILABLE"}
 
-    def _context_body(self, supplied):
+    def _json_body(self, supplied=None, *, max_bytes=512 * 1024, prefix="CONTEXT"):
         """Bounded same-origin JSON, including duplicate-key and NaN rejection."""
         def pairs(items):
             result = {}
             for key,value in items:
                 if key in result:
-                    raise ValueError("CONTEXT_DUPLICATE_JSON_KEY")
+                    raise ValueError(prefix + "_DUPLICATE_JSON_KEY")
                 result[key] = value
             return result
         if supplied is None:
-            if self.headers.get("Transfer-Encoding") or len(self.headers.get_all("Content-Length") or []) != 1:
-                raise ValueError("CONTEXT_BODY_LENGTH_REQUIRED")
-            length = int(self.headers.get("Content-Length"))
-            if not 0 < length <= 512 * 1024:
-                raise ValueError("CONTEXT_BODY_SIZE_LIMIT")
+            lengths = (self.headers.get_all("Content-Length") if hasattr(self.headers, "get_all")
+                       else [self.headers["Content-Length"]] if "Content-Length" in self.headers else [])
+            if self.headers.get("Transfer-Encoding") is not None or len(lengths or []) != 1:
+                raise ValueError(prefix + "_BODY_LENGTH_REQUIRED")
+            length = int(lengths[0])
+            if not 0 < length <= max_bytes:
+                raise ValueError(prefix + "_BODY_SIZE_LIMIT")
             connection = getattr(self, "connection", None)
             previous_timeout = connection.gettimeout() if connection is not None else None
+            expired = threading.Event()
+            deadline = None
+            if connection is not None:
+                def expire_body():
+                    expired.set()
+                    self._expire_input()
+                deadline = threading.Timer(self.JSON_BODY_TIMEOUT_SECONDS, expire_body)
+                deadline.daemon = True
+                deadline.start()
             try:
                 if connection is not None:
-                    connection.settimeout(5)
+                    connection.settimeout(self.JSON_BODY_TIMEOUT_SECONDS)
                 raw = self.rfile.read(length)
             finally:
+                if deadline is not None:
+                    deadline.cancel()
                 if connection is not None:
                     connection.settimeout(previous_timeout)
+            if expired.is_set():
+                raise ValueError(prefix + "_BODY_DEADLINE")
             if len(raw) != length:
-                raise ValueError("CONTEXT_BODY_TRUNCATED")
+                raise ValueError(prefix + "_BODY_TRUNCATED")
             supplied = json.loads(raw.decode("utf-8"), object_pairs_hook=pairs,
-                parse_constant=lambda value: (_ for _ in ()).throw(ValueError("CONTEXT_NONFINITE_JSON")))
-        if not isinstance(supplied, dict) or len(json.dumps(supplied, allow_nan=False).encode()) > 512 * 1024:
-            raise ValueError("CONTEXT_BODY_OBJECT_REQUIRED")
+                parse_constant=lambda value: (_ for _ in ()).throw(ValueError(prefix + "_NONFINITE_JSON")))
+        if not isinstance(supplied, dict) or len(json.dumps(supplied, allow_nan=False).encode()) > max_bytes:
+            raise ValueError(prefix + "_BODY_OBJECT_REQUIRED")
         return supplied
+
+    def _context_body(self, supplied):
+        return self._json_body(supplied)
 
     def _handle_context_import(self, body=None):
         from context_data import ContextValidationError
@@ -1034,6 +1160,15 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             # never acquire data, persist a scan or consume a paper observation.
             self._send_json(405, {"status": "error", "reason_code": "EXPLICIT_POST_REQUIRED",
                 "message": "Use an explicit POST to request a scan."}, send_body=send_body)
+            return
+        if not (route == "/api" or route.startswith("/api/")):
+            if not self._try_serve_approved_public_asset(raw_path, send_body=send_body):
+                self._send_json(404, {"status": "error", "error_type": "NotFoundError",
+                    "message": "Resource not found."}, send_body=send_body)
+            return
+        if not _known_read_resource(_api_resource(route)):
+            self._send_json(404, {"status": "error", "error_type": "NotFoundError",
+                "message": "Unknown API endpoint."}, send_body=send_body)
             return
         self._ensure_initialized()
         query_params = urllib.parse.parse_qs(parsed.query)
@@ -1170,12 +1305,33 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         if not self._allow_local_request():
             return
-        self._ensure_initialized()
         parsed = urllib.parse.urlparse(self.path)
         route = parsed.path.rstrip("/") or "/"
+        resource = _api_resource(route)
+        if resource not in ("scan", "backtest", "context-import", "context-enrich"):
+            self._send_json(405, {"status": "error", "error_type": "MethodNotAllowedError",
+                "message": "Unsupported POST endpoint. Live order execution is disabled."})
+            return
+        body = None
+        if resource != "scan":
+            try:
+                body = self._json_body(max_bytes=10 * 1024 * 1024 if resource == "backtest" else 512 * 1024,
+                                       prefix="BACKTEST" if resource == "backtest" else "CONTEXT")
+            except (ValueError, TypeError, RecursionError, UnicodeError, OSError):
+                if resource == "backtest":
+                    payload = {"status": "error", "error_type": "ValidationError",
+                               "message": "A bounded finite JSON object with valid framing is required."}
+                else:
+                    payload = {"status": "UNAVAILABLE", "reason_code": "CONTEXT_INVALID_IMPORT"
+                               if resource == "context-import" else "CONTEXT_INVALID_ENRICHMENT"}
+                self._send_json(400, payload)
+                return
+        # Only a recognized operation with valid JSON framing may initialize a
+        # cold local runtime. Semantic validation still belongs to its handler.
+        self._ensure_initialized()
         if route in ("/api/context-import", "/api/v1/context-import", "/api/context-enrich", "/api/v1/context-enrich"):
-            code, payload = (self._handle_context_import() if route.endswith("context-import")
-                             else self._handle_context_enrich())
+            code, payload = (self._handle_context_import(body) if route.endswith("context-import")
+                             else self._handle_context_enrich(body))
             self._send_json(code, payload)
             return
         if route in ("/api/scan", "/api/v1/scan"):
@@ -1183,7 +1339,7 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
             self._send_json(code, payload)
             return
         if route in ("/api/backtest", "/api/v1/backtest"):
-            code, payload = self._handle_post_backtest()
+            code, payload = self._handle_post_backtest(body)
             self._send_json(code, payload)
             return
         self._send_json(405, {
@@ -1287,7 +1443,26 @@ def create_http_server(
     """
     Factory returning a configured `ThreadingHTTPServer` instance for production and tests.
     """
-    return TradePulseThreadingHTTPServer((host, port), handler_cls)
+    host = _loopback_bind_host(host)
+    server_class = TradePulseThreadingHTTPServer
+    if ipaddress.ip_address(host).version == 6:
+        class IPv6LoopbackServer(TradePulseThreadingHTTPServer):
+            address_family = socket.AF_INET6
+        server_class = IPv6LoopbackServer
+    return server_class((host, port), handler_cls)
+
+
+def _loopback_bind_host(host):
+    """No public binding or DNS resolution before a separately approved profile."""
+    if host == "localhost":
+        return "127.0.0.1"
+    try:
+        address = ipaddress.ip_address(host)
+        if address.is_loopback:
+            return str(address)
+    except (ValueError, TypeError):
+        pass
+    raise ValueError("LOOPBACK_BIND_REQUIRED")
 
 
 def run_server(
@@ -1296,9 +1471,10 @@ def run_server(
     start_scheduler: Optional[bool] = None,
     config: Optional[BotConfig] = None,
 ) -> None:
+    host = _loopback_bind_host(host)
     os.chdir(PROJECT_ROOT)
     configure_server_runtime(config=config, start_scheduler=start_scheduler)
-    server = ThreadingHTTPServer((host, port), DashboardRequestHandler)
+    server = create_http_server(host, port, DashboardRequestHandler)
     print(f"TradePulse & OrderBlock Server (Phase 2C) running at http://{host}:{port}")
     try:
         server.serve_forever()

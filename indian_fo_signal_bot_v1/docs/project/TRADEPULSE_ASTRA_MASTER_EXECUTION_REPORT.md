@@ -1,43 +1,34 @@
 # TradePulse Astra master execution report
 
-Mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1. Work spanning 2026-10-24–27, Asia/Kolkata.
-**PARTIAL CHECKPOINT — tested changes accepted only within their stated scope.**
-
-Last updated UTC: 2026-10-27T08:44:20.480013+00:00
+Original mission TRADEPULSE-ASTRA-OWNER-2026-10-24-V1; master mission INCOMPLETE.
+UI remains DEFERRED_OWNER_UI_REVAMP. Continue original functionality tasks.
+Updated UTC: 2026-10-29T09:02:05.209821+00:00; client date2026-10-29, Asia/Kolkata.
 
 ## 1. Executive verdict
 
-**PARTIAL VERIFIED OFFLINE ENGINEERING; MASTER MISSION INCOMPLETE.**
+B01.5a VERIFIED_COMPLETE_LIMITED: 1198 Python / 40 Node / 103 compile; 39 focused (11 VWAP +28 ORB). Fresh verification caches: 103 files / 4516743 bytes removed. Prior E02 cleanup105 remains separate retained history, not an aggregate claim.
 
-D01.2 now supplies bounded, transport-free option/Greeks/depth/OI and benchmark
-inspection with original source bindings, exact declared contract resolution, past-only
-clocks and truthful unavailable capabilities. 56 new tests and the current canonical
-suite pass: **1184/1184 Python, 38/38 Node, 101 compiled Python files**,
-zero failures/errors/skips/unraisables. Source remained unchanged during the full run.
-No native snapshot becomes an executable contract, replay dataset or ranking factor.
-See [D01 completion](../reports/astra_d01_completion_20261027_01.md) for exact scope and failures retained.
+Isolated experimental cash VWAP build_contract/evaluate_observation evidence only; non-actionable, no accepted automatic fill policy, no capital reservation or position creation. Existing ORB automatic behavior unchanged. Actual retained scanner/detector pipeline and volume boundaries tested; mocked EMA/RSI boundaries are unit numerical checks only. Initial failure was absent-module ModuleNotFoundError; restricted temporary SQLite smoke failure was a sandbox limitation, followed by approved passing runs. No empirical, performance, live, provider admission or customer acceptance. Original mission INCOMPLETE; UI DEFERRED_OWNER_UI_REVAMP, no UI work.
 
-C03 cash rank history/API/UI and B01 ORB future-trigger mechanics remain covered by
-the current full suite. Genuine empirical/OOS and live-consumer acceptance, broader
-paper triggers, full visual/mobile/accessibility checks and customer readiness remain
-incomplete. The earlier instrumented3s health SLO failure remains unresolved as a
-production operating claim; a passing offline suite does not establish that SLO.
+Current proof: master_astra_b01_vwap_20261029_01.json. Completion/review: astra_b01_vwap_completion_20261029_01.md and astra_b01_vwap_independent_review_20261029_01.md. E02 ledger identity validation and its cleanup remain covered; prior source receipts are historical after new B01 files/registration.
 
-Owner-confirmed broker/config/app-env/live-helper edits are preserved. This slice
-made no provider request, send, real order, saved-setting edit, operational DB or Git
-mutation. The app env differs from the original mission baseline but matches the
-owner-confirmed hash; the local helper was never run. Next: E01.2b: retain versioned production UI assets and extend the existing CDP harness to render unchanged dashboard HTML with verified local assets for visual/mobile/accessibility checks, using astra_browser_production_assets_plan_20261027_01.md; no provider calls.
+B01.5b NOT_STARTED: explicit opt-in coordinator/portfolio integration with retained-source guards, atomic entry/rollback, direct-enter bypass, concurrency and restart tests. No policy activation or account mutation yet.
 
 ## 2. Audit manifest and Git state
 
-D01.2 adds two production modules and two test modules, plus release/test registration.
-Current source and all new evidence are bound in astra_d01_closeout_20261027_01.json.
-Its baseline archives all four prior handoffs; 727 earlier documents/receipts remain byte-identical.
-Earlier source snapshots named below are historical, not current-source proof.
+This B01 unit adds vwap_paper_triggers.py and test_astra_vwap_paper_triggers.py; existing edits are release_management.py/test_bot.py registration only. Baseline106 becomes108 source files;1183 prior documents, original four handoffs, saved settings and20cached public bodies remain preserved. Prior UI/API fixes are unchanged.
+
+The earlier verified E02.2 unit changed storage.py and test_phase5c_recovery.py. Two
+earlier class-only edits in public/index.html predate the owner's UI deferral.
+That unit added no application module, database schema or provider route. Its baseline
+astra_journal_cleanup_baseline_20261029_01.json preserves1121prior documents,
+four original handoffs, saved configuration, owner-confirmed source and20cached
+public asset/license bodies. Latest prior handoff bytes are archived again.
+The new source-bound proof/closeout supersedes prior receipts for current source.
 
 Owner-confirmed parallel changes to brokers.py/config.py/app .env and local verify_live_quick.py are preserved and separately hash-bound in astra_owner_changes_20261026_01.json. The app env differs from the original baseline. This task did not execute the helper or activate these settings; it excluded only this named local helper from release packaging. Its printed PASS labels are not acceptance evidence.
 
-Current externally advanced HEAD `4030b39c97a78b9ab3e8885a13d80e193dfcc73e`; this task made no Git writes.
+Current externally advanced HEAD `1404d3bd43567a0717c34614a45d58b226857e3a`; this task made no Git writes.
 Branch main; starting HEAD `fcdbadb`, full SHA and 88 source-file hashes in
 `../evidence/astra_baseline_20261024_01.json`. The initial source matched the retained
 Phase 6 receipt; new source requires the new proof below. 522 prior documents were
@@ -73,7 +64,7 @@ of every function in the repository.
 |2 historical/research|Mechanics accepted, empirical blocked|VERIFIED_CURRENT_SOURCE_AND_TEST for exact fold coverage; D01.2 observation mechanics VERIFIED_OFFLINE; genuine empirical/OOS BLOCKED_EXTERNAL|
 |3 live market data|Adapters tested, live not accepted|Existing fixture regression coverage; real fresh completed scanner-consumed bars NOT_ESTABLISHED; no provider call|
 |4 scanner/ranking|Offline accepted|Current regression proof; evidence-passport integration verified; source-bound cash rank history/API/UI VERIFIED_OFFLINE; empirical factors and exact option ranking unavailable|
-|5 context/dashboard/alerts|Offline accepted|Current Node/HTTP regressions; paper journal and truthfulness fixes verified; actual Chrome/Edge DOM and keyboard checks pass; external-asset styling/mobile visual/new delivery acceptance NOT_ESTABLISHED|
+|5 context/dashboard/alerts|Offline accepted|Current Node/HTTP regressions; paper journal and truthfulness fixes verified; Chrome/Edge assets214 each/four widths and pagination60 each/desktop320 verified; UI journal/accessibility work is deferred to the owner's revamp; no new delivery acceptance|
 |6 paper/performance/release|Offline accounting accepted|B01 ORB prospective mechanics and legacy automatic rejection VERIFIED_CURRENT_SOURCE_AND_TEST; other strategy/contract triggers, live evidence and customer release unavailable|
 
 Passing old paper tests means their retained contracts still work; those tests did
@@ -82,6 +73,12 @@ erase this newly demonstrated requirement gap. Prior report statements of comple
 Phase 6 are valid only within their original tested boundary.
 
 ## 4. Architecture and call flows
+
+B01.5a is a separate inspection path: caller-supplied read-only transaction and
+retained qualified original inputs -> frozen contract; a later committed input
+batch and prior records -> full history replay, past-only indicator/cost checks
+and a non-actionable evidence record. The coordinator and portfolio do not call
+this new library. Automatic entry integration remains B01.5b.
 
 D01 is an isolated library path: retained raw bytes + master declaration -> pure
 option inspection; explicit asset/index windows -> pure alignment. Outputs keep
@@ -284,6 +281,12 @@ from historical authenticity, display, derived-data and redistribution rights.
 |R06 concurrent HTTP latency, observed limitation|Three intermediate canonical stages failed HTTP timing; instrumented after-probe still exceeded the3s health assertion. The final uninstrumented proof is stated separately. No global latency guarantee or sole-cause attribution.|
 |R02 medium stale current priority, corrected|Independent review found read expiry 5m later than rebuild qualification; exact boundary regression failed then passed after correction.|
 |E03 medium absent values, corrected|UI self-review found absent quality coerced to 0 and invalidation borrowed from stop; 32-test before run failed one regression, after32/32 pass. Observed zero remains0.|
+|E04 focus/mobile usability, corrected|Actual fixtures reproduced lost selection/refresh/retry focus, missing tab semantics and obstructive mobile header; final assets03 pass214 per browser.|
+|E05 chart descriptions, corrected|OI change and hypothetical gross/net model are labeled accurately; no empirical result is implied.|
+|E06 pagination truthfulness, corrected|Before browser50/56 and Node38/40 reproduced inverted ranges and stale range after503. Empty current pages retain positive totals; failed pages clear old ranges. Final pagination60 per browser and Node40 pass.|
+|E07 mobile retry visibility, corrected|Edge assets02 passed213/214 with the correctly focused retry card offscreen. Focus now restores after cards and inspector render; final assets03 Chrome214/Edge214 pass.|
+|D02 typed validation, corrected|Missing current/baseline/both OI status leaked3KeyErrors; ACTIVE-only get check now rejects with typed error. Focused32 and same8diagnostic cases pass without input mutation.|
+|E02.2 medium ledger API identity, corrected|Two writer-backed tests reproduced24 failing assertions; positions/recovery payload identities now match account/entity wrappers or return generic503. Focused22 and current canonical pass; no financial writes or payload echo.|
 
 Negative controls: offline runner blocks non-loopback sockets; fixtures install
 transport sentinels and separate stores. UI renders journal strings via safe text,
@@ -294,9 +297,11 @@ order endpoint was called and no new broker dispatch was added. The current
 HTTP/research/metadata/rank slice received independent read-only source review;
 R02 was fixed afterwards and tested by root. Earlier UI review was its author's self-review. Subsequent independent rank
 review and browser DOM/keyboard checks are documented in section15. Full paper,
-product/security and production-assets visual/accessibility approval remain open.
+product/security approval remains open. Limited E01 browser/pagination review is recorded in section15.
 
 ## 10. Paper engine detailed verdict
+
+B01.5a now supplies an isolated, non-actionable VWAP future-reclaim evidence contract. Automatic VWAP entries remain unsupported until B01.5b. The existing ORB entry/ledger mechanism below is unchanged and its28focused regressions passed.
 
 The original failure is retained: legacy automatic close policy filled98 when
 threshold100 was never reached (high99). The repaired coordinator rejects new
@@ -413,12 +418,19 @@ execution drift suspend conclusions. No strategy was promoted or retired here.
 
 ## 12. UX and product differentiation
 
-Implemented: safe persisted quantity, missing levels, stale-account withholding,
-read-only bounded paper history, maturity and historical scan-rank scope. 38 Node tests pass. Chrome and Edge each pass36 actual DOM/keyboard checks at
-desktop/mobile viewports; production-asset visual styling and full accessibility
-acceptance remain unestablished. Existing
-vanilla JS kept. Integrated candidate priority remains separate from paper trigger
-authority; synthetic acceptance is never displayed as live-market validation.
+**DEFERRED_OWNER_UI_REVAMP.** The owner will rework the UI. Continue the original master functionality tasks; the retained UI results below describe earlier bounded work, not a new acceptance.
+
+
+
+Current renderer coverage is 40 Node tests. Actual production-assets Chrome 214/214 and Edge 214/214
+pass at1440/768/390/320 widths; pagination Chrome 60/60 and Edge 60/60 pass at desktop/320px.
+Verified scenarios include native previous/next, sizes10/20/50, filter resets, delayed
+reads, empty/error/shrinking totals, selected tab semantics and visible retry focus.
+Screenshots cover captured viewports; positive chart rendering covers the signal chart.
+Computed contrast is NOT_EVALUATED. No CSS animation was rendered in the checked
+fixture state; JavaScript reduced motion and WCAG conformance remain unestablished.
+Actual-browser bounded paper journal is E01.2d; its existing40-row cap and complete
+ledger API remain preserved. Existing vanilla JS and paper authority remain.
 
 | Priority / feature | Customer problem and competing workaround | Cost/dependency/risk | Acceptance and value hypothesis |
 |---|---|---|---|
@@ -504,13 +516,13 @@ dates and full SBOM review remain unverified work; do not claim commercial readi
 
 | Task / phase / owner | State | Dependency, files and measurable acceptance |
 |---|---|---|
-|B01 /6 /paper owner|ORB SLICE VERIFIED; broader lifecycle INCOMPLETE|Premature automatic legacy path blocked, ORB source-bound trigger/recovery/rollback/API mechanics verified. Other cash/F&O trigger policies, qualified tick/execution assumptions and later lifecycle remain explicit independent work.| 
+|B01 /6 /paper owner|ORB + ISOLATED VWAP EVIDENCE VERIFIED; lifecycle INCOMPLETE|VWAP contract11tests/ORB28pass; integration5b and other strategies/contracts remain pending.|
 |C03 /4,5 /coordinator|VERIFIED_COMPLETE for offline cash priority scope|Source-bound atomic history, read API/UI, TCS/INFY evaluator fixture, adversarial corruption/rollback/ordering and canonical proof. Wider empirical/contract factors remain unavailable.|
 |C02 /2,4,5 /coordinator|Implemented and tested|Evidence metadata wired scanner/history/UI; no promotion authority. Additional calibration requires X01.|
-|E01 /5,6 /UI|Narrow slice VERIFIED|Journal/rank bounded previews. Chrome/Edge actual DOM/keyboard pass at two viewports; full paging, production-assets visual/mobile/accessibility acceptance pending.|
-|E02 /1,6 /independent reviewer|IN_PROGRESS|Read-only HTTP/research/metadata/rank review completed; freshness finding reproduced and fixed. B01 repair and C03 received scoped independent review; Chrome/Edge DOM/keyboard checks passed. Full product/security and production-assets visual/accessibility acceptance remain open.|
+|E01 /5,6 /UI|DEFERRED_OWNER_UI_REVAMP|Preserve prior verified scope; further UI work belongs to the planned revamp.|
+|E02 /1,6 /independent reviewer|IN_PROGRESS|Read-only HTTP/research/metadata/rank review completed; freshness finding reproduced and fixed. B01 repair and C03 received scoped independent review; Chrome/Edge DOM/keyboard checks passed. Final E01/D01 scoped review passes; full product/security, paper-journal browser and accessibility conformance remain open.|
 |D01 /2,3 /data owner|D01.1/2 VERIFIED_OFFLINE; runtime admission absent|Exact neutral benchmark/chain/Greeks/OI/depth contracts and offline provider fixtures; no new calls; preserve provider fail-closed behavior.|
-|F02 /6 /coordinator|Current-slice proof; mission release NOT_STARTED|B01 ORB, C03 and D01.2 source verified; runtime D01 admission, broader lifecycle, browser and full review remain. Existing release packager includes new modules; no new archive or customer release.|
+|F02 /6 /coordinator|Current-slice proof; mission release NOT_STARTED|B01 ORB, C03 and D01.2 source verified; runtime D01 admission, broader lifecycle, paper-journal browser and full accessibility/product review remain. Existing release packager includes new modules; no new archive or customer release.|
 |X01 /2 /operator + data owner|BLOCKED_EXTERNAL|Complete authentic history, approved trust/rights, dated corporate-action/instrument universe, frozen OOS protocol; no fixtures as edge.|
 |X02 /3 /operator|BLOCKED_EXTERNAL|New exact scoped authorization, official session, unused/approved stage and real accepted stream->scanner evidence.|
 |X03 /6 /owner + counsel/vendor|BLOCKED_EXTERNAL|Legal/data/tenant/security/support readiness and separate public-release approval.|
@@ -521,14 +533,48 @@ work; a prototype or a prior report is never whole-phase completion.
 
 ## 15. Verification ledger
 
-**Current D01 source:** master_astra_d01_20261027_01.json: PASS 1184/1184 Python, 38/38 Node,
-101 compiled files, 56 new tests; no failures/errors/skips/unraisables.
-RUN: `.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage astra_d01_20261027_01`.
-Current source/log/handoff/preservation bindings: astra_d01_closeout_20261027_01.json.
-Final focused56/56 and earlier integration108/108 passed; current canonical covers
-later numerical/clock repairs. Initial assertion, sandbox, underflow/precision and
-offset failures remain retained. The reviewer did not author production modules
-but authored option tests; this limitation is explicit in the review report.
+**Current source:** master_astra_b01_vwap_20261029_01.json: B01.5a VERIFIED_COMPLETE_LIMITED: 1198 Python / 40 Node / 103 compile; 39 focused (11 VWAP +28 ORB). Fresh verification caches: 103 files / 4516743 bytes removed. Prior E02 cleanup105 remains separate retained history, not an aggregate claim.
+
+Exact executed IDs, source-before/source-after and log hashes match. Previous E02/E01 verification below is historical at its own source boundary. No new UI verification was run.
+
+**Historical E02 source:** `master_astra_backend_cleanup_20261029_01.json`: PASS 1187/1187 Python, 40/40 Node, 101 compiled Python files;
+zero failures/errors/skips/unraisables and exact source-before/source-after equality.
+RUN: `.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage astra_backend_cleanup_20261029_01`.
+Focused E02 after22/22; before2tests/24failures, plus retained initial sandbox failure.
+Cleanup dryrun/apply passed:105untracked files, 4,566,808bytes,
+two empty directories, no recursive deletion. All1121prior documents and274images
+are preserved. Final independent review and separate closeout validation are retained.
+No provider/order/send/operationalDB/Git mutation. E01UI work is owner-deferred.
+
+**Historical verification ledger below:** the E01 receipts identify earlier source,
+before the two class edits and ledger API correction. They were not rerun as UI work.
+
+
+
+**Historical E01 source:** `master_astra_e01_20261029_02.json`: PASS 1185/1185 Python, 40/40 Node, 101 compiled Python files; zero failures/errors/skips/
+unraisables, exact executed IDs and unchanged source. RUN:
+`.venv_phase4\Scripts\python.exe -B -W error::ResourceWarning verify_offline.py --stage astra_e01_20261029_02`.
+Final assets03 Chrome 214/214 and Edge 214/214; pagination03 Chrome 60/60 and Edge 60/60; focused Node40/40.
+Actual production HTML and16cached assets/4licenses are used. No JavaScript exceptions,
+crashes or unexpected fixture requests; browsers exited, servers stopped and profiles
+were removed. Focused D0132/32 and identical-input diagnostic8/8 pass. Exact hashes,
+logs, screenshots and handoffs are bound by the E01 closeout/separate validation.
+Final scoped review is in astra_e01_ui_review_20261029_02.md.
+
+Before browser04 passed186/210 with24genuine focus/retry/label failures. Earlier
+receipts preserve focus-reset, identical-read serialization and CDP-pumping harness
+mistakes; interim after04 was209/210 due to the harness race. Later pagination before
+was50/56; its two added Node regressions gave38/40 before repair, then40/40. Edge
+assets02 was213/214 with a correctly focused retry card offscreen; restoration now
+follows full rendering and final assets03 pass in both browsers. Failures remain intact.
+
+**Historical E01 stage01:** master_astra_e01_20261029_01.json passed1185Python,
+38Node and101compiled before pagination/layout repairs. Earlier completion/review01
+are preserved and do not identify the final source.
+**Historical D01:** master_astra_d01_20261027_01.json passed1184Python/38Node/
+101compiled at that source boundary. Its56new tests and numerical/clock diagnostics
+remain retained; current proof includes the later typed-rejection fix. The original
+D01 reviewer authored option tests, not production. Later scoped review is independent.
 
 **Historical C03 canonical proof:** `../evidence/master_astra_rank_history_20261027_01.json`: PASS
 1128/1128 Python, 38/38 Node, 97 compiled files, exit 0 and
@@ -684,6 +730,9 @@ prose counts, future mutable checkpoints and historical HEAD labels.
 
 ## 16. Outstanding owner decisions
 
+The owner has settled the immediate direction: continue the original Astra master mission and defer UI work to its planned revamp. No new provider authorization is inferred.
+
+
 Product goals are already settled. Future approval is required only for precise
 provider runs/activation, paid data and licenses, account/customer security setup,
 qualified legal/commercial decisions, public launch and destructive migration.
@@ -692,18 +741,13 @@ token, plan, phone/contact detail or screenshot is needed for the current work.
 
 ## 17. Next-session checkpoint
 
-Current completed unit: D01.2 pure option/Greeks/depth/OI and benchmark inspection,
-with current-source full offline proof and retained failure diagnostics. No command
-is running at this checkpoint. Broader mission remains incomplete.
-Safe first command: `Get-Content docs/project/TRADEPULSE_ASTRA_CHECKPOINT.md`.
+B01.5a VERIFIED_COMPLETE_LIMITED: 1198 Python / 40 Node / 103 compile; 39 focused (11 VWAP +28 ORB). Fresh verification caches: 103 files / 4516743 bytes removed. Prior E02 cleanup105 remains separate retained history, not an aggregate claim.
 
-Single next action: **E01.2b: retain versioned production UI assets and extend the existing CDP harness to render unchanged dashboard HTML with verified local assets for visual/mobile/accessibility checks, using astra_browser_production_assets_plan_20261027_01.md; no provider calls.**
-Reuse completed actual DOM/keyboard fixtures and preserve current outputs. Keep
-genuine market/entitlement work separately gated. Do not repeat the baseline audit,
-ORB implementation, C03 ranking or D01.2 parser. Evidence stages must be unique.
+No command is running at this checkpoint. Master mission remains incomplete. UI is deferred; provider/order/send/operational database/Git actions were not performed.
 
-Resume: `CONTINUE FROM CHECKPOINT. Preserve verified B01/C03/D01.2; resume E01.2b
-production-assets browser acceptance with no provider calls, real orders or sends.`
+B01.5b NOT_STARTED: explicit opt-in coordinator/portfolio integration with retained-source guards, atomic entry/rollback, direct-enter bypass, concurrency and restart tests. No policy activation or account mutation yet.
+
+Use astra_b01_pending_continuation_20261029_01.md and the completed5a contract as the starting point; do not restart the audit or reimplement completed work. Resume: CONTINUE FROM CHECKPOINT.
 
 ## 18. Source references and evidence limits
 

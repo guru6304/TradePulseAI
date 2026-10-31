@@ -1,0 +1,18 @@
+test_astra_vwap_paper_triggers (unittest.loader._FailedTest.test_astra_vwap_paper_triggers) ... ERROR
+
+======================================================================
+ERROR: test_astra_vwap_paper_triggers (unittest.loader._FailedTest.test_astra_vwap_paper_triggers)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_astra_vwap_paper_triggers
+Traceback (most recent call last):
+  File "C:\Python314\Lib\unittest\loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 23, in <module>
+    from vwap_paper_triggers import build_contract, evaluate_observation
+ModuleNotFoundError: No module named 'vwap_paper_triggers'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)

@@ -1,0 +1,69 @@
+ 
+desktop.no_source PASS 
+desktop.real_browser_timezone PASS UTC
+desktop.fresh_no_source_health_request PASS 
+desktop.no_source_no_cards PASS 
+desktop.no_source_time_unavailable PASS 
+desktop.error_distinct PASS 
+desktop.demo_three PASS 
+desktop.naive_health_1000_ist PASS 16 Oct, 10:00 IST
+desktop.first_rank PASS 
+desktop.rank_reversal PASS 
+desktop.keyboard_search PASS 
+desktop.search_filter PASS 
+desktop.exact_identity_chart PASS 
+desktop.mixed_format_exact_1000_ist PASS {'host_timezone': 'UTC', 'host_offset_minutes': 0, 'source_time': '16 Oct, 10:00 IST', 'signal_time': 'Opening Range Breakout · 16 Oct, 10:00 IST', 'last_candle_time': '16 Oct, 10:00 IST', 'candle_rows': 10}
+desktop.host_clock_is_non_ist PASS 0
+desktop.text_safe PASS 
+desktop.escape_dialog PASS 
+desktop.route_opportunities PASS 
+desktop.route_options PASS 
+desktop.route_strategies PASS 
+desktop.route_paper PASS 
+desktop.route_health PASS 
+desktop.route_pulse PASS 
+desktop.browser_back PASS 
+desktop.expiry_clears PASS 
+mobile.no_source PASS 
+mobile.real_browser_timezone PASS America/New_York
+mobile.fresh_no_source_health_request PASS 
+mobile.no_source_no_cards PASS 
+mobile.no_source_time_unavailable PASS 
+mobile.error_distinct PASS 
+mobile.demo_three PASS 
+mobile.naive_health_1000_ist PASS 16 Oct, 10:00 IST
+mobile.first_rank PASS 
+mobile.rank_reversal PASS 
+mobile.keyboard_search PASS 
+mobile.search_filter PASS 
+mobile.exact_identity_chart PASS 
+mobile.mixed_format_exact_1000_ist PASS {'host_timezone': 'America/New_York', 'host_offset_minutes': 240, 'source_time': '16 Oct, 10:00 IST', 'signal_time': 'Opening Range Breakout · 16 Oct, 10:00 IST', 'last_candle_time': '16 Oct, 10:00 IST', 'candle_rows': 10}
+mobile.host_clock_is_non_ist PASS 240
+mobile.text_safe PASS 
+mobile.escape_dialog PASS 
+mobile.mobile_more PASS 
+mobile.mobile_more_navigation PASS 
+mobile.route_opportunities PASS 
+mobile.route_options PASS 
+mobile.route_strategies PASS 
+mobile.route_paper PASS 
+mobile.route_health PASS 
+mobile.route_pulse PASS 
+mobile.browser_back PASS 
+mobile.expiry_clears PASS 
+overflow.360 PASS {'width': 360, 'scroll': 360}
+overflow.390 PASS {'width': 390, 'scroll': 390}
+overflow.768 PASS {'width': 768, 'scroll': 768}
+overflow.1024 PASS {'width': 1024, 'scroll': 1009}
+overflow.1366 PASS {'width': 1366, 'scroll': 1351}
+overflow.1440 PASS {'width': 1440, 'scroll': 1425}
+overflow.1920 PASS {'width': 1920, 'scroll': 1905}
+deep_link.paper PASS 
+semantic.skip_and_named_controls PASS 
+contrast.body_text_only PASS 17.253344854427723
+external_blocked PASS 
+post_blocked PASS 
+get_head_only_origin PASS 
+no_fixture_failures PASS []
+no_js_exceptions_or_crashes PASS 
+bounded_run_under_60_seconds PASS 3.461

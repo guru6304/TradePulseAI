@@ -1,0 +1,841 @@
+{
+  "cache_deletion_candidates": [
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\angel_feed.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403026996600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/angel_feed.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 66760
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\angel_feed_control.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403043413800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/angel_feed_control.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 24298
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\angel_history_capture.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403056875500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/angel_history_capture.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 18325
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\backtest_engine.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403116777700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/backtest_engine.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 107224
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\benchmark_observations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403127406400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/benchmark_observations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 17414
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\brokers.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403398006400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/brokers.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 258340
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\candle_lineage.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403424858900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/candle_lineage.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 46944
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\config.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403444105600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/config.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 36248
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\configuration_check.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403450107000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/configuration_check.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 2412
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\context_data.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403466014100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/context_data.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 31636
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\context_workflow.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403484352100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/context_workflow.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 23005
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\contract_universe.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403495538600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/contract_universe.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 19479
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\dhan_feed.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403523042900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/dhan_feed.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 54755
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\dhan_feed_control.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403531082100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/dhan_feed_control.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 7247
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\diagnostics.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403572825400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/diagnostics.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 61568
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\forward_paper.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403587262400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/forward_paper.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 23741
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\historical_data.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403630568200,
+      "path": "indian_fo_signal_bot_v1/__pycache__/historical_data.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 55616
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\historical_pagination.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403642847900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/historical_pagination.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 9534
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\historical_study.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403659783700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/historical_study.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 33941
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\instrument_archive.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403683376400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/instrument_archive.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 33014
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\instrument_identity.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403724523500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/instrument_identity.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 68284
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\notification_outbox.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403749754600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/notification_outbox.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 35715
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\opportunity_ranking.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403762938700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/opportunity_ranking.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 13926
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\option_execution.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403787680200,
+      "path": "indian_fo_signal_bot_v1/__pycache__/option_execution.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 40339
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\option_observations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403814237800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/option_observations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 35187
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\paper_portfolio.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403856837000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/paper_portfolio.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 77597
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\paper_triggers.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403868856000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/paper_triggers.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 18360
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\performance_acceptance.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403879743700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/performance_acceptance.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 21967
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\publisher_trust.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403898490800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/publisher_trust.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 38231
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\rank_history.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403914068000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/rank_history.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 28617
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\readiness_policy.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403929870100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/readiness_policy.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 26627
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\release_management.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403953247100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/release_management.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 40035
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\research_protocol.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264403963745900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/research_protocol.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 15203
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\scanner_engine.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404010016300,
+      "path": "indian_fo_signal_bot_v1/__pycache__/scanner_engine.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 99511
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\server.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404053916300,
+      "path": "indian_fo_signal_bot_v1/__pycache__/server.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 88351
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\source_qualification.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404066320900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/source_qualification.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 19356
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\storage.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404295430600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/storage.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 246297
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\strategies.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404391942900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/strategies.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 120264
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\strategy_evidence.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404398784800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/strategy_evidence.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 11005
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\telegram_bot.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404407410000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/telegram_bot.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 17092
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_angel_feed.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404431152500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_angel_feed.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 57159
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_angel_history_capture.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404443680300,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_angel_history_capture.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 22134
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_angel_market_data.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404463666000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_angel_market_data.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 43420
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_context_batch.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404477889200,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_context_batch.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 24821
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_evaluation_reads.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404493174600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_evaluation_reads.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 10299
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_health_reads.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404501289100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_health_reads.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 9588
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_http_safety.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404508191900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_http_safety.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 5045
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_paper_triggers.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404532872400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_paper_triggers.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 58921
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_rank_history.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404562716500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_rank_history.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 36023
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_ranking.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404571706100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_ranking.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 12357
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_research.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404580975000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_research.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 13958
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_scan_references.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404587448500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_scan_references.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 12421
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_astra_vwap_paper_triggers.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404601158100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_astra_vwap_paper_triggers.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 28091
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_benchmark_observations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404614458900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_benchmark_observations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 30673
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_blocker_removal.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264404630745300,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_blocker_removal.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 34879
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_bot.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405127382000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_bot.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 775779
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_cash_lineage.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405154730800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_cash_lineage.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 59082
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_cash_workflow.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405174176700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_cash_workflow.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 29277
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_completion_engineering.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405189204400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_completion_engineering.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 26319
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_context_alerts.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405201117600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_context_alerts.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 26936
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_context_data.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405218350100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_context_data.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 36092
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_context_http.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405231602400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_context_http.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 35375
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_context_workflow.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405243233100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_context_workflow.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 27413
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_continuous_acceptance.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405270018900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_continuous_acceptance.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 75019
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_contract_universe.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405282523000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_contract_universe.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 18995
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_dhan_feed.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405303363800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_dhan_feed.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 44559
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_historical_pagination.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405311397400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_historical_pagination.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 10784
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_historical_study.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405330845900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_historical_study.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 28010
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_local_api_security.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405337772400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_local_api_security.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 4643
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_market_data_contract.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405357280100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_market_data_contract.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 44086
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_notification_outbox.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405368117500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_notification_outbox.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 14840
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_option_execution.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405383131300,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_option_execution.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 32567
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_option_observations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405407348100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_option_observations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 51031
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_paper_sessions.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405413351900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_paper_sessions.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 5087
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase3_angel_integration.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405427050000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase3_angel_integration.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 28406
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase45_integration.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405444712200,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase45_integration.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 35006
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase45_scanner_gaps.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405455884900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase45_scanner_gaps.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 22461
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_acceptance.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405462358500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_acceptance.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 8290
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_e2e.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405478600700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_e2e.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 35121
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_evaluation_storage.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405489895600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_evaluation_storage.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 21203
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_explanations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405503009200,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_explanations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 30138
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_feed_history.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405514230100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_feed_history.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 21836
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_market_data.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405536885500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_market_data.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 43867
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_recommendations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405558197100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_recommendations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 49513
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase4_strategy.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405571189700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase4_strategy.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 9159
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase5a_contracts.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405588200500,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase5a_contracts.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 36049
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase5a_integration.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405602234600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase5a_integration.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 22008
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase5a_paper.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405625546100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase5a_paper.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 55630
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase5a_provenance.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405638647600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase5a_provenance.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 27368
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase5b_forward.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405651340600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase5b_forward.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 32848
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase5c_recovery.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405684387700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase5c_recovery.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 81855
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase6_paper_lifecycle.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405696548100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase6_paper_lifecycle.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 25355
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase6_performance_validity.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405705888300,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase6_performance_validity.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 12983
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_phase6_risk_recovery.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405717402800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_phase6_risk_recovery.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 24703
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_publisher_trust.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405731246700,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_publisher_trust.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 34229
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_release_management.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405740054900,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_release_management.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 15974
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_release_operations.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405747716000,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_release_operations.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 13290
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_task2_integration.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405755728800,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_task2_integration.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 11138
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\test_verify_offline.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405763710100,
+      "path": "indian_fo_signal_bot_v1/__pycache__/test_verify_offline.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 14797
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\upstox_diagnostics.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405774580200,
+      "path": "indian_fo_signal_bot_v1/__pycache__/upstox_diagnostics.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 17248
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\verify_live_quick.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405780782400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/verify_live_quick.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 5403
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\verify_offline.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405791844400,
+      "path": "indian_fo_signal_bot_v1/__pycache__/verify_offline.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 21521
+    },
+    {
+      "absolute_path": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__\\vwap_paper_triggers.cpython-314.pyc",
+      "action": "DELETE_CANDIDATE",
+      "mtime_ns": 1793264405806831600,
+      "path": "indian_fo_signal_bot_v1/__pycache__/vwap_paper_triggers.cpython-314.pyc",
+      "reason": "UNTRACKED_REGENERABLE_PROJECT_PYTHON_BYTECODE",
+      "size_bytes": 20196
+    }
+  ],
+  "candidate_file_count": 103,
+  "candidate_size_bytes": 4516743,
+  "deletions": 0,
+  "environment_or_private_payloads_read": false,
+  "image_deletion_candidates": [],
+  "previous_inventory": "astra_cleanup_inventory_20261029_01.json",
+  "previous_inventory_sha256": "feeb679468f69e2da12ef8baedc77b69c146b0b7699e91067d417c7cd52e3065",
+  "provider_requests": 0,
+  "recorded_at": "2026-10-29T09:01:45.534159+00:00",
+  "schema": "tradepulse.safe-cleanup-inventory.v1",
+  "source_helper_sha256": "7d67b001b8e248749b831923f49d9a926969cd8ad6ac7dfdfef5f7bc61fa9a5e",
+  "status": "PASS_READ_ONLY_INVENTORY",
+  "workspace": "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b"
+}

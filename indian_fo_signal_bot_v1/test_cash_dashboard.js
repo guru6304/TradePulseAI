@@ -55,7 +55,7 @@ function dashboard(options = {}) {
   });
   const html = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
   const scripts = [...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)];
-  const script = scripts.map(match => match[1]).find(text => text.includes('function renderSignalCards()'));
+  const script = scripts.map(match => match[1]).find(text => /function renderSignalCards\s*\(/.test(text));
   assert.ok(script, 'actual dashboard inline script must exist');
   const end = script.lastIndexOf('})();');
   assert.ok(end > 0, 'dashboard closure must exist');
@@ -688,6 +688,40 @@ test('a backward client clock jump cannot extend the server ranking validity', a
   view.apiClient.getOpportunityRankings = async () => rankingPayload();
   await view.loadOpportunityRankings();
   assert.ok(view.timers.at(-1).delay <= 55001, 'clock jump cannot add lifetime');
+});
+
+test('empty later pages distinguish retained totals from a globally empty result', () => {
+  const view = dashboard();
+  view.state.signals = [];
+  view.state.signalsTotal = 5;
+  view.state.signalsOffset = 20;
+  view.renderSignalCards();
+  assert.equal(view.node('signalsPaginationInfo').textContent, 'No results on this page (5 total)');
+  assert.match(view.node('signalCardsContainer').textContent, /No Signals on This Page/);
+  assert.match(view.node('signalCardsContainer').textContent, /5 stored setups/);
+  assert.doesNotMatch(view.node('signalCardsContainer').textContent, /database returned 0 signals/);
+  assert.equal(view.node('btnPrevSignalsPage').disabled, false);
+  assert.equal(view.node('btnNextSignalsPage').disabled, true);
+  view.state.scans = [];
+  view.state.scansTotal = 5;
+  view.state.scansOffset = 15;
+  view.renderScanRunsTable();
+  assert.equal(view.node('scansPaginationInfo').textContent, 'No scan runs on this page (5 total)');
+  assert.match(view.node('scanRunsTableBody').textContent, /5 scan runs/);
+  assert.doesNotMatch(view.node('scanRunsTableBody').textContent, /No scan runs recorded matching/);
+  assert.equal(view.node('btnPrevScansPage').disabled, false);
+  assert.equal(view.node('btnNextScansPage').disabled, true);
+});
+
+test('failed signal page clears the previous successful pagination range', async () => {
+  const view = dashboard();
+  renderSignal(view, storedSignal());
+  assert.match(view.node('signalsPaginationInfo').textContent, /Showing/);
+  view.apiClient.getSignals = async () => { throw new Error('authored page failure'); };
+  await view.loadSignals();
+  assert.equal(view.node('signalsPaginationInfo').textContent, 'Signal results unavailable');
+  assert.doesNotMatch(view.node('signalCardsContainer').textContent, /RELIANCE/);
+  assert.equal(view.node('detailEntryPrice').textContent, '--');
 });
 
 if (workflowFlag !== -1) {

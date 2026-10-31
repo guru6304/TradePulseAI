@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: collects more than100 ranked rows with API limit100 and snapshot-pinned later pages
+ok 1 - collects more than100 ranked rows with API limit100 and snapshot-pinned later pages
+  ---
+  duration_ms: 55.2514
+  type: 'test'
+  ...
+# Subtest: full-snapshot search reaches a candidate beyond the first API page
+ok 2 - full-snapshot search reaches a candidate beyond the first API page
+  ---
+  duration_ms: 24.1072
+  type: 'test'
+  ...
+# Subtest: zero matches keep reset and paging recovery; a shortened last page clamps locally
+ok 3 - zero matches keep reset and paging recovery; a shortened last page clamps locally
+  ---
+  duration_ms: 32.774
+  type: 'test'
+  ...
+# Subtest: mixed rank versions and malformed page/duplicate identities withhold the entire collection
+ok 4 - mixed rank versions and malformed page/duplicate identities withhold the entire collection
+  ---
+  duration_ms: 38.4469
+  type: 'test'
+  ...
+# Subtest: rejects rank collection larger than512 rather than reading an unbounded list
+ok 5 - rejects rank collection larger than512 rather than reading an unbounded list
+  ---
+  duration_ms: 4.6717
+  type: 'test'
+  ...
+# Subtest: local filter rerender preserves the focused filter and resets page
+ok 6 - local filter rerender preserves the focused filter and resets page
+  ---
+  duration_ms: 22.6367
+  type: 'test'
+  ...
+# Subtest: reordered refresh preserves a focused candidate without moving a user-owned search focus
+ok 7 - reordered refresh preserves a focused candidate without moving a user-owned search focus
+  ---
+  duration_ms: 9.0382
+  type: 'test'
+  ...
+# Subtest: selected X-Ray withholds old prices while refreshing then rebinds the same source identity
+ok 8 - selected X-Ray withholds old prices while refreshing then rebinds the same source identity
+  ---
+  duration_ms: 17.0679
+  type: 'test'
+  ...
+# Subtest: removed or source-revised selected candidates cannot retain old price evidence
+ok 9 - removed or source-revised selected candidates cannot retain old price evidence
+  ---
+  duration_ms: 11.9692
+  type: 'test'
+  ...
+# Subtest: expiry invalidates selected X-Ray and late signal completion cannot restore it
+ok 10 - expiry invalidates selected X-Ray and late signal completion cannot restore it
+  ---
+  duration_ms: 3.9531
+  type: 'test'
+  ...
+# Subtest: a late older ranking read cannot replace the later accepted snapshot
+ok 11 - a late older ranking read cannot replace the later accepted snapshot
+  ---
+  duration_ms: 3.2502
+  type: 'test'
+  ...
+# Subtest: closing a popup cancels a pending detail and returns focus to its exact surviving candidate
+ok 12 - closing a popup cancels a pending detail and returns focus to its exact surviving candidate
+  ---
+  duration_ms: 5.1447
+  type: 'test'
+  ...
+# Subtest: signal lookup narrows supported source/time fields and never sends LONG as stored direction
+ok 13 - signal lookup narrows supported source/time fields and never sends LONG as stored direction
+  ---
+  duration_ms: 5.6179
+  type: 'test'
+  ...
+# Subtest: X-Ray exposes retained zones, checks, warnings, maturity, context and paper trigger safely
+ok 14 - X-Ray exposes retained zones, checks, warnings, maturity, context and paper trigger safely
+  ---
+  duration_ms: 4.6908
+  type: 'test'
+  ...
+# Subtest: health refresh clears the old session label on loading and error
+ok 15 - health refresh clears the old session label on loading and error
+  ---
+  duration_ms: 10.8354
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 381.9048

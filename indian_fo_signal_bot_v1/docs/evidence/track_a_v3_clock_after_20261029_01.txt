@@ -1,0 +1,90 @@
+TAP version 13
+# Subtest: actual terminal clock and chart contract under TZ=UTC
+not ok 1 - actual terminal clock and chart contract under TZ=UTC
+  ---
+  duration_ms: 218.341
+  type: 'test'
+  location: 'C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\test_terminal_clock.js:116:5'
+  failureType: 'testCodeFailure'
+  error: 'the timezone child must report tests=9'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    ✔ the child uses its requested host timezone (19.797ms)
+    ✔ backend IST text and ISO offsets denote one instant (3.0748ms)
+    ✔ invalid, missing, non-string and rolled-over dates never become source instants (1.5794ms)
+    ✔ expiry parser requires an explicit offset and accepts equivalent ISO instants (2.0476ms)
+    ✔ fresh health display is 10:00 IST for backend text in a non-IST host (2.6202ms)
+    ✔ ranking refresh rejects naive as_of or valid_until instead of scheduling expiry (3.17ms)
+    ✔ actual detail links naive signal and completed 5m bars to the ISO ranking watermark (13.0091ms)
+    ✔ actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark (18.736ms)
+    ✔ actual 5m chart allows a retained previous-session boundary (3.8032ms)
+    ℹ tests 9
+    ℹ suites 0
+    ℹ pass 9
+    ℹ fail 0
+    ℹ cancelled 0
+    ℹ skipped 0
+    ℹ todo 0
+    ℹ duration_ms 158.4569
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_terminal_clock.js:128:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.start (node:internal/test_runner/test:1191:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17)
+  ...
+# Child TZ=UTC\\n✔ the child uses its requested host timezone (19.797ms)\\n✔ backend IST text and ISO offsets denote one instant (3.0748ms)\\n✔ invalid, missing, non-string and rolled-over dates never become source instants (1.5794ms)\\n✔ expiry parser requires an explicit offset and accepts equivalent ISO instants (2.0476ms)\\n✔ fresh health display is 10:00 IST for backend text in a non-IST host (2.6202ms)\\n✔ ranking refresh rejects naive as_of or valid_until instead of scheduling expiry (3.17ms)\\n✔ actual detail links naive signal and completed 5m bars to the ISO ranking watermark (13.0091ms)\\n✔ actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark (18.736ms)\\n✔ actual 5m chart allows a retained previous-session boundary (3.8032ms)\\nℹ tests 9\\nℹ suites 0\\nℹ pass 9\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 158.4569\\n
+# Subtest: actual terminal clock and chart contract under TZ=America/New_York
+not ok 2 - actual terminal clock and chart contract under TZ=America/New_York
+  ---
+  duration_ms: 214.4652
+  type: 'test'
+  location: 'C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\test_terminal_clock.js:116:5'
+  failureType: 'testCodeFailure'
+  error: 'the timezone child must report tests=9'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    ✔ the child uses its requested host timezone (17.2833ms)
+    ✔ backend IST text and ISO offsets denote one instant (3.1324ms)
+    ✔ invalid, missing, non-string and rolled-over dates never become source instants (1.3985ms)
+    ✔ expiry parser requires an explicit offset and accepts equivalent ISO instants (1.7215ms)
+    ✔ fresh health display is 10:00 IST for backend text in a non-IST host (3.7633ms)
+    ✔ ranking refresh rejects naive as_of or valid_until instead of scheduling expiry (2.1357ms)
+    ✔ actual detail links naive signal and completed 5m bars to the ISO ranking watermark (6.4502ms)
+    ✔ actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark (15.9472ms)
+    ✔ actual 5m chart allows a retained previous-session boundary (4.5365ms)
+    ℹ tests 9
+    ℹ suites 0
+    ℹ pass 9
+    ℹ fail 0
+    ℹ cancelled 0
+    ℹ skipped 0
+    ℹ todo 0
+    ℹ duration_ms 150.0129
+    
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_terminal_clock.js:128:16)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1325:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:911:18)
+    Test.postRun (node:internal/test_runner/test:1465:19)
+    Test.run (node:internal/test_runner/test:1390:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)
+  ...
+# Child TZ=America/New_York\\n✔ the child uses its requested host timezone (17.2833ms)\\n✔ backend IST text and ISO offsets denote one instant (3.1324ms)\\n✔ invalid, missing, non-string and rolled-over dates never become source instants (1.3985ms)\\n✔ expiry parser requires an explicit offset and accepts equivalent ISO instants (1.7215ms)\\n✔ fresh health display is 10:00 IST for backend text in a non-IST host (3.7633ms)\\n✔ ranking refresh rejects naive as_of or valid_until instead of scheduling expiry (2.1357ms)\\n✔ actual detail links naive signal and completed 5m bars to the ISO ranking watermark (6.4502ms)\\n✔ actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark (15.9472ms)\\n✔ actual 5m chart allows a retained previous-session boundary (4.5365ms)\\nℹ tests 9\\nℹ suites 0\\nℹ pass 9\\nℹ fail 0\\nℹ cancelled 0\\nℹ skipped 0\\nℹ todo 0\\nℹ duration_ms 150.0129\\n
+1..2
+# tests 2
+# suites 0
+# pass 0
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 518.5662

@@ -1074,6 +1074,11 @@ class SQLitePersistenceStore:
                     body = json.loads(row["body"])
                     if not isinstance(body, dict):
                         raise ValueError()
+                    # These writers retain both identities in every payload.
+                    # Events instead retain command/result JSON without them.
+                    if collection in ("positions", "recovery_decisions") and (
+                            body.get("account_id") != account_id or body.get(key) != row["entity_id"]):
+                        raise ValueError()
                     item = dict(sequence_id=row["sequence_id"], entity_id=row["entity_id"], payload=body)
                     size = len(json.dumps(item, allow_nan=False).encode("utf-8")) + 2
                     if size > 900 * 1024:

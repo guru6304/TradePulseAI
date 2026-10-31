@@ -13,6 +13,10 @@ from strategies import evaluate_orb_breakout, format_ist_timestamp, parse_ist_ti
 
 
 ORB_FILL_POLICY = "ORB_FOLLOW_THROUGH_CLOSE_V1"
+VWAP_FILL_POLICY = "VWAP_REPEATED_RECLAIM_CLOSE_V1"
+OB_FILL_POLICY = "OB_FIRST_RETEST_FOLLOW_THROUGH_CLOSE_V1"
+ST_FILL_POLICY = "ST_REPEATED_PULLBACK_CLOSE_V1"
+TRIGGER_FILL_POLICIES = (ORB_FILL_POLICY, VWAP_FILL_POLICY, OB_FILL_POLICY, ST_FILL_POLICY)
 ORB_RULE_ID = "orb.signal_extreme_completed_close_cross.v1"
 ORB_STRATEGY = "strat_4_orb_filtered"
 
@@ -187,3 +191,104 @@ def entry_evidence(store, conn, decision, supplied, source_run_id, now, config):
     return dict(candidate_id=decision["candidate_id"], trigger_contract=contract,
         trigger_timestamp_ist=last["trigger_timestamp_ist"], trigger_evaluations=records,
         fill_source_reference=actual["source_reference"])
+
+
+def build_strategy_contract(store, conn, run_id, candidate, config, queued_at):
+    """Select only the explicitly configured prospective paper experiment.
+
+    The VWAP detector and isolated evidence rule are unchanged. The opt-in
+    execution adapter interprets that rule with existing capital/cost controls;
+    neither experiment asserts an executable market quote or empirical edge.
+    """
+    if config.fill_policy == ORB_FILL_POLICY:
+        return build_contract(store, conn, run_id, candidate, config.square_off_ist)
+    return _experiment_module(config).build_contract(store, conn, run_id, candidate, config, queued_at)
+
+
+def _experiment_module(config):
+    if config.fill_policy == VWAP_FILL_POLICY:
+        import vwap_paper_triggers
+        return vwap_paper_triggers
+    if config.fill_policy == ST_FILL_POLICY:
+        import supertrend_paper_triggers
+        return supertrend_paper_triggers
+    _require(config.fill_policy == OB_FILL_POLICY, "STRATEGY_TRIGGER_POLICY_REQUIRED")
+    import order_block_paper_triggers
+    return order_block_paper_triggers
+
+
+def _experimental_assert_contract(store, conn, decision, config):
+    signal_key = signal_state_identity(decision["candidate"])[0]
+    _require(decision.get("candidate_id") == digest([config.account_id, signal_key])
+             and decision.get("signal_key") == signal_key and decision.get("run_id") == config.run_id,
+             "PAPER_TRIGGER_DECISION_IDENTITY_MISMATCH")
+    _require(decision.get("account_id") == config.account_id and decision.get("config_hash") == config.config_hash
+             and decision.get("candidate_hash") == digest(decision["candidate"]), "PAPER_TRIGGER_DECISION_SCOPE_MISMATCH")
+    expected = build_strategy_contract(store, conn, decision["source_scan_run_id"], decision["candidate"], config,
+                                      decision["queued_at_ist"])
+    _require(decision.get("trigger_contract") == expected, "PAPER_TRIGGER_CONTRACT_INTEGRITY_FAILURE")
+    return expected
+
+
+def strategy_observation_record(store, conn, decision, supplied, source_run_id, now, config, cache=None):
+    if config.fill_policy == ORB_FILL_POLICY:
+        return observation_record(store, conn, decision, supplied, source_run_id, now, config, cache)
+    experiment = _experiment_module(config)
+    contract = _experimental_assert_contract(store, conn, decision, config)
+    original, _, _ = source_observation(store, conn, source_run_id, decision["candidate"], supplied["timestamp"], cache)
+    for key in ("open", "high", "low", "close", "volume", "instrument_identity", "data_mode", "is_simulated", "is_complete", "interval_min"):
+        _require(original.get(key) == supplied.get(key), "TRIGGER_OBSERVATION_SOURCE_CONFLICT")
+    prior = decision.get("trigger_evaluations", [])
+    raw = experiment.evaluate_observation(store, conn, contract, source_run_id, now,
+                                          [record["evidence_record"] for record in prior])
+    _require(parse_ist_timestamp(raw["timestamp_ist"]) == parse_ist_timestamp(supplied["timestamp"]),
+             "TRIGGER_OBSERVATION_SOURCE_CONFLICT")
+    rule = {VWAP_FILL_POLICY:"VWAP_FUTURE_RECLAIM", OB_FILL_POLICY:"OB_FIRST_RETEST_FOLLOW_THROUGH",
+            ST_FILL_POLICY:"ST_REPEATED_PULLBACK"}[config.fill_policy]
+    status, reason = {
+        "WAITING": ("WAITING", rule + "_NOT_CONFIRMED"),
+        "QUALIFIED_EXPERIMENTAL_TRIGGER": ("TRIGGERED", rule + "_CONFIRMED"),
+        "INVALIDATED": ("INVALIDATED", "SETUP_INVALIDATED_BEFORE_CLOSE_FILL"),
+        "TARGET_ALREADY_REACHED": ("INVALIDATED", "TARGET_ALREADY_REACHED_BEFORE_CLOSE_FILL"),
+        "EXPIRED": ("INVALIDATED", "TRIGGER_SESSION_EXPIRED"),
+    }[raw["status"]]
+    return dict(timestamp_ist=raw["timestamp_ist"], close=raw["close_reference"], status=status,
+        reason_code=reason, source_reference=raw["source_reference"], observed_at_ist=raw["observed_at_ist"],
+        trigger_timestamp_ist=raw["trigger_timestamp_ist"], execution_policy=config.fill_policy, evidence_record=raw)
+
+
+def validate_strategy_history(store, conn, decision, config, cache=None):
+    if config.fill_policy == ORB_FILL_POLICY:
+        return validate_history(store, conn, decision, config, cache)
+    _experiment_module(config)
+    contract = _experimental_assert_contract(store, conn, decision, config)
+    records = decision.get("trigger_evaluations")
+    _require(isinstance(records, list) and len(records) <= 75, "PAPER_TRIGGER_HISTORY_INVALID")
+    replay = dict(decision, trigger_evaluations=[])
+    for retained in records:
+        _require(not replay["trigger_evaluations"] or replay["trigger_evaluations"][-1]["status"] == "WAITING",
+                 "PAPER_TRIGGER_HISTORY_AFTER_TERMINAL")
+        source = retained["source_reference"]["run_id"]
+        bar, _, _ = source_observation(store, conn, source, decision["candidate"], retained["timestamp_ist"], cache)
+        actual = strategy_observation_record(store, conn, replay, bar, source,
+                    parse_ist_timestamp(retained["observed_at_ist"]), config, cache)
+        _require(actual == retained, "PAPER_TRIGGER_HISTORY_INTEGRITY_FAILURE")
+        replay["trigger_evaluations"].append(actual)
+    return contract, records
+
+
+def strategy_entry_evidence(store, conn, decision, supplied, source_run_id, now, config):
+    if config.fill_policy == ORB_FILL_POLICY:
+        return entry_evidence(store, conn, decision, supplied, source_run_id, now, config)
+    cache = {}
+    contract, records = validate_strategy_history(store, conn, decision, config, cache)
+    _require(bool(records) and records[-1]["status"] == "TRIGGERED", "PAPER_TRIGGER_NOT_CONFIRMED")
+    last = records[-1]
+    actual = strategy_observation_record(store, conn, dict(decision, trigger_evaluations=records[:-1]),
+                                        supplied, source_run_id, now, config, cache)
+    expected = dict(last, observed_at_ist=actual["observed_at_ist"],
+                    evidence_record=dict(last["evidence_record"], observed_at_ist=actual["observed_at_ist"]))
+    _require(actual == expected, "PAPER_TRIGGER_ENTRY_SOURCE_CONFLICT")
+    return dict(candidate_id=decision["candidate_id"], trigger_contract=contract,
+        trigger_timestamp_ist=last["trigger_timestamp_ist"], trigger_evaluations=records,
+        fill_source_reference=actual["source_reference"], execution_policy=config.fill_policy)

@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-29T05:11:00.817853+00:00",
+  "command": [
+    "node",
+    "test_cash_dashboard.js"
+  ],
+  "scope": "OFFLINE_DOM_DOUBLE_NOT_BROWSER_ACCEPTANCE",
+  "exit_code": 0,
+  "executed": 40,
+  "passed": 40,
+  "failures": 0,
+  "skipped": 0,
+  "source_before": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_after": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "log": "docs/evidence/astra_e01_pagination_node_after_20261029_03.txt",
+  "log_sha256": "6a880e057f20ad51f32b71b43c69f53fedc560f4c9a8a3101335830776128361"
+}

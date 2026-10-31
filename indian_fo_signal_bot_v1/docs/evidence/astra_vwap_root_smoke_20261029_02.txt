@@ -1,0 +1,18 @@
+test_actual_long_and_short_later_reclaim_are_non_actionable (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_actual_long_and_short_later_reclaim_are_non_actionable) ... [2026-10-29 14:10:25,407] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_138d8bb2 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 14:10:25,442] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_138d8bb2 in 58.66ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 14:10:25,460] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_138d8bb2 with exact cash input linkage
+[2026-10-29 14:10:25,578] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_9377665c via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 14:10:25,606] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_9377665c in 38.68ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 14:10:25,633] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_9377665c with exact cash input linkage
+[2026-10-29 14:10:25,782] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_69d39e34 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 14:10:25,810] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_69d39e34 in 38.31ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 14:10:25,825] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_69d39e34 with exact cash input linkage
+[2026-10-29 14:10:25,887] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_c876853e via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 14:10:25,916] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_c876853e in 39.79ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 14:10:25,946] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_c876853e with exact cash input linkage
+ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.786s
+
+OK

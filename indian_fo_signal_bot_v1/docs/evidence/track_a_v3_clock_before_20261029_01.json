@@ -1,0 +1,41 @@
+{
+  "kind": "EXECUTED_TERMINAL_CLOCK_NODE_TESTS",
+  "status": "FAIL",
+  "started_at": "2026-10-29T17:41:36.654123+00:00",
+  "completed_at": "2026-10-29T17:41:37.288399+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test_terminal_clock.js"
+  ],
+  "exit_code": 1,
+  "source_before": {
+    "public/terminal.js": "a95ce9bf5f7d1c7083f97083af47ba4f2b0ed1e832c9ed545b43c5355e4f1683",
+    "test_terminal_clock.js": "4eb89bfa51cace3de97e1bf0113f1df61abfebedb595f448ffa77d40e294423c"
+  },
+  "source_after": {
+    "public/terminal.js": "a95ce9bf5f7d1c7083f97083af47ba4f2b0ed1e832c9ed545b43c5355e4f1683",
+    "test_terminal_clock.js": "4eb89bfa51cace3de97e1bf0113f1df61abfebedb595f448ffa77d40e294423c"
+  },
+  "parent_suite_counts": {
+    "tests": 2,
+    "pass": 0,
+    "fail": 2,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "child_suite_contract": "9 executed assertions per timezone; exact totals enforced by parent",
+  "child_assertion_methods_passed": null,
+  "timezones": [
+    "UTC",
+    "America/New_York"
+  ],
+  "helper_sha256": "e1f2e5ffea0f66056052418c44a2d51312bf9c1d870ba442ec9ccdf6aa7582ff",
+  "log": "docs/evidence/track_a_v3_clock_before_20261029_01.txt",
+  "log_sha256": "db7864d0dd21254d2047cf5c2b485cc240d26fd2e79d6a003436875529bb4fdd",
+  "network_scope": "AUTHORED_READERS_ONLY_NO_NETWORK",
+  "operational_database_accessed": false,
+  "environment_files_read": false
+}

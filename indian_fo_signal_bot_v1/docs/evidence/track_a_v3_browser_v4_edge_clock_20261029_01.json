@@ -1,0 +1,1735 @@
+{
+  "accessibility_sample": [
+    {
+      "name": "Skip to content",
+      "role": "link"
+    },
+    {
+      "name": "TradePulse AI home",
+      "role": "link"
+    },
+    {
+      "name": "Collapse sidebar",
+      "role": "button"
+    },
+    {
+      "name": "Primary navigation",
+      "role": "navigation"
+    },
+    {
+      "name": "",
+      "role": "main"
+    },
+    {
+      "name": "Pulse",
+      "role": "link"
+    },
+    {
+      "name": "Opportunities",
+      "role": "link"
+    },
+    {
+      "name": "Options Lab",
+      "role": "link"
+    },
+    {
+      "name": "Strategies & Research",
+      "role": "link"
+    },
+    {
+      "name": "Paper Portfolio",
+      "role": "link"
+    },
+    {
+      "name": "Health & Settings",
+      "role": "link"
+    },
+    {
+      "name": "Refresh stored evidence",
+      "role": "button"
+    }
+  ],
+  "actual_fixture_requests": [
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/",
+      "query": {
+        "mode": [
+          "no_source"
+        ],
+        "viewport": [
+          "desktop"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/terminal.css",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/terminal.js",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "error",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 503
+    },
+    {
+      "fixture_mode": "error",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/signals",
+      "query": {
+        "limit": [
+          "200"
+        ],
+        "strategy_id": [
+          "strat_4_orb_filtered"
+        ],
+        "symbol": [
+          "INFY"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/scan-lineage",
+      "query": {
+        "run_id": [
+          "synthetic-run"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/cash-candles",
+      "query": {
+        "batch_id": [
+          "synthetic-INFY"
+        ],
+        "limit": [
+          "100"
+        ],
+        "offset": [
+          "0"
+        ],
+        "run_id": [
+          "synthetic-run"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "query": {
+        "limit": [
+          "10"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/backtest-eligibility",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/config",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/scans",
+      "query": {
+        "limit": [
+          "10"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/config",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/scans",
+      "query": {
+        "limit": [
+          "10"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/",
+      "query": {
+        "mode": [
+          "no_source"
+        ],
+        "viewport": [
+          "mobile"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/terminal.css",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/terminal.js",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "none",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "error",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 503
+    },
+    {
+      "fixture_mode": "error",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/signals",
+      "query": {
+        "limit": [
+          "200"
+        ],
+        "strategy_id": [
+          "strat_4_orb_filtered"
+        ],
+        "symbol": [
+          "INFY"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/scan-lineage",
+      "query": {
+        "run_id": [
+          "synthetic-run"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/cash-candles",
+      "query": {
+        "batch_id": [
+          "synthetic-INFY"
+        ],
+        "limit": [
+          "100"
+        ],
+        "offset": [
+          "0"
+        ],
+        "run_id": [
+          "synthetic-run"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/backtest-eligibility",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "query": {
+        "limit": [
+          "10"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/backtest-eligibility",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/config",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/scans",
+      "query": {
+        "limit": [
+          "10"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/config",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/scans",
+      "query": {
+        "limit": [
+          "10"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/terminal.css",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/terminal.js",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/health",
+      "query": {},
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "query": {
+        "limit": [
+          "20"
+        ],
+        "offset": [
+          "0"
+        ]
+      },
+      "status": 200
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "query": {},
+      "status": 204
+    },
+    {
+      "fixture_mode": "demo",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "query": {
+        "account_id": [
+          "synthetic-paper"
+        ]
+      },
+      "status": 200
+    }
+  ],
+  "application_imports": false,
+  "assertions": {
+    "passed": 68,
+    "total": 68
+  },
+  "browser": "edge",
+  "browser_arguments": [
+    "--headless=new",
+    "--disable-gpu",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--disable-domain-reliability",
+    "--disable-client-side-phishing-detection",
+    "--disable-breakpad",
+    "--disable-crash-reporter",
+    "--disable-pings",
+    "--safebrowsing-disable-auto-update",
+    "--metrics-recording-only",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--disable-search-engine-choice-screen",
+    "--disable-features=MediaRouter,OptimizationHints,AutofillServerCommunication,Translate,NetworkTimeServiceQuerying",
+    "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1, EXCLUDE localhost",
+    "--remote-debugging-address=127.0.0.1",
+    "--remote-debugging-port=0",
+    "--user-data-dir=<isolated-temporary-profile>",
+    "about:blank"
+  ],
+  "browser_crashes": [],
+  "browser_exit_code": 0,
+  "browser_run_seconds": 3.461,
+  "browser_version": {
+    "jsVersion": "15.6.12.7",
+    "product": "Edg/156.0.4314.50",
+    "protocolVersion": "1.3",
+    "revision": "@af2ba23ae0ecf7084d900446fc59d5119dd5fd5e",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36 Edg/156.0.0.0"
+  },
+  "cdp_allowed_requests": [
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/terminal.css"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/terminal.js"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scan-lineage"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/cash-candles"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-eligibility"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/terminal.css"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/terminal.js"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scan-lineage"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/cash-candles"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-eligibility"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-eligibility"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/terminal.css"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/terminal.js"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio"
+    }
+  ],
+  "cdp_blocked_requests": [
+    {
+      "host": "blocked.example",
+      "method": "GET",
+      "path": "/v4-probe"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "POST",
+      "path": "/api/scan"
+    }
+  ],
+  "checks": [
+    {
+      "details": null,
+      "name": "desktop.no_source",
+      "passed": true
+    },
+    {
+      "details": "UTC",
+      "name": "desktop.real_browser_timezone",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.fresh_no_source_health_request",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.no_source_no_cards",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.no_source_time_unavailable",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.error_distinct",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.demo_three",
+      "passed": true
+    },
+    {
+      "details": "16 Oct, 10:00 IST",
+      "name": "desktop.naive_health_1000_ist",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.first_rank",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.rank_reversal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.keyboard_search",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.search_filter",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.exact_identity_chart",
+      "passed": true
+    },
+    {
+      "details": {
+        "candle_rows": 10,
+        "host_offset_minutes": 0,
+        "host_timezone": "UTC",
+        "last_candle_time": "16 Oct, 10:00 IST",
+        "signal_time": "Opening Range Breakout \u00b7 16 Oct, 10:00 IST",
+        "source_time": "16 Oct, 10:00 IST"
+      },
+      "name": "desktop.mixed_format_exact_1000_ist",
+      "passed": true
+    },
+    {
+      "details": 0,
+      "name": "desktop.host_clock_is_non_ist",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.text_safe",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.escape_dialog",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.route_opportunities",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.route_options",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.route_strategies",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.route_paper",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.route_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.route_pulse",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.browser_back",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.expiry_clears",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.no_source",
+      "passed": true
+    },
+    {
+      "details": "America/New_York",
+      "name": "mobile.real_browser_timezone",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.fresh_no_source_health_request",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.no_source_no_cards",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.no_source_time_unavailable",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.error_distinct",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.demo_three",
+      "passed": true
+    },
+    {
+      "details": "16 Oct, 10:00 IST",
+      "name": "mobile.naive_health_1000_ist",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.first_rank",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.rank_reversal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.keyboard_search",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.search_filter",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.exact_identity_chart",
+      "passed": true
+    },
+    {
+      "details": {
+        "candle_rows": 10,
+        "host_offset_minutes": 240,
+        "host_timezone": "America/New_York",
+        "last_candle_time": "16 Oct, 10:00 IST",
+        "signal_time": "Opening Range Breakout \u00b7 16 Oct, 10:00 IST",
+        "source_time": "16 Oct, 10:00 IST"
+      },
+      "name": "mobile.mixed_format_exact_1000_ist",
+      "passed": true
+    },
+    {
+      "details": 240,
+      "name": "mobile.host_clock_is_non_ist",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.text_safe",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.escape_dialog",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.mobile_more",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.mobile_more_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.route_opportunities",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.route_options",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.route_strategies",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.route_paper",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.route_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.route_pulse",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.browser_back",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.expiry_clears",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 360,
+        "width": 360
+      },
+      "name": "overflow.360",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 390,
+        "width": 390
+      },
+      "name": "overflow.390",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 768,
+        "width": 768
+      },
+      "name": "overflow.768",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 1009,
+        "width": 1024
+      },
+      "name": "overflow.1024",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 1351,
+        "width": 1366
+      },
+      "name": "overflow.1366",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 1425,
+        "width": 1440
+      },
+      "name": "overflow.1440",
+      "passed": true
+    },
+    {
+      "details": {
+        "scroll": 1905,
+        "width": 1920
+      },
+      "name": "overflow.1920",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "deep_link.paper",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "semantic.skip_and_named_controls",
+      "passed": true
+    },
+    {
+      "details": 17.253344854427723,
+      "name": "contrast.body_text_only",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_blocked",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_blocked",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "get_head_only_origin",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_failures",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_js_exceptions_or_crashes",
+      "passed": true
+    },
+    {
+      "details": 3.461,
+      "name": "bounded_run_under_60_seconds",
+      "passed": true
+    }
+  ],
+  "clock_observations": [
+    {
+      "candle_rows": 10,
+      "host_offset_minutes": 0,
+      "host_timezone": "UTC",
+      "last_candle_time": "16 Oct, 10:00 IST",
+      "signal_time": "Opening Range Breakout \u00b7 16 Oct, 10:00 IST",
+      "source_time": "16 Oct, 10:00 IST",
+      "viewport": "desktop"
+    },
+    {
+      "candle_rows": 10,
+      "host_offset_minutes": 240,
+      "host_timezone": "America/New_York",
+      "last_candle_time": "16 Oct, 10:00 IST",
+      "signal_time": "Opening Range Breakout \u00b7 16 Oct, 10:00 IST",
+      "source_time": "16 Oct, 10:00 IST",
+      "viewport": "mobile"
+    }
+  ],
+  "computed_contrast_sample": {
+    "bodyBackground": "rgb(11, 17, 32)",
+    "bodyText": "rgb(242, 245, 252)",
+    "body_text_contrast_ratio": 17.253344854427723,
+    "focusToken": "#a79bff"
+  },
+  "environment_read": false,
+  "evidence_scope": "DETERMINISTIC_OFFLINE_DEMO",
+  "exit_code": 0,
+  "fixture_failures": [],
+  "helper_sha256": "4f83cdd21d84b3a70705ccb163d88452ea7fbd3e0cc5b9456fea75cccb8eb2df",
+  "javascript_exceptions": [],
+  "limitations": [
+    "Authored HTTP fixture, not actual backend or live acceptance.",
+    "No market performance or fabricated realized profit; toy ranking reversal only.",
+    "Limited semantic/overflow checks, no WCAG certification or usability study.",
+    "Browser networking suppression plus CDP interception, not an OS packet capture."
+  ],
+  "log": "docs/evidence/track_a_v3_browser_v4_edge_clock_20261029_01.txt",
+  "log_sha256": "0125e511ef23c402de05e8707e6bade4adc71bfdd421ceed83c20f73725dd6f0",
+  "operational_database_accessed": false,
+  "provider_requests": 0,
+  "recorded_at": "2026-10-29T17:44:21.234209+00:00",
+  "schema": "tradepulse.v3-browser-fixture.v2",
+  "screenshots": [
+    {
+      "file": "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_desktop_no_source.png",
+      "fixture_scope": "OFFLINE_AUTHORED_NO_SOURCE",
+      "host_timezone": "UTC",
+      "mode": "none",
+      "route": "#/pulse",
+      "sha256": "052b05f559c5df0b6d2c3be870417ac5c958e7062c0fc3524f487a1394c146fe",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "file": "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_desktop_demo.png",
+      "fixture_scope": "DETERMINISTIC_OFFLINE_DEMO",
+      "host_timezone": "UTC",
+      "mode": "demo",
+      "route": "#/pulse",
+      "sha256": "606321f9b690d0b306224cbf08f8f2be2c646967acea958cc86e13dcab5ae801",
+      "viewport": {
+        "height": 900,
+        "width": 1440
+      }
+    },
+    {
+      "file": "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_mobile_no_source.png",
+      "fixture_scope": "OFFLINE_AUTHORED_NO_SOURCE",
+      "host_timezone": "America/New_York",
+      "mode": "none",
+      "route": "#/pulse",
+      "sha256": "8c98a6d8755b7813c5bf90a2de9553b66664db3a8e319a05c28ef2be36687c44",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_mobile_demo.png",
+      "fixture_scope": "DETERMINISTIC_OFFLINE_DEMO",
+      "host_timezone": "America/New_York",
+      "mode": "demo",
+      "route": "#/pulse",
+      "sha256": "6c7c6e20b79a42c6fc9426f81d212fc6fdeaf2a1b980f7004bc53744c2c25ad7",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    }
+  ],
+  "server_thread_stopped": true,
+  "source_after": {
+    "public/terminal.css": "a61a1ca9dd534d21492f554e295769b382452c9d02353d8db0dae835f9a10701",
+    "public/terminal.html": "5323935b3b841b97ef03000b8eb315b8e7489c2282d50179fe8ed165ad918a57",
+    "public/terminal.js": "b302411b85f95ce46f95781df724df797bd272f1d770a4be00a035cce2b53dc1"
+  },
+  "source_before": {
+    "public/terminal.css": "a61a1ca9dd534d21492f554e295769b382452c9d02353d8db0dae835f9a10701",
+    "public/terminal.html": "5323935b3b841b97ef03000b8eb315b8e7489c2282d50179fe8ed165ad918a57",
+    "public/terminal.js": "b302411b85f95ce46f95781df724df797bd272f1d770a4be00a035cce2b53dc1"
+  },
+  "status": "PASS",
+  "syntax_preflight": {
+    "command": [
+      "node",
+      "--check",
+      "public/terminal.js"
+    ],
+    "exit_code": 0
+  },
+  "temporary_profile_removed": true,
+  "timestamp_fixture_contract": {
+    "cash_bar_last": "2026-10-16 10:00:00",
+    "desktop_host_timezone": "UTC",
+    "health": "2026-10-16 10:00:00",
+    "lineage_last": "2026-10-16 10:00:00",
+    "mobile_host_timezone": "America/New_York",
+    "rank_watermark": "2026-10-16T10:00:00+05:30",
+    "ranking_lifetime": "Explicit-offset ISO as_of and valid_until",
+    "signal": "2026-10-16 10:00:00",
+    "stored_naive_timezone": "Asia/Kolkata"
+  }
+}

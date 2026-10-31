@@ -1,0 +1,18 @@
+{
+  "status": "FAIL",
+  "scope": "HANDOFF_HELPER_NO_APPLICATION_CHANGE",
+  "recorded_at": "2026-10-29T05:19:51.523405+00:00",
+  "command": [
+    ".venv_phase4/Scripts/python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs/evidence/astra_e01_handoff_20261029_01.py"
+  ],
+  "exit_code": 1,
+  "error": "ValueError: substring not found",
+  "cause": "Master handoff bytes used CRLF while section-boundary code searched for LF blank lines. Failure happened before archive or handoff writes.",
+  "helper_sha256": "731aa38e902f602870825f7fd96d1b280780c7001b72913d284c6f2f881f36af",
+  "archive_created": false,
+  "repair_helper": "docs/evidence/astra_e01_handoff_20261029_02.py"
+}

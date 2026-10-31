@@ -1,0 +1,287 @@
+test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) ... 
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='account_id', value='other-account-secret') ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='account_id', value=None) ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='position_id', value='other-entity-secret') ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='position_id', value=None) ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='account_id', value='other-account-secret') ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='account_id', value=None) ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='decision_id', value='other-entity-secret') ... FAIL
+  test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='decision_id', value=None) ... FAIL
+test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) ... 
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api/v1', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api/v1', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api/v1', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api/v1', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api/v1', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api/v1', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api', method='HEAD', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api/v1', method='GET', account='eod') ... FAIL
+  test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api/v1', method='HEAD', account='eod') ... FAIL
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='account_id', value='other-account-secret')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='account_id', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='position_id', value='other-entity-secret')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='positions', field='position_id', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='account_id', value='other-account-secret')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='account_id', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='decision_id', value='other-entity-secret')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_ledger_embedded_identity_required_and_matches_physical_scope (test_phase5c_recovery.TestPhase5CRecovery.test_ledger_embedded_identity_required_and_matches_physical_scope) (collection='recovery_decisions', field='decision_id', value=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 526, in test_ledger_embedded_identity_required_and_matches_physical_scope
+    self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        lambda: self.store.query_paper_ledger("eod", collection))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 67, in assert_code
+    with self.assertRaises(PaperPortfolioError) as caught:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api/v1', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='account_id', prefix='/api/v1', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api/v1', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='positions', field='position_id', prefix='/api/v1', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api/v1', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='account_id', prefix='/api/v1', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api/v1', method='GET', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+======================================================================
+FAIL: test_actual_http_ledger_identity_corruption_is_generic_and_read_only (test_phase5c_recovery.TestPhase5CRecovery.test_actual_http_ledger_identity_corruption_is_generic_and_read_only) (collection='recovery_decisions', field='decision_id', prefix='/api/v1', method='HEAD', account='eod')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase5c_recovery.py", line 568, in test_actual_http_ledger_identity_corruption_is_generic_and_read_only
+    self.assertEqual(response.status, expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 503
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.565s
+
+FAILED (failures=24)

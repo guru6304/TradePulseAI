@@ -1,0 +1,65 @@
+{
+  "kind": "SCOPED_ENGINEERING_FREEZE_CLOSEOUT",
+  "status": "PASS",
+  "recorded_at": "2026-10-29T18:15:23.662876+00:00",
+  "canonical": "docs/evidence/master_track_a_v3_core_20261029_02.json",
+  "source_revision": "1404d3bd43567a0717c34614a45d58b226857e3a",
+  "source_count": 121,
+  "python_passed": 1293,
+  "node_checks": [
+    {
+      "command": [
+        "node",
+        "test_cash_dashboard.js"
+      ],
+      "executed": 40,
+      "passed": 40
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "test_terminal_clock.js"
+      ],
+      "executed": 2,
+      "passed": 2,
+      "scope": "UTC_AND_NEW_YORK_TIMEZONE_PARENT_SUITES_WITH_STRICT_NINE_CHILD_ASSERTIONS_EACH"
+    }
+  ],
+  "protected_old_document_count": 1226,
+  "protected_starting_source_count": 99,
+  "allowed_legacy_checkpoint_update": true,
+  "bindings": {
+    "docs/evidence/master_track_a_v3_core_20261029_02.json": "c86abe5d95794241caa96b40b5c066046106cef226a702ae74feef8e9704a71c",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_chrome_clock_20261029_01_desktop_no_source.png": "42a7a549efbd3e1801b29e2381f869297fc81ac98aaae40273f7cdd4f06b55a7",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_chrome_clock_20261029_01_desktop_demo.png": "5af22ce8ca4dcdeb49ae72614cb1313cd28c35025f2822636b1084b835cb92b8",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_chrome_clock_20261029_01_mobile_no_source.png": "8c98a6d8755b7813c5bf90a2de9553b66664db3a8e319a05c28ef2be36687c44",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_chrome_clock_20261029_01_mobile_demo.png": "6c7c6e20b79a42c6fc9426f81d212fc6fdeaf2a1b980f7004bc53744c2c25ad7",
+    "docs/evidence/track_a_v3_browser_v4_chrome_clock_20261029_01.json": "3dc29d72c305d1679b3e9fa3b62861826eb2304ca662be5501c52a74da6c58c4",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_desktop_no_source.png": "052b05f559c5df0b6d2c3be870417ac5c958e7062c0fc3524f487a1394c146fe",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_desktop_demo.png": "606321f9b690d0b306224cbf08f8f2be2c646967acea958cc86e13dcab5ae801",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_mobile_no_source.png": "8c98a6d8755b7813c5bf90a2de9553b66664db3a8e319a05c28ef2be36687c44",
+    "docs/project/ui-evidence/track_a_v3_browser_v4_edge_clock_20261029_01_mobile_demo.png": "6c7c6e20b79a42c6fc9426f81d212fc6fdeaf2a1b980f7004bc53744c2c25ad7",
+    "docs/evidence/track_a_v3_browser_v4_edge_clock_20261029_01.json": "422a08d934d8bd104af1387b11f58f59e61887368828771f2583d52f665dac6c",
+    "docs/evidence/track_a_v3_clock_after_20261029_02.json": "43ac1192584c116ae74d4bfac5c5455696d43d4ede84e1d0509ce79ed8ba4000",
+    "docs/project/TRADEPULSE_MASTER_STATUS.md": "f98c0dbcbb0ef028f4364d7eee69fcce9bb89a73aca93a4bed4233ee0e1e1216",
+    "docs/project/TRADEPULSE_MASTER_EXECUTION_REPORT.md": "16edfbab6d5693022c8ab05ba46d9a7d60186c4ef6baa324877b8baf3e7a3bad",
+    "docs/project/TRADEPULSE_ASTRA_CHECKPOINT.md": "b78c4d5e1940ed62f1620ce6de081819cc38e21a453f4db7a3ee1a9b256ea370",
+    "docs/project/SECURITY_REVIEW.md": "5485958301142645ca1b88db62b1e40c8c989f90a1a78734ea611a4773ade71f",
+    "docs/project/COMPETITOR_ACCEPTANCE.md": "52a7def10cb2f6e950397ae76ff808d8e9534148515a73b1ea1a3fe4da18c844",
+    "docs/project/CLEANUP_AND_PACKAGE_MANIFEST.md": "8d25232b37d2a6e17f874157246341e2ea4026988705412b7f6376cc77c7f682",
+    "docs/project/ui-evidence/README.md": "6475138a7e3260cf1aa743fae3700be3b1e156aea029d65ad6dbe32fc34d818e"
+  },
+  "helper_sha256": "e5af81ff1759762595d3af9b152cdac36354716b2c3ed16389b2d6b417d3cb76",
+  "release_status": "NOT_BUILT",
+  "external_gates": {
+    "X01": "BLOCKED_EXTERNAL",
+    "X02": "BLOCKED_EXTERNAL",
+    "X03": "BLOCKED_EXTERNAL"
+  },
+  "limitations": [
+    "Engineering freeze only; not whole-mission, live, empirical or launch acceptance.",
+    "No claim about current operational database contents or concurrent external application activity."
+  ]
+}

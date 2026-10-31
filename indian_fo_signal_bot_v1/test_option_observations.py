@@ -424,6 +424,19 @@ class TestOptionOIObservations(unittest.TestCase):
                 self.assertIsNone(result["delta"])
                 self.assertFalse(result["eligible"])
 
+    def test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs(self):
+        original = copy.deepcopy((self.current, self.baseline))
+        for targets in (("current",), ("baseline",), ("current", "baseline")):
+            with self.subTest(missing_status_from=targets):
+                self.current, self.baseline = copy.deepcopy(original)
+                for target in targets:
+                    del getattr(self, target)["identity"]["contract_status"]
+                submitted = copy.deepcopy((self.current, self.baseline))
+                with self.assertRaises(ObservationError) as caught:
+                    self.compare()
+                self.assertEqual(caught.exception.code, "OI_CONTRACT_NOT_EFFECTIVE")
+                self.assertEqual((self.current, self.baseline), submitted)
+
     def test_mismatched_contract_revision_expiry_or_units_cannot_join(self):
         original = copy.deepcopy(self.baseline)
         for identity_change in (dict(identifier="NSE_FO|50002"), dict(expiry="2026-11-05"),

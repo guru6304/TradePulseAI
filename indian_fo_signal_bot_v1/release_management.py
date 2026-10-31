@@ -43,6 +43,9 @@ class ReleasePackager:
         "instrument_identity.py",
         "paper_portfolio.py",
         "paper_triggers.py",
+        "vwap_paper_triggers.py",
+        "order_block_paper_triggers.py",
+        "supertrend_paper_triggers.py",
         "historical_data.py",
         "backtest_engine.py",
         "forward_paper.py",
@@ -81,6 +84,9 @@ class ReleasePackager:
 
     REQUIRED_ASSETS = [
         "public/index.html",
+        "public/terminal.html",
+        "public/terminal.css",
+        "public/terminal.js",
         ".env.example",
         "requirements.txt",
     ]

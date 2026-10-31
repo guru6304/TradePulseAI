@@ -51,7 +51,7 @@
 <body class="min-h-screen flex flex-col bg-[#090d16] text-slate-100">
 
   <!-- Top Institutional Market Breadth, Health & Index Ribbon -->
-  <header class="border-b border-slate-800 bg-slate-950/95 sticky top-0 z-30">
+  <header class="border-b border-slate-800 bg-slate-950/95 lg:sticky top-0 z-30">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center font-bold text-slate-950 shadow-lg shadow-emerald-500/20">
@@ -108,17 +108,17 @@
       </div>
 
       <!-- Primary Navigation Tabs (4 Tabs — Setup Guide Tab Removed per Phase 1E Spec) -->
-      <nav class="flex flex-wrap items-center gap-1" aria-label="Primary Tabs">
-        <button type="button" data-tab="tab-terminal" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+      <nav class="flex flex-wrap items-center gap-1" role="tablist" aria-label="Primary Tabs">
+        <button id="nav-tab-terminal" type="button" role="tab" aria-controls="tab-terminal" aria-selected="true" tabindex="0" data-tab="tab-terminal" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           1. Live Signal Terminal
         </button>
-        <button type="button" data-tab="tab-option-apex" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button id="nav-tab-option-apex" type="button" role="tab" aria-controls="tab-option-apex" aria-selected="false" tabindex="-1" data-tab="tab-option-apex" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           2. Nifty &amp; BankNifty Option Apex
         </button>
-        <button type="button" data-tab="tab-strategies" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button id="nav-tab-strategies" type="button" role="tab" aria-controls="tab-strategies" aria-selected="false" tabindex="-1" data-tab="tab-strategies" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           3. Top 5 Strategies &amp; Backtester
         </button>
-        <button type="button" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        <button id="nav-tab-brokers-telegram" type="button" role="tab" aria-controls="tab-brokers-telegram" aria-selected="false" tabindex="-1" data-tab="tab-brokers-telegram" class="nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500">
           4. System Health, Scan History &amp; Config
         </button>
       </nav>
@@ -146,7 +146,7 @@
     <!-- ================================================================== -->
     <!-- TAB 1: LIVE SIGNAL TERMINAL (Connected to GET /api/signals)        -->
     <!-- ================================================================== -->
-    <section id="tab-terminal" class="tab-panel space-y-5">
+    <section id="tab-terminal" role="tabpanel" aria-labelledby="nav-tab-terminal" class="tab-panel space-y-5">
       <section class="glass-card rounded-xl p-4 space-y-2" aria-label="Candidate priority">
         <h2 class="font-bold text-white">Candidate priority</h2>
         <p class="text-xs text-slate-400">Qualified cash setups ranked by rule quality and actual target risk/reward. Paper entry still requires its own trigger.</p>
@@ -238,7 +238,7 @@
 
         <!-- Right 5 Cols: Signal Detail Inspector & Level Structure Visualizer -->
         <div class="lg:col-span-5 space-y-4">
-          <div class="glass-card rounded-xl p-4 space-y-4 sticky top-28">
+          <div class="glass-card rounded-xl p-4 space-y-4 lg:sticky top-28">
             <div class="flex items-start justify-between gap-2 border-b border-slate-800 pb-3">
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
@@ -263,7 +263,7 @@
                 Note: <code class="text-slate-300">GET /api/signals</code> provides verified entry, zone, invalidation, stop-loss, and target levels; raw 5m OHLCV candle series are not exposed in Phase 1D.
               </p>
               <div class="relative h-64 w-full bg-slate-950/70 rounded-lg p-2 border border-slate-800/80">
-                <canvas id="signalPriceChart"></canvas>
+                <canvas id="signalPriceChart" role="img" aria-label="Selected stored signal reference levels">Entry, invalidation, stop and target values are shown in the signal inspector. These reference levels are not an execution instruction.</canvas>
               </div>
             </div>
 
@@ -332,7 +332,7 @@
     <!-- ================================================================== -->
     <!-- TAB 2: NIFTY 50 & BANK NIFTY OPTION APEX (GET /api/oi-snapshots)   -->
     <!-- ================================================================== -->
-    <section id="tab-option-apex" class="tab-panel hidden space-y-5">
+    <section id="tab-option-apex" role="tabpanel" aria-labelledby="nav-tab-option-apex" class="tab-panel hidden space-y-5">
       <div class="glass-card rounded-xl p-4 flex flex-wrap items-end justify-between gap-4">
         <div>
           <h2 class="text-base font-bold text-white">Option Apex &amp; Persisted OI Snapshot History (<code class="text-xs text-cyan-400">GET /api/oi-snapshots</code>)</h2>
@@ -434,7 +434,7 @@
             <span id="foChartMeasureTag" class="text-[10px] mono text-slate-400">--</span>
           </div>
           <div class="relative h-72 w-full">
-            <canvas id="optionOiChart"></canvas>
+            <canvas id="optionOiChart" role="img" aria-label="Retained option open interest change by strike">Call and put open interest changes are available in the snapshot table. A missing snapshot has no plotted market observation.</canvas>
           </div>
         </div>
         <div class="lg:col-span-7 glass-card rounded-xl p-4 overflow-x-auto">
@@ -464,7 +464,7 @@
     <!-- ================================================================== -->
     <!-- TAB 3: TOP 5 STRATEGIES BENCHMARK & STATUTORY FRICTION SIMULATOR   -->
     <!-- ================================================================== -->
-    <section id="tab-strategies" class="tab-panel hidden space-y-5">
+    <section id="tab-strategies" role="tabpanel" aria-labelledby="nav-tab-strategies" class="tab-panel hidden space-y-5">
       <div class="glass-card rounded-xl p-5 space-y-4">
         <div class="flex flex-wrap items-center justify-between gap-2">
           <div>
@@ -592,7 +592,7 @@
         <div class="lg:col-span-7 glass-card rounded-xl p-4">
           <h3 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Hypothetical Curve: Gross vs Net After Indian Statutory Charges [SIMULATED MODEL]</h3>
           <div class="relative h-72 w-full">
-            <canvas id="backtestEquityChart"></canvas>
+            <canvas id="backtestEquityChart" role="img" aria-label="Hypothetical gross and net equity model">This simulated model uses assumed outcomes and costs. It does not show observed strategy performance.</canvas>
           </div>
         </div>
       </div>
@@ -601,7 +601,7 @@
     <!-- ================================================================== -->
     <!-- TAB 4: SYSTEM HEALTH, SCAN HISTORY & READ-ONLY CONFIG              -->
     <!-- ================================================================== -->
-    <section id="tab-brokers-telegram" class="tab-panel hidden space-y-5">
+    <section id="tab-brokers-telegram" role="tabpanel" aria-labelledby="nav-tab-brokers-telegram" class="tab-panel hidden space-y-5">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
         <!-- Left 5 Cols: GET /api/health & GET /api/config Read-Only Status -->
         <div class="lg:col-span-5 space-y-4">
@@ -640,7 +640,7 @@
               <h3 class="font-bold text-slate-200">Stored paper, EOD and research reports</h3>
               <label>Configured session date <input id="paperReportSession" type="date" class="bg-slate-900 text-slate-200" /></label>
               <button id="refreshStoredReports" class="border border-slate-600 rounded px-2 py-1">Read stored reports</button>
-              <div id="storedReportsContainer">No report requested. Reading does not scan, fill or deliver.</div>
+              <div id="storedReportsContainer" class="min-w-0 [overflow-wrap:anywhere]">No report requested. Reading does not scan, fill or deliver.</div>
             </div>
 
             <!-- Read-Only Server Configuration Summary (Zero Secrets Exposed) -->
@@ -662,7 +662,7 @@
                 <h2 class="text-base font-bold text-white">Persisted Scan-Run History (<code class="text-xs text-cyan-400">GET /api/scans</code>)</h2>
                 <p class="text-xs text-slate-400">Distinguishes COMPLETED, COMPLETED_EMPTY (0 signals), FAILED, and SKIPPED_OVERLAP runs</p>
               </div>
-              <div class="flex items-center gap-2 text-xs">
+              <div class="flex flex-wrap items-center gap-2 text-xs">
                 <label for="filterScanStatus" class="text-slate-400">Status:</label>
                 <select id="filterScanStatus" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-100">
                   <option value="ALL">All Statuses</option>
@@ -672,7 +672,7 @@
                   <option value="SKIPPED_OVERLAP">SKIPPED_OVERLAP</option>
                   <option value="SKIPPED_OUTSIDE_SESSION">SKIPPED_OUTSIDE_SESSION</option>
                 </select>
-                <button id="btnRefreshScans" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+                <button id="btnRefreshScans" type="button" aria-label="Refresh stored scan history" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
                   &#8635;
                 </button>
               </div>
@@ -1439,11 +1439,16 @@
         }
 
         const seq = ++state.reqSeq.signals;
+        const focusedSignalKey = document.activeElement && container.contains(document.activeElement)
+          ? document.activeElement.getAttribute('data-signal-key') : null;
         badge.textContent = 'Loading...';
         clearChildren(container);
-        container.appendChild(
-          el('div', 'glass-card rounded-xl p-6 text-center text-xs text-slate-400 mono', 'Loading persisted signals from GET /api/signals...')
-        );
+        const loading = el('div', 'glass-card rounded-xl p-6 text-center text-xs text-slate-400 mono', 'Loading persisted signals from GET /api/signals...');
+        loading.setAttribute('role', 'status');
+        loading.setAttribute('tabindex', '-1');
+        if (focusedSignalKey !== null) loading.setAttribute('data-signal-key', focusedSignalKey);
+        container.appendChild(loading);
+        if (focusedSignalKey !== null) loading.focus({preventScroll: true});
 
         try {
           const res = await apiClient.getSignals(params);
@@ -1453,22 +1458,28 @@
           }
           state.signals = res.items;
           state.signalsTotal = Number.isFinite(Number(res.total_count)) ? Number(res.total_count) : res.items.length;
-          renderSignalCards();
+          // Restore only while focus remains in this request's loading state.
+          // A user who moved to a filter or another control keeps that focus.
+          renderSignalCards(document.activeElement === loading ? focusedSignalKey : null);
         } catch (err) {
           if (seq !== state.reqSeq.signals) return;
+          const restoreFocus = document.activeElement === loading && focusedSignalKey !== null;
           state.signals = [];
           state.signalsTotal = 0;
           badge.textContent = 'Error';
+          document.getElementById('signalsPaginationInfo').textContent = 'Signal results unavailable';
           clearChildren(container);
           const errBox = el('div', 'glass-card rounded-xl p-5 border border-rose-500/40 bg-rose-950/20 space-y-2 text-xs');
           errBox.appendChild(el('div', 'font-bold text-rose-300', 'Failed to load signals from GET /api/signals'));
           errBox.appendChild(el('p', 'text-rose-200 mono', err && err.message ? err.message : 'Unknown API error'));
           const retryBtn = el('button', 'px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold transition', 'Retry Loading Signals');
           retryBtn.type = 'button';
+          if (focusedSignalKey !== null) retryBtn.setAttribute('data-signal-key', focusedSignalKey);
           retryBtn.addEventListener('click', function() { loadSignals(); });
           errBox.appendChild(retryBtn);
           container.appendChild(errBox);
           renderEmptySignalInspector('API Error');
+          if (restoreFocus) retryBtn.focus();
         }
       }
 
@@ -1611,8 +1622,14 @@
         if (records.length > 8) container.appendChild(el('div', '', 'Showing 8 of ' + records.length + ' retained records.'));
       }
 
-      function renderSignalCards() {
+      function renderSignalCards(requestedFocusKey) {
         const container = document.getElementById('signalCardsContainer');
+        // Restore only focus that belonged to a replaced card, never a filter
+        // or other control the user reached while an asynchronous read completed.
+        const focusedCardKey = typeof requestedFocusKey === 'string' ? requestedFocusKey
+          : document.activeElement && container.contains(document.activeElement)
+            ? document.activeElement.getAttribute('data-signal-key') : null;
+        let restoredCard = null;
         const badge = document.getElementById('signalCountBadge');
         const pageInfo = document.getElementById('signalsPaginationInfo');
         const prevBtn = document.getElementById('btnPrevSignalsPage');
@@ -1625,22 +1642,26 @@
 
         const startIdx = total === 0 ? 0 : state.signalsOffset + 1;
         const endIdx = Math.min(total, state.signalsOffset + items.length);
-        pageInfo.textContent = total > 0 ? ('Showing ' + startIdx + '–' + endIdx + ' of ' + total) : '0 results';
+        pageInfo.textContent = items.length > 0 ? ('Showing ' + startIdx + '–' + endIdx + ' of ' + total)
+          : total > 0 ? ('No results on this page (' + total + ' total)') : '0 results';
         prevBtn.disabled = state.signalsOffset <= 0;
         nextBtn.disabled = (state.signalsOffset + state.signalsLimit) >= total;
 
         if (items.length === 0) {
           const emptyBox = el('div', 'glass-card rounded-xl p-6 text-center space-y-2.5 text-xs');
-          emptyBox.appendChild(el('div', 'text-slate-200 font-semibold text-sm', 'No Persisted Signals Found'));
+          emptyBox.appendChild(el('div', 'text-slate-200 font-semibold text-sm', total > 0 ? 'No Signals on This Page' : 'No Persisted Signals Found'));
           emptyBox.appendChild(
-            el('p', 'text-slate-400', 'The database returned 0 signals for the current filter criteria. Click "⚡ Scan Market Now" to run a scan or reset filters.')
+            el('p', 'text-slate-400', total > 0
+              ? total + ' stored setups match these filters, but this page is empty. Use Prev when available, or reset filters to reload.'
+              : 'The database returned 0 signals for the current filter criteria. Click "⚡ Scan Market Now" to run a scan or reset filters.')
           );
           const scanBtn = el('button', 'px-3.5 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold transition', '⚡ Scan Market Now');
           scanBtn.type = 'button';
           scanBtn.addEventListener('click', function() { triggerManualScan(); });
-          emptyBox.appendChild(scanBtn);
+          if (total === 0) emptyBox.appendChild(scanBtn);
           container.appendChild(emptyBox);
           renderEmptySignalInspector('No Signal Selected');
+          if (focusedCardKey !== null) document.getElementById('btnRefreshDashboard').focus();
           return;
         }
 
@@ -1663,10 +1684,12 @@
             ? 'border-emerald-500 ring-1 ring-emerald-500/40 bg-slate-900/95'
             : 'border-slate-800 hover:border-slate-700';
 
-          const card = el('div', 'signal-card-item glass-card rounded-xl p-3.5 cursor-pointer transition border ' + borderCls);
+          const card = el('div', 'signal-card-item glass-card rounded-xl p-3.5 cursor-pointer transition border focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400 ' + borderCls);
           card.setAttribute('tabindex', '0');
           card.setAttribute('role', 'button');
           card.setAttribute('aria-label', 'Inspect signal ' + (s.instrument_label || s.symbol || ''));
+          card.setAttribute('aria-pressed', String(isSelected));
+          card.setAttribute('data-signal-key', String(sigKey));
 
           // Top row: Instrument + Direction (with icon) + Segment + Data Mode + Quality Score
           const topRow = el('div', 'flex flex-wrap items-center justify-between gap-2');
@@ -1748,6 +1771,9 @@
             }
           });
           container.appendChild(card);
+          if (focusedCardKey !== null && focusedCardKey === String(sigKey)) {
+            restoredCard = card;
+          }
         });
 
         const selectedSig = items.find(function(s) {
@@ -1755,6 +1781,12 @@
         }) || items[0];
         if (selectedSig) {
           renderSelectedSignalInspector(selectedSig);
+        }
+        // Render the inspector before scrolling to the replacement control so
+        // its layout cannot push a successfully retried card out of view.
+        if (focusedCardKey !== null) {
+          const target = restoredCard || document.getElementById('btnRefreshDashboard');
+          target.focus({preventScroll: restoredCard !== null && typeof requestedFocusKey !== 'string'});
         }
       }
 
@@ -2288,13 +2320,16 @@
         const total = state.scansTotal || 0;
         const startIdx = total === 0 ? 0 : state.scansOffset + 1;
         const endIdx = Math.min(total, state.scansOffset + items.length);
-        info.textContent = total > 0 ? ('Showing ' + startIdx + '–' + endIdx + ' of ' + total + ' scan runs') : '0 scan runs recorded';
+        info.textContent = items.length > 0 ? ('Showing ' + startIdx + '–' + endIdx + ' of ' + total + ' scan runs')
+          : total > 0 ? ('No scan runs on this page (' + total + ' total)') : '0 scan runs recorded';
         prevBtn.disabled = state.scansOffset <= 0;
         nextBtn.disabled = (state.scansOffset + state.scansLimit) >= total;
 
         if (items.length === 0) {
           const tr = el('tr', '');
-          const td = el('td', 'py-4 px-3 text-slate-400 text-center font-sans', 'No scan runs recorded matching this filter.');
+          const td = el('td', 'py-4 px-3 text-slate-400 text-center font-sans', total > 0
+            ? total + ' scan runs match this filter, but this page is empty. Use Prev to view an earlier page.'
+            : 'No scan runs recorded matching this filter.');
           td.colSpan = 7;
           tr.appendChild(td);
           tbody.appendChild(tr);
@@ -2530,6 +2565,8 @@
         });
         document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
           const active = btn.getAttribute('data-tab') === tabId;
+          btn.setAttribute('aria-selected', String(active));
+          btn.setAttribute('tabindex', active ? '0' : '-1');
           btn.className = active
             ? 'nav-tab-btn px-3 py-1.5 rounded-lg font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 transition focus:outline-none focus:ring-2 focus:ring-emerald-500'
             : 'nav-tab-btn px-3 py-1.5 rounded-lg font-medium text-slate-300 hover:bg-slate-800 border border-transparent transition focus:outline-none focus:ring-2 focus:ring-emerald-500';
@@ -2550,6 +2587,19 @@
         document.querySelectorAll('.nav-tab-btn').forEach(function(btn) {
           btn.addEventListener('click', function() {
             switchTab(btn.getAttribute('data-tab'));
+          });
+          btn.addEventListener('keydown', function(ev) {
+            const tabs = Array.from(document.querySelectorAll('.nav-tab-btn'));
+            const index = tabs.indexOf(btn);
+            let next;
+            if (ev.key === 'ArrowRight') next = (index + 1) % tabs.length;
+            else if (ev.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+            else if (ev.key === 'Home') next = 0;
+            else if (ev.key === 'End') next = tabs.length - 1;
+            else return;
+            ev.preventDefault();
+            switchTab(tabs[next].getAttribute('data-tab'));
+            tabs[next].focus();
           });
         });
 

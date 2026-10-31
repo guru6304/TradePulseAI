@@ -1,0 +1,789 @@
+{
+    "schema":  "tradepulse.exact-cache-cleanup.v1",
+    "status":  "PASS",
+    "mode":  "APPLY",
+    "started_at":  "2026-10-29T07:43:36.3597682Z",
+    "command":  [
+                    "astra_cleanup_apply_20261029_01.ps1",
+                    "-Stage",
+                    "apply_20261029_01",
+                    "-Apply"
+                ],
+    "allowed_cache_roots":  [
+                                "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__",
+                                "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\docs\\evidence\\__pycache__"
+                            ],
+    "inventory":  "docs/evidence/astra_cleanup_inventory_20261029_01.json",
+    "inventory_sha256_before":  "feeb679468f69e2da12ef8baedc77b69c146b0b7699e91067d417c7cd52e3065",
+    "inventory_sha256_after":  "feeb679468f69e2da12ef8baedc77b69c146b0b7699e91067d417c7cd52e3065",
+    "script_sha256":  "0a9b5c0eba3775e77b3843f06b93189b7c556fc73abd4b4aef2e76b3f7a2ee19",
+    "planned_files":  105,
+    "all_targets_validated_before_deletion":  true,
+    "provider_requests":  0,
+    "operational_database_accessed":  false,
+    "environment_or_private_payloads_read":  false,
+    "tracked_files_removed":  0,
+    "images_removed":  0,
+    "private_directories_descended":  false,
+    "access_denied_history_directory":  "PRESERVED_UNINSPECTED",
+    "recursive_delete_used":  false,
+    "directory_delete_policy":  "Directory.Delete(path,false); atomically refuses nonempty directories",
+    "completed_at":  "2026-10-29T07:43:37.7997190Z",
+    "removed_files":  105,
+    "removed_bytes":  4566808,
+    "file_results":  [
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/angel_feed.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  66760,
+                             "inventory_size_bytes":  66760,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/angel_feed_control.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  24298,
+                             "inventory_size_bytes":  24298,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/angel_history_capture.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  18325,
+                             "inventory_size_bytes":  18325,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/backtest_engine.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  107224,
+                             "inventory_size_bytes":  107224,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/benchmark_observations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  17414,
+                             "inventory_size_bytes":  17414,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/brokers.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  258340,
+                             "inventory_size_bytes":  258340,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/candle_lineage.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  46944,
+                             "inventory_size_bytes":  46944,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/config.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  36248,
+                             "inventory_size_bytes":  36248,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/configuration_check.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  2412,
+                             "inventory_size_bytes":  2412,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/context_data.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  31636,
+                             "inventory_size_bytes":  31636,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/context_workflow.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  23005,
+                             "inventory_size_bytes":  23005,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/contract_universe.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  19479,
+                             "inventory_size_bytes":  19479,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/dhan_feed.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  54755,
+                             "inventory_size_bytes":  54755,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/dhan_feed_control.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  7247,
+                             "inventory_size_bytes":  7247,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/diagnostics.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  61568,
+                             "inventory_size_bytes":  61568,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/forward_paper.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  23741,
+                             "inventory_size_bytes":  23741,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/historical_data.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  55616,
+                             "inventory_size_bytes":  55616,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/historical_pagination.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  9534,
+                             "inventory_size_bytes":  9534,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/historical_study.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  33941,
+                             "inventory_size_bytes":  33941,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/instrument_archive.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  33014,
+                             "inventory_size_bytes":  33014,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/instrument_identity.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  68284,
+                             "inventory_size_bytes":  68284,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/newpaper_triggers.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  12341,
+                             "inventory_size_bytes":  12341,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/notification_outbox.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  35715,
+                             "inventory_size_bytes":  35715,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/opportunity_ranking.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  13926,
+                             "inventory_size_bytes":  13926,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/option_execution.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  40339,
+                             "inventory_size_bytes":  40339,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/option_observations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  35187,
+                             "inventory_size_bytes":  35187,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/paper_portfolio.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  77597,
+                             "inventory_size_bytes":  77597,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/paper_triggers.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  18360,
+                             "inventory_size_bytes":  18360,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/performance_acceptance.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  21967,
+                             "inventory_size_bytes":  21967,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/publisher_trust.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  38231,
+                             "inventory_size_bytes":  38231,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/rank_history.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  28617,
+                             "inventory_size_bytes":  28617,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/readiness_policy.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  26627,
+                             "inventory_size_bytes":  26627,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/release_management.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  39995,
+                             "inventory_size_bytes":  39995,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/research_protocol.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  15203,
+                             "inventory_size_bytes":  15203,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/scanner_engine.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  99511,
+                             "inventory_size_bytes":  99511,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/server.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  88351,
+                             "inventory_size_bytes":  88351,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/source_qualification.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  19356,
+                             "inventory_size_bytes":  19356,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/storage.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  246297,
+                             "inventory_size_bytes":  246075,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/strategies.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  120264,
+                             "inventory_size_bytes":  120264,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/strategy_evidence.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  11005,
+                             "inventory_size_bytes":  11005,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/telegram_bot.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  17092,
+                             "inventory_size_bytes":  17092,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_angel_feed.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  57159,
+                             "inventory_size_bytes":  57159,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_angel_history_capture.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  22134,
+                             "inventory_size_bytes":  22134,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_angel_market_data.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  43420,
+                             "inventory_size_bytes":  43420,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_context_batch.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  24821,
+                             "inventory_size_bytes":  24821,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_evaluation_reads.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  10299,
+                             "inventory_size_bytes":  10299,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_health_reads.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  9588,
+                             "inventory_size_bytes":  9588,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_http_safety.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  5045,
+                             "inventory_size_bytes":  5045,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_paper_triggers.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  58921,
+                             "inventory_size_bytes":  58921,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_rank_history.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  36023,
+                             "inventory_size_bytes":  36023,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_ranking.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  12357,
+                             "inventory_size_bytes":  12357,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_research.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  13958,
+                             "inventory_size_bytes":  13958,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_astra_scan_references.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  12421,
+                             "inventory_size_bytes":  12421,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_benchmark_observations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  30673,
+                             "inventory_size_bytes":  30673,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_blocker_removal.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  34879,
+                             "inventory_size_bytes":  34879,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_bot.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  775730,
+                             "inventory_size_bytes":  775730,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_cash_lineage.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  59082,
+                             "inventory_size_bytes":  59082,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_cash_workflow.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  29277,
+                             "inventory_size_bytes":  29277,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_completion_engineering.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  26319,
+                             "inventory_size_bytes":  26319,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_context_alerts.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  26936,
+                             "inventory_size_bytes":  26936,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_context_data.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  36092,
+                             "inventory_size_bytes":  36092,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_context_http.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  35375,
+                             "inventory_size_bytes":  35375,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_context_workflow.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  27413,
+                             "inventory_size_bytes":  27413,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_continuous_acceptance.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  75019,
+                             "inventory_size_bytes":  75019,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_contract_universe.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  18995,
+                             "inventory_size_bytes":  18995,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_dhan_feed.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  44559,
+                             "inventory_size_bytes":  44559,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_historical_pagination.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  10784,
+                             "inventory_size_bytes":  10784,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_historical_study.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  28010,
+                             "inventory_size_bytes":  28010,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_local_api_security.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  4643,
+                             "inventory_size_bytes":  4643,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_market_data_contract.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  44086,
+                             "inventory_size_bytes":  44086,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_notification_outbox.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  14840,
+                             "inventory_size_bytes":  14840,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_option_execution.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  32567,
+                             "inventory_size_bytes":  32567,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_option_observations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  51031,
+                             "inventory_size_bytes":  51031,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_paper_sessions.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  5087,
+                             "inventory_size_bytes":  5087,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase3_angel_integration.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  28406,
+                             "inventory_size_bytes":  28406,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase45_integration.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  35006,
+                             "inventory_size_bytes":  35006,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase45_scanner_gaps.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  22461,
+                             "inventory_size_bytes":  22461,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_acceptance.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  8290,
+                             "inventory_size_bytes":  8290,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_e2e.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  35121,
+                             "inventory_size_bytes":  35121,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_evaluation_storage.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  21203,
+                             "inventory_size_bytes":  21203,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_explanations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  30138,
+                             "inventory_size_bytes":  30138,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_feed_history.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  21836,
+                             "inventory_size_bytes":  21836,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_market_data.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  43867,
+                             "inventory_size_bytes":  43867,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_recommendations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  49513,
+                             "inventory_size_bytes":  49513,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase4_strategy.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  9159,
+                             "inventory_size_bytes":  9159,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase5a_contracts.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  36049,
+                             "inventory_size_bytes":  36049,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase5a_integration.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  22008,
+                             "inventory_size_bytes":  22008,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase5a_paper.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  55630,
+                             "inventory_size_bytes":  55630,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase5a_provenance.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  27368,
+                             "inventory_size_bytes":  27368,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase5b_forward.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  32848,
+                             "inventory_size_bytes":  32848,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase5c_recovery.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  81855,
+                             "inventory_size_bytes":  72432,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase6_paper_lifecycle.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  25355,
+                             "inventory_size_bytes":  25355,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase6_performance_validity.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  12983,
+                             "inventory_size_bytes":  12983,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_phase6_risk_recovery.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  24703,
+                             "inventory_size_bytes":  24703,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_publisher_trust.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  34229,
+                             "inventory_size_bytes":  34229,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_release_management.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  15974,
+                             "inventory_size_bytes":  15974,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_release_operations.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  13290,
+                             "inventory_size_bytes":  13290,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_task2_integration.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  11138,
+                             "inventory_size_bytes":  11138,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/test_verify_offline.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  14797,
+                             "inventory_size_bytes":  14797,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/upstox_diagnostics.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  17248,
+                             "inventory_size_bytes":  17248,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/verify_live_quick.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  5403,
+                             "inventory_size_bytes":  5403,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/__pycache__/verify_offline.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  21521,
+                             "inventory_size_bytes":  21521,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/docs/evidence/__pycache__/phase45_closeout_20261024_01.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  30222,
+                             "inventory_size_bytes":  30222,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/docs/evidence/__pycache__/phase4_implementation_closeout_20261023_01.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  28276,
+                             "inventory_size_bytes":  28276,
+                             "existed_after":  false
+                         },
+                         {
+                             "path":  "indian_fo_signal_bot_v1/docs/evidence/__pycache__/phase4_implementation_render_report_20261023_01.cpython-314.pyc",
+                             "outcome":  "REMOVED",
+                             "removed_bytes":  27602,
+                             "inventory_size_bytes":  27602,
+                             "existed_after":  false
+                         }
+                     ],
+    "directory_results":  [
+                              {
+                                  "path":  "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\__pycache__",
+                                  "outcome":  "REMOVED_EMPTY_DIRECTORY",
+                                  "existed_after":  false
+                              },
+                              {
+                                  "path":  "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\docs\\evidence\\__pycache__",
+                                  "outcome":  "REMOVED_EMPTY_DIRECTORY",
+                                  "existed_after":  false
+                              }
+                          ],
+    "errors":  [
+
+               ],
+    "exit_code":  0,
+    "log":  "docs/evidence/astra_cleanup_apply_20261029_01.txt",
+    "log_sha256":  "d2b8773892c1ae2f0869e531688f64350d7e861d1c51954d08896665d313df60"
+}

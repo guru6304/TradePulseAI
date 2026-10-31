@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-29T12:56:59.333652+00:00",
+  "kind": "CATEGORICAL_SAVED_FLAGS_ONLY",
+  "settings": {
+    "workspace": {
+      "present": true,
+      "safe_setting": {
+        "ACTIVE_BROKER": false,
+        "TELEGRAM_DRY_RUN": true,
+        "ENABLE_BACKGROUND_SCHEDULER": true,
+        "SERVER_HOST": true
+      }
+    },
+    "app": {
+      "present": true,
+      "safe_setting": {
+        "ACTIVE_BROKER": true,
+        "TELEGRAM_DRY_RUN": true,
+        "ENABLE_BACKGROUND_SCHEDULER": true,
+        "SERVER_HOST": true
+      }
+    }
+  },
+  "actual_execution": "OFFLINE_TEST_CONFIG_NETWORK_BLOCKED",
+  "configuration_changed": false
+}

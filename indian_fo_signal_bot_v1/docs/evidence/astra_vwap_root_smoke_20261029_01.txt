@@ -1,0 +1,76 @@
+test_actual_long_and_short_later_reclaim_are_non_actionable (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_actual_long_and_short_later_reclaim_are_non_actionable) ... Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_n4vh_1nl\orb_trigger.sqlite: OperationalError
+
+  test_actual_long_and_short_later_reclaim_are_non_actionable (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_actual_long_and_short_later_reclaim_are_non_actionable) (side='LONG') ... ERROR
+Database connection failed for C:\Users\HP\AppData\Local\Temp\tradepulse_offline_phase4_se0kzyko\orb_trigger.sqlite: OperationalError
+  test_actual_long_and_short_later_reclaim_are_non_actionable (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_actual_long_and_short_later_reclaim_are_non_actionable) (side='SHORT') ... ERROR
+
+======================================================================
+ERROR: test_actual_long_and_short_later_reclaim_are_non_actionable (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_actual_long_and_short_later_reclaim_are_non_actionable) (side='LONG')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 65, in test_actual_long_and_short_later_reclaim_are_non_actionable
+    fixture, config, contract = self.ready(side)
+                                ~~~~~~~~~~^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 53, in ready
+    fixture = VWAPScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 28, in __init__
+    super().__init__(owner, side)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+======================================================================
+ERROR: test_actual_long_and_short_later_reclaim_are_non_actionable (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_actual_long_and_short_later_reclaim_are_non_actionable) (side='SHORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 285, in _get_connection
+    conn = sqlite3.connect(self.db_path, timeout=30.0, check_same_thread=False)
+sqlite3.OperationalError: unable to open database file
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 65, in test_actual_long_and_short_later_reclaim_are_non_actionable
+    fixture, config, contract = self.ready(side)
+                                ~~~~~~~~~~^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 53, in ready
+    fixture = VWAPScannerFixture(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 28, in __init__
+    super().__init__(owner, side)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 46, in __init__
+    self.engine = self.scenario._engine("angelone", database="orb_trigger.sqlite")
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_phase4_e2e.py", line 150, in _engine
+    store = SQLitePersistenceStore(cfg.database_url)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 258, in __init__
+    self.initialize_schema()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 336, in initialize_schema
+    conn = self._get_connection()
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\storage.py", line 296, in _get_connection
+    raise PersistenceError(f"Failed to connect to SQLite database ({type(exc).__name__}): {exc}") from exc
+storage.PersistenceError: Failed to connect to SQLite database (OperationalError): unable to open database file
+
+----------------------------------------------------------------------
+Ran 1 test in 0.025s
+
+FAILED (errors=2)

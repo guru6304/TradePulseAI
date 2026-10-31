@@ -1,0 +1,92 @@
+test_actual_sqlite_import_failure_returns503_and_rolls_back_source (test_context_http.TestActualContextSQLiteFailures.test_actual_sqlite_import_failure_returns503_and_rolls_back_source) ... ok
+test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable (test_context_http.TestActualContextSQLiteFailures.test_actual_sqlite_snapshot_failure_keeps_phase4_and_marks_context_unavailable) ... [2026-10-30 00:01:17,600] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_96c47307 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:17,638] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_96c47307 in 48.98ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:17,656] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_96c47307 with exact cash input linkage
+[2026-10-30 00:01:17,665] [WARNING] [tradepulse.scanner] Context enrichment unavailable; original scan decision retained.
+ok
+test_corrupt_context_cannot_be_served_by_real_history_routes (test_context_http.TestContextHTTP.test_corrupt_context_cannot_be_served_by_real_history_routes) ... [2026-10-30 00:01:17,711] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_3391e670 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:17,742] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_3391e670 in 32.44ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:17,757] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_3391e670 with exact cash input linkage
+Failed to query scan runs: CONTEXT_SNAPSHOT_INTEGRITY_FAILURE
+ok
+test_duplicate_content_length_is_rejected_before_body_read (test_context_http.TestContextHTTP.test_duplicate_content_length_is_rejected_before_body_read) ... ok
+test_duplicate_json_nonfinite_and_invalid_structures_are_rejected (test_context_http.TestContextHTTP.test_duplicate_json_nonfinite_and_invalid_structures_are_rejected) ... ok
+test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert (test_context_http.TestContextHTTP.test_foreign_origin_cannot_import_or_enrich_and_reads_are_inert) ... ok
+test_no_request_can_supply_trust_mapping_or_intake_time (test_context_http.TestContextHTTP.test_no_request_can_supply_trust_mapping_or_intake_time) ... ok
+test_oversize_transfer_encoding_and_missing_length_are_rejected (test_context_http.TestContextHTTP.test_oversize_transfer_encoding_and_missing_length_are_rejected) ... ok
+test_real_import_scan_enrich_and_read_routes_agree_without_sends (test_context_http.TestContextHTTP.test_real_import_scan_enrich_and_read_routes_agree_without_sends) ... [2026-10-30 00:01:21,300] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_0280f033 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:21,330] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_0280f033 in 30.64ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:21,351] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_0280f033 with exact cash input linkage
+ok
+test_timeout_in_both_new_body_readers_returns_bounded_unavailable (test_context_http.TestContextHTTP.test_timeout_in_both_new_body_readers_returns_bounded_unavailable) ... ok
+test_corrupt_existing_import_inventory_returns_storage_failure (test_context_http.TestStoredContextPayloadGuards.test_corrupt_existing_import_inventory_returns_storage_failure) ... [2026-10-30 00:01:22,530] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_e0dcffe0 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:22,567] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_e0dcffe0 in 37.72ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:22,583] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_e0dcffe0 with exact cash input linkage
+ok
+test_corrupt_receipt_type_or_size_is_rejected_before_decoding (test_context_http.TestStoredContextPayloadGuards.test_corrupt_receipt_type_or_size_is_rejected_before_decoding) ... [2026-10-30 00:01:22,616] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_0a650fcc via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:22,649] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_0a650fcc in 32.89ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:22,665] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_0a650fcc with exact cash input linkage
+ok
+test_integer_or_oversized_original_bytes_rejected_before_source_validator (test_context_http.TestStoredContextPayloadGuards.test_integer_or_oversized_original_bytes_rejected_before_source_validator) ... [2026-10-30 00:01:22,701] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_07fd3314 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:22,740] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_07fd3314 in 38.76ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:22,760] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_07fd3314 with exact cash input linkage
+ok
+test_nontext_context_decision_returns503_from_supported_alert_api (test_context_http.TestStoredContextPayloadGuards.test_nontext_context_decision_returns503_from_supported_alert_api) ... [2026-10-30 00:01:22,808] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_d51c135d via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:22,846] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_d51c135d in 37.64ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:22,865] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_d51c135d with exact cash input linkage
+ok
+test_nontext_original_outbox_payload_is_graceful_persistence_failure (test_context_http.TestStoredContextPayloadGuards.test_nontext_original_outbox_payload_is_graceful_persistence_failure) ... [2026-10-30 00:01:22,894] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_760cb6e4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:22,924] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_760cb6e4 in 30.49ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:22,940] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_760cb6e4 with exact cash input linkage
+ok
+test_oversized_or_nontext_stored_snapshot_is_rejected_before_decoding (test_context_http.TestStoredContextPayloadGuards.test_oversized_or_nontext_stored_snapshot_is_rejected_before_decoding) ... [2026-10-30 00:01:22,970] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_ee1ca776 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:23,000] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_ee1ca776 in 29.66ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:23,014] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_ee1ca776 with exact cash input linkage
+ok
+test_oversized_or_nontext_stored_source_json_is_rejected_before_decoding (test_context_http.TestStoredContextPayloadGuards.test_oversized_or_nontext_stored_source_json_is_rejected_before_decoding) ... [2026-10-30 00:01:23,058] [INFO] [tradepulse.scanner] Starting scan scan_20261023_141505_766058e1 via Angel One SmartAPI (mode=LIVE)
+[2026-10-30 00:01:23,087] [INFO] [tradepulse.scanner] Staged scan scan_20261023_141505_766058e1 in 28.94ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:23,099] [INFO] [tradepulse.scanner] Committed scan scan_20261023_141505_766058e1 with exact cash input linkage
+ok
+test_dns_rebinding_host_and_cross_site_requests_are_rejected (test_local_api_security.TestLocalAPISecurity.test_dns_rebinding_host_and_cross_site_requests_are_rejected) ... ok
+test_foreign_origin_cannot_scan_or_read_local_records (test_local_api_security.TestLocalAPISecurity.test_foreign_origin_cannot_scan_or_read_local_records) ... ok
+test_same_origin_and_local_cli_keep_existing_read_and_scan_contract (test_local_api_security.TestLocalAPISecurity.test_same_origin_and_local_cli_keep_existing_read_and_scan_contract) ... [2026-10-30 00:01:24,512] [INFO] [tradepulse.scanner] Starting scan scan_20261016_141505_4a4dc53c via Upstox API v2 (mode=LIVE)
+[2026-10-30 00:01:24,573] [INFO] [tradepulse.scanner] Staged scan scan_20261016_141505_4a4dc53c in 72.08ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-30 00:01:24,592] [INFO] [tradepulse.scanner] Committed scan scan_20261016_141505_4a4dc53c with exact cash input linkage
+ok
+test_bad_host_remains_403_before_routing_or_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_bad_host_remains_403_before_routing_or_initialization) ... ok
+test_duplicate_keys_and_nonfinite_json_reject_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_duplicate_keys_and_nonfinite_json_reject_before_initialization) ... ok
+test_duplicate_lengths_and_transfer_encoding_reject_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_duplicate_lengths_and_transfer_encoding_reject_before_initialization) ... ok
+test_foreign_origin_and_cross_site_remain_403_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_foreign_origin_and_cross_site_remain_403_before_initialization) ... ok
+test_get_and_head_scan_aliases_remain_405_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_get_and_head_scan_aliases_remain_405_before_initialization) ... ok
+test_malformed_json_and_nonobjects_reject_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_malformed_json_and_nonobjects_reject_before_initialization) ... ok
+test_missing_invalid_and_oversized_lengths_reject_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_missing_invalid_and_oversized_lengths_reject_before_initialization) ... ok
+test_truncated_complete_json_rejects_before_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_truncated_complete_json_rejects_before_initialization) ... ok
+test_unknown_get_and_head_api_routes_return_404_without_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_unknown_get_and_head_api_routes_return_404_without_initialization) ... ok
+test_unsupported_post_routes_return_405_without_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_unsupported_post_routes_return_405_without_initialization) ... ok
+test_valid_config_then_scan_aliases_share_one_injected_initialization (test_track_a_cold_http.TestTrackAColdHTTP.test_valid_config_then_scan_aliases_share_one_injected_initialization) ... ok
+test_valid_scan_can_initialize_injected_runtime_before_config_read (test_track_a_cold_http.TestTrackAColdHTTP.test_valid_scan_can_initialize_injected_runtime_before_config_read) ... ok
+test_incomplete_header_timeout_releases_slots_without_client_close (test_track_a_security.TestTrackABoundedHTTPWorkers.test_incomplete_header_timeout_releases_slots_without_client_close) ... ok
+test_two_partial_headers_bound_workers_and_third_is_503_then_close_recovers (test_track_a_security.TestTrackABoundedHTTPWorkers.test_two_partial_headers_bound_workers_and_third_is_503_then_close_recovers) ... ok
+test_factory_rejects_nonloopback_before_socket_creation (test_track_a_security.TestTrackALoopbackStartup.test_factory_rejects_nonloopback_before_socket_creation) ... ok
+test_localhost_factory_binds_only_loopback_without_runtime_initialization (test_track_a_security.TestTrackALoopbackStartup.test_localhost_factory_binds_only_loopback_without_runtime_initialization) ... ok
+test_localhost_runner_keeps_valid_explicit_launch_path (test_track_a_security.TestTrackALoopbackStartup.test_localhost_runner_keeps_valid_explicit_launch_path) ... ok
+test_runner_rejects_nonloopback_before_configuration_or_binding (test_track_a_security.TestTrackALoopbackStartup.test_runner_rejects_nonloopback_before_configuration_or_binding) ... ok
+test_absolute_body_deadline_rejects_trickle_and_listener_recovers (test_track_a_security.TestTrackASecurity.test_absolute_body_deadline_rejects_trickle_and_listener_recovers) ... ok
+test_absolute_header_deadline_rejects_trickle_and_listener_recovers (test_track_a_security.TestTrackASecurity.test_absolute_header_deadline_rejects_trickle_and_listener_recovers) ... ok
+test_backtest_duplicate_keys_and_nonfinite_values_are_rejected (test_track_a_security.TestTrackASecurity.test_backtest_duplicate_keys_and_nonfinite_values_are_rejected) ... ok
+test_backtest_incomplete_body_times_out_and_listener_remains_usable (test_track_a_security.TestTrackASecurity.test_backtest_incomplete_body_times_out_and_listener_remains_usable) ... ok
+test_backtest_malformed_nonobject_and_invalid_utf8_remain_rejected (test_track_a_security.TestTrackASecurity.test_backtest_malformed_nonobject_and_invalid_utf8_remain_rejected) ... ok
+test_backtest_missing_invalid_and_oversized_length_reject_without_reading (test_track_a_security.TestTrackASecurity.test_backtest_missing_invalid_and_oversized_length_reject_without_reading) ... ok
+test_backtest_rejects_complete_json_when_declared_body_is_truncated (test_track_a_security.TestTrackASecurity.test_backtest_rejects_complete_json_when_declared_body_is_truncated) ... ok
+test_backtest_rejects_duplicate_content_length_before_execution (test_track_a_security.TestTrackASecurity.test_backtest_rejects_duplicate_content_length_before_execution) ... ok
+test_backtest_rejects_transfer_encoding_with_or_without_length (test_track_a_security.TestTrackASecurity.test_backtest_rejects_transfer_encoding_with_or_without_length) ... ok
+test_valid_backtest_request_keeps_explicit_route_contract (test_track_a_security.TestTrackASecurity.test_valid_backtest_request_keeps_explicit_route_contract) ... ok
+test_entry_aliases_serve_exact_new_local_bundle_without_initializing (test_track_a_terminal_http.TestTrackATerminalHTTP.test_entry_aliases_serve_exact_new_local_bundle_without_initializing) ... ok
+test_script_styles_and_private_404s_do_not_create_runtime (test_track_a_terminal_http.TestTrackATerminalHTTP.test_script_styles_and_private_404s_do_not_create_runtime) ... ok
+test_get_and_head_scan_aliases_cannot_reach_scanner_or_paper (test_astra_http_safety.TestAstraReadSafety.test_get_and_head_scan_aliases_cannot_reach_scanner_or_paper) ... ok
+test_post_scan_remains_explicit_paper_consumer (test_astra_http_safety.TestAstraReadSafety.test_post_scan_remains_explicit_paper_consumer) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 14.865s
+
+OK

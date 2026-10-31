@@ -497,6 +497,92 @@ class TestPhase5CRecovery(unittest.TestCase):
         self.assertEqual(code, 503)
         self.assertEqual(payload["status"], "RECONCILIATION_REQUIRED")
 
+    def ledger_identity_fixture(self):
+        paper, result, _, _ = self.eod_entry()
+        self.f._set_time("10:10", date="2026-10-19")
+        decision = paper.review_unresolved_eod(result["position_id"], "identity-review")
+        return paper, (("positions", "paper_positions", "position_id", result["position_id"]),
+                       ("recovery_decisions", "paper_recovery_decisions", "decision_id", decision["decision_id"]))
+
+    def test_ledger_embedded_identity_required_and_matches_physical_scope(self):
+        paper, collections = self.ledger_identity_fixture()
+        for collection, table, key, entity in collections:
+            valid = self.store.query_paper_ledger("eod", collection)
+            self.assertEqual(valid["items"][0]["entity_id"], entity)
+            restarted = self.restart(paper)
+            self.assertEqual(restarted.store.query_paper_ledger("eod", collection), valid)
+            original = valid["items"][0]["payload"]
+            for field in ("account_id", key):
+                for value in ("other-account-secret" if field == "account_id" else "other-entity-secret", None):
+                    with self.subTest(collection=collection, field=field, value=value):
+                        corrupt = dict(original)
+                        if value is None:
+                            corrupt.pop(field)
+                        else:
+                            corrupt[field] = value
+                        with self.store.paper_transaction() as conn:
+                            conn.execute(f"UPDATE {table} SET payload_json=? WHERE {key}=?", (_encode(corrupt), entity))
+                        try:
+                            self.assert_code("MALFORMED_OR_OVERSIZED_PAPER_RECORD",
+                                lambda: self.store.query_paper_ledger("eod", collection))
+                        finally:
+                            with self.store.paper_transaction() as conn:
+                                conn.execute(f"UPDATE {table} SET payload_json=? WHERE {key}=?", (_encode(original), entity))
+        events = self.store.query_paper_ledger("eod", "events")
+        self.assertTrue(events["items"])
+        self.assertTrue(all("event_id" not in item["payload"] for item in events["items"]))
+
+    def test_actual_http_ledger_identity_corruption_is_generic_and_read_only(self):
+        _, collections = self.ledger_identity_fixture()
+        self.f._service(account_id="other")
+        engine = SimpleNamespace(store=self.store, _now_ist=lambda: self.f.now)
+        handler = type("OfflineIdentityHandler", (DashboardRequestHandler,), {"engine": engine, "scheduler": object()})
+        server = create_http_server("127.0.0.1", 0, handler_cls=handler)
+        self.addCleanup(server.server_close)
+        thread = threading.Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        def stop():
+            server.shutdown()
+            thread.join(timeout=5)
+            self.assertFalse(thread.is_alive())
+        self.addCleanup(stop)
+        for collection, table, key, entity in collections:
+            original = self.store.query_paper_ledger("eod", collection)["items"][0]["payload"]
+            for field in ("account_id", key):
+                corrupt = dict(original, private_marker="retained-secret-marker")
+                corrupt[field] = "other" if field == "account_id" else "conflicting-secret-entity"
+                with self.store.paper_transaction() as conn:
+                    conn.execute(f"UPDATE {table} SET payload_json=? WHERE {key}=?", (_encode(corrupt), entity))
+                with self.store.paper_transaction(write=False) as conn:
+                    before = tuple(conn.iterdump())
+                try:
+                    for prefix in ("/api", "/api/v1"):
+                        for method in ("GET", "HEAD"):
+                            for account, expected in (("eod", 503), ("other", 200)):
+                                with self.subTest(collection=collection, field=field, prefix=prefix, method=method, account=account):
+                                    connection = http.client.HTTPConnection(*server.server_address, timeout=5)
+                                    try:
+                                        connection.request(method, prefix + "/paper-ledger?account_id=" + account + "&collection=" + collection)
+                                        response = connection.getresponse()
+                                        body = response.read()
+                                        self.assertEqual(response.status, expected)
+                                        self.assertEqual(response.getheader("Cache-Control"), "no-store")
+                                        self.assertNotIn(b"retained-secret-marker", body)
+                                        self.assertNotIn(b"conflicting-secret-entity", body)
+                                        if method == "HEAD":
+                                            self.assertEqual(body, b"")
+                                        elif expected == 503:
+                                            self.assertEqual(json.loads(body)["status"], "RECONCILIATION_REQUIRED")
+                                        else:
+                                            self.assertEqual(json.loads(body)["items"], [])
+                                    finally:
+                                        connection.close()
+                    with self.store.paper_transaction(write=False) as conn:
+                        self.assertEqual(tuple(conn.iterdump()), before)
+                finally:
+                    with self.store.paper_transaction() as conn:
+                        conn.execute(f"UPDATE {table} SET payload_json=? WHERE {key}=?", (_encode(original), entity))
+
     def seed_lifecycle(self, paper, event_count):
         """Bounded graph clones, never passed off as replayed strategy results."""
         self.f._set_time("10:10")

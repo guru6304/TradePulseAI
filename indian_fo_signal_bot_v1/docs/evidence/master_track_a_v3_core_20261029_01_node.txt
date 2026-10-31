@@ -1,0 +1,48 @@
+✔ candidate cards and inspector use supported numeric gross RR and visited rule explanations (25.3697ms)
+✔ empty scan renders warm-up and rejected-rule reasons from retained evaluation (3.7666ms)
+✔ scan history exposes downstream risk rejection when a detected setup has no stored signal (2.0235ms)
+✔ signal cards never promote missing, unknown or conflicting provenance to LIVE (18.9747ms)
+✔ selected inspector never promotes untrusted provenance to LIVE (17.9579ms)
+✔ explicit source labels distinguish stored LIVE records from simulated records (2.8151ms)
+✔ backend health failure clears a previously accepted header (3.1511ms)
+✔ continuous feed status exposes stale and fixture observations with signals blocked (3.0677ms)
+✔ a failed signals API request removes cached cards and inspector prices (2.8778ms)
+✔ late successful health response cannot replace a newer unavailable state (3.3208ms)
+✔ fixture scope overrides live-shaped source and acceptance flags (2.3221ms)
+✔ risk-rejected stored candidates show rejection and exact source batch (2.2348ms)
+✔ stored report failures clear prior accounting and never turn reconciliation failure into accepted equity (4.1051ms)
+✔ late stored report response cannot restore accounting after current health fails (2.4724ms)
+✔ actual inspector renders source identity, times, safe links and local qualification without HTML injection (3.0274ms)
+✔ source hyperlinks reject executable, credentialed and local addresses without hiding the qualified facts (38.2516ms)
+✔ missing and failed context never inherit neutral or previously qualified facts (3.5644ms)
+✔ warning records expose stale, unverified, retracted and conflicting source state without changing candidate risk (2.939ms)
+✔ inconsistent qualified context and exact instrument or candidate mismatches withhold facts (17.3206ms)
+✔ current-information context remains labeled as a later informational update to a stored decision (2.4414ms)
+✔ scan-only rejected candidates expose retained context and suppression even with no stored signal (2.2564ms)
+✔ notification view distinguishes local preview acknowledgement, retry and suppressed context without delivery claims (1.9965ms)
+✔ phase 6 paper ledger report renders open positions, closed positions, fees, and equity with simulation disclaimer (2.0324ms)
+✔ phase 6 EOD statement renders reconciled statement hash or unresolved status truthfully (3.0414ms)
+✔ missing persisted quantity and price levels remain unavailable without invented sizing or chart zeros (2.9889ms)
+✔ missing quality and invalidation stay unavailable while observed zero quality is preserved (4.6631ms)
+✔ valid stored zero quantity is preserved and a missing entry zone is not invented from entry price (2.3915ms)
+✔ stale paper marks suppress current equity and unrealized P&L in retained reports (1.904ms)
+✔ stored paper journal shows persisted lifecycle and costs safely while missing trigger fields remain unavailable (2.4967ms)
+✔ paper journal withholds stale open marks and reports bounded partial preview (2.343ms)
+✔ paper report refresh uses only GET routes and rendering cannot create paper entries (5.096ms)
+✔ strategy evidence and retained rank are scoped to a historical scan, never current probability (3.041ms)
+✔ candidate priority shows real score changes and unavailable components safely (2.3234ms)
+✔ expired priority shows historical ranks and removes current labels (1.8025ms)
+✔ ranking refresh only reads GET and expires current ranks between refreshes (2.6103ms)
+✔ ranking read failure and older in-flight response cannot restore cached current ranks (2.0802ms)
+✔ health failure clears candidate priority and cancels pending rank rendering (2.0673ms)
+✔ a backward client clock jump cannot extend the server ranking validity (1.7975ms)
+✔ empty later pages distinguish retained totals from a globally empty result (1.7249ms)
+✔ failed signal page clears the previous successful pagination range (2.2895ms)
+ℹ tests 40
+ℹ suites 0
+ℹ pass 40
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 223.507

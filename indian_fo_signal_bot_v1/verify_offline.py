@@ -114,6 +114,23 @@ def run_command(command, log, cwd=APP):
                 status="PASS" if code == 0 else "FAIL", log=log.relative_to(APP).as_posix())
 
 
+def run_node_tests(command, log):
+    check = run_command(command, log)
+    output = log.read_text(encoding="utf-8")
+    words = {"executed":"tests", "passed":"pass", "failures":"fail",
+             "skipped":"skipped", "cancelled":"cancelled", "todo":"todo"}
+    matches = {key:re.search(r"\b"+word+r" (\d+)\s*$", output, re.MULTILINE)
+               for key,word in words.items()}
+    if all(matches.values()):
+        check.update({key:int(value[1]) for key,value in matches.items()})
+        if (not check["executed"] or check["passed"] != check["executed"]
+                or any(check[key] for key in ("failures","skipped","cancelled","todo"))):
+            check["status"] = "FAIL"
+    else:
+        check["status"] = "FAIL"
+    return check
+
+
 def validate_evidence(path, root=APP):
     """Validate current source/log bindings, never infer execution from file names."""
     data = json.loads(path.read_text(encoding="utf-8"))
@@ -182,18 +199,14 @@ def main(argv=None):
                   runner="unittest.TextTestRunner(test_bot.load_tests)", cwd=str(APP), log=logfile.relative_to(APP).as_posix())
     checks = []
     node_log = prefix.with_name(prefix.name+"_node.txt")
-    node = run_command(["node", "test_cash_dashboard.js"], node_log)
-    output = node_log.read_text(encoding="utf-8")
-    counts = {key: re.search(r"\b"+word+r" (\d+)\s*$", output, re.MULTILINE)
-              for key, word in (("executed", "tests"), ("passed", "pass"), ("failures", "fail"), ("skipped", "skipped"))}
-    if all(counts.values()):
-        node.update({k: int(v[1]) for k, v in counts.items()})
-        if not node["executed"] or node["passed"] != node["executed"] or node["failures"] or node["skipped"]:
-            node["status"] = "FAIL"
-    else:
-        node["status"] = "FAIL"
-    checks.append(node)
+    checks.append(run_node_tests(["node", "test_cash_dashboard.js"], node_log))
+    clock_log = prefix.with_name(prefix.name+"_clock_node.txt")
+    clock = run_node_tests(["node", "--test", "--test-reporter=tap", "test_terminal_clock.js"], clock_log)
+    clock["scope"] = "UTC_AND_NEW_YORK_TIMEZONE_PARENT_SUITES_WITH_STRICT_NINE_CHILD_ASSERTIONS_EACH"
+    checks.append(clock)
     checks.append(run_command(["node", "--check", "test_cash_dashboard.js"], prefix.with_name(prefix.name+"_syntax.txt")))
+    terminal_syntax = prefix.with_name(prefix.name+"_terminal_syntax.txt")
+    checks.append(run_command(["node", "--check", "public/terminal.js"], terminal_syntax))
     files = sorted(APP.glob("*.py"))
     try:
         for file in files:
@@ -208,7 +221,7 @@ def main(argv=None):
         stage=args.stage, started_at=started, completed_at=timestamp(), status="PASS" if passed else "FAIL",
         exit_code=0 if passed else 1, source_before=before, source_after=after, python=python, checks=checks,
         unraisable_errors=unraisable,
-        logs={p.relative_to(APP).as_posix(): digest(p) for p in (logfile,node_log,prefix.with_name(prefix.name+"_syntax.txt"))})
+        logs={p.relative_to(APP).as_posix(): digest(p) for p in (logfile,node_log,clock_log,prefix.with_name(prefix.name+"_syntax.txt"),terminal_syntax)})
     try:
         data["source_revision"] = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=APP,
             text=True, stderr=subprocess.DEVNULL).strip()

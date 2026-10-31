@@ -1,0 +1,39 @@
+{
+  "kind": "EXECUTED_TERMINAL_DOM_REGRESSION",
+  "status": "PASS",
+  "started_at": "2026-10-29T18:31:20.136579+00:00",
+  "completed_at": "2026-10-29T18:31:20.606865+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test_terminal_opportunities.js"
+  ],
+  "exit_code": 0,
+  "counts": {
+    "tests": 15,
+    "pass": 15,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "source_before": {
+    "public/terminal.html": "5323935b3b841b97ef03000b8eb315b8e7489c2282d50179fe8ed165ad918a57",
+    "public/terminal.css": "855df218f9e9db8ffe631761541e1955959125a9754b3d67e23abbb75ac21729",
+    "public/terminal.js": "704e69c0b539db52222cc5299f138df8716b7b1aaf799f871f374443dd348936",
+    "test_terminal_opportunities.js": "5146839171b4e666663793c91f1d0d80f7b898a8fbd511fe10ca5ce515cad317"
+  },
+  "source_after": {
+    "public/terminal.html": "5323935b3b841b97ef03000b8eb315b8e7489c2282d50179fe8ed165ad918a57",
+    "public/terminal.css": "855df218f9e9db8ffe631761541e1955959125a9754b3d67e23abbb75ac21729",
+    "public/terminal.js": "704e69c0b539db52222cc5299f138df8716b7b1aaf799f871f374443dd348936",
+    "test_terminal_opportunities.js": "5146839171b4e666663793c91f1d0d80f7b898a8fbd511fe10ca5ce515cad317"
+  },
+  "helper_sha256": "84f8420e78c8a98e423a72bc94fb27b8a822e0e093c110b9060656870faa7d97",
+  "log": "docs/evidence/track_a_v3_opportunities_after_20261030_01.txt",
+  "log_sha256": "5c75e18ca4ffcfbed6bcf3eb469ab4a8689edf76db0f62b06cd9f966100cb222",
+  "scope": "AUTHORED_READER_AND_DOM_DOUBLE_NOT_BROWSER_OR_LIVE_ACCEPTANCE",
+  "operational_database_accessed": false,
+  "environment_files_read": false
+}

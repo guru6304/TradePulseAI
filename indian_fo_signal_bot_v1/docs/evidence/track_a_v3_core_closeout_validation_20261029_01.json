@@ -1,0 +1,12 @@
+{
+  "kind": "INDEPENDENT_READBACK_OF_CORE_CLOSEOUT",
+  "status": "PASS",
+  "recorded_at": "2026-10-29T18:16:16.914014+00:00",
+  "validated_receipt": "docs/evidence/track_a_v3_core_closeout_20261029_01.json",
+  "receipt_sha256": "d51dfebcc387696ecb6ee782530b101c937068fe7e6354ffa1c42b40eaa06f59",
+  "validated_bindings": 19,
+  "python_passed": 1293,
+  "source_files": 121,
+  "source_and_logs_current": true,
+  "release_status": "NOT_BUILT"
+}

@@ -2035,7 +2035,7 @@ class TestIndianFOSignalBotPhase1E(unittest.TestCase):
         directory = tempfile.TemporaryDirectory()
         self.addCleanup(directory.cleanup)
         fixture_public = Path(directory.name)
-        (fixture_public / "index.html").write_bytes((Path(PUBLIC_WEB_DIR) / "index.html").read_bytes())
+        (fixture_public / "terminal.html").write_bytes((Path(PUBLIC_WEB_DIR) / "terminal.html").read_bytes())
         public_patch = patch("server.PUBLIC_WEB_DIR", str(fixture_public))
         public_patch.start()
         self.addCleanup(public_patch.stop)
@@ -2067,8 +2067,9 @@ class TestIndianFOSignalBotPhase1E(unittest.TestCase):
                     self.assertEqual(resp.status, 200)
                     self.assertIn("text/html", resp.headers.get("Content-Type", ""))
                     html_body = resp.read().decode("utf-8")
-                    self.assertIn("TradePulseApiClient", html_body)
-                    self.assertIn("/api/signals", html_body)
+                    self.assertIn("TradePulse AI", html_body)
+                    self.assertIn('/terminal.js', html_body)
+                    self.assertIn('/terminal.css', html_body)
 
             # 2) OPTIONS preflight on /api/scan must return 204 with CORS headers
             opt_req = urllib.request.Request(f"http://127.0.0.1:{port}/api/scan", method="OPTIONS")
@@ -2307,7 +2308,6 @@ class TestIndianFOSignalBotPhase1F(unittest.TestCase):
         self.sim = SimulatedNSEAdapter(seed=42, clock=self.fixed_clock)
 
     def test_p1f_server_uses_threading_http_server_and_base_request_handler(self):
-        import inspect
         from http.server import BaseHTTPRequestHandler, SimpleHTTPRequestHandler, ThreadingHTTPServer
         import server as server_mod
         from server import DashboardRequestHandler, TradePulseThreadingHTTPServer, create_http_server, run_server
@@ -2321,14 +2321,22 @@ class TestIndianFOSignalBotPhase1F(unittest.TestCase):
         self.assertTrue(ThreadingHTTPServer.daemon_threads)
         self.assertGreaterEqual(ThreadingHTTPServer.request_queue_size, 64)
 
-        run_server_src = inspect.getsource(run_server)
-        self.assertIn("ThreadingHTTPServer", run_server_src)
-
         httpd = create_http_server("127.0.0.1", 0)
         try:
             self.assertIsInstance(httpd, ThreadingHTTPServer)
             self.assertTrue(httpd.daemon_threads)
             self.assertGreaterEqual(httpd.request_queue_size, 64)
+            # The launcher must use the guarded factory; constructor text in
+            # its source is not evidence of the actual runtime server type.
+            with patch.object(server_mod, "configure_server_runtime") as initialize, \
+                 patch.object(server_mod, "create_http_server", return_value=httpd) as factory, \
+                 patch.object(httpd, "serve_forever") as serve, \
+                 patch.object(DashboardRequestHandler, "scheduler", None), \
+                 patch.object(server_mod.os, "chdir"), patch("builtins.print"):
+                run_server(host="127.0.0.1", port=0, start_scheduler=False)
+                factory.assert_called_once_with("127.0.0.1", 0, DashboardRequestHandler)
+                initialize.assert_called_once_with(config=None, start_scheduler=False)
+                serve.assert_called_once()
         finally:
             httpd.server_close()
 
@@ -4665,13 +4673,14 @@ class TestIndianFOSignalBotPhase2C(unittest.TestCase):
                 with b_err.exception:
                     self.assertEqual(b_err.exception.code, 400)
 
-                # Verify public/index.html contains Phase 2C telemetry fields
+                # The terminal presents source/freshness in its compact header;
+                # operational baseline counts remain verified through the API.
                 with urllib.request.urlopen(f"http://127.0.0.1:{port}/", timeout=5) as r_html:
                     html_text = r_html.read().decode("utf-8")
-                self.assertIn("Source Obs (IST):", html_text)
-                self.assertIn("Last Market-Data Time (IST)", html_text)
-                self.assertIn("Candle Freshness Status", html_text)
-                self.assertIn("Closing Baselines:", html_text)
+                self.assertIn('id="source-mode"', html_text)
+                self.assertIn('id="source-time"', html_text)
+                self.assertIn('id="session"', html_text)
+                self.assertIn('src="/terminal.js"', html_text)
 
                 # Verify private files including /diagnostics.py are blocked with HTTP 404
                 for priv_path in ("/diagnostics.py", "/.env", "/brokers.py", "/storage.py", "/server.py"):
@@ -10354,7 +10363,11 @@ def load_tests(loader, tests, pattern):
                        "test_phase6_paper_lifecycle", "test_phase6_risk_recovery", "test_phase6_performance_validity",
                        "test_astra_http_safety", "test_astra_research", "test_astra_ranking", "test_astra_paper_triggers", "test_astra_rank_history", "test_astra_context_batch", "test_astra_health_reads",
                        "test_astra_scan_references", "test_astra_evaluation_reads",
-                       "test_option_observations", "test_benchmark_observations"):
+                       "test_option_observations", "test_benchmark_observations", "test_astra_vwap_paper_triggers",
+                       "test_astra_vwap_execution", "test_track_a_security",
+                       "test_track_a_order_block_triggers", "test_track_a_order_block_execution",
+                       "test_track_a_terminal_http", "test_track_a_supertrend_triggers",
+                       "test_track_a_supertrend_execution", "test_track_a_cold_http"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

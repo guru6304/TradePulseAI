@@ -1,0 +1,60 @@
+test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) ... 
+  test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) (missing_status_from=('current',)) ... ERROR
+  test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) (missing_status_from=('baseline',)) ... ERROR
+  test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) (missing_status_from=('current', 'baseline')) ... ERROR
+
+======================================================================
+ERROR: test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) (missing_status_from=('current',))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 436, in test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs
+    self.compare()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 397, in compare
+    return compare_oi(self.current, self.baseline, **dict(self.policy, **policy))
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 447, in compare_oi
+    current_value, current_time, current_hash = _oi_observation(current, decision)
+                                                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 432, in _oi_observation
+    or identity["contract_status"] != "ACTIVE"):
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'contract_status'
+
+======================================================================
+ERROR: test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) (missing_status_from=('baseline',))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 436, in test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs
+    self.compare()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 397, in compare
+    return compare_oi(self.current, self.baseline, **dict(self.policy, **policy))
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 448, in compare_oi
+    baseline_value, baseline_time, baseline_hash = _oi_observation(baseline, decision)
+                                                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 432, in _oi_observation
+    or identity["contract_status"] != "ACTIVE"):
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'contract_status'
+
+======================================================================
+ERROR: test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs (test_option_observations.TestOptionOIObservations.test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs) (missing_status_from=('current', 'baseline'))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 436, in test_missing_contract_status_rejects_with_typed_error_without_mutating_inputs
+    self.compare()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_option_observations.py", line 397, in compare
+    return compare_oi(self.current, self.baseline, **dict(self.policy, **policy))
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 447, in compare_oi
+    current_value, current_time, current_hash = _oi_observation(current, decision)
+                                                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\option_observations.py", line 432, in _oi_observation
+    or identity["contract_status"] != "ACTIVE"):
+       ~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'contract_status'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (errors=3)

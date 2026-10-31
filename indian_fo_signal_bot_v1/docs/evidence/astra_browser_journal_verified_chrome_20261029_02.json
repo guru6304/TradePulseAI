@@ -1,0 +1,2794 @@
+{
+  "actual_fixture_requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-session",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    }
+  ],
+  "application_modules_imported": false,
+  "artifacts": [
+    {
+      "file": "astra_browser_journal_verified_chrome_20261029_02.txt",
+      "sha256": "d984cb777bcb9fc884293d111e1d8179ea8ba3fe5f4d1b50a5e72164e0a02b05"
+    },
+    {
+      "file": "astra_browser_journal_verify_20261029_02.py",
+      "sha256": "ad5b3eb934a93dab21999c1b579b9d583dc5369af2a41b0830b94dbffbbfe083"
+    },
+    {
+      "file": "astra_browser_journal_probes_20261029_02.py",
+      "sha256": "954d8f9eca0a2941554668176675537beed46c29040d41548a32a1f0055b79ae"
+    },
+    {
+      "file": "astra_browser_ui_probes_20261029_01.py",
+      "sha256": "5486529059753de9a7ef19929ac2d32e7a29bb1b8d755cc08bd5117fd90d9da4"
+    },
+    {
+      "file": "astra_browser_journal_verified_chrome_20261029_02_desktop.png",
+      "scope": "AUTHORED_BOUNDED_PAPER_JOURNAL_VIEWPORT",
+      "sha256": "a85b3791033057638f32b4fd0474cb096900a1ace9aab277bbc28674519114ba",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_journal_verified_chrome_20261029_02_narrow.png",
+      "scope": "AUTHORED_BOUNDED_PAPER_JOURNAL_VIEWPORT",
+      "sha256": "f6eecdf4c7a99e9ad041223a8fe05ce5a0f91e03ad435303ffd48da4e87463ae",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    }
+  ],
+  "assertions": {
+    "passed": 50,
+    "total": 50
+  },
+  "asset_manifest_sha256": "abf318e600bd58b79f8a6300e071a046de8930c0c9c77ecfc30911678ef81f41",
+  "browser": "chrome",
+  "browser_arguments": [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "--headless=new",
+    "--disable-gpu",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--disable-domain-reliability",
+    "--disable-client-side-phishing-detection",
+    "--disable-breakpad",
+    "--disable-crash-reporter",
+    "--disable-pings",
+    "--safebrowsing-disable-auto-update",
+    "--metrics-recording-only",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--disable-search-engine-choice-screen",
+    "--disable-features=MediaRouter,OptimizationHints,AutofillServerCommunication,Translate,NetworkTimeServiceQuerying",
+    "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1, EXCLUDE localhost",
+    "--remote-debugging-address=127.0.0.1",
+    "--remote-debugging-port=0",
+    "--user-data-dir=<new-isolated-temporary-profile>",
+    "about:blank"
+  ],
+  "browser_crashes": [],
+  "browser_exit_code": 0,
+  "browser_run_seconds": 3.701,
+  "browser_version": {
+    "jsVersion": "15.6.75.19",
+    "product": "Chrome/156.0.8078.48",
+    "protocolVersion": "1.3",
+    "revision": "@d0c02bfad08ec92a6ffcf989e53cd995e6381a4c",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  "cached_assets_fulfilled": [
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    },
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    }
+  ],
+  "cases": [
+    {
+      "details": null,
+      "name": "desktop.production_dom_and_fixture_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_refresh_renders_explicit_fixture_journal",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": false,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-A",
+          "path": "/api/paper-session",
+          "session_date": "2026-10-16",
+          "status": 200
+        }
+      ],
+      "name": "desktop.paper_reads_have_explicit_fixture_account_and_session",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.refresh_keeps_native_control_focus",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.configured_session_statement_is_fixture_scoped",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.persisted_lifecycle_costs_and_missing_trigger_fields",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "heading": "Setups and decisions \u2014 showing 40 of retained total 90",
+          "rows": 40
+        },
+        {
+          "heading": "Positions \u2014 showing 40 of retained total 91",
+          "rows": 40
+        },
+        {
+          "heading": "Retained events \u2014 showing 40 of retained total 92",
+          "rows": 40
+        }
+      ],
+      "name": "desktop.each_collection_is_bounded_to_40_with_retained_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.partial_preview_is_explicit_and_excess_rows_absent",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.hostile_journal_strings_remain_literal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.journal_has_accessibility_region_name",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.stored_report_text_stays_within_viewport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.stale_open_marks_withhold_current_equity_and_pnl",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.missing_open_marks_remain_unavailable",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.failed_reconciliation_withholds_journal_and_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.empty_journal_has_explicit_zero_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.failed_portfolio_read_clears_prior_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.failed_session_read_does_not_reuse_old_statement",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.held_portfolio_request_really_started",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "text": "Reports unavailable: current health request failed."
+      },
+      "name": "desktop.late_portfolio_cannot_restore_after_failed_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.health_can_recover_without_financial_mutation",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": true,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-B",
+          "held": false,
+          "kind": "empty",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        }
+      ],
+      "name": "desktop.new_health_account_uses_distinct_report_request",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "empty": 3
+      },
+      "name": "desktop.late_old_account_cannot_replace_new_empty_journal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.production_dom_and_fixture_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_refresh_renders_explicit_fixture_journal",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": false,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-A",
+          "path": "/api/paper-session",
+          "session_date": "2026-10-16",
+          "status": 200
+        }
+      ],
+      "name": "narrow.paper_reads_have_explicit_fixture_account_and_session",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.refresh_keeps_native_control_focus",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.configured_session_statement_is_fixture_scoped",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.persisted_lifecycle_costs_and_missing_trigger_fields",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "heading": "Setups and decisions \u2014 showing 40 of retained total 90",
+          "rows": 40
+        },
+        {
+          "heading": "Positions \u2014 showing 40 of retained total 91",
+          "rows": 40
+        },
+        {
+          "heading": "Retained events \u2014 showing 40 of retained total 92",
+          "rows": 40
+        }
+      ],
+      "name": "narrow.each_collection_is_bounded_to_40_with_retained_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.partial_preview_is_explicit_and_excess_rows_absent",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.hostile_journal_strings_remain_literal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.journal_has_accessibility_region_name",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.stored_report_text_stays_within_viewport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.stale_open_marks_withhold_current_equity_and_pnl",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.missing_open_marks_remain_unavailable",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.failed_reconciliation_withholds_journal_and_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.empty_journal_has_explicit_zero_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.failed_portfolio_read_clears_prior_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.failed_session_read_does_not_reuse_old_statement",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.held_portfolio_request_really_started",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "text": "Reports unavailable: current health request failed."
+      },
+      "name": "narrow.late_portfolio_cannot_restore_after_failed_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.health_can_recover_without_financial_mutation",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": true,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-B",
+          "held": false,
+          "kind": "empty",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        }
+      ],
+      "name": "narrow.new_health_account_uses_distinct_report_request",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "empty": 3
+      },
+      "name": "narrow.late_old_account_cannot_replace_new_empty_journal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_fetch_blocked_before_transport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_scan_probe_blocked_before_fixture_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "only_get_head_reached_exact_fixture_origin",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_scan_or_mutation_reached_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_javascript_exceptions_or_browser_crashes",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_server_failures",
+      "passed": true
+    }
+  ],
+  "cdp_allowed_requests": [
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/notification-outbox",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/backtest-runs",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-portfolio",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/paper-session",
+      "scheme": "http"
+    }
+  ],
+  "cdp_blocked_requests": [
+    {
+      "host": "blocked.example",
+      "method": "GET",
+      "path": "/offline-interception-probe",
+      "scheme": "https"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "POST",
+      "path": "/api/scan",
+      "scheme": "http"
+    }
+  ],
+  "checks": [
+    {
+      "details": null,
+      "name": "desktop.production_dom_and_fixture_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_refresh_renders_explicit_fixture_journal",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": false,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-A",
+          "path": "/api/paper-session",
+          "session_date": "2026-10-16",
+          "status": 200
+        }
+      ],
+      "name": "desktop.paper_reads_have_explicit_fixture_account_and_session",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.refresh_keeps_native_control_focus",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.configured_session_statement_is_fixture_scoped",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.persisted_lifecycle_costs_and_missing_trigger_fields",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "heading": "Setups and decisions \u2014 showing 40 of retained total 90",
+          "rows": 40
+        },
+        {
+          "heading": "Positions \u2014 showing 40 of retained total 91",
+          "rows": 40
+        },
+        {
+          "heading": "Retained events \u2014 showing 40 of retained total 92",
+          "rows": 40
+        }
+      ],
+      "name": "desktop.each_collection_is_bounded_to_40_with_retained_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.partial_preview_is_explicit_and_excess_rows_absent",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.hostile_journal_strings_remain_literal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.journal_has_accessibility_region_name",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.stored_report_text_stays_within_viewport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.stale_open_marks_withhold_current_equity_and_pnl",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.missing_open_marks_remain_unavailable",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.failed_reconciliation_withholds_journal_and_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.empty_journal_has_explicit_zero_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.failed_portfolio_read_clears_prior_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.failed_session_read_does_not_reuse_old_statement",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.held_portfolio_request_really_started",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "text": "Reports unavailable: current health request failed."
+      },
+      "name": "desktop.late_portfolio_cannot_restore_after_failed_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.health_can_recover_without_financial_mutation",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": true,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-B",
+          "held": false,
+          "kind": "empty",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        }
+      ],
+      "name": "desktop.new_health_account_uses_distinct_report_request",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "empty": 3
+      },
+      "name": "desktop.late_old_account_cannot_replace_new_empty_journal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.production_dom_and_fixture_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_refresh_renders_explicit_fixture_journal",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": false,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-A",
+          "path": "/api/paper-session",
+          "session_date": "2026-10-16",
+          "status": 200
+        }
+      ],
+      "name": "narrow.paper_reads_have_explicit_fixture_account_and_session",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.refresh_keeps_native_control_focus",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.configured_session_statement_is_fixture_scoped",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.persisted_lifecycle_costs_and_missing_trigger_fields",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "heading": "Setups and decisions \u2014 showing 40 of retained total 90",
+          "rows": 40
+        },
+        {
+          "heading": "Positions \u2014 showing 40 of retained total 91",
+          "rows": 40
+        },
+        {
+          "heading": "Retained events \u2014 showing 40 of retained total 92",
+          "rows": 40
+        }
+      ],
+      "name": "narrow.each_collection_is_bounded_to_40_with_retained_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.partial_preview_is_explicit_and_excess_rows_absent",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.hostile_journal_strings_remain_literal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.journal_has_accessibility_region_name",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.stored_report_text_stays_within_viewport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.stale_open_marks_withhold_current_equity_and_pnl",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.missing_open_marks_remain_unavailable",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.failed_reconciliation_withholds_journal_and_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.empty_journal_has_explicit_zero_totals",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.failed_portfolio_read_clears_prior_accounting",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.failed_session_read_does_not_reuse_old_statement",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.held_portfolio_request_really_started",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "text": "Reports unavailable: current health request failed."
+      },
+      "name": "narrow.late_portfolio_cannot_restore_after_failed_health",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.health_can_recover_without_financial_mutation",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "account_id": "fixture-paper-A",
+          "held": true,
+          "kind": "normal",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        },
+        {
+          "account_id": "fixture-paper-B",
+          "held": false,
+          "kind": "empty",
+          "path": "/api/paper-portfolio",
+          "status": 200
+        }
+      ],
+      "name": "narrow.new_health_account_uses_distinct_report_request",
+      "passed": true
+    },
+    {
+      "details": {
+        "completed": true,
+        "empty": 3
+      },
+      "name": "narrow.late_old_account_cannot_replace_new_empty_journal",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_fetch_blocked_before_transport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_scan_probe_blocked_before_fixture_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "only_get_head_reached_exact_fixture_origin",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_scan_or_mutation_reached_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_javascript_exceptions_or_browser_crashes",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_server_failures",
+      "passed": true
+    }
+  ],
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs\\evidence\\astra_browser_journal_verify_20261029_02.py",
+    "--stage",
+    "verified_chrome_20261029_02",
+    "--browser",
+    "chrome"
+  ],
+  "environment_files_read": false,
+  "exit_code": 0,
+  "external_assets_omitted": false,
+  "fixture_scope": "OFFLINE_AUTHORED_HTTP_FIXTURE_NOT_LIVE_ACCEPTANCE",
+  "fixture_server_failures": [],
+  "helper_sha256": "ad5b3eb934a93dab21999c1b579b9d583dc5369af2a41b0830b94dbffbbfe083",
+  "html_preparation": {
+    "chart_stub": false,
+    "external_links_omitted": 0,
+    "external_scripts_omitted": 0,
+    "manifest_sha256": "abf318e600bd58b79f8a6300e071a046de8930c0c9c77ecfc30911678ef81f41",
+    "production_inline_scripts_unchanged": true,
+    "served_html_sha256": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "source_html_sha256": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "tailwind_stub": false
+  },
+  "javascript_exceptions": [],
+  "limitations": [
+    "Authored HTTP fixtures do not establish actual backend or LIVE integration",
+    "Exact manifest assets fulfilled from retained public bytes; no external page transport",
+    "Two viewport authored journal checks; no full UX/accessibility attestation",
+    "Explicit authored fixture account and bounded preview only; no actual backend or ledger-page navigation acceptance",
+    "CDP blocks external requests and all methods except exact-origin GET/HEAD",
+    "Browser background-networking suppression is configuration, not OS packet capture"
+  ],
+  "log_file": "astra_browser_journal_verified_chrome_20261029_02.txt",
+  "log_sha256": "d984cb777bcb9fc884293d111e1d8179ea8ba3fe5f4d1b50a5e72164e0a02b05",
+  "operational_database_accessed": false,
+  "probe_helper_sha256": "954d8f9eca0a2941554668176675537beed46c29040d41548a32a1f0055b79ae",
+  "report_fixture_response_captures": [
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "stale",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "missing",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "reconciliation",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "empty",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "failure",
+      "path": "/api/paper-portfolio",
+      "status": 503
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 503
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": true,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": true,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-B",
+      "held": false,
+      "kind": "empty",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-B",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "stale",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "missing",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "reconciliation",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "empty",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "failure",
+      "path": "/api/paper-portfolio",
+      "status": 503
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": false,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 503
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": true,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "held": true,
+      "kind": "normal",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-A",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-B",
+      "held": false,
+      "kind": "empty",
+      "path": "/api/paper-portfolio",
+      "status": 200
+    },
+    {
+      "account_id": "fixture-paper-B",
+      "path": "/api/paper-session",
+      "session_date": "2026-10-16",
+      "status": 200
+    }
+  ],
+  "schema_version": "tradepulse.astra-browser-dom-keyboard.v1",
+  "scope": "AUTHORED_BROWSER_BOUNDED_PAPER_JOURNAL_NOT_BACKEND_OR_LIVE_ACCEPTANCE",
+  "screenshots": [
+    {
+      "file": "astra_browser_journal_verified_chrome_20261029_02_desktop.png",
+      "scope": "AUTHORED_BOUNDED_PAPER_JOURNAL_VIEWPORT",
+      "sha256": "a85b3791033057638f32b4fd0474cb096900a1ace9aab277bbc28674519114ba",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_journal_verified_chrome_20261029_02_narrow.png",
+      "scope": "AUTHORED_BOUNDED_PAPER_JOURNAL_VIEWPORT",
+      "sha256": "f6eecdf4c7a99e9ad041223a8fe05ce5a0f91e03ad435303ffd48da4e87463ae",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    }
+  ],
+  "server_thread_stopped": true,
+  "source_after": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_before": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_sha256": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-29T05:35:45.608018+00:00",
+  "status": "PASS",
+  "temporary_profile_removed": true
+}

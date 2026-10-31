@@ -1,0 +1,199 @@
+ 
+desktop.no_source PASS 
+desktop.real_browser_timezone PASS UTC
+desktop.fresh_no_source_health_request PASS 
+desktop.no_source_no_cards PASS 
+desktop.no_source_time_unavailable PASS 
+desktop.error_distinct PASS 
+desktop.demo_three PASS 
+desktop.naive_health_1000_ist PASS 16 Oct, 10:00 IST
+desktop.visible_source_freshness PASS 
+desktop.first_rank PASS 
+desktop.rank_reversal PASS 
+desktop.keyboard_search PASS 
+desktop.search_filter PASS 
+desktop.exact_identity_chart PASS 
+desktop.mixed_format_exact_1000_ist PASS {'host_timezone': 'UTC', 'host_offset_minutes': 0, 'source_time': '16 Oct, 10:00 IST', 'signal_time': 'Opening Range Breakout · 16 Oct, 10:00 IST', 'last_candle_time': '16 Oct, 10:00 IST', 'candle_rows': 10}
+desktop.host_clock_is_non_ist PASS 0
+desktop.text_safe PASS 
+desktop.escape_dialog PASS 
+desktop.route_opportunities PASS 
+desktop.route_options PASS 
+desktop.route_strategies PASS 
+desktop.route_paper PASS 
+desktop.route_health PASS 
+desktop.route_pulse PASS 
+desktop.browser_back PASS 
+desktop.expiry_clears PASS 
+desktop.w4.complete_snapshot PASS 
+desktop.w4.pinned_100_row_contract PASS [{'query': {'limit': ['100'], 'offset': ['0']}, 'response': {'pagination': {'total': 125, 'limit': 100, 'offset': 0}, 'snapshot': {'run_id': 'synthetic-run-4', 'work_id': '1d5ba802fe091da154c1877abe55c875b2a49554b5390610c4919afa7e8e250f', 'policy': 'CASH_QUALITY_ACTUAL_RR_DIRECTION_ONE_SYMBOL_V2', 'rank_version': 'd7ec71323c289819e19149719db5da1930b99599bca8af0df8bd6b9459889254', 'previous_rank_version': None, 'reference': '2026-10-16T10:00:00+05:30', 'valid_until': '2026-10-29T18:34:06.488470+00:00', 'scope': {'provider': 'authored-fixture', 'data_mode': 'SIMULATED', 'segment': 'NSE_EQUITY_INTRADAY', 'profile_digest': '202e7ce32a7b7f5c71f28902c59f39800afcbabb5775ddd3596358effab497fa'}, 'evidence_scope': 'DETERMINISTIC_OFFLINE_DEMO', 'source_authenticity': 'NOT_ESTABLISHED', 'previous_snapshot': None, 'source_data_watermarks': ['2026-10-16T10:00:00+05:30'], 'source_data_watermark_count': 1, 'exclusions': [], 'exclusion_count': 0, 'removals': [], 'removal_count': 0, 'metadata_preview_limit': 100, 'exclusions_truncated': False, 'removals_truncated': False, 'source_data_watermarks_truncated': False}, 'row_count': 100}}, {'query': {'limit': ['100'], 'offset': ['100'], 'run_id': ['synthetic-run-4']}, 'response': {'pagination': {'total': 125, 'limit': 100, 'offset': 100}, 'snapshot': {'run_id': 'synthetic-run-4', 'work_id': '1d5ba802fe091da154c1877abe55c875b2a49554b5390610c4919afa7e8e250f', 'policy': 'CASH_QUALITY_ACTUAL_RR_DIRECTION_ONE_SYMBOL_V2', 'rank_version': 'd7ec71323c289819e19149719db5da1930b99599bca8af0df8bd6b9459889254', 'previous_rank_version': None, 'reference': '2026-10-16T10:00:00+05:30', 'valid_until': '2026-10-29T18:34:06.488470+00:00', 'scope': {'provider': 'authored-fixture', 'data_mode': 'SIMULATED', 'segment': 'NSE_EQUITY_INTRADAY', 'profile_digest': '202e7ce32a7b7f5c71f28902c59f39800afcbabb5775ddd3596358effab497fa'}, 'evidence_scope': 'DETERMINISTIC_OFFLINE_DEMO', 'source_authenticity': 'NOT_ESTABLISHED', 'previous_snapshot': None, 'source_data_watermarks': ['2026-10-16T10:00:00+05:30'], 'source_data_watermark_count': 1, 'exclusions': [], 'exclusion_count': 0, 'removals': [], 'removal_count': 0, 'metadata_preview_limit': 100, 'exclusions_truncated': False, 'removals_truncated': False, 'source_data_watermarks_truncated': False}, 'row_count': 25}}]
+desktop.w4.cross_server_page_filter PASS 
+desktop.w4.zero_match_controls_and_focus PASS 
+desktop.w4.reset_filters PASS 
+desktop.w4.local_last_page PASS 
+desktop.w4.paging_does_not_reread PASS 
+desktop.w4.shrunk_last_page_recovers PASS 
+desktop.w4.reject_mixed-version PASS 
+desktop.w4.reject_duplicate PASS 
+desktop.w4.reject_short-page PASS 
+desktop.w4.recover_valid_snapshot PASS 
+desktop.w4.reorder_keeps_owned_focus PASS 
+desktop.w4.selected_detail PASS 
+desktop.w4.extended_retained_evidence PASS 
+desktop.w4.narrow_supported_signal_query PASS {'symbol': ['TCS'], 'strategy_id': ['strat_4_orb_filtered'], 'provider': ['authored-fixture'], 'segment': ['NSE_EQUITY_INTRADAY'], 'start_time': ['2026-10-16T10:00:00+05:30'], 'end_time': ['2026-10-16T10:00:00+05:30'], 'limit': ['200'], 'offset': ['0']}
+desktop.w4.immediate_price_withholding PASS 
+desktop.w4.same_source_selection_requalified PASS 
+desktop.w4.close_restores_exact_focus PASS 
+desktop.w4.selected_before_removal PASS 
+desktop.w4.removed_selection_withheld PASS 
+desktop.w4.removed_close_recovery_focus PASS 
+desktop.w4.restored_after_removal PASS 
+desktop.w4.late_signal_was_requested PASS 
+desktop.w4.new_selection_loaded PASS 
+desktop.w4.late_signal_cannot_replace_selection PASS 
+desktop.w4.expired_selection_withheld PASS 
+desktop.w4.late_rank_was_requested PASS 
+desktop.w4.new_rank_wins PASS 
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51392)
+Traceback (most recent call last):
+  File "C:\Python314\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 496, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 484, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser_v5.py", line 253, in do_GET
+    def do_GET(self):self.respond()
+                     ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser_v5.py", line 251, in respond
+    try:self.wfile.write(body)
+        ~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+desktop.w4.late_rank_cannot_replace_or_steal_focus PASS 
+desktop.w4.empty_current_scan_distinct PASS 
+desktop.w4.archive_distinct PASS 
+desktop.w4.loading_clears_old_session PASS 
+desktop.w4.health_error_clears_old_session PASS 
+desktop.w4.return_to_small_pulse PASS 
+mobile.no_source PASS 
+mobile.real_browser_timezone PASS America/New_York
+mobile.fresh_no_source_health_request PASS 
+mobile.no_source_no_cards PASS 
+mobile.no_source_time_unavailable PASS 
+mobile.error_distinct PASS 
+mobile.demo_three PASS 
+mobile.naive_health_1000_ist PASS 16 Oct, 10:00 IST
+mobile.visible_source_freshness PASS 
+mobile.first_rank PASS 
+mobile.rank_reversal PASS 
+mobile.keyboard_search PASS 
+mobile.search_filter PASS 
+mobile.exact_identity_chart PASS 
+mobile.mixed_format_exact_1000_ist PASS {'host_timezone': 'America/New_York', 'host_offset_minutes': 240, 'source_time': '16 Oct, 10:00 IST', 'signal_time': 'Opening Range Breakout · 16 Oct, 10:00 IST', 'last_candle_time': '16 Oct, 10:00 IST', 'candle_rows': 10}
+mobile.host_clock_is_non_ist PASS 240
+mobile.text_safe PASS 
+mobile.escape_dialog PASS 
+mobile.mobile_more PASS 
+mobile.mobile_more_navigation PASS 
+mobile.route_opportunities PASS 
+mobile.route_options PASS 
+mobile.route_strategies PASS 
+mobile.route_paper PASS 
+mobile.route_health PASS 
+mobile.route_pulse PASS 
+mobile.browser_back PASS 
+mobile.expiry_clears PASS 
+mobile.w4.complete_snapshot PASS 
+mobile.w4.pinned_100_row_contract PASS [{'query': {'limit': ['100'], 'offset': ['0']}, 'response': {'pagination': {'total': 125, 'limit': 100, 'offset': 0}, 'snapshot': {'run_id': 'synthetic-run-23', 'work_id': 'ab963f7e1912e166f6c8531f321ea46153d07be4f36e99c533a1e5ce3defb7cf', 'policy': 'CASH_QUALITY_ACTUAL_RR_DIRECTION_ONE_SYMBOL_V2', 'rank_version': 'd7ec71323c289819e19149719db5da1930b99599bca8af0df8bd6b9459889254', 'previous_rank_version': None, 'reference': '2026-10-16T10:00:00+05:30', 'valid_until': '2026-10-29T18:34:12.141548+00:00', 'scope': {'provider': 'authored-fixture', 'data_mode': 'SIMULATED', 'segment': 'NSE_EQUITY_INTRADAY', 'profile_digest': '202e7ce32a7b7f5c71f28902c59f39800afcbabb5775ddd3596358effab497fa'}, 'evidence_scope': 'DETERMINISTIC_OFFLINE_DEMO', 'source_authenticity': 'NOT_ESTABLISHED', 'previous_snapshot': None, 'source_data_watermarks': ['2026-10-16T10:00:00+05:30'], 'source_data_watermark_count': 1, 'exclusions': [], 'exclusion_count': 0, 'removals': [], 'removal_count': 0, 'metadata_preview_limit': 100, 'exclusions_truncated': False, 'removals_truncated': False, 'source_data_watermarks_truncated': False}, 'row_count': 100}}, {'query': {'limit': ['100'], 'offset': ['100'], 'run_id': ['synthetic-run-23']}, 'response': {'pagination': {'total': 125, 'limit': 100, 'offset': 100}, 'snapshot': {'run_id': 'synthetic-run-23', 'work_id': 'ab963f7e1912e166f6c8531f321ea46153d07be4f36e99c533a1e5ce3defb7cf', 'policy': 'CASH_QUALITY_ACTUAL_RR_DIRECTION_ONE_SYMBOL_V2', 'rank_version': 'd7ec71323c289819e19149719db5da1930b99599bca8af0df8bd6b9459889254', 'previous_rank_version': None, 'reference': '2026-10-16T10:00:00+05:30', 'valid_until': '2026-10-29T18:34:12.141548+00:00', 'scope': {'provider': 'authored-fixture', 'data_mode': 'SIMULATED', 'segment': 'NSE_EQUITY_INTRADAY', 'profile_digest': '202e7ce32a7b7f5c71f28902c59f39800afcbabb5775ddd3596358effab497fa'}, 'evidence_scope': 'DETERMINISTIC_OFFLINE_DEMO', 'source_authenticity': 'NOT_ESTABLISHED', 'previous_snapshot': None, 'source_data_watermarks': ['2026-10-16T10:00:00+05:30'], 'source_data_watermark_count': 1, 'exclusions': [], 'exclusion_count': 0, 'removals': [], 'removal_count': 0, 'metadata_preview_limit': 100, 'exclusions_truncated': False, 'removals_truncated': False, 'source_data_watermarks_truncated': False}, 'row_count': 25}}]
+mobile.w4.cross_server_page_filter PASS 
+mobile.w4.zero_match_controls_and_focus PASS 
+mobile.w4.reset_filters PASS 
+mobile.w4.local_last_page PASS 
+mobile.w4.paging_does_not_reread PASS 
+mobile.w4.shrunk_last_page_recovers PASS 
+mobile.w4.reject_mixed-version PASS 
+mobile.w4.reject_duplicate PASS 
+mobile.w4.reject_short-page PASS 
+mobile.w4.recover_valid_snapshot PASS 
+mobile.w4.reorder_keeps_owned_focus PASS 
+mobile.w4.selected_detail PASS 
+mobile.w4.extended_retained_evidence PASS 
+mobile.w4.narrow_supported_signal_query PASS {'symbol': ['TCS'], 'strategy_id': ['strat_4_orb_filtered'], 'provider': ['authored-fixture'], 'segment': ['NSE_EQUITY_INTRADAY'], 'start_time': ['2026-10-16T10:00:00+05:30'], 'end_time': ['2026-10-16T10:00:00+05:30'], 'limit': ['200'], 'offset': ['0']}
+mobile.w4.immediate_price_withholding PASS 
+mobile.w4.same_source_selection_requalified PASS 
+mobile.w4.close_restores_exact_focus PASS 
+mobile.w4.selected_before_removal PASS 
+mobile.w4.removed_selection_withheld PASS 
+mobile.w4.removed_close_recovery_focus PASS 
+mobile.w4.restored_after_removal PASS 
+mobile.w4.late_signal_was_requested PASS 
+mobile.w4.new_selection_loaded PASS 
+mobile.w4.late_signal_cannot_replace_selection PASS 
+mobile.w4.expired_selection_withheld PASS 
+mobile.w4.late_rank_was_requested PASS 
+mobile.w4.new_rank_wins PASS 
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 51622)
+Traceback (most recent call last):
+  File "C:\Python314\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 496, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 484, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser_v5.py", line 253, in do_GET
+    def do_GET(self):self.respond()
+                     ~~~~~~~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\docs\evidence\track_a_v3_browser_v5.py", line 251, in respond
+    try:self.wfile.write(body)
+        ~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+mobile.w4.late_rank_cannot_replace_or_steal_focus PASS 
+mobile.w4.empty_current_scan_distinct PASS 
+mobile.w4.archive_distinct PASS 
+mobile.w4.loading_clears_old_session PASS 
+mobile.w4.health_error_clears_old_session PASS 
+mobile.w4.return_to_small_pulse PASS 
+overflow.360 PASS {'width': 360, 'scroll': 360}
+overflow.390 PASS {'width': 390, 'scroll': 390}
+overflow.768 PASS {'width': 768, 'scroll': 768}
+overflow.1024 PASS {'width': 1024, 'scroll': 1009}
+overflow.1366 PASS {'width': 1366, 'scroll': 1351}
+overflow.1440 PASS {'width': 1440, 'scroll': 1425}
+overflow.1920 PASS {'width': 1920, 'scroll': 1905}
+deep_link.paper PASS 
+semantic.skip_and_named_controls PASS 
+contrast.body_text_only PASS 17.253344854427723
+external_blocked PASS 
+post_blocked PASS 
+get_head_only_origin PASS 
+no_fixture_failures PASS []
+no_js_exceptions_or_crashes PASS 
+bounded_run_under_60_seconds PASS 12.832

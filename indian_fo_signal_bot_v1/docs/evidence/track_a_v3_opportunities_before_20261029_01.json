@@ -1,0 +1,39 @@
+{
+  "kind": "EXECUTED_TERMINAL_DOM_REGRESSION",
+  "status": "FAIL",
+  "started_at": "2026-10-29T18:21:37.901848+00:00",
+  "completed_at": "2026-10-29T18:21:38.251917+00:00",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "test_terminal_opportunities.js"
+  ],
+  "exit_code": 1,
+  "counts": {
+    "tests": 15,
+    "pass": 2,
+    "fail": 13,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "source_before": {
+    "public/terminal.html": "5323935b3b841b97ef03000b8eb315b8e7489c2282d50179fe8ed165ad918a57",
+    "public/terminal.css": "a61a1ca9dd534d21492f554e295769b382452c9d02353d8db0dae835f9a10701",
+    "public/terminal.js": "b302411b85f95ce46f95781df724df797bd272f1d770a4be00a035cce2b53dc1",
+    "test_terminal_opportunities.js": "03f6fea2326b9347079aa8206b4dc4914597dc1b5f7c16beac477f26abbd607f"
+  },
+  "source_after": {
+    "public/terminal.html": "5323935b3b841b97ef03000b8eb315b8e7489c2282d50179fe8ed165ad918a57",
+    "public/terminal.css": "a61a1ca9dd534d21492f554e295769b382452c9d02353d8db0dae835f9a10701",
+    "public/terminal.js": "b302411b85f95ce46f95781df724df797bd272f1d770a4be00a035cce2b53dc1",
+    "test_terminal_opportunities.js": "03f6fea2326b9347079aa8206b4dc4914597dc1b5f7c16beac477f26abbd607f"
+  },
+  "helper_sha256": "84f8420e78c8a98e423a72bc94fb27b8a822e0e093c110b9060656870faa7d97",
+  "log": "docs/evidence/track_a_v3_opportunities_before_20261029_01.txt",
+  "log_sha256": "b3297b9324c60bce0ae207aed4b5a083ab36d334674c6126b5949804e2ceffb5",
+  "scope": "AUTHORED_READER_AND_DOM_DOUBLE_NOT_BROWSER_OR_LIVE_ACCEPTANCE",
+  "operational_database_accessed": false,
+  "environment_files_read": false
+}

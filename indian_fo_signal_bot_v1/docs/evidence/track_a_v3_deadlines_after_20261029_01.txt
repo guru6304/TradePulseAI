@@ -1,0 +1,88 @@
+test_incomplete_header_timeout_releases_slots_without_client_close (test_track_a_security.TestTrackABoundedHTTPWorkers.test_incomplete_header_timeout_releases_slots_without_client_close) ... ok
+test_two_partial_headers_bound_workers_and_third_is_503_then_close_recovers (test_track_a_security.TestTrackABoundedHTTPWorkers.test_two_partial_headers_bound_workers_and_third_is_503_then_close_recovers) ... ok
+test_factory_rejects_nonloopback_before_socket_creation (test_track_a_security.TestTrackALoopbackStartup.test_factory_rejects_nonloopback_before_socket_creation) ... ok
+test_localhost_factory_binds_only_loopback_without_runtime_initialization (test_track_a_security.TestTrackALoopbackStartup.test_localhost_factory_binds_only_loopback_without_runtime_initialization) ... ok
+test_localhost_runner_keeps_valid_explicit_launch_path (test_track_a_security.TestTrackALoopbackStartup.test_localhost_runner_keeps_valid_explicit_launch_path) ... ok
+test_runner_rejects_nonloopback_before_configuration_or_binding (test_track_a_security.TestTrackALoopbackStartup.test_runner_rejects_nonloopback_before_configuration_or_binding) ... ok
+test_absolute_body_deadline_rejects_trickle_and_listener_recovers (test_track_a_security.TestTrackASecurity.test_absolute_body_deadline_rejects_trickle_and_listener_recovers) ... ----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59004)
+FAIL
+Traceback (most recent call last):
+  File "C:\Python314\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 496, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 484, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 1269, in do_POST
+    self._send_json(code, payload)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\server.py", line 199, in _send_json
+    self.end_headers()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 598, in end_headers
+    self.flush_headers()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 602, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+test_absolute_header_deadline_rejects_trickle_and_listener_recovers (test_track_a_security.TestTrackASecurity.test_absolute_header_deadline_rejects_trickle_and_listener_recovers) ... ----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 59006)
+Traceback (most recent call last):
+  File "C:\Python314\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 496, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Python314\Lib\http\server.py", line 464, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+                           ~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Python314\Lib\socket.py", line 729, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+ConnectionAbortedError: [WinError 10053] An established connection was aborted by the software in your host machine
+----------------------------------------
+ok
+test_backtest_duplicate_keys_and_nonfinite_values_are_rejected (test_track_a_security.TestTrackASecurity.test_backtest_duplicate_keys_and_nonfinite_values_are_rejected) ... ok
+test_backtest_incomplete_body_times_out_and_listener_remains_usable (test_track_a_security.TestTrackASecurity.test_backtest_incomplete_body_times_out_and_listener_remains_usable) ... ok
+test_backtest_malformed_nonobject_and_invalid_utf8_remain_rejected (test_track_a_security.TestTrackASecurity.test_backtest_malformed_nonobject_and_invalid_utf8_remain_rejected) ... ok
+test_backtest_missing_invalid_and_oversized_length_reject_without_reading (test_track_a_security.TestTrackASecurity.test_backtest_missing_invalid_and_oversized_length_reject_without_reading) ... ok
+test_backtest_rejects_complete_json_when_declared_body_is_truncated (test_track_a_security.TestTrackASecurity.test_backtest_rejects_complete_json_when_declared_body_is_truncated) ... ok
+test_backtest_rejects_duplicate_content_length_before_execution (test_track_a_security.TestTrackASecurity.test_backtest_rejects_duplicate_content_length_before_execution) ... ok
+test_backtest_rejects_transfer_encoding_with_or_without_length (test_track_a_security.TestTrackASecurity.test_backtest_rejects_transfer_encoding_with_or_without_length) ... ok
+test_valid_backtest_request_keeps_explicit_route_contract (test_track_a_security.TestTrackASecurity.test_valid_backtest_request_keeps_explicit_route_contract) ... ok
+
+======================================================================
+FAIL: test_absolute_body_deadline_rejects_trickle_and_listener_recovers (test_track_a_security.TestTrackASecurity.test_absolute_body_deadline_rejects_trickle_and_listener_recovers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_track_a_security.py", line 216, in test_absolute_body_deadline_rejects_trickle_and_listener_recovers
+    self.assertEqual(self.trickle_request(headers, body), 400)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != 400
+
+----------------------------------------------------------------------
+Ran 16 tests in 1.953s
+
+FAILED (failures=1)

@@ -1,0 +1,56 @@
+test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_track_a_order_block_execution.TestTrackAOrderBlockExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) ... 
+  test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_track_a_order_block_execution.TestTrackAOrderBlockExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='LONG') ... ERROR
+  test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_track_a_order_block_execution.TestTrackAOrderBlockExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='SHORT') ... ERROR
+
+======================================================================
+ERROR: test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_track_a_order_block_execution.TestTrackAOrderBlockExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='LONG')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 124, in __post_init__
+    raise ValueError()
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_track_a_order_block_execution.py", line 91, in test_actual_long_short_scanner_handoff_fills_once_at_later_close
+    ready = queued_ob(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_track_a_order_block_execution.py", line 35, in queued_ob
+    paper = PaperPortfolio(fixture.store, PaperAccountConfig(**values), clock=lambda: fixture.now)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "<string>", line 23, in __init__
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 136, in __post_init__
+    _reject("INVALID_SESSION_OR_COST_POLICY")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: INVALID_SESSION_OR_COST_POLICY
+
+======================================================================
+ERROR: test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_track_a_order_block_execution.TestTrackAOrderBlockExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='SHORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 124, in __post_init__
+    raise ValueError()
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_track_a_order_block_execution.py", line 91, in test_actual_long_short_scanner_handoff_fills_once_at_later_close
+    ready = queued_ob(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_track_a_order_block_execution.py", line 35, in queued_ob
+    paper = PaperPortfolio(fixture.store, PaperAccountConfig(**values), clock=lambda: fixture.now)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "<string>", line 23, in __init__
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 136, in __post_init__
+    _reject("INVALID_SESSION_OR_COST_POLICY")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: INVALID_SESSION_OR_COST_POLICY
+
+----------------------------------------------------------------------
+Ran 1 test in 0.083s
+
+FAILED (errors=2)

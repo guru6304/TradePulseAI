@@ -1,0 +1,21 @@
+{
+  "browser_assertions_validated": {
+    "chrome": 214,
+    "edge": 214
+  },
+  "cached_public_files": 20,
+  "closeout_sha256": "84f568f6808098226987535176dcabb0b4bced29c687cbf5b30e9a693f599dd5",
+  "current_receipt_validated": true,
+  "files": 376,
+  "focused_node_tests_validated": 40,
+  "new_tests_executed": false,
+  "pagination_assertions_validated": {
+    "chrome": 60,
+    "edge": 60
+  },
+  "preserved_documents": 760,
+  "recorded_at": "2026-10-29T05:20:23.270685+00:00",
+  "scope": "E01_LIMITED_BROWSER_PAGINATION_AND_D01_MISSING_STATUS_REJECTION_NOT_MISSION_ACCEPTANCE",
+  "source_files": 106,
+  "status": "PASS"
+}

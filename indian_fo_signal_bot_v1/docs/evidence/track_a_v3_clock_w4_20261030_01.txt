@@ -1,0 +1,24 @@
+TAP version 13
+# Subtest: actual terminal clock and chart contract under TZ=UTC
+ok 1 - actual terminal clock and chart contract under TZ=UTC
+  ---
+  duration_ms: 280.7192
+  type: 'test'
+  ...
+# Child TZ=UTC\\nTAP version 13\\n\# Subtest: the child uses its requested host timezone\\nok 1 - the child uses its requested host timezone\\n  ---\\n  duration_ms: 18.7625\\n  type: 'test'\\n  ...\\n\# Subtest: backend IST text and ISO offsets denote one instant\\nok 2 - backend IST text and ISO offsets denote one instant\\n  ---\\n  duration_ms: 3.7013\\n  type: 'test'\\n  ...\\n\# Subtest: invalid, missing, non-string and rolled-over dates never become source instants\\nok 3 - invalid, missing, non-string and rolled-over dates never become source instants\\n  ---\\n  duration_ms: 1.4622\\n  type: 'test'\\n  ...\\n\# Subtest: expiry parser requires an explicit offset and accepts equivalent ISO instants\\nok 4 - expiry parser requires an explicit offset and accepts equivalent ISO instants\\n  ---\\n  duration_ms: 1.769\\n  type: 'test'\\n  ...\\n\# Subtest: fresh health display is 10:00 IST for backend text in a non-IST host\\nok 5 - fresh health display is 10:00 IST for backend text in a non-IST host\\n  ---\\n  duration_ms: 7.0555\\n  type: 'test'\\n  ...\\n\# Subtest: ranking refresh rejects naive as_of or valid_until instead of scheduling expiry\\nok 6 - ranking refresh rejects naive as_of or valid_until instead of scheduling expiry\\n  ---\\n  duration_ms: 5.654\\n  type: 'test'\\n  ...\\n\# Subtest: actual detail links naive signal and completed 5m bars to the ISO ranking watermark\\nok 7 - actual detail links naive signal and completed 5m bars to the ISO ranking watermark\\n  ---\\n  duration_ms: 10.9843\\n  type: 'test'\\n  ...\\n\# Subtest: actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark\\nok 8 - actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark\\n  ---\\n  duration_ms: 26.379\\n  type: 'test'\\n  ...\\n\# Subtest: actual 5m chart allows a retained previous-session boundary\\nok 9 - actual 5m chart allows a retained previous-session boundary\\n  ---\\n  duration_ms: 6.7661\\n  type: 'test'\\n  ...\\n1..9\\n\# tests 9\\n\# suites 0\\n\# pass 9\\n\# fail 0\\n\# cancelled 0\\n\# skipped 0\\n\# todo 0\\n\# duration_ms 201.0519\\n
+# Subtest: actual terminal clock and chart contract under TZ=America/New_York
+ok 2 - actual terminal clock and chart contract under TZ=America/New_York
+  ---
+  duration_ms: 240.4954
+  type: 'test'
+  ...
+# Child TZ=America/New_York\\nTAP version 13\\n\# Subtest: the child uses its requested host timezone\\nok 1 - the child uses its requested host timezone\\n  ---\\n  duration_ms: 18.4761\\n  type: 'test'\\n  ...\\n\# Subtest: backend IST text and ISO offsets denote one instant\\nok 2 - backend IST text and ISO offsets denote one instant\\n  ---\\n  duration_ms: 3.2829\\n  type: 'test'\\n  ...\\n\# Subtest: invalid, missing, non-string and rolled-over dates never become source instants\\nok 3 - invalid, missing, non-string and rolled-over dates never become source instants\\n  ---\\n  duration_ms: 2.411\\n  type: 'test'\\n  ...\\n\# Subtest: expiry parser requires an explicit offset and accepts equivalent ISO instants\\nok 4 - expiry parser requires an explicit offset and accepts equivalent ISO instants\\n  ---\\n  duration_ms: 2.4767\\n  type: 'test'\\n  ...\\n\# Subtest: fresh health display is 10:00 IST for backend text in a non-IST host\\nok 5 - fresh health display is 10:00 IST for backend text in a non-IST host\\n  ---\\n  duration_ms: 4.4323\\n  type: 'test'\\n  ...\\n\# Subtest: ranking refresh rejects naive as_of or valid_until instead of scheduling expiry\\nok 6 - ranking refresh rejects naive as_of or valid_until instead of scheduling expiry\\n  ---\\n  duration_ms: 3.478\\n  type: 'test'\\n  ...\\n\# Subtest: actual detail links naive signal and completed 5m bars to the ISO ranking watermark\\nok 7 - actual detail links naive signal and completed 5m bars to the ISO ranking watermark\\n  ---\\n  duration_ms: 10.1954\\n  type: 'test'\\n  ...\\n\# Subtest: actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark\\nok 8 - actual detail withholds the chart for wrong 5m lineage, bars, identity or watermark\\n  ---\\n  duration_ms: 25.1567\\n  type: 'test'\\n  ...\\n\# Subtest: actual 5m chart allows a retained previous-session boundary\\nok 9 - actual 5m chart allows a retained previous-session boundary\\n  ---\\n  duration_ms: 4.0656\\n  type: 'test'\\n  ...\\n1..9\\n\# tests 9\\n\# suites 0\\n\# pass 9\\n\# fail 0\\n\# cancelled 0\\n\# skipped 0\\n\# todo 0\\n\# duration_ms 177.2238\\n
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 614.4193

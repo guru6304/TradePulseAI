@@ -1,0 +1,5494 @@
+{
+  "actual_fixture_requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    }
+  ],
+  "application_modules_imported": false,
+  "artifacts": [
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01.txt",
+      "sha256": "63261a52c071a162218c3d1c5aefd3de755375831bd66d8d18343f1937d27afa"
+    },
+    {
+      "file": "astra_browser_assets_verify_20261028_01.py",
+      "sha256": "181635c1c63611fdcf37ff821178c3ea2006ec1918ff9c5ca6c1ef3eee3a937c"
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "0930fb99ff6b3501d0f9224c13ff66efcc5914441c6728a42d62aad2882ac390",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "ede25273983fcdb8bc1b95225b84291c86d08e4ad015704d97ccb00fc45f74cd",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "a59ae036fc367c1afd5b37b035a8a1152dfdc88253b34da08a20381966ded361",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "8ffc4a680cd42edb234aac555338dceeaed9f127029423a2c54a66e50a9df978",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "feeda52f0e5a558a42dd10e853557b2861447ac72c24f0c6dc30e51f917307e3",
+      "viewport": {
+        "height": 1000,
+        "mobile": false,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "039bf5ca71029e5af174b3d5362852c952f7ce1e7404bbbc59f1dc60a5472bf4",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "c3d0584f8e5562b2d0742640459c4e05db7fc356b6874f6eb70b1427b3d9e4e9",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "f4915af181e9a8885583ebd6a89f14a87ac0d6a9f2984737464fc3c65c5e3718",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "d56f1f9edce9f8780e95ce591c220c932e4ada02e7428d54f5ea45deeb498178",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "3a397364db07aeb42786f55affb481a0fde2a7df13c2719137fbb1611bed78c8",
+      "viewport": {
+        "height": 1024,
+        "mobile": false,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "ea1dfcdf3eb90fbe4f2003562e43be956861a64137f88db14396affea4e4931f",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "0f6bf10d77e15545553d6eca372b57ec655b540cdf0e45f1d303e2ecf929aa96",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "18a5107337e9d6802755c07b0eeaeb8abc2aebac5ca0b5ddadf0a6daace10b6f",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "6bb7f96e3f2332195ebf2da37fd311c806b20dc8bb4aa94c75e2661b62513892",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "4a39cb80b184c79331b01ff2208032796f90f24175c08f21af0399a5b13265e0",
+      "viewport": {
+        "height": 844,
+        "mobile": true,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "3eae0b9919f47d3982e0a44b757643362fef0ddd6b963da18b2e7082efd69bc4",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "77b07e6804bbd21136491887afe96b8dddaa0a11e598191e4502a1929c984dcd",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "912833ce732f9037e14a4a8c9f5d58cd8c2c9bacc06d4c33643623ce59599de8",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "ec1bab5e158176b07f65a902ed67f14aefb40fea051012fa53eca45e0e034ada",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "6b8df9158821c029f62f4c7cb1f0a272f364df8d3488c62109f5f12282aacafb",
+      "viewport": {
+        "height": 844,
+        "mobile": true,
+        "width": 320
+      }
+    }
+  ],
+  "assertions": {
+    "passed": 104,
+    "total": 162
+  },
+  "asset_manifest_sha256": "abf318e600bd58b79f8a6300e071a046de8930c0c9c77ecfc30911678ef81f41",
+  "browser": "chrome",
+  "browser_arguments": [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "--headless=new",
+    "--disable-gpu",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--disable-domain-reliability",
+    "--disable-client-side-phishing-detection",
+    "--disable-breakpad",
+    "--disable-crash-reporter",
+    "--disable-pings",
+    "--safebrowsing-disable-auto-update",
+    "--metrics-recording-only",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--disable-search-engine-choice-screen",
+    "--disable-features=MediaRouter,OptimizationHints,AutofillServerCommunication,Translate,NetworkTimeServiceQuerying",
+    "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1, EXCLUDE localhost",
+    "--remote-debugging-address=127.0.0.1",
+    "--remote-debugging-port=0",
+    "--user-data-dir=<new-isolated-temporary-profile>",
+    "about:blank"
+  ],
+  "browser_crashes": [],
+  "browser_exit_code": 0,
+  "browser_run_seconds": 15.409,
+  "browser_version": {
+    "jsVersion": "15.5.35.23",
+    "product": "Chrome/155.0.8059.80",
+    "protocolVersion": "1.3",
+    "revision": "@43a195105613ac83c21d3f14de279f4a045c7da0",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36"
+  },
+  "cached_assets_fulfilled": [
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    },
+    {
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2"
+    },
+    {
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2"
+    },
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    },
+    {
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2"
+    },
+    {
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2"
+    },
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    },
+    {
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2"
+    },
+    {
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2"
+    },
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    },
+    {
+      "sha256": "1be3448e292fbf05ffe176fe1e43f135013d50b1e7d324ad1a558f623d3bb6f6",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7SUc.woff2"
+    },
+    {
+      "sha256": "34b9c504cab7a73e37b746343a449132e56cf7b5481af2cb81dc74dcff25c956",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7SUc.woff2"
+    }
+  ],
+  "cases": [
+    {
+      "details": null,
+      "name": "desktop.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "desktop.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "desktop.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "desktop.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "desktop.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 216,
+        "position": "sticky",
+        "viewport": 1000
+      },
+      "name": "desktop.header_leaves_mobile_reading_space",
+      "passed": true
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "desktop.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "desktop.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 449
+      },
+      "name": "desktop.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "desktop.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "desktop.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "tablet.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "tablet.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "tablet.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "tablet.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 304,
+        "position": "sticky",
+        "viewport": 1024
+      },
+      "name": "tablet.header_leaves_mobile_reading_space",
+      "passed": true
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "tablet.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "tablet.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 662
+      },
+      "name": "tablet.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "tablet.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "tablet.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "mobile.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "mobile.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "mobile.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "mobile.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 548.5,
+        "position": "sticky",
+        "viewport": 844
+      },
+      "name": "mobile.header_leaves_mobile_reading_space",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "mobile.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "mobile.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 314
+      },
+      "name": "mobile.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "mobile.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "mobile.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "narrow.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "narrow.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "narrow.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "narrow.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 581,
+        "position": "sticky",
+        "viewport": 844
+      },
+      "name": "narrow.header_leaves_mobile_reading_space",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "narrow.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "narrow.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 244
+      },
+      "name": "narrow.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "narrow.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "narrow.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_fetch_blocked_before_transport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_scan_probe_blocked_before_fixture_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "only_get_head_reached_exact_fixture_origin",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_scan_or_mutation_reached_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_javascript_exceptions_or_browser_crashes",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_server_failures",
+      "passed": true
+    }
+  ],
+  "cdp_allowed_requests": [
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    }
+  ],
+  "cdp_blocked_requests": [
+    {
+      "host": "blocked.example",
+      "method": "GET",
+      "path": "/offline-interception-probe",
+      "scheme": "https"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "POST",
+      "path": "/api/scan",
+      "scheme": "http"
+    }
+  ],
+  "checks": [
+    {
+      "details": null,
+      "name": "desktop.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "desktop.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "desktop.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "desktop.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "desktop.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 216,
+        "position": "sticky",
+        "viewport": 1000
+      },
+      "name": "desktop.header_leaves_mobile_reading_space",
+      "passed": true
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "desktop.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "desktop.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "desktop.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "desktop.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 449
+      },
+      "name": "desktop.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "desktop.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "desktop.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "tablet.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "tablet.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "tablet.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "tablet.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 304,
+        "position": "sticky",
+        "viewport": 1024
+      },
+      "name": "tablet.header_leaves_mobile_reading_space",
+      "passed": true
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "tablet.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "tablet.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "tablet.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "tablet.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 662
+      },
+      "name": "tablet.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "tablet.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "tablet.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "tablet.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "mobile.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "mobile.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "mobile.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "mobile.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 548.5,
+        "position": "sticky",
+        "viewport": 844
+      },
+      "name": "mobile.header_leaves_mobile_reading_space",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "mobile.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "mobile.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "mobile.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "mobile.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 314
+      },
+      "name": "mobile.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "mobile.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "mobile.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "mobile.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.production_dom_content_loaded_and_fixture_gets",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.literal_hostile_text_no_executable_dom",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.zero_and_unavailable_values_preserved",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.fixture_scope_and_no_invented_quantity",
+      "passed": true
+    },
+    {
+      "details": {
+        "chart": "4.4.1",
+        "fonts": [
+          {
+            "family": "Inter",
+            "weight": "400"
+          },
+          {
+            "family": "Inter",
+            "weight": "500"
+          },
+          {
+            "family": "Inter",
+            "weight": "600"
+          },
+          {
+            "family": "Inter",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "400"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "600"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          },
+          {
+            "family": "JetBrains Mono",
+            "weight": "700"
+          }
+        ],
+        "tailwind": "flex"
+      },
+      "name": "narrow.real_chart_tailwind_fonts",
+      "passed": true
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "narrow.card_keyboard_selection_preserves_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "narrow.card_selection_semantic",
+      "passed": false
+    },
+    {
+      "details": {
+        "detail": "INFY",
+        "focused": false,
+        "pressed": null
+      },
+      "name": "narrow.card_changes_selected_detail",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.space_preserves_selected_card_focus",
+      "passed": false
+    },
+    {
+      "details": {
+        "height": 581,
+        "position": "sticky",
+        "viewport": 844
+      },
+      "name": "narrow.header_leaves_mobile_reading_space",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-terminal.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-terminal.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-terminal.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-option-apex.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-option-apex.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-option-apex.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-strategies.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-strategies.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-strategies.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "buttonId": "",
+        "controls": null,
+        "labelledby": null,
+        "panelRole": null,
+        "role": null,
+        "selected": null,
+        "selectedCount": 0,
+        "visible": true
+      },
+      "name": "narrow.tab-brokers-telegram.tab_semantics",
+      "passed": false
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-brokers-telegram.controls_within_viewport",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "narrow.tab-brokers-telegram.accessibility_tree_tab_names",
+      "passed": false
+    },
+    {
+      "details": {
+        "canvases": [
+          {
+            "fallback": "",
+            "id": "signalPriceChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "optionOiChart",
+            "label": null,
+            "role": null
+          },
+          {
+            "fallback": "",
+            "id": "backtestEquityChart",
+            "label": null,
+            "role": null
+          }
+        ],
+        "refresh": null
+      },
+      "name": "narrow.canvas_and_icon_control_names",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "narrow.reduced_motion_disables_pulse",
+      "passed": true
+    },
+    {
+      "details": {
+        "datasets": 1,
+        "exists": true,
+        "height": 238,
+        "width": 244
+      },
+      "name": "narrow.real_signal_chart_has_native_canvas",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.tabs_arrow_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "narrow.tabs_end_navigation",
+      "passed": false
+    },
+    {
+      "details": null,
+      "name": "narrow.tabs_home_navigation",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_tab_reaches_read_only_refresh",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_enter_refreshes_retained_ranking",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.refresh_made_new_get_requests",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.option_navigation_focus_target",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.native_enter_changes_tab_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.short_lived_rank_initially_current",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.real_timer_expires_to_historical_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.http_503_clears_cached_ranks_and_signal_prices",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.delayed_rank_request_started",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.newer_health_failure_clears_rank_panel",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.late_rank_response_cannot_restore_old_current_state",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_fetch_blocked_before_transport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_scan_probe_blocked_before_fixture_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "only_get_head_reached_exact_fixture_origin",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_scan_or_mutation_reached_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_javascript_exceptions_or_browser_crashes",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_server_failures",
+      "passed": true
+    }
+  ],
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs\\evidence\\astra_browser_assets_verify_20261028_01.py",
+    "--stage",
+    "before_chrome_20261028_01",
+    "--browser",
+    "chrome"
+  ],
+  "environment_files_read": false,
+  "exit_code": 1,
+  "external_assets_omitted": false,
+  "fixture_scope": "OFFLINE_AUTHORED_HTTP_FIXTURE_NOT_LIVE_ACCEPTANCE",
+  "fixture_server_failures": [],
+  "helper_sha256": "181635c1c63611fdcf37ff821178c3ea2006ec1918ff9c5ca6c1ef3eee3a937c",
+  "html_preparation": {
+    "chart_stub": false,
+    "external_links_omitted": 0,
+    "external_scripts_omitted": 0,
+    "manifest_sha256": "abf318e600bd58b79f8a6300e071a046de8930c0c9c77ecfc30911678ef81f41",
+    "production_inline_scripts_unchanged": true,
+    "served_html_sha256": "d1cf81c4e65d97cbdaa3bcf73955a8158ce94b54926726bf21ef623d82913dc6",
+    "source_html_sha256": "d1cf81c4e65d97cbdaa3bcf73955a8158ce94b54926726bf21ef623d82913dc6",
+    "tailwind_stub": false
+  },
+  "javascript_exceptions": [],
+  "limitations": [
+    "Authored HTTP fixtures do not establish actual backend or LIVE integration",
+    "Exact manifest assets fulfilled from retained public bytes; no external page transport",
+    "Four viewport authored-data checks; limited accessibility, no full WCAG attestation",
+    "Screenshots use actual assets; positive chart coverage is signal chart only",
+    "CDP blocks external requests and all methods except exact-origin GET/HEAD",
+    "Browser background-networking suppression is configuration, not OS packet capture"
+  ],
+  "log_file": "astra_browser_assets_before_chrome_20261028_01.txt",
+  "log_sha256": "63261a52c071a162218c3d1c5aefd3de755375831bd66d8d18343f1937d27afa",
+  "operational_database_accessed": false,
+  "probe_helper_sha256": "b9736660ac34254d9bf17aee113be9547183016dfc918ccf593298d8b52a1121",
+  "schema_version": "tradepulse.astra-browser-dom-keyboard.v1",
+  "scope": "ACTUAL_ASSET_BROWSER_RESPONSIVE_KEYBOARD_LIMITED_ACCESSIBILITY",
+  "screenshots": [
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "0930fb99ff6b3501d0f9224c13ff66efcc5914441c6728a42d62aad2882ac390",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "ede25273983fcdb8bc1b95225b84291c86d08e4ad015704d97ccb00fc45f74cd",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "a59ae036fc367c1afd5b37b035a8a1152dfdc88253b34da08a20381966ded361",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "8ffc4a680cd42edb234aac555338dceeaed9f127029423a2c54a66e50a9df978",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_desktop.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "feeda52f0e5a558a42dd10e853557b2861447ac72c24f0c6dc30e51f917307e3",
+      "viewport": {
+        "height": 1000,
+        "mobile": false,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "039bf5ca71029e5af174b3d5362852c952f7ce1e7404bbbc59f1dc60a5472bf4",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "c3d0584f8e5562b2d0742640459c4e05db7fc356b6874f6eb70b1427b3d9e4e9",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "f4915af181e9a8885583ebd6a89f14a87ac0d6a9f2984737464fc3c65c5e3718",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "d56f1f9edce9f8780e95ce591c220c932e4ada02e7428d54f5ea45deeb498178",
+      "viewport": {
+        "height": 1024,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_tablet.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "3a397364db07aeb42786f55affb481a0fde2a7df13c2719137fbb1611bed78c8",
+      "viewport": {
+        "height": 1024,
+        "mobile": false,
+        "width": 768
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "ea1dfcdf3eb90fbe4f2003562e43be956861a64137f88db14396affea4e4931f",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "0f6bf10d77e15545553d6eca372b57ec655b540cdf0e45f1d303e2ecf929aa96",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "18a5107337e9d6802755c07b0eeaeb8abc2aebac5ca0b5ddadf0a6daace10b6f",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "6bb7f96e3f2332195ebf2da37fd311c806b20dc8bb4aa94c75e2661b62513892",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_mobile.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "4a39cb80b184c79331b01ff2208032796f90f24175c08f21af0399a5b13265e0",
+      "viewport": {
+        "height": 844,
+        "mobile": true,
+        "width": 390
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-terminal.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "3eae0b9919f47d3982e0a44b757643362fef0ddd6b963da18b2e7082efd69bc4",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-option-apex.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "77b07e6804bbd21136491887afe96b8dddaa0a11e598191e4502a1929c984dcd",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-strategies.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "912833ce732f9037e14a4a8c9f5d58cd8c2c9bacc06d4c33643623ce59599de8",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow_tab-brokers-telegram.png",
+      "scope": "ACTUAL_PRODUCTION_ASSETS_AUTHORED_API_FIXTURE",
+      "sha256": "ec1bab5e158176b07f65a902ed67f14aefb40fea051012fa53eca45e0e034ada",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    },
+    {
+      "file": "astra_browser_assets_before_chrome_20261028_01_narrow.png",
+      "scope": "ACTUAL_ASSET_FAILURE_STATE_DIAGNOSTIC",
+      "sha256": "6b8df9158821c029f62f4c7cb1f0a272f364df8d3488c62109f5f12282aacafb",
+      "viewport": {
+        "height": 844,
+        "mobile": true,
+        "width": 320
+      }
+    }
+  ],
+  "server_thread_stopped": true,
+  "source_after": {
+    "public/index.html": "d1cf81c4e65d97cbdaa3bcf73955a8158ce94b54926726bf21ef623d82913dc6",
+    "test_cash_dashboard.js": "063c6aa29ec2b6562d26a1b2fdb5eefcbc89f2a0e52d22c6c02e8a992f55ded1"
+  },
+  "source_before": {
+    "public/index.html": "d1cf81c4e65d97cbdaa3bcf73955a8158ce94b54926726bf21ef623d82913dc6",
+    "test_cash_dashboard.js": "063c6aa29ec2b6562d26a1b2fdb5eefcbc89f2a0e52d22c6c02e8a992f55ded1"
+  },
+  "source_sha256": {
+    "public/index.html": "d1cf81c4e65d97cbdaa3bcf73955a8158ce94b54926726bf21ef623d82913dc6",
+    "test_cash_dashboard.js": "063c6aa29ec2b6562d26a1b2fdb5eefcbc89f2a0e52d22c6c02e8a992f55ded1"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-28T09:23:19.417736+00:00",
+  "status": "FAIL",
+  "temporary_profile_removed": true
+}

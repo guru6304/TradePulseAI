@@ -1,0 +1,78 @@
+test_contract_survives_json_storage_roundtrip (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_contract_survives_json_storage_roundtrip) ... [2026-10-29 18:08:57,436] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121005_433627f4 via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:08:57,467] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121005_433627f4 in 67.16ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:08:57,481] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121005_433627f4 with exact cash input linkage
+[2026-10-29 18:08:57,661] [INFO] [tradepulse.scanner] Starting scan scan_20261016_121505_3e79273e via Angel One SmartAPI (mode=LIVE)
+[2026-10-29 18:08:57,690] [INFO] [tradepulse.scanner] Staged scan scan_20261016_121505_3e79273e in 38.21ms: status=COMPLETED, signals=1, persisted=1, duplicates=0, persistence=OK
+[2026-10-29 18:08:57,714] [INFO] [tradepulse.scanner] Committed scan scan_20261016_121505_3e79273e with exact cash input linkage
+ERROR
+test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_astra_vwap_execution.TestAstraVWAPExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) ... 
+  test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_astra_vwap_execution.TestAstraVWAPExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='LONG') ... ERROR
+  test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_astra_vwap_execution.TestAstraVWAPExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='SHORT') ... ERROR
+
+======================================================================
+ERROR: test_contract_survives_json_storage_roundtrip (test_astra_vwap_paper_triggers.TestAstraVWAPPaperTriggers.test_contract_survives_json_storage_roundtrip)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 58, in test_contract_survives_json_storage_roundtrip
+    result = self.evaluate(fixture, persisted, later)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_paper_triggers.py", line 82, in evaluate
+    return evaluate_observation(fixture.store, conn, contract, later["run_id"], now or fixture.now, history)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\vwap_paper_triggers.py", line 186, in evaluate_observation
+    _require(contract == expected, "VWAP_CONTRACT_INTEGRITY_FAILURE")
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\vwap_paper_triggers.py", line 27, in _require
+    raise ValueError(reason)
+ValueError: VWAP_CONTRACT_INTEGRITY_FAILURE
+
+======================================================================
+ERROR: test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_astra_vwap_execution.TestAstraVWAPExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='LONG')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 124, in __post_init__
+    raise ValueError()
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_execution.py", line 99, in test_actual_long_short_scanner_handoff_fills_once_at_later_close
+    ready = queued_vwap(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_execution.py", line 35, in queued_vwap
+    paper = PaperPortfolio(fixture.store, PaperAccountConfig(**values), clock=lambda: fixture.now)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "<string>", line 23, in __init__
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 136, in __post_init__
+    _reject("INVALID_SESSION_OR_COST_POLICY")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: INVALID_SESSION_OR_COST_POLICY
+
+======================================================================
+ERROR: test_actual_long_short_scanner_handoff_fills_once_at_later_close (test_astra_vwap_execution.TestAstraVWAPExecution.test_actual_long_short_scanner_handoff_fills_once_at_later_close) (side='SHORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 124, in __post_init__
+    raise ValueError()
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_execution.py", line 99, in test_actual_long_short_scanner_handoff_fills_once_at_later_close
+    ready = queued_vwap(self, side)
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\test_astra_vwap_execution.py", line 35, in queued_vwap
+    paper = PaperPortfolio(fixture.store, PaperAccountConfig(**values), clock=lambda: fixture.now)
+                                          ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "<string>", line 23, in __init__
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 136, in __post_init__
+    _reject("INVALID_SESSION_OR_COST_POLICY")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\HP\Downloads\indian_fo_signal_bot_phase3b\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: INVALID_SESSION_OR_COST_POLICY
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.525s
+
+FAILED (errors=3)

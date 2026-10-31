@@ -1,0 +1,9 @@
+{
+  "recorded_at": "2026-10-29T09:06:19.262726+00:00",
+  "scope": "METADATA_VALIDATION_FILENAME_CORRECTION",
+  "prior_validation_attempt": "FileExistsError safely refused overwrite of preserved validation01",
+  "application_source_changed": false,
+  "prior_files_overwritten": false,
+  "prior_helper_sha256": "4e145f2b14ac479c739562b0f8fc39dda41d5d344e1d740d20521280a0de9234",
+  "fixed_helper": "astra_b01_vwap_closeout_20261029_03.py"
+}

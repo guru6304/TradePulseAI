@@ -1,0 +1,5084 @@
+{
+  "actual_fixture_requests": [
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/favicon.ico",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/signals",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 503
+    },
+    {
+      "method": "GET",
+      "path": "/api/scans",
+      "status": 200
+    }
+  ],
+  "application_modules_imported": false,
+  "artifacts": [
+    {
+      "file": "astra_browser_pagination_after_chrome_20261029_03.txt",
+      "sha256": "ed2f5765b474da62e05ed1a910bd3355a3bf623e042027d8faf77b17f99f432e"
+    },
+    {
+      "file": "astra_browser_pagination_verify_20261029_02.py",
+      "sha256": "bbc5e97cbf3e9c0ea830af0514e1dc4b0fb9771b2c19f46cf9d5e20a6a59f33b"
+    },
+    {
+      "file": "astra_browser_pagination_probes_20261029_02.py",
+      "sha256": "0cf5473f8b478c59d96fa9fc9cc2c51618b1a217139172432865d297c17517ad"
+    },
+    {
+      "file": "astra_browser_ui_probes_20261029_01.py",
+      "sha256": "5486529059753de9a7ef19929ac2d32e7a29bb1b8d755cc08bd5117fd90d9da4"
+    },
+    {
+      "file": "astra_browser_pagination_after_chrome_20261029_03_desktop.png",
+      "scope": "EXISTING_PAGINATION_AUTHORED_FIXTURE",
+      "sha256": "58a69964d0db86a281934909b51b3fa21e6e96db070156a6b2b71997ff2d7487",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_pagination_after_chrome_20261029_03_narrow.png",
+      "scope": "EXISTING_PAGINATION_AUTHORED_FIXTURE",
+      "sha256": "30d8de24825d827f5ebac95a0e194b26aa93207e87fd882ad7ee177b871624ad",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    }
+  ],
+  "assertions": {
+    "passed": 60,
+    "total": 60
+  },
+  "asset_manifest_sha256": "abf318e600bd58b79f8a6300e071a046de8930c0c9c77ecfc30911678ef81f41",
+  "browser": "chrome",
+  "browser_arguments": [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "--headless=new",
+    "--disable-gpu",
+    "--disable-background-networking",
+    "--disable-component-update",
+    "--disable-default-apps",
+    "--disable-extensions",
+    "--disable-sync",
+    "--disable-domain-reliability",
+    "--disable-client-side-phishing-detection",
+    "--disable-breakpad",
+    "--disable-crash-reporter",
+    "--disable-pings",
+    "--safebrowsing-disable-auto-update",
+    "--metrics-recording-only",
+    "--no-first-run",
+    "--no-default-browser-check",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--disable-search-engine-choice-screen",
+    "--disable-features=MediaRouter,OptimizationHints,AutofillServerCommunication,Translate,NetworkTimeServiceQuerying",
+    "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1, EXCLUDE localhost",
+    "--remote-debugging-address=127.0.0.1",
+    "--remote-debugging-port=0",
+    "--user-data-dir=<new-isolated-temporary-profile>",
+    "about:blank"
+  ],
+  "browser_crashes": [],
+  "browser_exit_code": 0,
+  "browser_run_seconds": 6.631,
+  "browser_version": {
+    "jsVersion": "15.6.75.19",
+    "product": "Chrome/156.0.8078.48",
+    "protocolVersion": "1.3",
+    "revision": "@d0c02bfad08ec92a6ffcf989e53cd995e6381a4c",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36"
+  },
+  "cached_assets_fulfilled": [
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    },
+    {
+      "sha256": "f6e95fcc7dc37b0a39ec6c707c10309272c2e901f13a39e260af1ae8bcec3967",
+      "url": "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    },
+    {
+      "sha256": "176e894661aa9cdc9a5cba6c720044cbbf7b8bd80d1c9a142a7c24b1b6c50d15",
+      "url": "https://cdn.tailwindcss.com/3.4.17"
+    },
+    {
+      "sha256": "d2af8974e95271638772e9e9524db5b9a6f58d6ec2d5d781400447b4a31c681e",
+      "url": "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"
+    },
+    {
+      "sha256": "3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2"
+    },
+    {
+      "sha256": "83c005d49d8a6a50474c73a5a36ac0468076e9c4a29da7bdb14995d80560a5be",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2"
+    },
+    {
+      "sha256": "db5ff4db83e580426280e9337a58dc57d3a83784a1b03ad80914651594441d52",
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPx7cwhsk.woff2"
+    }
+  ],
+  "cases": [
+    {
+      "details": null,
+      "name": "desktop.production_dom_and_initial_pages",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "info": "Showing 1\u201320 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.signals_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnNextSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.signals_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 41\u201345 of 45",
+        "next": true,
+        "previous": false
+      },
+      "name": "desktop.signals_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnPrevSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.signals_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "info": "Showing 1\u201310 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.signals_page_size_10_resets_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.signal_page_size_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 1\u201345 of 45",
+        "next": true,
+        "previous": true
+      },
+      "name": "desktop.signals_page_size_50_resets_offset",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.symbol_filter_resets_later_page_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.symbol_filter_response_keeps_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "0 setups",
+        "focus": "searchSymbol",
+        "ids": [],
+        "info": "0 results",
+        "next": true,
+        "previous": true
+      },
+      "name": "desktop.empty_symbol_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "held": true,
+          "item_ids": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "limit": 10,
+          "offset": 10,
+          "query": "limit=10&offset=10",
+          "request_id": 12,
+          "status": 200,
+          "total": 45
+        },
+        {
+          "held": false,
+          "item_ids": [
+            3,
+            6,
+            9,
+            12,
+            15,
+            18,
+            21,
+            24,
+            27,
+            30
+          ],
+          "limit": 10,
+          "offset": 0,
+          "query": "limit=10&offset=0&symbol=RELIANCE",
+          "request_id": 13,
+          "status": 200,
+          "total": 15
+        }
+      ],
+      "name": "desktop.pagination_overlap_uses_distinct_filter_reads",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.late_page_cannot_replace_new_filter",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.late_page_cannot_steal_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "held": false,
+          "item_ids": [],
+          "limit": 20,
+          "offset": 20,
+          "query": "limit=20&offset=20",
+          "request_id": 17,
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "badge": "5 setups",
+          "focus": "btnRefreshDashboard",
+          "ids": [],
+          "info": "No results on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "desktop.shrinking_signal_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "No Signals on This Page5 stored setups match these filters, but this page is empty. Use Prev when available, or reset filters to reload."
+      },
+      "name": "desktop.positive_total_empty_signal_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "Error",
+        "focus": "btnNextSignalsPage",
+        "ids": [],
+        "info": "Signal results unavailable",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.failed_signal_page_withholds_old_range_and_cards",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "nav-tab-brokers-telegram",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-002",
+          "fixture-scan-003",
+          "fixture-scan-004",
+          "fixture-scan-005",
+          "fixture-scan-006",
+          "fixture-scan-007",
+          "fixture-scan-008",
+          "fixture-scan-009",
+          "fixture-scan-010",
+          "fixture-scan-011",
+          "fixture-scan-012",
+          "fixture-scan-013",
+          "fixture-scan-014",
+          "fixture-scan-015"
+        ],
+        "info": "Showing 1\u201315 of 31 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.scans_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.scans_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "",
+        "ids": [
+          "fixture-scan-031"
+        ],
+        "info": "Showing 31\u201331 of 31 scan runs",
+        "next": true,
+        "previous": false
+      },
+      "name": "desktop.scans_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnPrevScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.scans_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-003",
+          "fixture-scan-005",
+          "fixture-scan-007",
+          "fixture-scan-009",
+          "fixture-scan-011",
+          "fixture-scan-013",
+          "fixture-scan-015",
+          "fixture-scan-017",
+          "fixture-scan-019",
+          "fixture-scan-021",
+          "fixture-scan-023",
+          "fixture-scan-025",
+          "fixture-scan-027",
+          "fixture-scan-029"
+        ],
+        "info": "Showing 1\u201315 of 16 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.scan_status_filter_resets_later_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.scan_filter_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "No scan runs recorded matching this filter."
+        ],
+        "info": "0 scan runs recorded",
+        "next": true,
+        "previous": true
+      },
+      "name": "desktop.empty_scan_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "item_ids": [],
+          "limit": 15,
+          "offset": 15,
+          "query": "limit=15&offset=15",
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "focus": "btnRefreshScans",
+          "ids": [
+            "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+          ],
+          "info": "No scan runs on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "desktop.shrinking_scan_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+      },
+      "name": "desktop.positive_total_empty_scan_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "Failed to load scan runs: HTTP 503 error on /api/scans"
+        ],
+        "info": "Error loading scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.failed_scan_page_withholds_old_range_and_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.production_dom_and_initial_pages",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "info": "Showing 1\u201320 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.signals_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnNextSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.signals_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 41\u201345 of 45",
+        "next": true,
+        "previous": false
+      },
+      "name": "narrow.signals_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnPrevSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.signals_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "info": "Showing 1\u201310 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.signals_page_size_10_resets_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.signal_page_size_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 1\u201345 of 45",
+        "next": true,
+        "previous": true
+      },
+      "name": "narrow.signals_page_size_50_resets_offset",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.symbol_filter_resets_later_page_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.symbol_filter_response_keeps_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "0 setups",
+        "focus": "searchSymbol",
+        "ids": [],
+        "info": "0 results",
+        "next": true,
+        "previous": true
+      },
+      "name": "narrow.empty_symbol_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "held": true,
+          "item_ids": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "limit": 10,
+          "offset": 10,
+          "query": "limit=10&offset=10",
+          "request_id": 32,
+          "status": 200,
+          "total": 45
+        },
+        {
+          "held": false,
+          "item_ids": [
+            3,
+            6,
+            9,
+            12,
+            15,
+            18,
+            21,
+            24,
+            27,
+            30
+          ],
+          "limit": 10,
+          "offset": 0,
+          "query": "limit=10&offset=0&symbol=RELIANCE",
+          "request_id": 33,
+          "status": 200,
+          "total": 15
+        }
+      ],
+      "name": "narrow.pagination_overlap_uses_distinct_filter_reads",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.late_page_cannot_replace_new_filter",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.late_page_cannot_steal_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "held": false,
+          "item_ids": [],
+          "limit": 20,
+          "offset": 20,
+          "query": "limit=20&offset=20",
+          "request_id": 37,
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "badge": "5 setups",
+          "focus": "btnRefreshDashboard",
+          "ids": [],
+          "info": "No results on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "narrow.shrinking_signal_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "No Signals on This Page5 stored setups match these filters, but this page is empty. Use Prev when available, or reset filters to reload."
+      },
+      "name": "narrow.positive_total_empty_signal_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "Error",
+        "focus": "btnNextSignalsPage",
+        "ids": [],
+        "info": "Signal results unavailable",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.failed_signal_page_withholds_old_range_and_cards",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "nav-tab-brokers-telegram",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-002",
+          "fixture-scan-003",
+          "fixture-scan-004",
+          "fixture-scan-005",
+          "fixture-scan-006",
+          "fixture-scan-007",
+          "fixture-scan-008",
+          "fixture-scan-009",
+          "fixture-scan-010",
+          "fixture-scan-011",
+          "fixture-scan-012",
+          "fixture-scan-013",
+          "fixture-scan-014",
+          "fixture-scan-015"
+        ],
+        "info": "Showing 1\u201315 of 31 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.scans_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.scans_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "",
+        "ids": [
+          "fixture-scan-031"
+        ],
+        "info": "Showing 31\u201331 of 31 scan runs",
+        "next": true,
+        "previous": false
+      },
+      "name": "narrow.scans_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnPrevScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.scans_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-003",
+          "fixture-scan-005",
+          "fixture-scan-007",
+          "fixture-scan-009",
+          "fixture-scan-011",
+          "fixture-scan-013",
+          "fixture-scan-015",
+          "fixture-scan-017",
+          "fixture-scan-019",
+          "fixture-scan-021",
+          "fixture-scan-023",
+          "fixture-scan-025",
+          "fixture-scan-027",
+          "fixture-scan-029"
+        ],
+        "info": "Showing 1\u201315 of 16 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.scan_status_filter_resets_later_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.scan_filter_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "No scan runs recorded matching this filter."
+        ],
+        "info": "0 scan runs recorded",
+        "next": true,
+        "previous": true
+      },
+      "name": "narrow.empty_scan_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "item_ids": [],
+          "limit": 15,
+          "offset": 15,
+          "query": "limit=15&offset=15",
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "focus": "btnRefreshScans",
+          "ids": [
+            "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+          ],
+          "info": "No scan runs on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "narrow.shrinking_scan_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+      },
+      "name": "narrow.positive_total_empty_scan_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "Failed to load scan runs: HTTP 503 error on /api/scans"
+        ],
+        "info": "Error loading scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.failed_scan_page_withholds_old_range_and_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_fetch_blocked_before_transport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_scan_probe_blocked_before_fixture_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "only_get_head_reached_exact_fixture_origin",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_scan_or_mutation_reached_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_javascript_exceptions_or_browser_crashes",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_server_failures",
+      "passed": true
+    }
+  ],
+  "cdp_allowed_requests": [
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/favicon.ico",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/health",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/config",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/oi-snapshots",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/opportunity-rankings",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/signals",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "GET",
+      "path": "/api/scans",
+      "scheme": "http"
+    }
+  ],
+  "cdp_blocked_requests": [
+    {
+      "host": "blocked.example",
+      "method": "GET",
+      "path": "/offline-interception-probe",
+      "scheme": "https"
+    },
+    {
+      "host": "127.0.0.1",
+      "method": "POST",
+      "path": "/api/scan",
+      "scheme": "http"
+    }
+  ],
+  "checks": [
+    {
+      "details": null,
+      "name": "desktop.production_dom_and_initial_pages",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "info": "Showing 1\u201320 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.signals_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnNextSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.signals_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 41\u201345 of 45",
+        "next": true,
+        "previous": false
+      },
+      "name": "desktop.signals_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnPrevSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.signals_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "info": "Showing 1\u201310 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.signals_page_size_10_resets_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.signal_page_size_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 1\u201345 of 45",
+        "next": true,
+        "previous": true
+      },
+      "name": "desktop.signals_page_size_50_resets_offset",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.symbol_filter_resets_later_page_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.symbol_filter_response_keeps_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "0 setups",
+        "focus": "searchSymbol",
+        "ids": [],
+        "info": "0 results",
+        "next": true,
+        "previous": true
+      },
+      "name": "desktop.empty_symbol_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "held": true,
+          "item_ids": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "limit": 10,
+          "offset": 10,
+          "query": "limit=10&offset=10",
+          "request_id": 12,
+          "status": 200,
+          "total": 45
+        },
+        {
+          "held": false,
+          "item_ids": [
+            3,
+            6,
+            9,
+            12,
+            15,
+            18,
+            21,
+            24,
+            27,
+            30
+          ],
+          "limit": 10,
+          "offset": 0,
+          "query": "limit=10&offset=0&symbol=RELIANCE",
+          "request_id": 13,
+          "status": 200,
+          "total": 15
+        }
+      ],
+      "name": "desktop.pagination_overlap_uses_distinct_filter_reads",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.late_page_cannot_replace_new_filter",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.late_page_cannot_steal_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "held": false,
+          "item_ids": [],
+          "limit": 20,
+          "offset": 20,
+          "query": "limit=20&offset=20",
+          "request_id": 17,
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "badge": "5 setups",
+          "focus": "btnRefreshDashboard",
+          "ids": [],
+          "info": "No results on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "desktop.shrinking_signal_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "No Signals on This Page5 stored setups match these filters, but this page is empty. Use Prev when available, or reset filters to reload."
+      },
+      "name": "desktop.positive_total_empty_signal_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "Error",
+        "focus": "btnNextSignalsPage",
+        "ids": [],
+        "info": "Signal results unavailable",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.failed_signal_page_withholds_old_range_and_cards",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "nav-tab-brokers-telegram",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-002",
+          "fixture-scan-003",
+          "fixture-scan-004",
+          "fixture-scan-005",
+          "fixture-scan-006",
+          "fixture-scan-007",
+          "fixture-scan-008",
+          "fixture-scan-009",
+          "fixture-scan-010",
+          "fixture-scan-011",
+          "fixture-scan-012",
+          "fixture-scan-013",
+          "fixture-scan-014",
+          "fixture-scan-015"
+        ],
+        "info": "Showing 1\u201315 of 31 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.scans_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.scans_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "",
+        "ids": [
+          "fixture-scan-031"
+        ],
+        "info": "Showing 31\u201331 of 31 scan runs",
+        "next": true,
+        "previous": false
+      },
+      "name": "desktop.scans_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnPrevScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "desktop.scans_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-003",
+          "fixture-scan-005",
+          "fixture-scan-007",
+          "fixture-scan-009",
+          "fixture-scan-011",
+          "fixture-scan-013",
+          "fixture-scan-015",
+          "fixture-scan-017",
+          "fixture-scan-019",
+          "fixture-scan-021",
+          "fixture-scan-023",
+          "fixture-scan-025",
+          "fixture-scan-027",
+          "fixture-scan-029"
+        ],
+        "info": "Showing 1\u201315 of 16 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.scan_status_filter_resets_later_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "desktop.scan_filter_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "No scan runs recorded matching this filter."
+        ],
+        "info": "0 scan runs recorded",
+        "next": true,
+        "previous": true
+      },
+      "name": "desktop.empty_scan_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "item_ids": [],
+          "limit": 15,
+          "offset": 15,
+          "query": "limit=15&offset=15",
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "focus": "btnRefreshScans",
+          "ids": [
+            "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+          ],
+          "info": "No scan runs on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "desktop.shrinking_scan_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+      },
+      "name": "desktop.positive_total_empty_scan_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "Failed to load scan runs: HTTP 503 error on /api/scans"
+        ],
+        "info": "Error loading scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "desktop.failed_scan_page_withholds_old_range_and_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.production_dom_and_initial_pages",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "info": "Showing 1\u201320 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.signals_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnNextSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.signals_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "",
+        "ids": [
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 41\u201345 of 45",
+        "next": true,
+        "previous": false
+      },
+      "name": "narrow.signals_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "btnPrevSignalsPage",
+        "ids": [
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40
+        ],
+        "info": "Showing 21\u201340 of 45",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.signals_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "info": "Showing 1\u201310 of 45",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.signals_page_size_10_resets_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.signal_page_size_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "45 setups",
+        "focus": "selectPageLimit",
+        "ids": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "info": "Showing 1\u201345 of 45",
+        "next": true,
+        "previous": true
+      },
+      "name": "narrow.signals_page_size_50_resets_offset",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.symbol_filter_resets_later_page_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.symbol_filter_response_keeps_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "0 setups",
+        "focus": "searchSymbol",
+        "ids": [],
+        "info": "0 results",
+        "next": true,
+        "previous": true
+      },
+      "name": "narrow.empty_symbol_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": [
+        {
+          "held": true,
+          "item_ids": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20
+          ],
+          "limit": 10,
+          "offset": 10,
+          "query": "limit=10&offset=10",
+          "request_id": 32,
+          "status": 200,
+          "total": 45
+        },
+        {
+          "held": false,
+          "item_ids": [
+            3,
+            6,
+            9,
+            12,
+            15,
+            18,
+            21,
+            24,
+            27,
+            30
+          ],
+          "limit": 10,
+          "offset": 0,
+          "query": "limit=10&offset=0&symbol=RELIANCE",
+          "request_id": 33,
+          "status": 200,
+          "total": 15
+        }
+      ],
+      "name": "narrow.pagination_overlap_uses_distinct_filter_reads",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "15 setups",
+        "focus": "searchSymbol",
+        "ids": [
+          3,
+          6,
+          9,
+          12,
+          15,
+          18,
+          21,
+          24,
+          27,
+          30
+        ],
+        "info": "Showing 1\u201310 of 15",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.late_page_cannot_replace_new_filter",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.late_page_cannot_steal_search_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "held": false,
+          "item_ids": [],
+          "limit": 20,
+          "offset": 20,
+          "query": "limit=20&offset=20",
+          "request_id": 37,
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "badge": "5 setups",
+          "focus": "btnRefreshDashboard",
+          "ids": [],
+          "info": "No results on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "narrow.shrinking_signal_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "No Signals on This Page5 stored setups match these filters, but this page is empty. Use Prev when available, or reset filters to reload."
+      },
+      "name": "narrow.positive_total_empty_signal_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "badge": "Error",
+        "focus": "btnNextSignalsPage",
+        "ids": [],
+        "info": "Signal results unavailable",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.failed_signal_page_withholds_old_range_and_cards",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "nav-tab-brokers-telegram",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-002",
+          "fixture-scan-003",
+          "fixture-scan-004",
+          "fixture-scan-005",
+          "fixture-scan-006",
+          "fixture-scan-007",
+          "fixture-scan-008",
+          "fixture-scan-009",
+          "fixture-scan-010",
+          "fixture-scan-011",
+          "fixture-scan-012",
+          "fixture-scan-013",
+          "fixture-scan-014",
+          "fixture-scan-015"
+        ],
+        "info": "Showing 1\u201315 of 31 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.scans_first_page",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.scans_middle_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "",
+        "ids": [
+          "fixture-scan-031"
+        ],
+        "info": "Showing 31\u201331 of 31 scan runs",
+        "next": true,
+        "previous": false
+      },
+      "name": "narrow.scans_last_page_native_next",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnPrevScansPage",
+        "ids": [
+          "fixture-scan-016",
+          "fixture-scan-017",
+          "fixture-scan-018",
+          "fixture-scan-019",
+          "fixture-scan-020",
+          "fixture-scan-021",
+          "fixture-scan-022",
+          "fixture-scan-023",
+          "fixture-scan-024",
+          "fixture-scan-025",
+          "fixture-scan-026",
+          "fixture-scan-027",
+          "fixture-scan-028",
+          "fixture-scan-029",
+          "fixture-scan-030"
+        ],
+        "info": "Showing 16\u201330 of 31 scan runs",
+        "next": false,
+        "previous": false
+      },
+      "name": "narrow.scans_previous_page_native_key",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "fixture-scan-001",
+          "fixture-scan-003",
+          "fixture-scan-005",
+          "fixture-scan-007",
+          "fixture-scan-009",
+          "fixture-scan-011",
+          "fixture-scan-013",
+          "fixture-scan-015",
+          "fixture-scan-017",
+          "fixture-scan-019",
+          "fixture-scan-021",
+          "fixture-scan-023",
+          "fixture-scan-025",
+          "fixture-scan-027",
+          "fixture-scan-029"
+        ],
+        "info": "Showing 1\u201315 of 16 scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.scan_status_filter_resets_later_offset",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "narrow.scan_filter_change_keeps_control_focus",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "filterScanStatus",
+        "ids": [
+          "No scan runs recorded matching this filter."
+        ],
+        "info": "0 scan runs recorded",
+        "next": true,
+        "previous": true
+      },
+      "name": "narrow.empty_scan_filter_truthful_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "last_response": {
+          "item_ids": [],
+          "limit": 15,
+          "offset": 15,
+          "query": "limit=15&offset=15",
+          "status": 200,
+          "total": 5
+        },
+        "range": {
+          "focus": "btnRefreshScans",
+          "ids": [
+            "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+          ],
+          "info": "No scan runs on this page (5 total)",
+          "next": true,
+          "previous": false
+        }
+      },
+      "name": "narrow.shrinking_scan_total_never_shows_inverted_range",
+      "passed": true
+    },
+    {
+      "details": {
+        "retained_total": 5,
+        "text": "5 scan runs match this filter, but this page is empty. Use Prev to view an earlier page."
+      },
+      "name": "narrow.positive_total_empty_scan_page_keeps_retained_total",
+      "passed": true
+    },
+    {
+      "details": {
+        "focus": "btnNextScansPage",
+        "ids": [
+          "Failed to load scan runs: HTTP 503 error on /api/scans"
+        ],
+        "info": "Error loading scan runs",
+        "next": false,
+        "previous": true
+      },
+      "name": "narrow.failed_scan_page_withholds_old_range_and_rows",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "external_fetch_blocked_before_transport",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "post_scan_probe_blocked_before_fixture_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "only_get_head_reached_exact_fixture_origin",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_scan_or_mutation_reached_server",
+      "passed": true
+    },
+    {
+      "details": null,
+      "name": "no_javascript_exceptions_or_browser_crashes",
+      "passed": true
+    },
+    {
+      "details": [],
+      "name": "no_fixture_server_failures",
+      "passed": true
+    }
+  ],
+  "command": [
+    "C:\\Users\\HP\\Downloads\\indian_fo_signal_bot_phase3b\\indian_fo_signal_bot_v1\\.venv_phase4\\Scripts\\python.exe",
+    "-B",
+    "-W",
+    "error::ResourceWarning",
+    "docs\\evidence\\astra_browser_pagination_verify_20261029_02.py",
+    "--stage",
+    "after_chrome_20261029_03",
+    "--browser",
+    "chrome"
+  ],
+  "environment_files_read": false,
+  "exit_code": 0,
+  "external_assets_omitted": false,
+  "fixture_scope": "OFFLINE_AUTHORED_HTTP_FIXTURE_NOT_LIVE_ACCEPTANCE",
+  "fixture_server_failures": [],
+  "helper_sha256": "bbc5e97cbf3e9c0ea830af0514e1dc4b0fb9771b2c19f46cf9d5e20a6a59f33b",
+  "html_preparation": {
+    "chart_stub": false,
+    "external_links_omitted": 0,
+    "external_scripts_omitted": 0,
+    "manifest_sha256": "abf318e600bd58b79f8a6300e071a046de8930c0c9c77ecfc30911678ef81f41",
+    "production_inline_scripts_unchanged": true,
+    "served_html_sha256": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "source_html_sha256": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "tailwind_stub": false
+  },
+  "javascript_exceptions": [],
+  "limitations": [
+    "Authored HTTP fixtures do not establish actual backend or LIVE integration",
+    "Exact manifest assets fulfilled from retained public bytes; no external page transport",
+    "Two viewport authored pagination checks; no full UX/accessibility attestation",
+    "No configured paper account or paper-ledger UI acceptance in this fixture",
+    "CDP blocks external requests and all methods except exact-origin GET/HEAD",
+    "Browser background-networking suppression is configuration, not OS packet capture"
+  ],
+  "log_file": "astra_browser_pagination_after_chrome_20261029_03.txt",
+  "log_sha256": "ed2f5765b474da62e05ed1a910bd3355a3bf623e042027d8faf77b17f99f432e",
+  "operational_database_accessed": false,
+  "probe_helper_sha256": "0cf5473f8b478c59d96fa9fc9cc2c51618b1a217139172432865d297c17517ad",
+  "scan_fixture_response_captures": [
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-031"
+      ],
+      "limit": 15,
+      "offset": 30,
+      "query": "limit=15&offset=30",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-003",
+        "fixture-scan-005",
+        "fixture-scan-007",
+        "fixture-scan-009",
+        "fixture-scan-011",
+        "fixture-scan-013",
+        "fixture-scan-015",
+        "fixture-scan-017",
+        "fixture-scan-019",
+        "fixture-scan-021",
+        "fixture-scan-023",
+        "fixture-scan-025",
+        "fixture-scan-027",
+        "fixture-scan-029"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0&status=COMPLETED",
+      "status": 200,
+      "total": 16
+    },
+    {
+      "item_ids": [],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0&status=SKIPPED_OVERLAP",
+      "status": 200,
+      "total": 0
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 5
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 503,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-031"
+      ],
+      "limit": 15,
+      "offset": 30,
+      "query": "limit=15&offset=30",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-003",
+        "fixture-scan-005",
+        "fixture-scan-007",
+        "fixture-scan-009",
+        "fixture-scan-011",
+        "fixture-scan-013",
+        "fixture-scan-015",
+        "fixture-scan-017",
+        "fixture-scan-019",
+        "fixture-scan-021",
+        "fixture-scan-023",
+        "fixture-scan-025",
+        "fixture-scan-027",
+        "fixture-scan-029"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0&status=COMPLETED",
+      "status": 200,
+      "total": 16
+    },
+    {
+      "item_ids": [],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0&status=SKIPPED_OVERLAP",
+      "status": 200,
+      "total": 0
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 200,
+      "total": 5
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-016",
+        "fixture-scan-017",
+        "fixture-scan-018",
+        "fixture-scan-019",
+        "fixture-scan-020",
+        "fixture-scan-021",
+        "fixture-scan-022",
+        "fixture-scan-023",
+        "fixture-scan-024",
+        "fixture-scan-025",
+        "fixture-scan-026",
+        "fixture-scan-027",
+        "fixture-scan-028",
+        "fixture-scan-029",
+        "fixture-scan-030"
+      ],
+      "limit": 15,
+      "offset": 15,
+      "query": "limit=15&offset=15",
+      "status": 503,
+      "total": 31
+    },
+    {
+      "item_ids": [
+        "fixture-scan-001",
+        "fixture-scan-002",
+        "fixture-scan-003",
+        "fixture-scan-004",
+        "fixture-scan-005",
+        "fixture-scan-006",
+        "fixture-scan-007",
+        "fixture-scan-008",
+        "fixture-scan-009",
+        "fixture-scan-010",
+        "fixture-scan-011",
+        "fixture-scan-012",
+        "fixture-scan-013",
+        "fixture-scan-014",
+        "fixture-scan-015"
+      ],
+      "limit": 15,
+      "offset": 0,
+      "query": "limit=15&offset=0",
+      "status": 200,
+      "total": 31
+    }
+  ],
+  "schema_version": "tradepulse.astra-browser-dom-keyboard.v1",
+  "scope": "AUTHORED_BROWSER_EXISTING_PAGINATION_NOT_BACKEND_OR_PAPER_ACCEPTANCE",
+  "screenshots": [
+    {
+      "file": "astra_browser_pagination_after_chrome_20261029_03_desktop.png",
+      "scope": "EXISTING_PAGINATION_AUTHORED_FIXTURE",
+      "sha256": "58a69964d0db86a281934909b51b3fa21e6e96db070156a6b2b71997ff2d7487",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      }
+    },
+    {
+      "file": "astra_browser_pagination_after_chrome_20261029_03_narrow.png",
+      "scope": "EXISTING_PAGINATION_AUTHORED_FIXTURE",
+      "sha256": "30d8de24825d827f5ebac95a0e194b26aa93207e87fd882ad7ee177b871624ad",
+      "viewport": {
+        "height": 844,
+        "width": 320
+      }
+    }
+  ],
+  "server_thread_stopped": true,
+  "signal_fixture_response_captures": [
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 1,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 2,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "limit": 20,
+      "offset": 40,
+      "query": "limit=20&offset=40",
+      "request_id": 3,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 4,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 5,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "limit": 50,
+      "offset": 0,
+      "query": "limit=50&offset=0",
+      "request_id": 6,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 7,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 10,
+      "offset": 10,
+      "query": "limit=10&offset=10",
+      "request_id": 8,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24,
+        27,
+        30
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0&symbol=RELIANCE",
+      "request_id": 9,
+      "status": 200,
+      "total": 15
+    },
+    {
+      "held": false,
+      "item_ids": [],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0&symbol=NOMATCH",
+      "request_id": 10,
+      "status": 200,
+      "total": 0
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 11,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": true,
+      "item_ids": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 10,
+      "offset": 10,
+      "query": "limit=10&offset=10",
+      "request_id": 12,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24,
+        27,
+        30
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0&symbol=RELIANCE",
+      "request_id": 13,
+      "status": 200,
+      "total": 15
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 14,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 15,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 16,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 17,
+      "status": 200,
+      "total": 5
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 18,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 19,
+      "status": 503,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 20,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 21,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 22,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "limit": 20,
+      "offset": 40,
+      "query": "limit=20&offset=40",
+      "request_id": 23,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 24,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 25,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "limit": 50,
+      "offset": 0,
+      "query": "limit=50&offset=0",
+      "request_id": 26,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 27,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 10,
+      "offset": 10,
+      "query": "limit=10&offset=10",
+      "request_id": 28,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24,
+        27,
+        30
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0&symbol=RELIANCE",
+      "request_id": 29,
+      "status": 200,
+      "total": 15
+    },
+    {
+      "held": false,
+      "item_ids": [],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0&symbol=NOMATCH",
+      "request_id": 30,
+      "status": 200,
+      "total": 0
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 31,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": true,
+      "item_ids": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 10,
+      "offset": 10,
+      "query": "limit=10&offset=10",
+      "request_id": 32,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        3,
+        6,
+        9,
+        12,
+        15,
+        18,
+        21,
+        24,
+        27,
+        30
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0&symbol=RELIANCE",
+      "request_id": 33,
+      "status": 200,
+      "total": 15
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "limit": 10,
+      "offset": 0,
+      "query": "limit=10&offset=0",
+      "request_id": 34,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 35,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 36,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 37,
+      "status": 200,
+      "total": 5
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 38,
+      "status": 200,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40
+      ],
+      "limit": 20,
+      "offset": 20,
+      "query": "limit=20&offset=20",
+      "request_id": 39,
+      "status": 503,
+      "total": 45
+    },
+    {
+      "held": false,
+      "item_ids": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "limit": 20,
+      "offset": 0,
+      "query": "limit=20&offset=0",
+      "request_id": 40,
+      "status": 200,
+      "total": 45
+    }
+  ],
+  "source_after": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_before": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_sha256": {
+    "public/index.html": "771ce662a50b7de468d7bcd9b788141961ccb6a92ba42e559a09a61cde230bac",
+    "test_cash_dashboard.js": "a3d5c98cfde32115f5624534ac28b65f15a4da57c9ee13ff3530a58115338ceb"
+  },
+  "source_unchanged": true,
+  "started_at": "2026-10-29T05:10:26.237787+00:00",
+  "status": "PASS",
+  "temporary_profile_removed": true
+}
