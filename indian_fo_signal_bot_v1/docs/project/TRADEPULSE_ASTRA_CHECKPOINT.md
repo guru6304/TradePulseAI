@@ -1,4 +1,16 @@
-# TradePulse Track A ? core freeze verified; exact next W4 task
+# TradePulse AI — H0 completed; owner review checkpoint
+
+Current checkpoint date: **2026-11-02 (IST)**. Worktree `C:\Users\91810\TradePulseAI-Worktrees\main`, branch `main`; audited application source HEAD `10830923d2b398370f7eb5229953557f01460b78`. Clean initial state and `1404d3b` ancestry exit **0** independently checked. H0 changes documentation only; its commit SHA is in Git history and the owner-facing handoff receipt.
+
+Read the current [master status and test receipts](TRADEPULSE_MASTER_STATUS.md), [UI/API contract](../agent-contracts/TP_UI_API_CONTRACT_V1.md), and [strategy integration contract](../agent-contracts/TP_STRATEGY_INTEGRATION_CONTRACT_V1.md). They supersede the old next-task instructions below. W4 full-snapshot collection and X-Ray stability are already present in current source; do not reimplement from the historical report. Four cash future-paper policies exist; Option Apex forward admission remains incomplete, distinct from historical premium replay. Advanced ranking inputs, genuine market/OOS acceptance, new research strategies, React migration, authenticated admin replay and release/operations gates remain pending as described in the status ledger.
+
+**STOP AFTER H0.** Owner reviews the contract commit and controls synchronization into `dev`. No H1, new strategy, UI migration, provider request, broker operation, operational DB migration, live paper execution or trading activation is authorized by this checkpoint. Preserve `ACTIVE_BROKER=paper_sim`, `TELEGRAM_DRY_RUN=true`, `ENABLE_BACKGROUND_SCHEDULER=false` for this offline work. No remote push was performed.
+
+On a separately requested continuation, inspect the new main HEAD and existing source before selecting the next unfinished H1 task. Do not repeat H0 or treat the historical 1,293-test receipt as a fresh result.
+
+---
+
+# Historical core freeze checkpoint — retained, superseded by H0 above
 
 Updated: 2026-10-29 23:45 IST. Mission `TPA-MAIN-RECOVERY-TO-RELEASE-20261029-V3`. Authoritative [board](TRADEPULSE_MASTER_STATUS.md). Branch main/HEAD1404d3bd43567a0717c34614a45d58b226857e3a; 575visible dirty/untracked files. Preserve .env/private/operationalDB/WAL, old evidence, dev and TrackB. No Git writes or provider/order/send authorization.
 

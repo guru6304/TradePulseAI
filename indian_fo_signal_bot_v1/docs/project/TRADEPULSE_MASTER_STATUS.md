@@ -1,4 +1,107 @@
-# TradePulse AI — Track A Recovery to Release
+# TradePulse AI — H0 source contracts frozen, 2026-11-02
+
+This section is the current implementation/status authority. Scope: **H0 only**, based on source revision `10830923d2b398370f7eb5229953557f01460b78`; the older board below is retained historical evidence. H1 has not begun. No application source, strategy, UI, operational configuration or production database is changed by H0.
+
+## Preflight and deliverables
+
+- Worktree: `C:\Users\91810\TradePulseAI-Worktrees\main`; branch `main`; initial `git status --short` empty. `git merge-base --is-ancestor 1404d3b HEAD` returned **0**. Local `origin/main` also resolved to `1083092`; no remote fetch was performed, so remote freshness beyond the retained tracking ref is **NOT_VERIFIED**.
+- Source-derived [UI/API contract](../agent-contracts/TP_UI_API_CONTRACT_V1.md) and [strategy integration contract](../agent-contracts/TP_STRATEGY_INTEGRATION_CONTRACT_V1.md). Their anchors refer to the unchanged source revision above. Unknown schemas and future interfaces remain explicitly `NOT_VERIFIED` or proposed.
+- H0 updates this existing status file and the [existing resume checkpoint](TRADEPULSE_ASTRA_CHECKPOINT.md); no competing status report is introduced. The local H0 commit receipt is reported to the owner after committing. No push or branch synchronization is included.
+- Reference authority reviewed: the 2026-11-02 Agent 1 continuation prompt and `START_HERE.md`; Stage 3 historical master/owner board, prior read-only audit and unverified UI dependency matrix; Stage 1 final research specification (especially time, ranking and integration boundaries); Stage 2 final design handoff and updated QA. Historical BRDs/design exports are context, not current schema or test evidence.
+
+## Current implementation ledger
+
+`COMPLETE CODE` means the specified implementation exists, with the scoped offline evidence below. It does not mean market acceptance, complete product acceptance or strategy alpha.
+
+| Area | Current classification | Source evidence and remaining dependency |
+|---|---|---|
+| Current main recovery | COMPLETE CODE | `1404d3b` is already included; no recovery merge/reset is needed. The initial ten commits are recorded below. |
+| HTTP method/security boundaries | COMPLETE CODE / PARTIAL | `server.py:1152` dispatches retained GET/HEAD; `server.py:1305` handles explicit POST; `server.py:1351` checks local origin; `server.py:1438` restricts binding. **Cold recognized reads may initialize runtime/store** at `server.py:1173`; scheduler behavior depends on `configure_server_runtime` at `server.py:1372`. Never promise universal zero writes from a cold GET. H0 tests inject disposable/fake runtime and keep scheduler disabled. Public/customer auth and RBAC remain absent. |
+| Existing five detection strategies | COMPLETE CODE | Existing evaluators in `strategies.py` and the scanner are documented in the strategy contract. Detection, rule quality and research eligibility do not establish profitable signals. |
+| Qualified cash rank/history | COMPLETE CODE / PARTIAL | `opportunity_ranking.py:41`, `:117`, `:144`; `rank_history.py:19`, `:311`. Quality descending, then actual **gross T1 R:R**, deterministic ties, one surviving symbol (including competing directions), maximum 512 candidate evaluations. Sector/relative strength/regime/depth/spread/net executable reward/empirical edge remain missing factors, not a new weighted model. |
+| W4 snapshot collection and X-Ray stability | COMPLETE CODE | `public/terminal.js:189` already collects bounded pages pinned to one run/version/scope, then filters/pages the collection; source-bound detail/selection and expiry guards exist. `test_terminal_opportunities.js:140` onward covers these behaviors. Old checkpoint's W4 first-page gap is superseded; no H1 fix is applied. |
+| Four cash forward paper policies | COMPLETE CODE | ORB/VWAP/Order Block/Supertrend policy dispatch in `paper_triggers.py:15`; coordinator in `forward_paper.py:18`; account allowlist `paper_portfolio.py:103`; atomic guarded entry `paper_portfolio.py:741`. Prospective fill, exit/risk/recovery fixtures are checked below. No operational account or live paper session was activated. |
+| Option Apex forward paper | PARTIAL / BLOCKED DATA | Detection and historical exact-premium replay exist in `strategies.py` / `option_execution.py`. `paper_portfolio.py:103` excludes Option Apex; the prospective trigger dispatcher has only four cash policies. Exact dated contract, synchronized executable premium quotes, units/liquidity and source admission must precede any forward integration. Historical option replay is not fifth-strategy forward acceptance. |
+| Data admission/time/lineage | COMPLETE CODE / BLOCKED DATA | `brokers.py:299` admission age differs from stricter rank/paper gates; `candle_lineage.py:161` requires retained qualified cash source. Offline adapter-shaped fixtures test normalization, gaps, timestamps, identity and lineage. Genuine authorized provider observations, dated universe/sector data and rights-qualified OOS remain unavailable for this acceptance. |
+| Same-symbol contrary paper positions | PARTIAL / NOT_VERIFIED | Ranking deduplicates symbols, but `paper_portfolio.py:741` entry does not establish an unconditional portfolio-wide opposite-direction exclusion for configurations allowing multiple positions. Trace/test both sides across strategy accounts before promising that invariant; H0 does not alter risk policy. |
+| New volume breakout/retest and option fitness | RESEARCH ONLY | Stage 1 designs are delegated to `feature/new-strategies`. No implemented activation flag or shared adapter is established on this main revision; default-OFF is a future integration requirement. No new strategy implementation or rank replacement is included. |
+| Frontend integration | PARTIAL | Active vanilla terminal uses same-origin stored GET data. No React/TypeScript/Vite project is present here. Nested public HTML/JS/CSS/assets can already be served (`server.py:239`); woff/woff2/fonts, JSON and source-map extensions are not allowlisted (`server.py:84`). Built asset paths/CSP compatibility and route-by-route parity require reviewed future integration. Options/research/paper/health are bounded previews, not full Stage 2 acceptance; Options Lab currently reads symbol/underlying where its DTO provides index_symbol (`public/terminal.js:552`, `storage.py:2979`). |
+| Proposed UI/admin features | PARTIAL / RESEARCH ONLY | Opportunity detail-by-path, per-symbol rank history, scan manifest and contract fitness endpoints from Stitch are absent; `/api/backtest-runs/compare` resolves as literal run detail, not a comparison operation (`server.py:109`). Exact inventory is in the UI contract. Point-in-time admin replay, backend role authorization and broad response runtime validators remain dependencies. Do not infer availability from a mockup. |
+| Local dependency reproducibility | PARTIAL | Required `.venv_phase4` from `docs/PROJECT_LAYOUT_AND_RETENTION.md` is absent in this worktree. The available Python interpreter has all five declared packages installed, but only cffi matches `requirements.txt`; four pinned versions differ (table below). No installation or dependency change is made in H0. |
+| External acceptance/release | BLOCKED DATA / NOT TESTED | No genuine OOS edge or authorized live scanner acceptance; no H0 five-strategy replay-to-browser acceptance, latency benchmark, browser QA, operating soak, release package or public/customer security certification. Existing historical receipts are retained, not rerun or promoted. |
+
+## H0 offline test evidence
+
+Audited source `1083092`; documentation-only changes do not change the Python source fingerprint. Observed environment: **Windows-11-10.0.26300-SP0, Python 3.12.4, SQLite 3.45.3, Node v24.16.0**. Tests used authored wire data, injected HTTP runtimes and memory/disposable SQLite stores. Outbound DNS/connect calls were blocked by the existing `verify_offline.offline_network`; test bootstrap ignores project `.env` and replaces configuration with literal safe defaults (`test_bot.py:11`). Fixture logs saying `mode=LIVE` are adapter-shaped test records, not private broker access. Intentional storage failures/stale data in negative cases were expected; the result below has zero test failures.
+
+| Executed check | Observed result |
+|---|---|
+| Targeted Python command below, 17 modules | **257 run / 257 passed**, failures 0, errors 0, skips 0; **164.742 seconds**, process exit 0. |
+| `node --test test_terminal_opportunities.js test_terminal_clock.js` | Exit **0**; **15 Opportunities tests + 2 timezone parent tests passed**, failures/skips 0. Each timezone parent requires 9 passing child tests (UTC and America/New_York), **18 child assertions** separately, not added to the parent test count. |
+| `git diff --check` | Exit **0**; no whitespace errors. Final source/staging review must contain only the two contracts, this status and the existing checkpoint. |
+
+Exact Python command, run from `C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1` in PowerShell (no application server/startup command):
+
+```powershell
+$env:ACTIVE_BROKER = 'paper_sim'
+$env:TELEGRAM_DRY_RUN = 'true'
+$env:ENABLE_BACKGROUND_SCHEDULER = 'false'
+$env:PYTHONDONTWRITEBYTECODE = '1'
+$tpH0Check = @'
+from contextlib import ExitStack
+import json, platform, sys, unittest
+from verify_offline import ExecutionResult, offline_network
+modules = ['test_market_data_contract', 'test_cash_lineage', 'test_astra_ranking', 'test_astra_rank_history', 'test_option_observations', 'test_option_execution', 'test_astra_paper_triggers', 'test_astra_vwap_execution', 'test_track_a_order_block_execution', 'test_track_a_supertrend_execution', 'test_phase6_paper_lifecycle', 'test_phase6_risk_recovery', 'test_astra_http_safety', 'test_track_a_cold_http', 'test_track_a_terminal_http', 'test_local_api_security', 'test_track_a_security']
+with ExitStack() as guards:
+    offline_network(guards)
+    import test_bot
+    suite = unittest.defaultTestLoader.loadTestsFromNames(modules)
+    result = unittest.TextTestRunner(verbosity=1, resultclass=ExecutionResult).run(suite)
+    summary = dict(python=sys.version.split()[0], platform=platform.platform(), modules=modules, executed=result.testsRun, passed=len(result.passed_ids), failures=len(result.failures), errors=len(result.errors), skipped=len(result.skipped), external_network='BLOCKED', source_head='1083092')
+    print(json.dumps(summary, sort_keys=True))
+    sys.exit(0 if result.wasSuccessful() and not result.skipped else 1)
+'@
+python -c $tpH0Check
+```
+
+The observed final JSON reported `executed:257`, `passed:257`, `failures:0`, `errors:0`, `skipped:0`, `external_network:"BLOCKED"`. This is a targeted H0 result, **not** a rerun of the historical 1,293-test baseline, pinned-environment certification, all-five market acceptance, or a performance benchmark. Tests named in either contract but outside the command are source-inspected only.
+
+Installed distribution metadata was checked without importing application configuration or contacting a registry:
+
+| Package | Repository pin | Installed in tested interpreter | Pin matched |
+|---|---|---|---|
+| cryptography | 50.0.2 | 50.0.1 | No |
+| cffi | 2.1.1 | 2.1.1 | Yes |
+| pycparser | 3.11 | 2.22 | No |
+| tzdata | 2026.5 | 2024.1 | No |
+| websockets | 15.0.1 | 16.1.1 | No |
+
+These mismatches are reproducibility dependencies; the passing fixture checks do not validate missing pinned environments or actual stream transport. No credentials, `.env` contents or operational database were read for this audit. Reference-folder reads needed sandbox approval; after access was granted there was no test execution blocker.
+
+## Handoff and stop
+
+Owner reviews the H0 commit, then controls `main -> dev` synchronization before strategy/UI agents depend on these interfaces. Strategy agent must use the existing DTOs behind additive, default-OFF adapters and preserve the ranker; UI agent must use the exact verified GET queries, complete run-pinned snapshot and locally served assets. Main retains scanner/ranker/SQLite/paper/API ownership. There is no automatic merge into `dev` or edit of the feature worktrees.
+
+**STOPPED AFTER H0.** Next authorized action is owner review/synchronization. H1 requires a follow-up instruction and must begin by checking its remaining gaps against the new HEAD, since W4 code already exists. Engineering/product gate percentages from the historical board are **not recalculated or newly accepted** by this contract audit.
+
+### Initial ten commits (newest first)
+
+```text
+1083092 docs: add project layout, VWAP evidence, and browser test assets
+1404d3b feat(astra): complete D01 options observation validator, live broker hardening & executive audit
+4030b39 astra ranking engine and somw new features added.
+fcdbadb docs(audit): complete combined phase 2/3 acceptance, phase 6 evidence validation, and roadmap closure
+df85455 feat(phase6): complete paper trading lifecycle, risk recovery, and release packaging
+facee6b feat(phase4-5): implement context integration, alerts outbox, and complete Phase 4/5 offline verification
+f569273 feat(phase4): implement structured strategy evaluations, candidate explanations, and dashboard analytics
+4eb7330 docs(task3): add Task 3 resumption audit artifacts and operator report
+9335734 feat(task3): complete real-data acceptance verification and closeout reporting
+5c9f095 chore: ignore historical_audit_logs.zip in .gitignore
+```
+
+---
+
+# Historical Track A board — 2026-10-29 (superseded for current H0 status)
 
 Mission: `TPA-MAIN-RECOVERY-TO-RELEASE-20261029-V3`. Authoritative current board; the owner's Workflow Board is the initial reference. Original six BRD phases and task IDs continue.
 
