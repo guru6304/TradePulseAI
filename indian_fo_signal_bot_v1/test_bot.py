@@ -10367,7 +10367,7 @@ def load_tests(loader, tests, pattern):
                        "test_astra_vwap_execution", "test_track_a_security",
                        "test_track_a_order_block_triggers", "test_track_a_order_block_execution",
                        "test_track_a_terminal_http", "test_track_a_supertrend_triggers",
-                       "test_track_a_supertrend_execution", "test_track_a_cold_http"):
+                       "test_track_a_supertrend_execution", "test_track_a_cold_http", "test_h1_paper_conflicts"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

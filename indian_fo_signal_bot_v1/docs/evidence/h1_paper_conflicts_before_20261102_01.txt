@@ -1,0 +1,88 @@
+test_closed_position_releases_the_opposite_direction_guard (test_h1_paper_conflicts.TestH1PaperConflicts.test_closed_position_releases_the_opposite_direction_guard) ... ok
+test_committed_entry_retry_recovers_before_new_opposite_exposure_check (test_h1_paper_conflicts.TestH1PaperConflicts.test_committed_entry_retry_recovers_before_new_opposite_exposure_check) ... ok
+test_concurrent_opposite_entries_on_independent_connections_commit_only_one (test_h1_paper_conflicts.TestH1PaperConflicts.test_concurrent_opposite_entries_on_independent_connections_commit_only_one) ... FAIL
+test_conflict_reads_retained_positions_when_report_previews_are_empty (test_h1_paper_conflicts.TestH1PaperConflicts.test_conflict_reads_retained_positions_when_report_previews_are_empty) ... FAIL
+test_independent_accounts_keep_independent_directional_exposure (test_h1_paper_conflicts.TestH1PaperConflicts.test_independent_accounts_keep_independent_directional_exposure) ... ok
+test_long_and_short_conflict_across_strategies_and_later_candidate_times (test_h1_paper_conflicts.TestH1PaperConflicts.test_long_and_short_conflict_across_strategies_and_later_candidate_times) ... 
+  test_long_and_short_conflict_across_strategies_and_later_candidate_times (test_h1_paper_conflicts.TestH1PaperConflicts.test_long_and_short_conflict_across_strategies_and_later_candidate_times) (first_side='LONG') ... FAIL
+  test_long_and_short_conflict_across_strategies_and_later_candidate_times (test_h1_paper_conflicts.TestH1PaperConflicts.test_long_and_short_conflict_across_strategies_and_later_candidate_times) (first_side='SHORT') ... ERROR
+test_opposite_side_different_instrument_remains_allowed (test_h1_paper_conflicts.TestH1PaperConflicts.test_opposite_side_different_instrument_remains_allowed) ... ok
+test_restart_enforces_the_retained_open_exposure (test_h1_paper_conflicts.TestH1PaperConflicts.test_restart_enforces_the_retained_open_exposure) ... FAIL
+test_revised_master_metadata_and_symbol_do_not_change_exposure_identity (test_h1_paper_conflicts.TestH1PaperConflicts.test_revised_master_metadata_and_symbol_do_not_change_exposure_identity) ... FAIL
+test_same_side_same_instrument_across_strategies_remains_allowed (test_h1_paper_conflicts.TestH1PaperConflicts.test_same_side_same_instrument_across_strategies_remains_allowed) ... ok
+
+======================================================================
+ERROR: test_long_and_short_conflict_across_strategies_and_later_candidate_times (test_h1_paper_conflicts.TestH1PaperConflicts.test_long_and_short_conflict_across_strategies_and_later_candidate_times) (first_side='SHORT')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\paper_portfolio.py", line 571, in _bar
+    raise ValueError()
+ValueError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 68, in test_long_and_short_conflict_across_strategies_and_later_candidate_times
+    opened = paper.enter(first, self.bar(first), "first")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\paper_portfolio.py", line 777, in enter
+    bar = self._bar(completed_next_bar, data["instrument_identity"], now)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\paper_portfolio.py", line 582, in _bar
+    _reject("INVALID_STALE_OR_UNFINISHED_BAR")
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\paper_portfolio.py", line 31, in _reject
+    raise PaperPortfolioError(code)
+paper_portfolio.PaperPortfolioError: INVALID_STALE_OR_UNFINISHED_BAR
+
+======================================================================
+FAIL: test_concurrent_opposite_entries_on_independent_connections_commit_only_one (test_h1_paper_conflicts.TestH1PaperConflicts.test_concurrent_opposite_entries_on_independent_connections_commit_only_one)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 190, in test_concurrent_opposite_entries_on_independent_connections_commit_only_one
+    self.assertEqual(sum(isinstance(outcome, dict) for outcome in outcomes), 1, outcomes)
+AssertionError: 2 != 1 : [{'status': 'OPEN', 'position_id': '2f10e26a27a84dbedfc37ee8d9a00f66b546aef818f7f8bcfbeb771fb88da7c7', 'execution_mode': 'SIMULATED'}, {'status': 'OPEN', 'position_id': '948794b1ccc4734f587920766efaadbef5b30cf7ad4903276d797149fc47a862', 'execution_mode': 'SIMULATED'}]
+
+======================================================================
+FAIL: test_conflict_reads_retained_positions_when_report_previews_are_empty (test_h1_paper_conflicts.TestH1PaperConflicts.test_conflict_reads_retained_positions_when_report_previews_are_empty)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 131, in test_conflict_reads_retained_positions_when_report_previews_are_empty
+    self.assert_conflict_without_effect(paper, second, self.bar(second), "outside-preview")
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 56, in assert_conflict_without_effect
+    with self.assertRaises(PaperPortfolioError) as caught:
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_long_and_short_conflict_across_strategies_and_later_candidate_times (test_h1_paper_conflicts.TestH1PaperConflicts.test_long_and_short_conflict_across_strategies_and_later_candidate_times) (first_side='LONG')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 73, in test_long_and_short_conflict_across_strategies_and_later_candidate_times
+    self.assert_conflict_without_effect(paper, second, self.bar(second, stamp="10:10"), "contrary")
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 56, in assert_conflict_without_effect
+    with self.assertRaises(PaperPortfolioError) as caught:
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_restart_enforces_the_retained_open_exposure (test_h1_paper_conflicts.TestH1PaperConflicts.test_restart_enforces_the_retained_open_exposure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 170, in test_restart_enforces_the_retained_open_exposure
+    self.assert_conflict_without_effect(recovered, opposite, self.bar(opposite), "after-restart")
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 56, in assert_conflict_without_effect
+    with self.assertRaises(PaperPortfolioError) as caught:
+AssertionError: PaperPortfolioError not raised
+
+======================================================================
+FAIL: test_revised_master_metadata_and_symbol_do_not_change_exposure_identity (test_h1_paper_conflicts.TestH1PaperConflicts.test_revised_master_metadata_and_symbol_do_not_change_exposure_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 119, in test_revised_master_metadata_and_symbol_do_not_change_exposure_identity
+    self.assert_conflict_without_effect(paper, second, self.bar(second), "renamed-contract")
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_h1_paper_conflicts.py", line 56, in assert_conflict_without_effect
+    with self.assertRaises(PaperPortfolioError) as caught:
+AssertionError: PaperPortfolioError not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.860s
+
+FAILED (failures=5, errors=1)

@@ -2,6 +2,10 @@
 
 Source freeze: `main` at `1083092`, inspected 2026-11-02 for Work Package H0. Paths and line anchors below are relative to `indian_fo_signal_bot_v1/` at that revision. This document describes existing Python/SQLite and browser behavior; it does not activate any operation or establish market acceptance. The H0 execution receipt is in [the authoritative status file](../project/TRADEPULSE_MASTER_STATUS.md).
 
+## H1 additive paper reason — unchanged HTTP schemas
+
+The first H1 backend checkpoint adds `CONFLICTING_OPEN_POSITION` to the reason strings that a retained REJECTED paper candidate decision can carry. The account entry service rejects a new opposing position for the same stable provider/token/exchange/segment/instrument-type identity inside its existing write transaction. The existing forward coordinator records this error through its ordinary REJECTED transition; read clients display the retained reason without initiating another entry or scan. This is an account-level risk restriction, not a ranking status or global multi-account guarantee. No route, query syntax, response key, nullability, actionability or pagination contract changes. See [paper_portfolio.py:795](../../paper_portfolio.py#L795), [forward_paper.py:252](../../forward_paper.py#L252), the strategy contract H1 addendum and the current status for test evidence. Original H0 line anchors below refer to their stated source freeze.
+
 ## Transport, methods, and local authority
 
 The API is the standard-library `DashboardRequestHandler`, with equivalent `/api/<resource>` and `/api/v1/<resource>` aliases. A trailing slash is removed before API dispatch. `HEAD` executes the same read handler and sends the same headers and computed content length as `GET`, but no body. API JSON uses UTF-8, `Cache-Control: no-store` and `X-Content-Type-Options: nosniff`. An optional handler `evidence_scope` is added at the top level of **every** JSON response, including errors. See [server.py:102](../../server.py#L102), [server.py:221](../../server.py#L221), [server.py:1152](../../server.py#L1152).

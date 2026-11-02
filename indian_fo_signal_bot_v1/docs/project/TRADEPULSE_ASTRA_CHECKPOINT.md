@@ -1,4 +1,18 @@
-# TradePulse AI — H0 completed; owner review checkpoint
+# TradePulse AI — H1 checkpoint 1; stopped for owner review
+
+Checkpoint date: **2026-11-02 (IST)**. Worktree `C:\Users\91810\TradePulseAI-Worktrees\main`, branch `main`; implementation base **`8faaf5a23ffb35bf635ae8cdadf3c5f5913cc802`**, clean at start and matching the local `origin/main` tracking ref. H0 is reviewed/approved and its push/synchronization is owner-confirmed. The H1 local commit SHA is recorded in Git history and the owner-facing handoff.
+
+Implemented one backend checkpoint: an atomic **account-scoped** opposite-side open-position guard in `PaperPortfolio.enter`. Stable provider/token/exchange/segment/instrument-type identity is checked across every retained account position before new financial effects; rejection reason **`CONFLICTING_OPEN_POSITION`**. Idempotent recovery, existing reconciliation/risk block precedence, same-side/different-instrument behavior, independent accounts and closed-position release are preserved. New regression tests are registered in `test_bot.load_tests`. No SQLite schema/configuration change, new route, ranking change, frontend edit or strategy implementation is included.
+
+Read the current [master status and bound test receipts](TRADEPULSE_MASTER_STATUS.md), [UI/API additive reason](../agent-contracts/TP_UI_API_CONTRACT_V1.md), and [strategy safety addendum](../agent-contracts/TP_STRATEGY_INTEGRATION_CONTRACT_V1.md). The test receipts distinguish expected red proof, an earlier fixture-clock error, and final passing verification. The old H0 and W4 next-task text below is historical.
+
+**STOP after this first H1 implementation checkpoint.** Owner review is next; no push, merge or second checkpoint. All verification remains offline with `ACTIVE_BROKER=paper_sim`, `TELEGRAM_DRY_RUN=true`, `ENABLE_BACKGROUND_SCHEDULER=false`, transport guards and disposable stores. No credentials, live provider requests, Telegram sends, operational DB modifications or trading activation.
+
+Next recommended backend task, only after authorization: source-bound Option Apex prospective-readiness preflight for exact dated identity and executable premium time/price/units/liquidity. Keep forward Option Apex blocked until qualified premium inputs and lifecycle exist. Preserve W4, the four cash prospective policies, lexicographic ranking and delegated feature ownership. Do not repeat H0.
+
+---
+
+# Historical H0 checkpoint — approved and superseded above
 
 Current checkpoint date: **2026-11-02 (IST)**. Worktree `C:\Users\91810\TradePulseAI-Worktrees\main`, branch `main`; audited application source HEAD `10830923d2b398370f7eb5229953557f01460b78`. Clean initial state and `1404d3b` ancestry exit **0** independently checked. H0 changes documentation only; its commit SHA is in Git history and the owner-facing handoff receipt.
 

@@ -1,4 +1,49 @@
-# TradePulse AI — H0 source contracts frozen, 2026-11-02
+# TradePulse AI — H1 checkpoint 1: atomic contrary-entry safety
+
+Current checkpoint: **2026-11-02 (IST)**, branch `main`, based on approved H0 commit `8faaf5a23ffb35bf635ae8cdadf3c5f5913cc802`. The initial worktree was clean and matched the local `origin/main` tracking ref. H0 review/push/synchronization is owner-confirmed. This is the **first H1 implementation checkpoint**; no push, merge or second checkpoint is included. Its commit SHA is reported in the owner-facing handoff and Git history.
+
+## Implemented behavior and scope
+
+An offline fixture at the H0 source opened both LONG and SHORT for one account/instrument and still reconciled as OK. `PaperPortfolio.enter` now checks **all retained account positions** inside the existing SQLite write transaction, after idempotent recovery and existing risk/reconciliation blocks, before any new reservation or financial effect. A new opposite-side OPEN position for the same `(provider, identifier, exchange, segment, instrument_type)` is rejected with **`CONFLICTING_OPEN_POSITION`**. The key ignores mutable labels/master revisions; bounded report previews cannot hide an existing position.
+
+| Current area | State | Source/evidence and limits |
+|---|---|---|
+| Account-level contrary-entry gate | COMPLETE CODE | `paper_portfolio.py:795`; `storage.py:930` supplies `BEGIN IMMEDIATE`. Both directions, cross-strategy/time, valid synthetic symbol/master revisions, empty previews, full-ledger rollback, restart and two independent SQLite-connection races are covered by `test_h1_paper_conflicts.py:63`. |
+| Compatibility and recovery | COMPLETE CODE | The 10 new tests preserve same-side entries, different instruments, independent accounts, closed-position release and committed-event recovery. The gate preserves existing earlier block precedence. It does not establish a no-pyramiding rule or a global multi-account risk budget; existing contradictory data is not rewritten or liquidated. |
+| Four cash future-paper policies | COMPLETE CODE within existing offline scope | Existing ORB/VWAP/Order Block/Supertrend tests accompany the change. Their detector/trigger/fill/exit rules are preserved. No operational account, scheduler or live paper session is activated. |
+| API and strategy integration | ADDITIVE | [UI contract](../agent-contracts/TP_UI_API_CONTRACT_V1.md) and [strategy contract](../agent-contracts/TP_STRATEGY_INTEGRATION_CONTRACT_V1.md) now identify the new rejection reason. Existing coordinator error handling records it on REJECTED decisions (`forward_paper.py:252`). No route, DTO, query, config field or DB schema is added. |
+| Option Apex prospective premium lifecycle | PARTIAL / BLOCKED DATA | Remains outside `paper_portfolio.py:103` cash allowlist. `scanner_engine.py:841`, `:1379` hand off underlying/cash bars; inspection captures cannot supply qualified executable premiums (`option_observations.py:230`, `:345`). Exact dated identity authority, synchronized premium clocks/bid/ask, units/liquidity and future premium ledger integration remain required. Historical replay is a separate capability. |
+| W4 and production rank | COMPLETE CODE / PARTIAL | Existing W4 remains implemented; no UI code is changed. Cash quality/gross-T1-RR lexicographic rank remains unchanged; advanced factors and empirical evidence remain unavailable. |
+| Operational/data acceptance | PARTIAL / BLOCKED DATA / NOT TESTED | Cold-read initialization/scheduler caveat, broader operating security, genuine authorized feed acceptance, rights-qualified dated OOS, cross-account coordination and release/soak gates remain open. H0 pinned-environment mismatch is unresolved; this checkpoint does not install dependencies. |
+| Delegated research and React | RESEARCH ONLY / OTHER OWNERS | New research strategies and React implementation remain owned by their feature branches. Neither worktree is modified. |
+
+## Executed verification
+
+All execution used Python **3.12.4** on Windows, safe process flags (`ACTIVE_BROKER=paper_sim`, `TELEGRAM_DRY_RUN=true`, `ENABLE_BACKGROUND_SCHEDULER=false`), the existing credential-free `test_bot` bootstrap, outbound socket/DNS guards and disposable fixture stores. LIVE-shaped adapter logs are synthetic wire fixtures, not broker requests. Neither project `.env` nor an operational DB was used.
+
+| Receipt | Executed result | Interpretation |
+|---|---|---|
+| [Before 01](../evidence/h1_paper_conflicts_before_20261102_01.json) / [log](../evidence/h1_paper_conflicts_before_20261102_01.txt) | 10 methods, 5 passed, 5 assertion failures, 1 error, 0 skips; exit 1 | Initial red proof plus a test-clock isolation error: an earlier failing subtest skipped its end-of-case clock reset. Retained, not accepted. The reset moved to the start of each subtest; no safety expectation was relaxed. |
+| [Before 02](../evidence/h1_paper_conflicts_before_20261102_02.json) / [log](../evidence/h1_paper_conflicts_before_20261102_02.txt) | 10 methods, 5 passed, **6 assertion failures across 5 failing methods**, 0 errors/skips; exit 1 | Corrected fixture at the original backend: all conflict/race expectations fail as expected, while compatibility controls pass. Both directional subtests fail independently. |
+| [After 02](../evidence/h1_paper_conflicts_after_20261102_02.json) / [log](../evidence/h1_paper_conflicts_after_20261102_02.txt) | **209/209 passed**, failures/errors/skips 0; exit **0**. Unittest 192.920s; guarded run including imports/receipt preparation 193.938s. | 10 new regressions + 199 existing tests across 13 modules. Source manifests before/after match; unraisable errors 0; complete expected/executed/passed IDs and log SHA-256 are retained. |
+
+Exact executed invocation from the application directory: **`python -B -c $tpH1Check after`**, with the three safe flags and `PYTHONDONTWRITEBYTECODE=1`. The full inline runner is retained verbatim in the after receipt's `command` array (`command[3]`), together with its exact interpreter path, arguments, working directory, source hashes and base revision. It uses `verify_offline.offline_network`, `ExecutionResult`, `case_ids`, `python_result` and `source_snapshot`; it rejects duplicate/zero/missing test execution, skips and changed source, and never overwrites a prior receipt. For a separately requested rerun, reuse that inline runner with a fresh stage string (for example `after_review`) so prior evidence remains immutable.
+
+Executed modules: `test_h1_paper_conflicts`, `test_phase5a_paper`, `test_phase5b_forward`, `test_phase5c_recovery`, `test_astra_paper_triggers`, `test_astra_vwap_execution`, `test_track_a_order_block_execution`, `test_track_a_supertrend_execution`, `test_phase6_paper_lifecycle`, `test_phase6_risk_recovery`, `test_paper_sessions`, `test_astra_rank_history`, `test_market_data_contract`.
+
+This is focused software evidence, not a full-suite, browser, latency, pinned-dependency, empirical-edge or live-market acceptance result. Independent validation matched the passing receipt to current source and all three log hashes; all **175** document links checked resolve. Code/test/document/JSON whitespace checks passed. The two immutable negative-run text logs each retain one trailing space emitted by unittest before subtest failures; the unrestricted staged whitespace check reports those two log lines. The final staged whitespace check excludes only those raw logs, preserving their original hash-bound bytes. Independent review found no blocking issue in the guard or test coverage.
+
+The new module is registered additively in the established `test_bot.load_tests` command (`test_bot.py:10370`). A separate **discovery-only** check found **1,315 unique test IDs**, including all 10 new IDs once; it executed zero tests. This is not a full-suite pass claim. No existing assertion or acceptance threshold was weakened.
+
+## Handoff and next recommended task
+
+The other agents need only accept the additional paper-decision reason `CONFLICTING_OPEN_POSITION`; the frontend should render it from retained data, and strategy adapters must respect the atomic account entry service. There is no new HTTP/strategy DTO or shared-schema migration. Original H0 anchors are retained at their stated source revision; H1 addenda identify current behavior.
+
+**STOP AFTER CHECKPOINT 1 FOR OWNER REVIEW.** The next recommended H1 backend task is a source-bound Option Apex prospective-admission preflight: distinguish analytical detector readiness from qualified dated-contract/premium quote readiness, retain explicit missing/source/time/unit/liquidity reasons, and prove that underlying bars or inspection-only captures cannot enable a forward option entry. Keep the option paper allowlist closed until that input contract and later premium lifecycle are independently accepted. This next task is a recommendation, not work begun in this checkpoint. No push/merge/second checkpoint is authorized.
+
+---
+
+# Historical H0 source-contract checkpoint — 2026-11-02
 
 This section is the current implementation/status authority. Scope: **H0 only**, based on source revision `10830923d2b398370f7eb5229953557f01460b78`; the older board below is retained historical evidence. H1 has not begun. No application source, strategy, UI, operational configuration or production database is changed by H0.
 

@@ -793,6 +793,19 @@ class PaperPortfolio:
             snapshot = self._snapshot(conn, now)
             if snapshot["entry_blocks"]:
                 _reject(snapshot["entry_blocks"][0])
+            # Reserve risk only after checking every retained account position.
+            # Report previews and mutable symbol/master metadata are not exposure
+            # identity. BEGIN IMMEDIATE serializes this check with the entry.
+            identity_fields = ("provider", "identifier", "exchange", "segment", "instrument_type")
+            candidate_identity = tuple(data["instrument_identity"][key] for key in identity_fields)
+            for position in self._positions(conn):
+                if position["status"] == "OPEN" and position["side"] != side:
+                    try:
+                        open_identity = tuple(position["instrument_identity"][key] for key in identity_fields)
+                    except (KeyError, TypeError):
+                        _reject("RECONCILIATION_REQUIRED")
+                    if open_identity == candidate_identity:
+                        _reject("CONFLICTING_OPEN_POSITION")
             if (datetime.combine(now.date(), time.fromisoformat(self.config.square_off_ist), tzinfo=IST) <= now):
                 _reject("ENTRY_AFTER_SQUARE_OFF")
             forward_close = self.config.fill_policy in (FORWARD_FILL_POLICY, *TRIGGER_FILL_POLICIES)
