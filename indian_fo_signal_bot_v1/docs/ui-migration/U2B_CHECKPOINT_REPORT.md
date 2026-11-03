@@ -59,10 +59,13 @@ Checkpoint **U2-B (Real Browser Acceptance)** executes genuine HTTP-served headl
 
 | File Path | Nature of Change | Purpose / Description |
 | :--- | :--- | :--- |
+| `run_browser_acceptance.mjs` | Created | Standalone, reproducible headless Chromium browser acceptance test runner using Chrome DevTools Protocol (CDP) over native WebSocket; orchestrates HTTP serving and Python backend lifecycle. |
+| `indian_fo_signal_bot_v1/offline_backend_server.py` | Created | Deterministic, offline Python test backend fixture using `DashboardRequestHandler` from `server.py` with zero operational database mutation, zero live broker connection, and complete 25-candidate ranking, lineage, candle, and paper-rejection fixtures. |
+| `frontend/package.json` | Modified | Added npm script `"test:browser": "node ../run_browser_acceptance.mjs"` for convenient developer execution from the `frontend/` directory. |
 | `frontend/src/views/XRayDrawer.tsx` | Modified | Implemented accessible focus management (`useRef`), capturing triggering Inspect button on open, shifting focus to close button, and restoring focus on modal dismissal. |
 | `frontend/vite.config.ts` | Modified | Hardened development and preview proxy header rewriting using underlying TCP socket IP (`req.socket.remoteAddress`) loopback verification in conjunction with Host and Origin validation. |
 | `indian_fo_signal_bot_v1/docs/project/ui-evidence/*.png` (31 files) | Created | Full suite of real browser screenshot artifacts captured across Desktop, Tablet, and Mobile viewports for all 8 views and interactions. |
-| `indian_fo_signal_bot_v1/docs/ui-migration/U2B_CHECKPOINT_REPORT.md` | Created | Comprehensive U2-B acceptance report, browser parity analysis, rank history reconciliation, and verification evidence. |
+| `indian_fo_signal_bot_v1/docs/ui-migration/U2B_CHECKPOINT_REPORT.md` | Modified | Comprehensive U2-B acceptance report, browser parity analysis, rank history reconciliation, screenshot inventory, and verification evidence. |
 
 ---
 
@@ -95,7 +98,78 @@ Each view was navigated to over HTTP (`http://127.0.0.1:5173/#/{view}`), evaluat
 | **Admin Research** | `#/admin-research` | PASS (`198 KB`) | PASS (`167 KB`) | PASS (`135 KB`) | PASS (No clipping) |
 | **Mobile "More" Sheet** | `#/pulse` (mobile) | N/A | N/A | PASS (`149 KB`) | PASS (No clipping) |
 
-*All 31 screenshot artifacts are stored in `indian_fo_signal_bot_v1/docs/project/ui-evidence/`.*
+### 3.3. Complete 31-Screenshot Visual Evidence Inventory
+
+All 31 screenshots are saved in `indian_fo_signal_bot_v1/docs/project/ui-evidence/` and verified:
+
+| # | Artifact Filename | Viewport | View / State | Visual Verification Target |
+| :-: | :--- | :--- | :--- | :--- |
+| 1 | `tradepulse_u2b_pulse_desktop.png` | Desktop (1440x900) | Pulse | Top shortlist cards, 4-column KPI stats, "What Changed" delta cards |
+| 2 | `tradepulse_u2b_pulse_tablet.png` | Tablet (768x1024) | Pulse | Responsive tablet layout, stat grid reflow, sidebar navigation |
+| 3 | `tradepulse_u2b_pulse_mobile.png` | Mobile (390x844) | Pulse | 2-column KPI stats, bottom `MobileNav` bar, compact summary cards |
+| 4 | `tradepulse_u2b_opportunities_desktop.png` | Desktop (1440x900) | Opportunities | 20-candidate table, server ranking `#1..#20`, predecessor rank `(prior #3)` |
+| 5 | `tradepulse_u2b_opportunities_tablet.png` | Tablet (768x1024) | Opportunities | Table horizontal scroll container, column alignment, sticky headers |
+| 6 | `tradepulse_u2b_opportunities_mobile.png` | Mobile (390x844) | Opportunities | Mobile horizontal swiping, compact row badges, inspect action buttons |
+| 7 | `tradepulse_u2b_opportunities_page2_desktop.png` | Desktop (1440x900) | Opps (Page 2) | Candidates `#21..#25`, client pagination info `"Page 2 of 2"`, disabled Next button |
+| 8 | `tradepulse_u2b_opportunities_page2_tablet.png` | Tablet (768x1024) | Opps (Page 2) | Tablet pagination bar layout, enabled Previous button, disabled Next button |
+| 9 | `tradepulse_u2b_opportunities_page2_mobile.png` | Mobile (390x844) | Opps (Page 2) | Mobile pagination bar responsiveness, thumb-accessible paging buttons |
+| 10 | `tradepulse_u2b_xray_open_desktop.png` | Desktop (1440x900) | X-Ray Drawer | Sliding inspector panel, 5m candlestick chart, active close button focus |
+| 11 | `tradepulse_u2b_xray_open_tablet.png` | Tablet (768x1024) | X-Ray Drawer | 500px tablet drawer overlay, dimmed background backdrop blur |
+| 12 | `tradepulse_u2b_xray_open_mobile.png` | Mobile (390x844) | X-Ray Drawer | Full-width immersive mobile sheet, top close control, zero lookahead notice |
+| 13 | `tradepulse_u2b_xray_diagnostics_desktop.png` | Desktop (1440x900) | X-Ray (Diagnostics) | Amber `CONFLICTING_OPEN_POSITION` badge, cryptographic source lineage |
+| 14 | `tradepulse_u2b_xray_diagnostics_tablet.png` | Tablet (768x1024) | X-Ray (Diagnostics) | Tablet paper decision status, source digest SHA-256, opportunity key |
+| 15 | `tradepulse_u2b_xray_diagnostics_mobile.png` | Mobile (390x844) | X-Ray (Diagnostics) | Mobile paper trigger decision, reason code display, read-only footer |
+| 16 | `tradepulse_u2b_options_desktop.png` | Desktop (1440x900) | Options Lab | Index strike selector, unavailable options chain notice, institutional styling |
+| 17 | `tradepulse_u2b_options_tablet.png` | Tablet (768x1024) | Options Lab | Tablet options layout, strike table placeholder, clear unavailable states |
+| 18 | `tradepulse_u2b_options_mobile.png` | Mobile (390x844) | Options Lab | Mobile options summary, compact parameters, no fictitious options data |
+| 19 | `tradepulse_u2b_strategies_desktop.png` | Desktop (1440x900) | Strategies | 4 institutional strategy catalog cards, parameters, indicators, rules |
+| 20 | `tradepulse_u2b_strategies_tablet.png` | Tablet (768x1024) | Strategies | 2-column strategy grid, setup parameters, entry/invalidation formulas |
+| 21 | `tradepulse_u2b_strategies_mobile.png` | Mobile (390x844) | Strategies | Stacked strategy catalog cards, readable fonts, touch-friendly scrolling |
+| 22 | `tradepulse_u2b_paper_desktop.png` | Desktop (1440x900) | Paper Portfolio | Reconciled ledger accounting, capital stats, open simulated positions |
+| 23 | `tradepulse_u2b_paper_tablet.png` | Tablet (768x1024) | Paper Portfolio | Tablet portfolio layout, P&L metrics, zero real-broker trading controls |
+| 24 | `tradepulse_u2b_paper_mobile.png` | Mobile (390x844) | Paper Portfolio | Stacked portfolio accounting cards, position table with horizontal scroll |
+| 25 | `tradepulse_u2b_health_desktop.png` | Desktop (1440x900) | System Health | Engine status, scheduler loop, broker connectivity, scan execution logs |
+| 26 | `tradepulse_u2b_health_tablet.png` | Tablet (768x1024) | System Health | Tablet diagnostic metrics, recent scan history table, clock sync status |
+| 27 | `tradepulse_u2b_health_mobile.png` | Mobile (390x844) | System Health | Mobile health cards, uptime status badge, scan cycles executed |
+| 28 | `tradepulse_u2b_admin-research_desktop.png` | Desktop (1440x900) | Admin Research | Historical datasets table, backtest run inspector, parameter filters |
+| 29 | `tradepulse_u2b_admin-research_tablet.png` | Tablet (768x1024) | Admin Research | Tablet dataset search, backtest runs query, execution mode badges |
+| 30 | `tradepulse_u2b_admin-research_mobile.png` | Mobile (390x844) | Admin Research | Mobile dataset listings, backtest status, read-only administration |
+| 31 | `tradepulse_u2b_mobile_more_sheet.png` | Mobile (390x844) | Mobile More Sheet | Thumb-accessible popover menu (`role="menu"`), secondary route links |
+
+### 3.4. Exact Execution Commands, Prerequisites & Verification Limitations
+
+#### Prerequisites
+- **Node.js**: v20.0.0 or later (tested on Node v24.2.0; requires native global `WebSocket` support).
+- **Python**: 3.10 or later (tested on Python 3.12.3; standard library + bot dependencies in `indian_fo_signal_bot_v1/requirements.txt`).
+- **Browser**: Google Chrome, Chromium, or Microsoft Edge installed on the host system.
+
+#### Exact Commands for Reproducibility
+```powershell
+# 1. From repository root (recommended):
+node run_browser_acceptance.mjs
+
+# 2. Or from frontend directory:
+cd frontend
+npm run test:browser
+
+# 3. Optional custom configuration via environment variables:
+$env:CHROME_PATH="C:\Program Files\Google\Chrome\Application\chrome.exe"
+$env:BACKEND_PORT="8000"
+$env:FRONTEND_PORT="5173"
+$env:CHROME_DEBUG_PORT="9222"
+node run_browser_acceptance.mjs
+```
+
+#### Automated Harness Architecture
+1. **Frontend Production Build**: Runs `npm.cmd run build` inside `frontend/` generating optimized assets in `frontend/dist`.
+2. **Offline Backend Process**: Spawns `python -u indian_fo_signal_bot_v1/offline_backend_server.py 8000`. Uses `verify_offline.offline_network` to block all external socket requests. Serves canonical DTO endpoints using `DashboardRequestHandler` from `server.py`.
+3. **HTTP Static & Proxy Server**: Binds to `127.0.0.1:5173`, serves static files from `frontend/dist`, and proxies `/api/*` to `127.0.0.1:8000` with same-origin header emulation.
+4. **Headless Chromium Orchestration**: Spawns Chrome in `--headless=new` with remote debugging port 9222. Connects directly via native `WebSocket` over Chrome DevTools Protocol (`Page.*`, `Runtime.*`, `Emulation.*`, `Input.*`).
+5. **Deterministic Tear-Down**: Closes WebSocket, terminates Chrome process, shuts down Node HTTP server, terminates Python backend process, and deletes temporary `--user-data-dir`.
+
+#### Verification Limitations
+- **Chromium Mobile Emulation**: Mobile Safari (WebKit on iOS) rendering is emulated using Chromium's mobile device metrics override (390×844, Device Scale Factor 2, `mobile: true`, touch emulation). Pixel-perfect WebKit rendering (e.g. iOS rubber-band scrolling) requires a physical Apple device or macOS Safari test runner.
+- **Offline Backend Fixture**: Uses deterministic in-memory fixtures. No real Upstox or Angel One broker credentials, active market WebSocket feeds, or live exchange order APIs were connected. Operational SQLite databases (`trade_pulse.db`, `paper_portfolio.db`) were strictly untouched.
 
 ---
 
