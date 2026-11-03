@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --tp-canvas: #090f15;
+  --tp-panel: #0f141b;
+  --tp-panel-raised: #171c23;
+  --tp-panel-hover: #1e252f;
+  --tp-border: #2d3542;
+  --tp-text: #dee2ec;
+  --tp-muted: #bdc8d1;
+  --tp-quality: #38bdf8;
+  --tp-long: #10b981;
+  --tp-short: #ef4444;
+  --tp-caution: #f59e0b;
+  --tp-disabled: #64748b;
+  --tp-focus: #38bdf8;
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #0f141b;
+    color: #dee2ec;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Numeric tabular figures for data alignment */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom terminal scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090f15;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #252a32;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #30353d;
+}
+
+/* Candlestick chart styling */
+.candle-chart line {
+  stroke-width: 1.5;
+}
+
+.candle-chart rect {
+  stroke-width: 0.5;
+}
