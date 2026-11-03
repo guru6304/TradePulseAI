@@ -1,0 +1,120 @@
+# Options source qualification preparation — D2
+
+Prepared **3 November 2026 IST**, branch `feature/new-strategies`, starting at approved D1 `71e2151fec3f60ffd4434462e0e6eab92b6106d4`. This report and the [D2 evidence matrix](TP_OPTIONS_EVIDENCE_MATRIX_D2.md) prepare questions, mappings and a possible future pilot. They do not qualify a provider or authorize acquisition. The local commit containing this report is D2; its SHA is supplied in the owner handoff and Git history. No push, merge or D3.
+
+Implemented a small **synthetic-only**, default-OFF mapping package in a new sibling namespace, `option_source_research`. It makes explicit joins into the approved `option_intelligence` structures and returns auditable mechanical results. Even a result with `state:VERIFIED` always has **source qualification, prospective readiness, forward entry, actionability, execution, historical replay and activation false**. No real input can be made eligible by a checksum, an official-looking reference, a structurally valid fixture or a producer-supplied permission flag.
+
+## Review and ownership
+
+Reviewed all three D1 documents: [capabilities](TP_OPTIONS_SOURCE_CAPABILITY_MATRIX_D1.md), [fixture contract](TP_OPTION_FIXTURE_CONTRACT_D1.md), [gaps/acquisition](TP_OPTIONS_DATA_GAP_AND_ACQUISITION_PLAN_D1.md); the approved Options Intelligence package; H0/H1 [strategy](../agent-contracts/TP_STRATEGY_INTEGRATION_CONTRACT_V1.md) and [UI/API](../agent-contracts/TP_UI_API_CONTRACT_V1.md) contracts. Main's exact `3902c3f0a4d8f13d5e0392485a5cef67d68ee734` preflight and contract addenda were inspected using `git show`, without merging or copying them. Existing fetched references were sufficient; no remote fetch was needed. No new provider documentation verification, inquiry or market request was performed in D2; official links/questions retain D1's dated scope and access limitations.
+
+Main owns source qualification and Option Apex prospective admission, exact future premium trigger/entry/exit, account/capital/exposure, scanner, ranking and core APIs. Its pinned preflight uses separate liquidity time and fixed5s/1s/2% mechanics and still never grants source qualification/readiness/entry. This mapper does not produce a Main declaration, call that preflight, or implement an alternate one. Research retains its own3s freshness and ordinal descriptive semantics. Current dates/phases/rights must still be independently reviewed before any genuine use.
+
+Approved volume/options code, tests, manifests, receipts, production modules, shared contracts, frontend and application attributes are unchanged. No authentication, credentials, private files, operational DB, subscription, purchase, capture, provider adapter, signal registration, rank factor or execution capability was introduced.
+
+## Deliverables and exact interfaces
+
+| New file | Scope |
+|---|---|
+| [option_source_research/__init__.py](../../option_source_research/__init__.py) | `SOURCE_MAPPING_ENABLED=False`, version `TP-OPTION-SOURCE-PREP-D2-1.0`. Only literal Boolean True opts into pure computation. |
+| [mapping.py](../../option_source_research/mapping.py) | Bounded JSON decoder; immutable EvidenceRow/MappingResult; strict explicit field/evidence joins; independent size-clock checks; invocation of the existing descriptive analyzer. No file/network/core access. |
+| [fixtures.py](../../option_source_research/fixtures.py) | Fresh authored fixtures for each of the three provider token syntaxes and five named positive/missing/invalid/stale/contradictory examples. No actual provider records, rights or values. |
+| [tests/__init__.py](../../option_source_research/tests/__init__.py) | New isolated test namespace. |
+| [tests/test_mapping.py](../../option_source_research/tests/test_mapping.py) |28 independent evidence-axis, temporal, identity/unit/presence/mapping, optional-data and no-authority tests. |
+| [tests/test_decoder.py](../../option_source_research/tests/test_decoder.py) |13 strict decoding, numeric-precision, byte-hash, named-example, source-event coverage, clock-boundary, immutable-permission, schema and runtime-import checks. |
+| [verify.py](../../option_source_research/verify.py) | Guarded offline receipt runner and current-source/log/vector validator. It uses existing credential-free verification infrastructure; no application startup. |
+| [.gitattributes](../../option_source_research/.gitattributes) | Scoped source line endings inside this new package; approved application attributes are unchanged. |
+| [TP_OPTIONS_EVIDENCE_MATRIX_D2.md](TP_OPTIONS_EVIDENCE_MATRIX_D2.md) | Seven mandatory checklist families, three provider-specific sets of official questions and four independent optional families, with pinned D1 references. |
+| This report | Mapping scope, rejects, proposed pilot, evidence and review stop. |
+| [Final receipt](../evidence/option_intelligence_source_d2_20261103_02.json) / [log](../evidence/option_intelligence_source_d2_20261103_02.txt) | Source-bound guarded execution and five authored vector results. |
+| [Earlier receipt](../evidence/option_intelligence_source_d2_20261103_01.json) / [log](../evidence/option_intelligence_source_d2_20261103_01.txt) | Retained earlier 137-test development run; superseded by the final source-bound receipt. |
+
+The public function is `map_synthetic_fixture(bundle, *, enabled=False) -> MappingResult`. `bundle` may be a bounded dictionary or supplied UTF-8 JSON bytes/text; text is never a URL/path to resolve. Schema is exactly **`tradepulse.option-source-mapping-fixture.d2.v1`**. It is a D2 synthetic mapping test envelope derived from D1 requirements, **not a runtime implementation of the entire D1 Fixture TypedDict**. Full D1, its separate illustrative test-vector schema, native provider records, legacy captures and Main declarations are rejected instead of automatically cast. `UNVERIFIED_CAPTURE` is explicitly unsupported with `REAL_CAPTURE_NOT_SUPPORTED_D2`.
+
+## Evidence and source questions
+
+The seven stable mandatory keys are `DATED_MASTER`, `TOKEN_TERMS_CROSSWALK`, `PREMIUM_TICK`, `LOT_QUANTITY_UNITS`, `BOOK_SOURCE_CLOCKS`, `SESSION_PHASES`, `DATA_RIGHTS`. The matrix identifies original artifact/issuer/version, token/terms validity, price/quantity meaning, source/receive/available clocks, revisions/phase and per-use permissions that an owner would need to establish. Optional `OI`, `GREEKS`, `DEPTH`, `VOLUME` do not repair missing core evidence.
+
+| Provider | Pinned D1-supported fields | Questions that remain open; no answer inferred |
+|---|---|---|
+| Angel One | Current master token/terms/lot/tick; FULL/WS price/size, exchange/trade clocks; live Greek fields. | Exact current master format/refresh/effective history and underlying-token relation; field-specific paise normalization; size/OI unit; whether feed time dates both book sides and sizes atomically; legitimate local receive instead of dummy receive; cadence/gaps; phase/calendar; written capture/retention/non-display rights and authoritative endpoint limits. Dummy OI-change is not evidence. |
+| Upstox | Current/expired exact key and terms, quote/feed/chain fields, distinct receipt/trade/response clocks. | JSON tick denomination, dated listing/status archive and token reuse; book rather than provider receipt/response/LTT time; atomicity/cadence, quantity units, Greek scales; current phase schedule; exact plan/segment and retention/replay/derived/display rights. Raw chain `prev_oi` does not invent a dated baseline. |
+| Dhan | Master/security IDs, documented master paise tick convention, chain/quote/feed book fields, separate rolling option history. | Detailed versus compact underlying relation, dated term revisions; LTT versus book/size time; count units, source clock/precision and snapshot versus event semantics; IV/theta conventions; phase/calendar and license scope. Rolling moneyness is not one fixed contract's history. |
+
+These summaries are questions drawn from the [D2 matrix](TP_OPTIONS_EVIDENCE_MATRIX_D2.md), not a new assertion of current account capability. `DocState` remains `DOCUMENTED|CONDITIONAL|UNVERIFIED|UNAVAILABLE|CONTRADICTORY`; `DataState` remains `VERIFIED|UNAVAILABLE|STALE|INVALID|NOT_ESTABLISHED`. No DOCUMENTED→VERIFIED or VERIFIED→qualified conversion exists.
+
+Each synthetic evidence row explicitly carries both axes, provider, requirement, scope, evidence ID/reference, effective half-open interval, availability and limitations. The output retains documentation state, **declared** observed state and separately **checked** record state. A row's checked VERIFIED means its authored record passed shape/time/scope checks; subsequent join or source-event coverage failures still block the overall result. It authenticates neither the reference nor the declared observed state. In real D1 evidence these families remain unresolved; the positive fixture's DOCUMENTED/VERIFIED labels are explicitly authored test assumptions, not official-source assertions. Every row is scoped `SYNTHETIC_OFFLINE_MAPPING`. Evidence intervals must cover relevant source events as well as the decision: master observation, book/side/size times, session bounds and capture/availability clocks, according to the evidence family.
+
+## Explicit D1-to-research mapping preparation
+
+Only identity-value joins with declared units are exercised. There is no provider-native normalizer and no unit conversion inferred from magnitudes. Source values are retained in the input object; mapping copies exact values from allowed named paths. The original-byte SHA-256 is retained for bytes/text input; dictionary input has only a canonical content digest and explicitly null original-byte hash. A checksum proves internal consistency only. Caller must retain the original immutable fixture for later audit; this package stores nothing.
+
+| D1 concept | D2 authored source / exact target | Validation / preserved limitation |
+|---|---|---|
+| Contract/master terms | `source.master.<field>` → `contract.<field>` for all required ExactOptionContract inputs | Provider/token, underlying, expiry/strike/side, lot/tick, units, dates/status, source/master revision and clocks are all explicit; no missing default. Full-day IST evidence must exactly cover the inclusive date projection; partial-day evidence cannot be widened. Current metadata is not backdated. |
+| Quote | `source.quote.<field>` → `quote.<field>` for all 16 required quote keys | Exact contract ID must already be supplied and match the existing identity function. Builder computes it only when authoring a fixture; mapper never fills a missing quote reference. `source_revision` binds the **master**. Quote capture/vendor revision is not guessed from it. |
+| Policy | `source.policy.<field>` → `policy.<field>` | All QuotePolicy fields explicit, including source/cadence/clock evidence and age/skew. Heartbeat, polling limit, LTT or response time do not substitute for book time. |
+| Session | `source.session.<field>` → `session.<field>` | Explicit source, date/phase and research window. Synthetic09:15–15:30 is not a qualified current exchange calendar. Actual CAS/segment discrepancies stay a Main/owner contract dependency. |
+| Liquidity clock | Explicit `source.size_at` and `book_time_meaning=EXCHANGE_BOOK_SNAPSHOT`, retained outside current quote DTO | Source size≤receive≤decision; size age≤policy age; full min/max span of book/bid/ask/size≤policy skew. Decimal microsecond arithmetic preserves fractional boundaries. No unsupported clock semantics or missing size time. |
+| Cost/friction | `source.assumptions.<field>` → `assumptions.<field>` | Effective-dated version/source/available-time, unit impact, aggregate round-trip fees and budgets all explicit, including authored0 rather than missing fees. No new fee calculator or account service. |
+| Optional context/depth/membership | Explicit source subrecords → existing named analyzer arguments | Existing inspectors independently validate source identity, presence, time and units; absent optional context remains absent. D2 does not convert a raw provider field or add an independent optional source authority. Unknown optional units do not veto core quote checks. |
+| Rights/authenticity | Mandatory synthetic-only evidence row and fixed qualification blockers | No real entitlement parser, signature verifier or permission-grant mechanism. ALLOWED-looking declarations or known URLs cannot enable real use. Full D1 entitlement/clock/atomicity/crosswalk proof remains future work with Main. |
+
+Every mapping row names source path, target path, ABSENT/NULL/OBSERVED, exact declared unit and evidence references. Target coverage is complete and unique; unknown targets, arbitrary renames/fallbacks, dangling/wrong requirement references or presence mismatches reject. New unit scalings would require an explicitly versioned transformation design and tests; none are implemented.
+
+Use decimal strings for quantities requiring exact decimal representation. JSON numeric tokens are accepted only within the existing finite/range bounds and when their decimal value survives the supported conversion exactly; otherwise `INEXACT_JSON_NUMBER_USE_DECIMAL_STRING` rejects the input. This prevents a high-precision off-tick source token from becoming an on-tick value through rounding. Already-decoded dictionaries cannot recover numeric precision previously lost by the caller; retain raw bytes and use the strict decoder when original-token evidence is required.
+
+Mandatory rejection examples include: unknown schema; real-capture provenance; non-read-only input; any asserted qualification/readiness/entry flag; duplicate JSON keys; nonfinite/excessive numerics or bounded-size failure; duplicate/missing evidence IDs/families; future/expired evidence; contradictory/unknown documentation; unknown observation semantics; source hash tamper; missing fields/ticks/units; token/revision/contract mismatch; future/stale/non-book/unaligned size clocks; crossed/locked/off-tick book; inadequate displayed size; unsupported date widening; missing costs. Optional invalid data are recorded independently through the approved inspector.
+
+## Offline examples and test results
+
+`fixtures.synthetic_fixture(provider)` authors the same test assumptions for `angelone`, `upstox` and `dhan` token syntaxes. **None is an authoritative provider record, actual listed option, real lot/tick, fee schedule, time observation or data-rights grant.** It uses fabricated values solely for deterministic mechanics. No production candidate is produced.
+
+| Named vector | Result | Required interpretation |
+|---|---|---|
+| `positive_synthetic_only` | VERIFIED / `SYNTHETIC_MAPPING_ONLY` | Existing analyzer reproduces indicative E102.00, S66.30, T166.30,50-unit gross risk1785 and current-book friction25. All authority flags false; no entry, quote authenticity or P&L. |
+| `missing_tick` | UNAVAILABLE / `MANDATORY_FIELD_ABSENT` | No tick default or paise guess. |
+| `invalid_crossed_book` | INVALID / `NONPOSITIVE_OR_CROSSED_BOOK` | No repair or LTP fallback. |
+| `stale_book_and_sizes` | STALE / `LIQUIDITY_SOURCE_CLOCK_STALE` | Prices and sizes move together so this isolates age, not cross-clock skew. |
+| `contradictory_book_documentation` | NOT_ESTABLISHED / `DOCUMENTATION_CONTRADICTORY` | DocState remains CONTRADICTORY; declared observed VERIFIED cannot override it. |
+
+From the application directory:
+
+```powershell
+python -B -m option_source_research.verify --receipt docs/evidence/option_intelligence_source_d2_20261103_02.json
+python -B -m option_source_research.verify --validate docs/evidence/option_intelligence_source_d2_20261103_02.json
+python -B -m option_intelligence.verify --validate docs/evidence/option_intelligence_checkpoint_20261103_01.json
+python -B -m volume_research.verify --validate docs/evidence/volume_checkpoint_20261103_01.json
+```
+
+The final guarded canonical run passed **139/139**, failures0, errors0, skips0, unraisable errors0, exit0: **41 new D2 tests +98 existing options tests**. Unittest0.585s, full run1.485s, Python3.12.4. Before/after source maps match; the receipt retains all expected/executed/passed IDs, module counts, source/log hashes and five vectors. Safe process flags, outbound socket/DNS guards and the existing credential-free `test_bot` bootstrap are used. No production server, account or DB is initialized by the new package. Receipt validation passed against the final sources and log; it reruns no unit tests. Existing evidence cannot be overwritten: use a fresh suffix for a future execution.
+
+Earlier targeted execution ran37 tests with one expected-reason mismatch after the price/size skew guard was strengthened: the stale example's old clock layout now reached skew rejection first. Its authored clocks were synchronized and stale-size reason corrected; two exact clock regressions were added. Targeted39/39 and the retained earlier guarded137/137 then passed. Final review added two further regressions for source-event interval coverage and JSON numeric precision: final targeted41/41 and guarded139/139 passed without weakening a gate. The earlier137-test receipt describes its earlier source map and is not current acceptance evidence. Windows sandbox startup also failed before some commands ran; the successful runs used the execution fallback. These startup failures are not test results.
+
+Final receipt/source validation, both documents'23 local links, mandatory evidence families,139 unique test IDs, five vectors and false operational flags passed consistency checks. Independent final review found no authority-granting or source-qualification bypass; its quote-field count and evidence-row wording corrections are incorporated. Staged whitespace validation is required before commit. Approved330-test options and173-test volume receipts validated against unchanged sources/logs; those validators rerun0 tests. This is selected synthetic software evidence, not a full-suite rerun, exchange-calendar acceptance, data qualification, latency benchmark, empirical strategy result or approval to collect market data.
+
+## Minimal future owner-authorized pilot — proposed, not started
+
+This pilot is a **source feasibility observation**, not paper trading or a statistical strategy trial. Defaults are0 requests,0 subscriptions,0 captures and0 spend until a separate written owner authorization and rights/clock evidence review. Any later authorization must name provider/endpoint/version/account scope, dates, instruments, purpose, duration, caps, rights and retention. No access tokens or credentials belong in a fixture, report, Git or support inquiry.
+
+| Item | Proposed maximum / prerequisite |
+|---|---|
+| Instruments | At most4 exact dated index options: one CE and one PE each for NIFTY and BANKNIFTY, plus at most2 index observations if needed. Owner selects actual listed non-expiry-day contracts from an independently checked as-of list; no hardcoded token/strike/lot or rolling alias. Check candidate expiry coverage separately. OPTSTK deferred pending membership/tick/phase evidence. |
+| Session/duration | One explicitly authorized ordinary session, a15-minute continuous-phase observation such as10:00–10:15 IST after calendar/status confirmation. Date unset. No open/close/auction or expiry-session inference. Stop at end; no scheduled follow-on capture or reconnect loop beyond approved bounds. |
+| Source evidence prerequisite | Exact dated master/crosswalk/tick/lot/status and phase evidence; explicit source book/bid/ask/size timestamp meaning, epoch/timezone/precision/atomicity, uncertainty and cadence; known local clock quality. If source only offers LTT/response/receipt time, retain inspection-only or abort. Do not duplicate a timestamp across legs without semantic proof. |
+| Allowed request classes | Only separately whitelisted read-only market metadata/status/quote or data-stream operations. Proposed cap: one preapproved metadata artifact, at most2 status reads, one feed connection, one subscription batch≤6 instruments, at most20 quote reads if explicitly approved as comparison/fallback. Optional chain/Greek/history/depth endpoints default excluded. No account/holdings/margin/orders/GTT, mutations, auto renewal, subscription purchase or broker configuration changes. |
+| Rate/retry cap | Whichever is stricter: verified endpoint/account limit or one REST request/second and20 total quote reads; no parallel burst, no retry after authorization/rate failure. At most one manually bounded reconnect if expressly approved; sequence loss invalidates affected coverage. Subscription/plan throughput is not inferred from documented maxima. |
+| Rights | Explicit private ACCESS, INTERNAL_CAPTURE, RETAIN, OFFLINE_REPLAY and NON_DISPLAY_ANALYSIS scope, subject to source conditions. DISPLAY, REDISTRIBUTE and DERIVED_EXTERNAL remain ungranted. Confirm applicable provider/exchange terms and whether synthetic/paper research is covered. A documentation URL, invoice or read-only token is insufficient by itself. |
+| Storage/retention | Owner-approved disposable local research directory, separate from operational DB and Git; protected access and documented deletion. Proposed ceiling7 calendar days or shorter licensor limit. No screenshots/payload publication, external upload or customer display. Even aggregate/derived sharing requires its own permission. Record hashes and coverage only within allowed retention scope. |
+| Clock thresholds | Proposed research maximum age3s, combined book/side/size span1s, with documented resolution supporting those bounds. Suggested client clock-error budget≤100ms is an unvalidated pilot target requiring actual clock evidence, not a new implemented gate. Use conservative uncertainty bounds; if unsupported, fail rather than fill missing clocks or silently relax thresholds. |
+| Hard acceptance |100% accepted fixtures have exact contract/master/tick/lot/units/phase/time/rights joins;0 inferred mandatory values;0 unresolved source-identity contradictions; no accepted off-tick/crossed/locked/undersized/stale samples. All rejected/missing/gap cases retained as allowed; no selective omission.0 orders/account changes/production writes. |
+| Coverage target | Suggested feasibility target:≥30 complete independently timestamped fresh observations per option spanning each of three5-minute windows; report actual counts, duplicates, stale fraction, worst ages/skew, gaps and provider drops. This is a proposed sampling target, not a reliability/accuracy claim or activation gate. Lack of activity/cadence does not authorize manufactured samples. |
+| Review result | Owner/Main reviews raw rights-qualified evidence and unresolved gaps. A successful observational pilot still does not enable preflight, option entries, portfolio allocation or historical P&L. Main's subsequent source/lifecycle work and explicit owner approval remain required. |
+
+The pilot thresholds and limits are proposals for a future authorization document, not new production policies or assertions that a broker can meet them. No provider was contacted, no capture directory/session was created and no request or purchase was issued in D2.
+
+## Remaining limits and next review
+
+D2 maps already authored explicit values; it does not load complete genuine D1 fixture envelopes, prove source signatures, ingest native master/feed formats, transform unresolved units, establish field atomicity, authenticate licensing or capture raw packets. Optional passthrough is limited to existing supplied-input inspectors. Current calendar/closing-auction differences and genuine OI close-time semantics remain unresolved. Real broker observations acquired:0.
+
+Source qualification must remain separate from the mechanical map. The next recommended action is owner/Main review of this matrix, schema subset and the proposed pilot authority/rights/clock questions. A future genuine loader, provider-specific transformation or capture pilot would be a separately approved checkpoint. **Stop after this local D2 commit: no push, merge, activation, broker capture or D3.**
