@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTerminal, STRATEGY_NAMES } from '../context/TerminalContext';
 import { apiClient } from '../api/client';
 import { StatusBadge } from '../components/common/StatusBadge';
@@ -22,7 +22,24 @@ export const XRayDrawer: React.FC = () => {
   const [chartErrorMessage, setChartErrorMessage] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'evidence' | 'geometry' | 'diagnostics'>('evidence');
 
+  const previousActiveElementRef = useRef<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const candidate = selectedCandidate;
+
+  // Manage focus: capture trigger element, focus dialog on open, restore on close
+  useEffect(() => {
+    if (candidate) {
+      previousActiveElementRef.current = document.activeElement as HTMLElement;
+      const timer = setTimeout(() => {
+        closeButtonRef.current?.focus();
+      }, 50);
+      return () => clearTimeout(timer);
+    } else if (previousActiveElementRef.current) {
+      previousActiveElementRef.current.focus();
+      previousActiveElementRef.current = null;
+    }
+  }, [candidate]);
 
   useEffect(() => {
     const currentCandidate = selectedCandidate;
@@ -238,6 +255,7 @@ export const XRayDrawer: React.FC = () => {
         </div>
 
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={closeDetail}
           className="p-1.5 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container"
