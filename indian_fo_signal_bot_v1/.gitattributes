@@ -5,3 +5,7 @@
 /docs/research/TP_VOLUME_* text eol=lf
 /docs/evidence/volume_checkpoint_*.json -text whitespace=cr-at-eol
 /docs/evidence/volume_checkpoint_*.txt -text
+/option_intelligence/** text eol=lf
+/docs/research/TP_OPTION_* text eol=lf
+/docs/evidence/option_intelligence_*.json -text whitespace=cr-at-eol
+/docs/evidence/option_intelligence_*.txt -text

@@ -1,0 +1,61 @@
+{
+  "schema_version": "tradepulse.option-intelligence-experiment.v1",
+  "authority": "TP-STAGE1-QUANT-DECISION-SPEC-2026-10-31-V1.0 section 7",
+  "candidate_version": "TP-OPTION-FIT-1.0",
+  "checkpoint_scope": "DESCRIPTIVE_SUPPLIED_SNAPSHOT_AND_INDICATIVE_SCENARIO_ONLY",
+  "default_enabled": false,
+  "actionable": false,
+  "actual_listing_authority": "NOT_ESTABLISHED",
+  "source_authenticity": "NOT_ESTABLISHED",
+  "verified_semantics": "SUPPLIED_STRUCTURE_IDENTITY_UNIT_AND_ASOF_CHECKS_ONLY",
+  "data_denominator": {"genuine_contracts_acquired": 0, "genuine_quote_events_acquired": 0},
+  "hypotheses": {
+    "quote_age_seconds": "3",
+    "age_requires": "Explicit source/clock/cadence references and available policy; declared cadence and timestamp resolution must support limits",
+    "index_relative_spread_comparator": "0.01",
+    "stock_relative_spread_comparator": "0.02",
+    "spread_comparator_status": "UNVALIDATED_COMPARISON_NOT_EXECUTION_GATE",
+    "premium_loss_fractions": ["0.25", "0.35", "0.45"],
+    "baseline_premium_loss_fraction": "0.35",
+    "premium_target_r": "1.8",
+    "bracket_status": "INDICATIVE_PREMIUM_SCENARIO_NOT_ORDER_OR_FILL"
+  },
+  "formulas": {
+    "relative_spread": "(ask-bid)/((ask+bid)/2)",
+    "requested_units": "intended_lots*date_valid_lot_size",
+    "entry_estimate": "ceil_tick(current_ask+incremental_entry_impact)",
+    "current_bid_exit_estimate": "floor_tick(current_bid-incremental_exit_impact)",
+    "snapshot_friction_inr": "units*(entry_estimate-current_bid_exit_estimate)+explicit_round_trip_fees",
+    "gross_premium_risk_inr": "units*(entry_estimate-floor_tick((1-loss_fraction)*entry_estimate))",
+    "friction_per_risk": "snapshot_friction_inr/gross_premium_risk_inr",
+    "oi_change": "matched_current_OI-normalized_dated_baseline_OI; no raw previous_close or unknown prev_oi substitution",
+    "greek_scenario": "delta*dS+0.5*gamma*dS^2+vega_per_IV_fraction*dIV_fraction+theta_per_calendar_day*days"
+  },
+  "optional_ablations_declared_not_empirically_executed": [
+    "QUOTE_IDENTITY_AND_FRICTION_BASELINE", "PLUS_DISPLAYED_DEPTH_CONTEXT",
+    "PLUS_MATCHED_OI_CONTEXT", "PLUS_NORMALIZED_IV_GREEKS_CONTEXT"
+  ],
+  "interpretation_constraints": [
+    "No standalone underlying direction or contract-selection recommendation",
+    "No weighted quality score, profitability, probability or true event-flow claim",
+    "No institutional buying, dealer inventory, GEX, IV percentile or missing-field imputation",
+    "No production ranking, prospective readiness, trigger, entry, exit or ledger implementation",
+    "Nearest two expiries are only within supplied same-scope records; complete actually-listed universe unavailable",
+    "Spread is already included in ask-to-bid estimates and must not be deducted twice",
+    "Historical option PNL remains BLOCKED_DATA_FOR_HISTORICAL_OPTION_PNL",
+    "Missing optional context does not veto independently valid quote arithmetic"
+  ],
+  "future_main_owned_lifecycle_reference_only": {
+    "qualified_underlying_thesis_required": true,
+    "same_contract_quote_revalidation_at_future_trigger_required": true,
+    "missing_future_quote": "NO_FILL/QUOTE_UNAVAILABLE",
+    "last_new_entry_ist": "14:45",
+    "mandatory_exit_ist": "15:15",
+    "underlying_invalidation_and_observed_bid_exits_required": true,
+    "not_implemented_by_this_component": true
+  },
+  "empirical_status": "NOT_RUN_NO_AUTHORIZED_DATASET_OR_HOLDOUT",
+  "numeric_input_domain": "finite Decimal-compatible scalars; absolute value <=2^53-1; nonzero magnitude >=1e-18; no bools",
+  "cost_schedule_status": "VERSIONED_EFFECTIVE_DATED_CALLER_ESTIMATES_UNVERIFIED",
+  "next_checkpoint_requires_owner_review": true
+}
