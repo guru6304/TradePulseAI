@@ -1,5 +1,7 @@
 # TradePulse UI/API contract V1
 
+H1 checkpoint 2 (2026-11-03 IST): Option Apex strategy-evaluation traces add the nested `prospective_preflight` object (`tradepulse.option-prospective-preflight.v1`) with status/reason, declaration validity, source qualification, readiness, entry authorization and blockers. Scanner currently reports `QUALIFIED_PROSPECTIVE_PREMIUM_REQUIRED`; all entry/readiness/qualification booleans are false. Analytical DETECTED status must not be interpreted as premium-entry readiness. No route, TradeSignal field, cash admission policy or DB schema changes. See the strategy contract's H1 checkpoint 2 addendum for the pure offline declaration boundary.
+
 Source freeze: `main` at `1083092`, inspected 2026-11-02 for Work Package H0. Paths and line anchors below are relative to `indian_fo_signal_bot_v1/` at that revision. This document describes existing Python/SQLite and browser behavior; it does not activate any operation or establish market acceptance. The H0 execution receipt is in [the authoritative status file](../project/TRADEPULSE_MASTER_STATUS.md).
 
 ## H1 additive paper reason — unchanged HTTP schemas

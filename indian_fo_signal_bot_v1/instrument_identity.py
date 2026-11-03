@@ -488,6 +488,11 @@ def validate_contract_identity(record, *, provider, as_of=None) -> ContractIdent
         if isinstance(record.get("multiplier"), bool) or record.get("multiplier") != 1:
             reject("UNSUPPORTED_MULTIPLIER", "Only an explicit unit quantity multiplier is supported.")
         result.update(lot_size=lot, multiplier=1)
+        if "tick_size" in record:
+            tick = record["tick_size"]
+            if (type(tick) not in (int, float) or not Decimal(str(tick)).is_finite() or tick <= 0):
+                reject("INVALID_CONTRACT_TICK", "Tick size must be finite and positive when declared.")
+            result["tick_size"] = tick
     if derivative:
         underlying = canonical_symbol(record.get("underlying"))
         if (underlying in INDICES) != index or underlying == symbol:

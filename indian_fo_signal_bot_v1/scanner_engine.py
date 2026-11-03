@@ -875,6 +875,9 @@ class IntradayBotEngine:
                 candles = arguments.pop("candles")
                 signal, trace = evaluate_strategy_detailed(strategy_id, candles, evaluator=evaluator, **arguments)
                 trace.update(symbol=symbol, data_mode=data_mode, source_reference=source_reference(symbol))
+                if strategy_id == "strat_3_option_apex_oi":
+                    from option_preflight import prospective_preflight
+                    trace["prospective_preflight"] = prospective_preflight(decision_at=now_dt.isoformat())
                 strategy_evaluations.append(trace)
                 return signal
 

@@ -1,0 +1,15 @@
+test_bad_prices_depth_units (test_h1_option_preflight.TestOptionPreflight.test_bad_prices_depth_units) ... ok
+test_every_required_field_missing (test_h1_option_preflight.TestOptionPreflight.test_every_required_field_missing) ... ok
+test_identity_and_revision_mismatches (test_h1_option_preflight.TestOptionPreflight.test_identity_and_revision_mismatches) ... ok
+test_master_integrity_and_tick_missing (test_h1_option_preflight.TestOptionPreflight.test_master_integrity_and_tick_missing) ... ok
+test_option_cannot_be_added_to_cash_allowlist (test_h1_option_preflight.TestOptionPreflight.test_option_cannot_be_added_to_cash_allowlist) ... ok
+test_recursive_or_oversized_declarations_fail_closed (test_h1_option_preflight.TestOptionPreflight.test_recursive_or_oversized_declarations_fail_closed) ... ok
+test_replay_chain_underlying_simulation_cannot_authorize (test_h1_option_preflight.TestOptionPreflight.test_replay_chain_underlying_simulation_cannot_authorize) ... ok
+test_stale_future_naive_unsynchronized_clocks (test_h1_option_preflight.TestOptionPreflight.test_stale_future_naive_unsynchronized_clocks) ... ok
+test_valid_declaration_still_blocked (test_h1_option_preflight.TestOptionPreflight.test_valid_declaration_still_blocked) ... ok
+test_angel_option_signal_uses_exact_master_contract_label_and_identity (test_bot.TestInstrumentIdentity.test_angel_option_signal_uses_exact_master_contract_label_and_identity) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 32.233s
+
+OK

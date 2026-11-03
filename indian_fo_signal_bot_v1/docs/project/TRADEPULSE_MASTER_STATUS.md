@@ -1,3 +1,25 @@
+# H1 checkpoint 2 — Option Apex prospective preflight
+
+Current checkpoint: **2026-11-03 IST**, branch `main`, base `627b61c`; clean at start. Backend-only, paper-only, offline. Local checkpoint commit is recorded in Git history and the owner handoff. This block supersedes the historical checkpoint 1 next action below.
+
+Implemented `option_preflight.py`: exact normalized dated identity and retained revision, provider token, lot/multiplier/units, retained tick, quote digest, bid/ask spread and displayed liquidity, offset clocks and synchronization. Valid declarations remain UNAVAILABLE pending independent source qualification and the full future-premium lifecycle. Scanner analytical traces explicitly report missing prospective evidence. No option is admitted to the cash allowlist; no cash policy or conflict guard is changed. No research algorithms, contract-fitness scoring, React, feature-branch merges, provider requests, credentials, operational databases, real orders or Telegram sends.
+
+Contract additions: optional positive `tick_size` retention in normalized identity; nested Option Apex evaluation-trace `prospective_preflight`; pure offline declaration-check interface. No route, TradeSignal, configuration or DB schema changes. See the two agent-contract addenda for fields and fixed mechanical limits. Existing H0 source anchors remain historical.
+
+Remaining blockers: independent source authority/qualification, authentic synchronized executable premiums and liquidity, exchange calendar/session admission, future premium trigger/fill/exit/ledger/recovery proof, empirical and operational acceptance. Source declarations cannot satisfy these gates. Research and React remain owned by their feature branches. Full-product percentages remain NOT_MEASURED. No new browser work or release artifact in this backend checkpoint.
+
+**Stop for owner review after checkpoint 2. Do not push, merge or start checkpoint 3.**
+
+## Checkpoint 2 verification
+
+[Regression receipt](../evidence/h1_option_preflight_20261103_01.json) / [log](../evidence/h1_option_preflight_20261103_01.txt): **228/228 passed**, zero failures/errors/skips, 342.721s. Includes four cash trigger/execution policies, account conflict rollback/restart/races, forward coordinator, exact identity/capture and historical option replay. Source unchanged during execution.
+
+[Final delta receipt](../evidence/h1_option_preflight_20261103_02.json) / [log](../evidence/h1_option_preflight_20261103_02.txt): **10/10 passed**, zero failures/errors/skips, 32.233s. After regression, only bounded malformed-declaration checks, test-discovery cleanup and an explicit scanner blocked-trace assertion changed. All nine preflight methods and that scanner test passed against final source, unchanged during execution. The first receipt binds the earlier source; the second binds final source. An initial development check had one fixture-constructor error, corrected without relaxing its assertion. No pre-change red proof is claimed.
+
+Both runs used `python -B`, credential-free unittest fixtures, disposable stores, `verify_offline.offline_network` under `ExitStack`, `ExecutionResult`, `case_ids`, `python_result`, before/after `source_snapshot`, and safe flags (`ACTIVE_BROKER=paper_sim`, `TELEGRAM_DRY_RUN=true`, `ENABLE_BACKGROUND_SCHEDULER=false`). Receipt module lists and executed test IDs identify the exact selections; external socket/DNS transport was blocked. `git diff --check` passed. No browser, authentic feed, empirical, operational or full-product acceptance is claimed.
+
+Changed files: `option_preflight.py`, `instrument_identity.py`, `scanner_engine.py`, `test_h1_option_preflight.py`, `test_bot.py`, both agent contracts, status/checkpoint and four evidence artifacts. Portfolio, coordinator and replay policies were inspected and preserved. Next action is owner review of this local checkpoint only.
+---
 # TradePulse AI — H1 checkpoint 1: atomic contrary-entry safety
 
 Current checkpoint: **2026-11-02 (IST)**, branch `main`, based on approved H0 commit `8faaf5a23ffb35bf635ae8cdadf3c5f5913cc802`. The initial worktree was clean and matched the local `origin/main` tracking ref. H0 review/push/synchronization is owner-confirmed. This is the **first H1 implementation checkpoint**; no push, merge or second checkpoint is included. Its commit SHA is reported in the owner-facing handoff and Git history.

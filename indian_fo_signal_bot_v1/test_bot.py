@@ -8573,6 +8573,11 @@ class TestInstrumentIdentity(unittest.TestCase):
         contract = chain["strikes"][0]["ce_contract"]
         self.assertEqual(options[0]["instrument_label"], contract["symbol"])
         self.assertEqual(options[0]["instrument_identity"], contract)
+        traces = [t for t in result["strategy_evaluations"] if t["strategy_id"] == "strat_3_option_apex_oi"]
+        self.assertTrue(traces)
+        for trace in traces:
+            self.assertFalse(trace["prospective_preflight"]["forward_entry_allowed"])
+            self.assertEqual(trace["prospective_preflight"]["reason_code"], "QUALIFIED_PROSPECTIVE_PREMIUM_REQUIRED")
         stored = self.store.query_signals(strategy_id="strat_3_option_apex_oi")["items"][0]
         self.assertEqual(stored["instrument_identity"], contract)
 
@@ -10367,7 +10372,8 @@ def load_tests(loader, tests, pattern):
                        "test_astra_vwap_execution", "test_track_a_security",
                        "test_track_a_order_block_triggers", "test_track_a_order_block_execution",
                        "test_track_a_terminal_http", "test_track_a_supertrend_triggers",
-                       "test_track_a_supertrend_execution", "test_track_a_cold_http", "test_h1_paper_conflicts"):
+                       "test_track_a_supertrend_execution", "test_track_a_cold_http", "test_h1_paper_conflicts",
+                       "test_h1_option_preflight"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 
