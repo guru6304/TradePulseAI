@@ -1,0 +1,7 @@
+# Preserve the bytes bound by the isolated research execution receipt.
+/.gitattributes text eol=lf
+/volume_research/** text eol=lf
+/test_volume_*.py text eol=lf
+/docs/research/TP_VOLUME_* text eol=lf
+/docs/evidence/volume_checkpoint_*.json -text whitespace=cr-at-eol
+/docs/evidence/volume_checkpoint_*.txt -text

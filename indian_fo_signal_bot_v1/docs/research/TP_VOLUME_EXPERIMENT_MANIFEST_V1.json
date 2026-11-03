@@ -1,0 +1,64 @@
+{
+  "schema_version": "tradepulse.volume-experiment-manifest.v1",
+  "authority": "TP-STAGE1-QUANT-DECISION-SPEC-2026-10-31-V1.0",
+  "purpose": "Predeclared development comparisons; no empirical study has run",
+  "strategy_versions": ["TP-VOL-BREAKOUT-1.0", "TP-VOL-RETEST-1.0"],
+  "default_enabled": false,
+  "implementation_status": "PURE_SYNTHETIC_HARNESS_ONLY",
+  "edge_status": "EDGE_NOT_ESTABLISHED",
+  "rvol": {
+    "baseline": "PRIOR_ELIGIBLE_SESSION_SAME_SLOT_MEDIAN",
+    "default_window": 20,
+    "development_windows": [5, 10, 15, 20, 30, 50, 60],
+    "matched_warmup_sessions": 60,
+    "default_threshold": "1.8",
+    "development_thresholds": ["1.5", "1.8", "2.2"],
+    "selection_scope": "DEVELOPMENT_FOLDS_ONLY"
+  },
+  "ablations": ["P", "P+RVOL", "P+sector", "P+RVOL+sector"],
+  "ablation_status": "DECLARED_NOT_EXECUTED; detectors implement approved RVOL baseline only",
+  "comparators": ["ACTUAL_FILTERED_ORB", "ACTUAL_CURRENT_CASH_RANK"],
+  "comparable_real_data_events": 0,
+  "overlap_status": "UNAVAILABLE_COMPARABLE_DATASET",
+  "optional_features": {
+    "sector": "SOFT_ALIGNED_15M_LOG_RETURN_RESIDUAL",
+    "robust_z": "DEFERRED_NOT_MANDATORY",
+    "volume_contraction": "SOFT_NOT_A_RETEST_VETO",
+    "max_stop_atr": "DEFERRED_SEPARATE_ABLATION"
+  },
+  "pilot_rules": {
+    "target_r": "1.8",
+    "min_net_rr": "1.25",
+    "max_open_gap_atr": "0.15",
+    "retest_width_atr": "0.20",
+    "retest_width_min_ticks": 2,
+    "b_future_bars": 2,
+    "r_retest_bars": 4,
+    "r_future_bars": 3,
+    "atr_overnight_rule": "INCLUDE_GAPS_USING_ASOF_COMPARABLE_PRICE_UNITS",
+    "atr_seed_rule": "MEAN_FIRST_14_PRIOR_TR_THEN_WILDER_RMA; FIRST_OF_MIN15_BARS_PREVIOUS_CLOSE_SEED",
+    "last_b_setup_ist": "14:40",
+    "last_r_impulse_ist": "14:20",
+    "last_r_retest_setup_ist": "14:40",
+    "last_new_fill_ist": "14:45",
+    "mandatory_exit_ist": "15:15",
+    "max_post_fill_bars": 12,
+    "time_stop_comparator": "DECLARED_NO_TIME_STOP_BY_SESSION_END_NOT_EXECUTED",
+    "fill_bar_ambiguity": "ABSTAIN_NO_FILL_AMBIGUOUS_OHLC",
+    "later_bar_ambiguity": "ADVERSE_STOP_FIRST"
+  },
+  "research_risk_scenarios_not_portfolio_configuration": {
+    "per_trade_nav_pct": "0.25",
+    "concurrent_nav_pct": "0.50",
+    "daily_nav_pct": "1.00"
+  },
+  "holdout": {
+    "status": "NOT_DESIGNATED_NO_DATA",
+    "dates": null,
+    "minimum_effect_delta": null,
+    "power_sample_size": null,
+    "rule": "Freeze dataset, candidate/rule/code versions and untouched dates before any holdout claim; never reuse touched holdout as fresh"
+  },
+  "cost_status": "EXPLICIT_CALLER_ESTIMATES_UNVERIFIED; no tariff supplied",
+  "options_workstream": "NOT_STARTED_OWNER_APPROVAL_REQUIRED"
+}
