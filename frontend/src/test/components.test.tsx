@@ -2,7 +2,15 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { App } from '../App';
 import { apiClient } from '../api/client';
-import type { HealthResponse, RankingResponse, SignalListResponse, ScanLineageResponse, CashCandlesResponse } from '../types/api';
+import type {
+  HealthResponse,
+  RankingResponse,
+  RankingRow,
+  SignalListResponse,
+  ScanLineageResponse,
+  CashCandlesResponse,
+  PaperPortfolioResponse,
+} from '../types/api';
 
 describe('React Terminal Components', () => {
   const dummySha = 'c'.repeat(64);
@@ -242,6 +250,36 @@ describe('React Terminal Components', () => {
     ],
   };
 
+  const mockPaperPortfolio: PaperPortfolioResponse = {
+    status: 'OK',
+    account_id: 'paper_primary',
+    run_id: 'run_20261031_0915',
+    config_hash: 'a'.repeat(64),
+    provider: 'paper_sim',
+    source_data_mode: 'SIMULATED',
+    execution_mode: 'SIMULATED',
+    fill_policy: 'NEXT_TICK',
+    as_of_ist: '2026-10-31 09:15:00+05:30',
+    reconciliation: {
+      status: 'OK',
+      errors: [],
+    },
+    accounting: {
+      starting_capital_inr: 1000000,
+      realized_net_pnl_inr: 12500,
+      unrealized_net_pnl_inr: 3200,
+      equity_inr: 1015700,
+      reserved_capital_inr: 200000,
+      available_capital_inr: 815700,
+      gross_exposure_inr: 200000,
+      fees_paid_inr: 120,
+      slippage_paid_inr: 80,
+      open_positions: 1,
+      closed_positions: 2,
+    },
+    positions: [],
+  };
+
   beforeEach(() => {
     vi.restoreAllMocks();
     window.location.hash = '#/pulse';
@@ -257,6 +295,7 @@ describe('React Terminal Components', () => {
     vi.spyOn(apiClient, 'getSignals').mockResolvedValue(mockSignals);
     vi.spyOn(apiClient, 'getScanLineage').mockResolvedValue(mockLineage);
     vi.spyOn(apiClient, 'getCashCandles').mockResolvedValue(mockCandles);
+    vi.spyOn(apiClient, 'getPaperPortfolio').mockResolvedValue(mockPaperPortfolio);
   });
 
   it('renders application shell, security protocol banner, and Pulse view', async () => {
@@ -352,5 +391,202 @@ describe('React Terminal Components', () => {
 
     expect(await screen.findByText(/No Reconciled Paper Account/i)).toBeInTheDocument();
     expect(screen.getByText(/Virtual simulated trading requires a configured and reconciled paper account/i)).toBeInTheDocument();
+  });
+
+  it('closes X-Ray drawer with Escape key and backdrop click', async () => {
+    render(<App />);
+
+    await waitFor(async () => {
+      const items = await screen.findAllByText('RELIANCE');
+      expect(items.length).toBeGreaterThan(0);
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: /View all \(1\) →/i }));
+    const inspectBtn = await screen.findByRole('button', { name: /Inspect RELIANCE/i });
+    fireEvent.click(inspectBtn);
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    // Press Escape key to close
+    fireEvent.keyDown(window, { key: 'Escape' });
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+
+    // Re-open and close with backdrop click
+    fireEvent.click(inspectBtn);
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+
+    const backdrop = document.querySelector('.backdrop-blur-xs');
+    expect(backdrop).toBeInTheDocument();
+    if (backdrop) {
+      fireEvent.click(backdrop);
+    }
+
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  it('preserves strict server ranking order and scores without client recomputation', async () => {
+    const multiRankResponse: RankingResponse = {
+      ...mockRanking,
+      pagination: { offset: 0, limit: 100, total: 3 },
+      current_rows: [
+        {
+          ...mockRanking.current_rows[0],
+          rank: 1,
+          symbol: 'RELIANCE',
+          instrument_identity: {
+            ...mockRanking.current_rows[0].instrument_identity,
+            symbol: 'RELIANCE',
+            identifier: '2885',
+          },
+          score_components: { rule_quality: 92, actual_target1_rr: 2.34 },
+        },
+        {
+          ...mockRanking.current_rows[0],
+          opportunity_key: 'opp-tcs-002',
+          candidate_id: 'cand-tcs-002',
+          rank: 2,
+          symbol: 'TCS',
+          instrument_identity: {
+            ...mockRanking.current_rows[0].instrument_identity,
+            symbol: 'TCS',
+            identifier: '11536',
+          },
+          score_components: { rule_quality: 85, actual_target1_rr: 1.85 },
+        },
+        {
+          ...mockRanking.current_rows[0],
+          opportunity_key: 'opp-infy-003',
+          candidate_id: 'cand-infy-003',
+          rank: 3,
+          symbol: 'INFY',
+          instrument_identity: {
+            ...mockRanking.current_rows[0].instrument_identity,
+            symbol: 'INFY',
+            identifier: '1594',
+          },
+          score_components: { rule_quality: 78, actual_target1_rr: 1.45 },
+        },
+      ],
+    };
+
+    vi.spyOn(apiClient, 'getOpportunityRankings').mockResolvedValue(multiRankResponse);
+
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: /Opportunities/i }));
+
+    expect(await screen.findByRole('table', { name: /Opportunities ranking table/i })).toBeInTheDocument();
+
+    const rows = screen.getAllByRole('row');
+    // Header is row 0; data rows are 1, 2, 3
+    expect(rows[1]).toHaveTextContent('#1');
+    expect(rows[1]).toHaveTextContent('RELIANCE');
+    expect(rows[1]).toHaveTextContent('92');
+    expect(rows[1]).toHaveTextContent('1:2.34');
+
+    expect(rows[2]).toHaveTextContent('#2');
+    expect(rows[2]).toHaveTextContent('TCS');
+    expect(rows[2]).toHaveTextContent('85');
+    expect(rows[2]).toHaveTextContent('1:1.85');
+
+    expect(rows[3]).toHaveTextContent('#3');
+    expect(rows[3]).toHaveTextContent('INFY');
+    expect(rows[3]).toHaveTextContent('78');
+    expect(rows[3]).toHaveTextContent('1:1.45');
+  });
+
+  it('verifies 20-row client pagination controls and boundary disabled states', async () => {
+    // Generate 25 synthetic ranking rows with valid, unique identities
+    const twentyFiveRows: RankingRow[] = Array.from({ length: 25 }, (_, i) => ({
+      ...mockRanking.current_rows[0],
+      opportunity_key: `opp-key-${i + 1}`,
+      candidate_id: `cand-${i + 1}`,
+      symbol: `SYM${i + 1}`,
+      rank: i + 1,
+      instrument_identity: {
+        ...mockRanking.current_rows[0].instrument_identity,
+        symbol: `SYM${i + 1}`,
+        identifier: String(2000 + i + 1),
+      },
+    }));
+
+    vi.spyOn(apiClient, 'getOpportunityRankings').mockResolvedValue({
+      ...mockRanking,
+      pagination: { offset: 0, limit: 100, total: 25 },
+      current_rows: twentyFiveRows,
+    });
+
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: /Opportunities/i }));
+
+    expect(await screen.findByRole('table', { name: /Opportunities ranking table/i })).toBeInTheDocument();
+
+    // On page 1: SYM1 is visible, SYM25 is not
+    expect(screen.getByText('SYM1')).toBeInTheDocument();
+    expect(screen.getByText('SYM20')).toBeInTheDocument();
+    expect(screen.queryByText('SYM21')).not.toBeInTheDocument();
+
+    const prevBtn = screen.getByRole('button', { name: /← Previous/i });
+    const nextBtn = screen.getByRole('button', { name: /Next →/i });
+
+    expect(prevBtn).toBeDisabled();
+    expect(nextBtn).toBeEnabled();
+    expect(screen.getByTestId('pagination-info')).toHaveTextContent('Page 1 of 2');
+
+    // Click Next
+    fireEvent.click(nextBtn);
+
+    expect(screen.getByText('SYM21')).toBeInTheDocument();
+    expect(screen.getByText('SYM25')).toBeInTheDocument();
+    expect(screen.queryByText('SYM1')).not.toBeInTheDocument();
+    expect(screen.getByTestId('pagination-info')).toHaveTextContent('Page 2 of 2');
+
+    expect(prevBtn).toBeEnabled();
+    expect(nextBtn).toBeDisabled();
+  });
+
+  it('verifies paper trading displays remain strictly read-only with zero order buttons', async () => {
+    render(<App />);
+
+    fireEvent.click(screen.getByRole('link', { name: /Paper Portfolio/i }));
+
+    expect(await screen.findByRole('heading', { name: /Paper Portfolio/i })).toBeInTheDocument();
+    expect(screen.getByText(/Starting Capital/i)).toBeInTheDocument();
+    expect(screen.getByText(/Current Equity/i)).toBeInTheDocument();
+
+    // Verify zero order or trading buttons
+    const buttons = screen.getAllByRole('button');
+    const forbiddenPatterns = [/buy/i, /sell/i, /order/i, /place order/i, /simulate paper entry/i, /execute/i];
+
+    for (const btn of buttons) {
+      const text = btn.textContent || '';
+      for (const pattern of forbiddenPatterns) {
+        expect(text).not.toMatch(pattern);
+      }
+    }
+  });
+
+  it('verifies responsive mobile navigation and more popover sheet', async () => {
+    render(<App />);
+
+    // Mobile bottom nav should have Pulse, Opps, Options, Paper, More
+    const bottomNav = screen.getByRole('navigation', { name: /Mobile Bottom Navigation/i });
+    expect(bottomNav).toBeInTheDocument();
+
+    const moreBtn = screen.getByRole('button', { name: /More destinations/i });
+    expect(moreBtn).toBeInTheDocument();
+
+    // Open More popover
+    fireEvent.click(moreBtn);
+
+    // Popover contains Strategies, Health, Admin Research
+    expect(await screen.findByRole('menuitem', { name: /Strategies & Research/i })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: /Health & Settings/i })).toBeInTheDocument();
+    expect(screen.getByRole('menuitem', { name: /Admin Research/i })).toBeInTheDocument();
   });
 });

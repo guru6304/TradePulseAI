@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
 import { MobileNav } from './MobileNav';
+import { XRayDrawer } from '../../views/XRayDrawer';
 
 interface ShellProps {
   children: React.ReactNode;
@@ -32,6 +33,9 @@ export const Shell: React.FC<ShellProps> = ({ children }) => {
       >
         {children}
       </main>
+
+      {/* Opportunity X-Ray Detail Modal Dialog */}
+      <XRayDrawer />
     </div>
   );
 };

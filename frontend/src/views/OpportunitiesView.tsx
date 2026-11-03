@@ -3,7 +3,6 @@ import { useTerminal, STRATEGY_NAMES } from '../context/TerminalContext';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { SearchIcon, SyncIcon, ArrowUpIcon, ArrowDownIcon } from '../components/common/Icons';
 import { formatInr, formatIstTime } from '../utils/time';
-import { XRayDrawer } from './XRayDrawer';
 
 export const OpportunitiesView: React.FC = () => {
   const {
@@ -398,7 +397,7 @@ export const OpportunitiesView: React.FC = () => {
               </button>
             </div>
 
-            <div className="text-outline">
+            <div className="text-outline" data-testid="pagination-info">
               Page <span className="text-on-surface font-bold">{currentPage + 1}</span> of{' '}
               <span className="text-on-surface font-bold">{totalPages}</span> ·{' '}
               <span className="text-primary font-bold">{filteredRows.length}</span> matching /{' '}
@@ -412,9 +411,6 @@ export const OpportunitiesView: React.FC = () => {
           Setup Quality evaluates detector rules, not a win probability. Gross R:R reflects price level geometry; net executable reward requires dated spreads and broker cost models. Canonical rank order is strictly server-determined and immutable.
         </p>
       </div>
-
-      {/* 6. X-Ray Detail Drawer */}
-      <XRayDrawer />
     </div>
   );
 };

@@ -105,6 +105,8 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDrawerOpen, onCloseDrawe
           <div
             className="bg-surface-container-low border-t border-outline-variant p-space-md rounded-t-xl flex flex-col gap-2 pb-16"
             onClick={(e) => e.stopPropagation()}
+            role="menu"
+            aria-label="Additional Workspaces"
           >
             <div className="flex items-center justify-between pb-2 border-b border-outline-variant/30">
               <span className="font-headline-md text-headline-md text-on-surface">Additional Workspaces</span>
@@ -112,6 +114,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDrawerOpen, onCloseDrawe
                 type="button"
                 onClick={() => setIsMoreOpen(false)}
                 className="p-1 text-on-surface-variant hover:text-on-surface"
+                aria-label="Close menu"
               >
                 <CloseIcon size={18} />
               </button>
@@ -119,6 +122,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDrawerOpen, onCloseDrawe
 
             <button
               type="button"
+              role="menuitem"
               onClick={() => handleSelectRoute('strategies')}
               className={`flex items-center gap-space-sm p-space-sm rounded ${
                 route === 'strategies' ? 'bg-surface-container-high text-primary' : 'text-on-surface-variant'
@@ -133,6 +137,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDrawerOpen, onCloseDrawe
 
             <button
               type="button"
+              role="menuitem"
               onClick={() => handleSelectRoute('health')}
               className={`flex items-center gap-space-sm p-space-sm rounded ${
                 route === 'health' ? 'bg-surface-container-high text-primary' : 'text-on-surface-variant'
@@ -147,6 +152,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isDrawerOpen, onCloseDrawe
 
             <button
               type="button"
+              role="menuitem"
               onClick={() => handleSelectRoute('admin-research')}
               className={`flex items-center justify-between p-space-sm rounded ${
                 route === 'admin-research' ? 'bg-surface-container-high text-error' : 'text-outline'

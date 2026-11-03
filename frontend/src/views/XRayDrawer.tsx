@@ -175,18 +175,38 @@ export const XRayDrawer: React.FC = () => {
     };
   }, [candidate, ranks?.snapshot?.run_id, setDetailState]);
 
+  // Handle Escape key to close modal
+  useEffect(() => {
+    if (!candidate) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeDetail();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [candidate, closeDetail]);
+
   if (!candidate) return null;
 
   const strategyName = STRATEGY_NAMES[candidate.strategy_id] || candidate.strategy_id;
   const paper = signal?.paper_decision;
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label={`Opportunity X-Ray detail for ${candidate.symbol}`}
-      className="fixed inset-y-0 right-0 z-50 w-full sm:w-[500px] lg:w-[540px] bg-surface-container-low border-l border-outline-variant shadow-2xl flex flex-col select-none animate-in slide-in-from-right duration-200"
-    >
+    <>
+      {/* Accessible Backdrop Overlay */}
+      <div
+        className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 transition-opacity"
+        onClick={closeDetail}
+        aria-hidden="true"
+      />
+
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Opportunity X-Ray detail for ${candidate.symbol}`}
+        className="fixed inset-y-0 right-0 z-50 w-full sm:w-[500px] lg:w-[540px] bg-surface-container-low border-l border-outline-variant shadow-2xl flex flex-col select-none animate-in slide-in-from-right duration-200"
+      >
       {/* 1. Drawer Header */}
       <div className="h-14 px-space-md bg-surface-container-lowest border-b border-outline-variant/40 flex items-center justify-between shrink-0">
         <div className="flex items-center gap-space-sm">
@@ -461,5 +481,6 @@ export const XRayDrawer: React.FC = () => {
         </button>
       </div>
     </div>
+    </>
   );
 };

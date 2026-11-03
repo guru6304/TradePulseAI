@@ -12,19 +12,26 @@ export default defineConfig({
     },
   },
   server: {
+    host: '127.0.0.1',
     port: 5173,
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         configure: (proxy) => {
-          proxy.on('proxyReq', (proxyReq) => {
-            // server.py enforces local loopback same-origin:
-            // 1. Host header port must match server bind port (handled by changeOrigin)
-            // 2. Origin header must be absent or match "http://" + Host
-            // 3. Sec-Fetch-Site header must not be "cross-site"
-            proxyReq.setHeader('Origin', 'http://127.0.0.1:8000');
-            proxyReq.setHeader('Sec-Fetch-Site', 'same-origin');
+          proxy.on('proxyReq', (proxyReq, req) => {
+            // Strictly guard proxy header rewrite to local development requests only
+            const clientHost = req.headers['host'] || '';
+            const isLocal =
+              clientHost.startsWith('localhost:') ||
+              clientHost.startsWith('127.0.0.1:') ||
+              clientHost === 'localhost' ||
+              clientHost === '127.0.0.1';
+
+            if (isLocal) {
+              proxyReq.setHeader('Origin', 'http://127.0.0.1:8000');
+              proxyReq.setHeader('Sec-Fetch-Site', 'same-origin');
+            }
           });
         },
       },
