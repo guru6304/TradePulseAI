@@ -345,7 +345,7 @@ describe('React Terminal Components', () => {
 
   it('displays UNAVAILABLE in X-Ray drawer when signal cannot be proven or joined', async () => {
     // When getSignals returns empty items (join cannot be proven)
-    vi.spyOn(apiClient, 'getSignals').mockResolvedValueOnce({
+    vi.spyOn(apiClient, 'getSignals').mockResolvedValue({
       status: 'ok',
       total_count: 0,
       limit: 200,
@@ -371,11 +371,11 @@ describe('React Terminal Components', () => {
   });
 
   it('displays truthful unconfigured paper portfolio notice when account_id is null', async () => {
-    vi.spyOn(apiClient, 'getHealth').mockResolvedValueOnce({
+    vi.spyOn(apiClient, 'getHealth').mockResolvedValue({
       ...mockHealth,
       paper_account_id: null,
     });
-    vi.spyOn(apiClient, 'getPaperAccounts').mockResolvedValueOnce({
+    vi.spyOn(apiClient, 'getPaperAccounts').mockResolvedValue({
       status: 'ok',
       execution_mode: 'SIMULATED',
       accounts: [],
@@ -386,8 +386,7 @@ describe('React Terminal Components', () => {
 
     render(<App />);
 
-    window.location.hash = '#/paper';
-    fireEvent(window, new HashChangeEvent('hashchange'));
+    fireEvent.click(screen.getByRole('link', { name: /Paper Portfolio/i }));
 
     expect(await screen.findByText(/No Reconciled Paper Account/i)).toBeInTheDocument();
     expect(screen.getByText(/Virtual simulated trading requires a configured and reconciled paper account/i)).toBeInTheDocument();
