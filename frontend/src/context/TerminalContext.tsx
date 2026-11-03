@@ -164,8 +164,20 @@ export const TerminalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
       if (healthRes.status === 'fulfilled') {
         setHealth(healthRes.value);
-        // If health has a paper account id, read paper portfolio
-        const accountId = healthRes.value.paper_account_id;
+        let accountId = healthRes.value.paper_account_id;
+
+        // Verified account discovery: if health does not name one, check paper-accounts
+        if (!accountId) {
+          try {
+            const accountsRes = await apiClient.getPaperAccounts({ limit: 1 }, { signal: controller.signal });
+            if (accountsRes.accounts && accountsRes.accounts.length > 0) {
+              accountId = accountsRes.accounts[0].account_id;
+            }
+          } catch {
+            // No paper account configured
+          }
+        }
+
         if (accountId) {
           try {
             const paperRes = await apiClient.getPaperPortfolio(accountId, { signal: controller.signal });
@@ -180,6 +192,9 @@ export const TerminalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         } else {
           setPaperPortfolio(null);
         }
+      } else {
+        setHealth(null);
+        setPaperPortfolio(null);
       }
 
       if (configRes.status === 'fulfilled') {

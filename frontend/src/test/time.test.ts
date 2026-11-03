@@ -62,3 +62,4 @@ describe('sourceTime and time utilities', () => {
     expect(stableStringify(a)).toBe(stableStringify(b));
   });
 });
+

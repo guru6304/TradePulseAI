@@ -18,6 +18,7 @@ import type {
   ScanLineageResponse,
   CashCandlesResponse,
   PaperPortfolioResponse,
+  PaperAccountsResponse,
 } from '../types/api';
 
 export class ApiError extends Error {
@@ -126,7 +127,21 @@ export const apiClient = {
     params: { run_id?: string; limit?: number; offset?: number } = {},
     options?: RequestOptions
   ): Promise<RankingResponse> {
-    return apiGet<RankingResponse>('/api/opportunity-rankings', params, options);
+    // server.py:558 strictly allows only {"run_id", "limit", "offset"}
+    const cleanParams: { run_id?: string; limit?: number; offset?: number } = {};
+    if (params.run_id !== undefined && params.run_id !== null) {
+      const stripped = String(params.run_id).trim();
+      if (stripped.length > 0 && stripped.length <= 160) {
+        cleanParams.run_id = stripped;
+      }
+    }
+    if (params.limit !== undefined && params.limit !== null) {
+      cleanParams.limit = Math.max(1, Math.min(100, Number(params.limit)));
+    }
+    if (params.offset !== undefined && params.offset !== null) {
+      cleanParams.offset = Math.max(0, Math.min(512, Number(params.offset)));
+    }
+    return apiGet<RankingResponse>('/api/opportunity-rankings', cleanParams, options);
   },
 
   getSignals(
@@ -138,6 +153,8 @@ export const apiClient = {
       start_time?: string;
       end_time?: string;
       direction?: string;
+      data_mode?: string;
+      state_context?: string;
       limit?: number;
       offset?: number;
     } = {},
@@ -146,18 +163,63 @@ export const apiClient = {
     return apiGet<SignalListResponse>('/api/signals', params, options);
   },
 
-  getScanLineage(run_id: string, options?: RequestOptions): Promise<ScanLineageResponse> {
-    return apiGet<ScanLineageResponse>('/api/scan-lineage', { run_id }, options);
+  async getScanLineage(run_id: string, options?: RequestOptions): Promise<ScanLineageResponse> {
+    const stripped = typeof run_id === 'string' ? run_id.trim() : '';
+    if (!stripped || stripped.length > 160) {
+      throw new ApiError(
+        'Invalid or missing run_id for /api/scan-lineage',
+        400,
+        'Bad Request',
+        { status: 'error', reason_code: 'INVALID_RUN_ID' }
+      );
+    }
+    return apiGet<ScanLineageResponse>('/api/scan-lineage', { run_id: stripped }, options);
   },
 
-  getCashCandles(
+  async getCashCandles(
     params: { run_id: string; batch_id: string; limit?: number; offset?: number },
     options?: RequestOptions
   ): Promise<CashCandlesResponse> {
-    return apiGet<CashCandlesResponse>('/api/cash-candles', params, options);
+    const run_id = typeof params.run_id === 'string' ? params.run_id.trim() : '';
+    const batch_id = typeof params.batch_id === 'string' ? params.batch_id.trim() : '';
+    if (!run_id || !batch_id) {
+      throw new ApiError(
+        'Both run_id and batch_id are required for /api/cash-candles',
+        400,
+        'Bad Request',
+        { status: 'error', reason_code: 'MISSING_CANDLE_IDENTIFIERS' }
+      );
+    }
+    return apiGet<CashCandlesResponse>(
+      '/api/cash-candles',
+      {
+        run_id,
+        batch_id,
+        limit: params.limit !== undefined ? Math.max(1, Math.min(200, Number(params.limit))) : undefined,
+        offset: params.offset !== undefined ? Math.max(0, Math.min(25000, Number(params.offset))) : undefined,
+      },
+      options
+    );
   },
 
-  getPaperPortfolio(account_id: string, options?: RequestOptions): Promise<PaperPortfolioResponse> {
-    return apiGet<PaperPortfolioResponse>('/api/paper-portfolio', { account_id }, options);
+  getPaperAccounts(
+    params: { limit?: number; cursor?: string } = {},
+    options?: RequestOptions
+  ): Promise<PaperAccountsResponse> {
+    return apiGet<PaperAccountsResponse>('/api/paper-accounts', params, options);
+  },
+
+  async getPaperPortfolio(account_id: string, options?: RequestOptions): Promise<PaperPortfolioResponse> {
+    const trimmed = typeof account_id === 'string' ? account_id.trim() : '';
+    if (!trimmed || trimmed.length > 128 || !/^[A-Za-z0-9_.:-]+$/.test(trimmed)) {
+      throw new ApiError(
+        `Invalid or missing account_id for paper portfolio request: ${account_id}`,
+        400,
+        'Bad Request',
+        { status: 'error', reason_code: 'INVALID_ACCOUNT_ID' }
+      );
+    }
+    return apiGet<PaperPortfolioResponse>('/api/paper-portfolio', { account_id: trimmed }, options);
   },
 };
+

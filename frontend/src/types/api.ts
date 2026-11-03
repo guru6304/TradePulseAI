@@ -339,6 +339,23 @@ export interface PaperPortfolioPosition {
   [key: string]: unknown;
 }
 
+export interface PaperAccountItem {
+  account_id: string;
+  config_hash: string;
+  created_at_ist: string;
+  execution_mode: 'SIMULATED' | string;
+}
+
+export interface PaperAccountsResponse {
+  status: string;
+  execution_mode: 'SIMULATED' | string;
+  accounts: PaperAccountItem[];
+  next_cursor: string | null;
+  through_sequence: number;
+  truncated: boolean;
+  evidence_scope?: string;
+}
+
 export interface PaperPortfolioResponse {
   status: 'OK' | 'BLOCKED' | 'RECONCILIATION_REQUIRED' | string;
   account_id: string;
@@ -411,3 +428,4 @@ export interface SelectedCandidateSource {
   watermark: number; // millisecond timestamp
   digest: string;
 }
+

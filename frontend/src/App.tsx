@@ -41,3 +41,4 @@ export const App: React.FC = () => {
     </TerminalProvider>
   );
 };
+

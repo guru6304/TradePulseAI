@@ -163,3 +163,4 @@ export const ScheduleIcon: React.FC<IconProps> = ({ size = 16, className = '', .
     <polyline points="12 6 12 12 16 14" />
   </svg>
 );
+

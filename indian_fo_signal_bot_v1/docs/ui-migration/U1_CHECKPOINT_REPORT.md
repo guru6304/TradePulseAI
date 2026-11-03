@@ -1,87 +1,62 @@
-# TradePulse AI — U1 Checkpoint Implementation Report
-**Stage 4 / Agent 3 / React UI Migration**  
+# TradePulse AI — U1 Checkpoint Implementation Report (U1-C Correction)
+**Stage 4 / Agent 3 / React UI Migration — Exact Backend API Parity**  
 **Date:** 2026-11-03  
 **Worktree:** `C:\Users\91810\TradePulseAI-Worktrees\ui`  
 **Branch:** `feature/new-ui`  
 **Baseline Git Commit:** `627b61c`  
-
----
-
-## 1. Executive Summary
-
-The U1 checkpoint delivers the complete, self-contained modern frontend foundation for **TradePulse AI**, migrating from the standalone vanilla terminal prototype to a strict, production-grade **React 18 + TypeScript + Vite + Tailwind CSS** architecture.
-
-The implementation faithfully reflects the approved **Stitch Institutional Terminal Precision** design (`C:\Users\91810\TradePulseAI-References\Stage2-UI`) while strictly adhering to the immutable contracts:
-- `TP_UI_API_CONTRACT_V1.md`
+**Pre-Correction Commit:** `d0c3b23`  
+**Authoritative Contracts:**
+- `TP_UI_API_CONTRACT_V1.md` (Inspected against `main` at `1083092`)
 - `TP_STRATEGY_INTEGRATION_CONTRACT_V1.md`
 - `TRADEPULSE_MASTER_STATUS.md`
 
-All code is contained within the `frontend/` directory, completely preserving the existing Python backend (`server.py`) and the vanilla terminal (`public/terminal.*`) as zero-risk fallbacks.
+---
+
+## 1. Executive Summary & Defect Diagnosis (U1-C)
+
+Following owner review of checkpoint `d0c3b23`, an audit was conducted comparing `server.py`, the H0 contract `TP_UI_API_CONTRACT_V1.md`, and all frontend network dispatch and documentation paths.
+
+The audit revealed that while core frontend runtime code in `frontend/src/api/` was already using canonical backend endpoints (`/api/opportunity-rankings`, `/api/cash-candles`, `/api/scan-lineage`, `/api/signals`), the previous checkpoint report contained inaccurate endpoint documentation (e.g. `/api/rankings`, `page=N`, `/api/cash-candles-batch`, `/api/signal-lineage`, unscoped `/api/paper-portfolio`). Furthermore, runtime query parameter validation, paper account discovery, and loopback Host/Origin proxy alignment required formalization.
+
+All contract mismatches have been systematically investigated and corrected in **U1-C**. Parity is backed by a live disposable loopback integration test (`test_ui_api_loopback_parity.py`) against `server.create_http_server()`, strict unit/component tests in Vitest (30 passing tests), strict TypeScript typechecks, clean production build, and 17 passing node regression tests.
 
 ---
 
-## 2. Implemented Architecture & Component Hierarchy
+## 2. Contract Mismatch & Parity Resolution Matrix
 
-```
-frontend/
-├── index.html                 # Dark mode, CSP-safe, zero external fonts/CDNs
-├── package.json               # React 18, Vite 5, Tailwind 3, Vitest 2
-├── tsconfig.json              # Strict TypeScript 5.6 configuration
-├── vite.config.ts             # Base './', API proxy to localhost:8000, JSDOM test runner
-├── tailwind.config.js         # Stitch institutional dark palette & design tokens
-└── src/
-    ├── main.tsx               # Root entrypoint
-    ├── App.tsx                # TerminalProvider wrapper + Shell
-    ├── index.css              # Custom scrollbars, tabular numbers, typography
-    ├── types/
-    │   └── api.ts             # Strict TypeScript definitions for all backend endpoints
-    ├── utils/
-    │   └── time.ts            # Timezone-safe IST parsing, leap year validation, INR formatters
-    ├── api/
-    │   ├── client.ts          # Read-only GET/HEAD same-origin client (no POST/PUT/DELETE)
-    │   └── snapshot-collector.ts # Bounded multi-page snapshot pagination & invariant enforcement
-    ├── context/
-    │   └── TerminalContext.tsx# Reactive state: routing, health, snapshots, selection, lifecycle
-    ├── components/
-    │   ├── common/
-    │   │   ├── Icons.tsx      # Bundled SVG icons matching Stitch icon specifications
-    │   │   └── StatusBadge.tsx# Qualified, Radar, Long, Short, Paper, Stale status chips
-    │   └── layout/
-    │       ├── Shell.tsx      # Responsive desktop/tablet/mobile viewport container
-    │       ├── Header.tsx     # Institutional banner, clock, search bar, GET refresh
-    │       ├── Sidebar.tsx    # Desktop 224px left navigation (hidden on mobile)
-    │       └── MobileNav.tsx  # Mobile bottom bar + hamburger drawer (390px responsive)
-    └── views/
-        ├── PulseView.tsx      # Shortlist hero cards, zero-signal truthful waiting state, KPIs
-        ├── OpportunitiesView.tsx # Canonical priority ranking table, filter tabs, run watermark ribbon
-        ├── XRayDrawer.tsx     # Candidate inspect drawer: factor breakdown, 5m lineage, diagnostics
-        ├── CandleChart.tsx    # Retained 5m SVG candlestick chart + accessible OHLC data table
-        ├── OptionsView.tsx    # Derivatives overview (truthful mock/unsupported notification)
-        ├── StrategiesView.tsx # Active pipeline strategy registry & parameter inspection
-        ├── PaperView.tsx      # Virtual execution ledger, portfolio summary & rejection auditor
-        ├── HealthView.tsx     # Backend heartbeat, clock drift, Upstox connectivity inspector
-        └── AdminResearchView.tsx # Read-only calibration and research environment audit
-```
+| Item # | Identified Surface | Previous Code / Report State | Verified Source Behavior (`server.py` & H0) | Final Resolution (U1-C) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1** | **Ranking Endpoint Path** | Report listed `/api/rankings?limit=20`. Code in `client.ts` used `/api/opportunity-rankings`. | `server.py:95, 1192` defines `opportunity-rankings`. `/api/rankings` does NOT exist and returns HTTP 404 `NotFoundError`. | Standardized 100% on `/api/opportunity-rankings`. Corrected report and added unit + loopback tests asserting `/api/rankings` returns 404 and `/api/opportunity-rankings` returns 200. |
+| **2** | **Ranking Pagination & Envelope** | Report listed `page=N`. Code used `limit` & `offset`. | `server.py:558` strictly allows only `{"run_id", "limit", "offset"}`. Querying `page` triggers a 400 `Invalid ranking query.` Server returns `{status, actionable, scope, as_of, current_rows, historical_rows, pagination, snapshot}`. | Enforced strict parameter sanitization in `client.ts:getOpportunityRankings` ensuring client `page` is never forwarded. Multi-page collection pins `snapshot.run_id`. Verified in loopback integration test. |
+| **3** | **Cash Candles Endpoint** | Report listed `/api/cash-candles-batch?symbols=...`. Code used `/api/cash-candles`. | `server.py:95, 522` defines `/api/cash-candles`. Strictly requires `run_id` and matching `batch_id`; unknown params return 400, missing batch returns 404. `/api/cash-candles-batch` returns 404. | Enforced parameter validation in `client.ts:getCashCandles`: throws `ApiError` if `run_id` or `batch_id` is empty. Updated documentation. Verified 404 on `cash-candles-batch` and 200 on exact `run_id` + `batch_id` in loopback test. |
+| **4** | **Signal Lineage Interface** | Report listed `/api/signal-lineage?symbol=...&direction=...`. Code used `getSignals` with client join. | `server.py` implements `/api/signals` with query bounds; `/api/signal-lineage` is NOT implemented and returns 404. Signal reconciliation requires exact join on `dedup_key`, `strategy_id`, `position_type`, `instrument_identity`, and aware watermark. | Clarified that `/api/signals` is the canonical endpoint. In `XRayDrawer.tsx`, if the join cannot be uniquely proven (zero or multiple matches), the drawer strictly transitions to `UNAVAILABLE` and withholds replacement price/chart data. |
+| **5** | **Paper Portfolio Scoping** | Report listed `/api/paper-portfolio` without query parameters. Code called `getPaperPortfolio(accountId)`. | `server.py:933, 942` strictly requires `account_id` (1..128 chars, `[A-Za-z0-9_.:-]{1,120}`). Unscoped `/api/paper-portfolio` returns 400 `Invalid paper-report query.` | Added pre-dispatch validation in `client.ts:getPaperPortfolio` rejecting empty/invalid IDs. Added `/api/paper-accounts` client method for verified discovery if `health.paper_account_id` is null. If unconfigured, renders "No Reconciled Paper Account" without querying. |
+| **6** | **Health DTO Structure** | Report assumed `market_state` and `clock_drift` fields. | `server.py:388-398` projects `status`, `broker`, `database`, `scheduler`, `last_scan`, `paper_account_id`, `operations`, `live_acceptance`. No top-level `market_state` or `clock_drift` exists. | Verified `HealthResponse` TypeScript schema against `server.py`. In `Header.tsx`, session label is mapped directly from `health.scheduler.session_state` and candle/scan timestamp, matching `public/terminal.js:243`. |
+| **7** | **Host / Origin Security & Vite Proxy** | Vite dev server proxy forwarded default browser `Origin: http://localhost:5173`. | `server.py:1351` enforces strict local same-origin checks: loopback client, `Host` header port matching server bind port, and `Origin` matching `http://` + Host or absent. Mismatched Origin or `Sec-Fetch-Site: cross-site` returns 403 `LOCAL_SAME_ORIGIN_REQUIRED`. | Configured `proxy.on('proxyReq')` in `vite.config.ts` to rewrite `Origin: http://127.0.0.1:8000` and `Sec-Fetch-Site: same-origin` during local development. Verified in loopback integration tests. |
 
 ---
 
 ## 3. Authoritative Route-to-API Mapping Table
 
-Every frontend screen and data fetcher was verified against real backend endpoints defined in `TP_UI_API_CONTRACT_V1.md`. **Zero Stitch imaginary routes were invented.**
+Every frontend screen and data fetcher was verified against real backend endpoints defined in `TP_UI_API_CONTRACT_V1.md` and `server.py`. **Zero Stitch imaginary routes are utilized.**
 
-| UI Component | Backend API Endpoint | HTTP Method | Fallback / Unavailable Behavior | Parity Contract Verified |
-| :--- | :--- | :--- | :--- | :--- |
-| **Header / Clock** | `/api/health` | `GET` | Shows `OFFLINE` badge, amber stale warning if drift detected | Verified `HealthResponse` |
-| **Pulse Hero Cards** | `/api/rankings?limit=20` | `GET` | "No Qualified Opportunities" waiting card with truthful IST timestamp | Verified `RankingResponse` |
-| **Pulse KPIs** | `/api/rankings`, `/api/health` | `GET` | Displays actual candidate count, market state, and backend version | Verified `RankingResponse` |
-| **Opportunities Table**| `/api/rankings?page=N&limit=20&run_id=...` | `GET` | Shows empty state "No matching candidates for filter" | Verified multi-page snapshot |
-| **X-Ray Lineage** | `/api/scan-lineage?run_id=...` | `GET` | Retains snapshot timestamp, explains missing lineage | Verified `ScanLineageResponse` |
-| **X-Ray 5m Candles** | `/api/cash-candles-batch?symbols=...` | `GET` | Renders zero-lookahead notice or "Historical candles unavailable" | Verified `CashCandlesResponse` |
-| **X-Ray Signal Detail**| `/api/signal-lineage?symbol=...&direction=...` | `GET` | Fallback to ranking row factor scores if signal payload absent | Verified `SignalItem` |
-| **Paper Ledger** | `/api/paper-portfolio` | `GET` | Displays virtual trades or empty ledger notice; audit badges | Verified `PaperPortfolioResponse` |
-| **System Settings** | `/api/config` | `GET` | Read-only configuration dump with locked production toggles | Verified `ConfigResponse` |
-| **Rank History / Delta**| *Not Implemented in Backend* | `N/A` | Displays "Backend Rank History endpoint (/api/rank-history) not yet provisioned. Showing single-snapshot priority." | Truthful limitation notice |
-| **Manual Execution**| *Blocked by Policy* | `N/A` | No POST execution buttons exist in UI; paper trigger reasons displayed read-only | Enforces read-only safety |
+| UI Component | Backend API Endpoint | HTTP Method | Query Parameters & Constraints | Fallback / Unavailable Behavior | Parity Contract Verified |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Header / Clock** | `/api/health` | `GET` | No query consumed | `OFFLINE` badge; alerts reflected from `operations.alerts` | Verified `HealthResponse` |
+| **Pulse Hero Cards** | `/api/opportunity-rankings` | `GET` | `limit=100`, `offset=0` | "No Qualified Opportunities" waiting card with truthful IST timestamp | Verified `RankingResponse` |
+| **Pulse KPIs** | `/api/opportunity-rankings`, `/api/health` | `GET` | `limit=100`, `offset=0` | Shows candidate count from complete snapshot; session state from `scheduler.session_state` | Verified `RankingResponse` |
+| **Opportunities Table**| `/api/opportunity-rankings` | `GET` | `run_id=<pinned>`, `limit=100`, `offset=0,100..` (Strict: no `page` param) | Shows empty state "No matching candidates for filter" | Verified multi-page snapshot |
+| **X-Ray Lineage** | `/api/scan-lineage` | `GET` | Required `run_id` (1..160 chars) | Retains snapshot timestamp, displays error if batch missing | Verified `ScanLineageResponse` |
+| **X-Ray 5m Candles** | `/api/cash-candles` | `GET` | Required `run_id` and matching `batch_id`; `limit=100`, `offset=N` | Renders zero-lookahead notice or "Historical candles unavailable" | Verified `CashCandlesResponse` |
+| **X-Ray Signal Detail**| `/api/signals` | `GET` | `symbol`, `strategy_id`, `provider`, `segment`, `start_time`, `end_time`, `limit=200`, `offset=0` | Exact join on candidate identity/watermark; displays `UNAVAILABLE` if match count !== 1 | Verified `SignalItem` |
+| **Paper Ledger** | `/api/paper-portfolio` | `GET` | Strictly requires `account_id` (1..128 chars) | Displays "No Reconciled Paper Account" if unconfigured; displays audit badges | Verified `PaperPortfolioResponse` |
+| **Paper Accounts** | `/api/paper-accounts` | `GET` | `limit=100`, optional `cursor` | Used for verified account discovery when `health.paper_account_id` is null | Verified `PaperAccountsResponse` |
+| **Options Lab** | `/api/oi-snapshots` | `GET` | `limit=10` | Displays "Contract viability comes first" notice and historical previews | Verified `OiSnapshotItem` |
+| **Strategies** | `/api/backtest-eligibility` | `GET` | No query consumed | Displays 5 baseline strategies + 2 gated research algorithms | Verified eligibility DTO |
+| **System Settings** | `/api/config` | `GET` | No query consumed | Read-only configuration dump with locked production toggles | Verified `ConfigResponse` |
+| **Scan Telemetry** | `/api/scans` | `GET` | `limit=10`, `offset=0` | Retained scan execution table with duration, signals, and broker mode | Verified `ScanListResponse` |
+| **Rank History / Delta**| *Not Implemented in Backend* | `N/A` | Endpoint does not exist | Displays "Backend Rank History endpoint (/api/rank-history) not yet provisioned. Showing single-snapshot priority." | Truthful limitation notice |
+| **Manual Execution**| *Blocked by Policy* | `N/A` | No POST execution buttons exist in UI | Displays paper trigger reasons (`CONFLICTING_OPEN_POSITION`) read-only | Enforces read-only safety |
 
 ---
 
@@ -93,11 +68,11 @@ Every frontend screen and data fetcher was verified against real backend endpoin
 
 ### 4.2. Server-Provided Priority Ranking Preservation
 - Client-side sorting never calculates an alternative score or re-ranks candidates.
-- All candidate orderings strictly follow server-provided `rank` or explicit user table sort (e.g. symbol name, RSI value) within the verified server snapshot.
+- All candidate orderings strictly follow server-provided `rank` or explicit user table sort within the verified server snapshot.
 
 ### 4.3. Multi-Page Snapshot Invariant Enforcement (`snapshot-collector.ts`)
 - Multi-page ranking retrieval pins subsequent pages to the first page's `run_id`.
-- Enforces snapshot invariants: halts if `version` or `scope` changes across pages, validates row uniqueness, clamps at maximum 512 rows, and marks snapshots as expired when server `valid_until` has elapsed.
+- Enforces snapshot invariants: halts if `version`, `work_id`, `scope`, `reference`, `valid_until`, or `policy` changes across pages, validates row uniqueness, clamps at maximum 512 rows, and marks snapshots as expired when server `valid_until` has elapsed.
 
 ### 4.4. Paper Rejection Reason Code: `CONFLICTING_OPEN_POSITION`
 - Added full support for the new H1 additive paper rejection reason: `CONFLICTING_OPEN_POSITION`.
@@ -113,65 +88,81 @@ Every frontend screen and data fetcher was verified against real backend endpoin
 
 ## 5. Verification & Test Results
 
-### 5.1. Vitest Frontend Unit & Component Suite
+### 5.1. Real Loopback Integration Test Suite (`test_ui_api_loopback_parity.py`)
+Command: `cd indian_fo_signal_bot_v1; python -m unittest test_ui_api_loopback_parity.py`  
+Result: **10 of 10 tests passed (100%) in 0.423s**
+- `test_rankings_alias_does_not_exist_and_returns_404`: Confirms `/api/rankings` returns 404 `NotFoundError`.
+- `test_opportunity_rankings_rejects_page_parameter_with_400`: Confirms `/api/opportunity-rankings?page=1` returns 400 `Invalid ranking query.`
+- `test_cash_candles_batch_does_not_exist_and_returns_404`: Confirms `/api/cash-candles-batch` returns 404 `NotFoundError`.
+- `test_cash_candles_requires_both_run_id_and_batch_id`: Confirms `/api/cash-candles` rejects unknown query params with 400, returns 404 for missing/invalid batch, and returns 200 with OHLCV items when both `run_id` and matching `batch_id` are provided.
+- `test_signal_lineage_does_not_exist_and_returns_404`: Confirms `/api/signal-lineage` returns 404 `NotFoundError`.
+- `test_signals_supports_exact_filter_parameters`: Confirms `/api/signals` returns 200 list envelope with items matching filter parameters.
+- `test_paper_portfolio_requires_account_id_and_rejects_unscoped_request`: Confirms `/api/paper-portfolio` without `account_id` returns 400 `Invalid paper-report query.`; with `account_id` returns 200.
+- `test_paper_accounts_discovery_returns_200`: Confirms `/api/paper-accounts` returns 200 with configured accounts.
+- `test_health_dto_exact_structure`: Confirms `/api/health` returns 200 with broker, scheduler, database, operations, paper_account_id; asserts non-existence of `market_state` and `clock_drift`.
+- `test_host_origin_security_and_vite_proxy_behavior`: Confirms loopback Host/Origin enforcement (200 on same origin, 403 on mismatched Origin from `http://localhost:5173` without proxy header rewrite, 403 on cross-site fetch).
+
+### 5.2. Vitest Frontend Unit & Component Suite
 Command: `cd frontend; npm.cmd run test`  
-Result: **18 of 18 tests passed (100%)**
-
-- `src/test/time.test.ts`: 7 tests passed
-  - Normalizes naive IST strings and ISO offsets to identical millisecond timestamps.
-  - Rejects rollover dates (e.g., Feb 30) and non-string inputs.
-  - Formats INR currency according to Indian numbering system (e.g. ₹2,845.50).
-- `src/test/api-client.test.ts`: 4 tests passed
-  - Executes GET requests with `same-origin`, `no-store`, and abort timeout.
-  - Rejects with typed `ApiError` on HTTP 404/500 and network abort.
+Result: **30 of 30 tests passed (100%) across 4 test suites**
+- `src/test/api-client.test.ts`: 14 tests passed
+  - GET execution with same-origin credentials, no-store, Accept json.
+  - Query parameter encoding and null/undefined filtering.
+  - Strict paths for `/api/opportunity-rankings`, `/api/cash-candles`, `/api/scan-lineage`, `/api/signals`, `/api/paper-portfolio`, `/api/paper-accounts`, `/api/health`, `/api/config`.
+  - Rejection of invalid account ID in `getPaperPortfolio` before dispatch.
+  - Rejection of missing `run_id` or `batch_id` in `getCashCandles`.
 - `src/test/snapshot-collector.test.ts`: 5 tests passed
-  - Binds subsequent pages to initial page `run_id`.
-  - Enforces 512 total candidate boundary.
-  - Rejects mixed versions and duplicate candidates.
-- `src/test/components.test.tsx`: 2 tests passed
-  - Verifies full shell rendering, status badges, and mobile navigation.
-  - Validates Opportunities table pagination, candidate inspection, 5m candlestick chart rendering, and X-Ray drawer with `CONFLICTING_OPEN_POSITION`.
+  - Pinned `run_id` across multi-page retrieval.
+  - Maximum 512 total candidate boundary enforcement.
+  - Invariant consistency and deadline calculation.
+- `src/test/time.test.ts`: 7 tests passed
+  - IST/ISO timezone normalization, leap year validation, Indian number formatting.
+- `src/test/components.test.tsx`: 4 tests passed
+  - Shell rendering and Pulse view.
+  - Opportunities table navigation, candidate inspection, 5m candlestick chart, and X-Ray drawer with `CONFLICTING_OPEN_POSITION`.
+  - Displays `UNAVAILABLE` in X-Ray drawer when signal join cannot be proven.
+  - Displays truthful unconfigured paper portfolio notice when `account_id` is null.
 
-### 5.2. TypeScript Strict Typecheck
+### 5.3. TypeScript Strict Typecheck
 Command: `cd frontend; npm.cmd run typecheck`  
 Result: **0 errors, 0 warnings**
 
-### 5.3. Production Build Validation
+### 5.4. Production Build Validation
 Command: `cd frontend; npm.cmd run build`  
 Result: **Vite v5.4.21 production build successful**
 ```
-dist/index.html                   0.70 kB │ gzip:  0.42 kB
-dist/assets/index-Cpea2bEA.css   22.90 kB │ gzip:  5.28 kB
-dist/assets/index-CdQs3SPc.js   253.61 kB │ gzip: 69.34 kB
-✓ built in 2.08s
+dist/index.html                   0.71 kB │ gzip:  0.42 kB
+dist/assets/index-DaFh9Oar.css   22.99 kB │ gzip:  5.30 kB
+dist/assets/index-yupbAula.js   255.38 kB │ gzip: 69.93 kB
+✓ built in 2.23s
 ```
 
-### 5.4. Existing Vanilla Terminal Regression Suite
+### 5.5. Existing Vanilla Terminal Regression Suite
 Command: `cd indian_fo_signal_bot_v1; node --test test_terminal_opportunities.js test_terminal_clock.js`  
 Result: **17 of 17 tests passed (100%)** under both `TZ=UTC` and `TZ=America/New_York`.
 
 ---
 
-## 6. Unsupported Backend Dependencies & Follow-ups for U2/U3
+## 6. Host / Origin Security & Vite Proxy Runtime Parity
 
-1. **Rank Movement History (`/api/rank-history`)**:
-   - The Stitch design features a "What Changed" delta ticker. The current backend provides `run_id` and single snapshot rankings without historical rank deltas. The UI currently displays a truthful note explaining that history is not yet provisioned.
-2. **Server-Side RBAC & Live Trading**:
-   - Trading and execution controls are strictly omitted in the UI. The UI operates in a 100% read-only observational state.
-3. **Backend Static File Serving (`server.py`)**:
-   - For U2, `server.py` can be updated to optionally serve the compiled `frontend/dist/` assets under a dedicated route (e.g., `/app` or behind a flag) while preserving `/` for the legacy `public/terminal.html` until full verification.
+The Python backend enforces local loopback security in `server.py:1351`:
+1. `Host` header port must match the server's actual listening port.
+2. `Origin` header must either be absent or match `http://` + Host.
+3. `Sec-Fetch-Site` header must not be `cross-site`.
+
+When developers run `npm run dev` with Vite, the browser originates requests from `http://localhost:5173`. Vite's proxy has been configured in `frontend/vite.config.ts` via `proxy.on('proxyReq')` to rewrite `Origin: http://127.0.0.1:8000` and `Sec-Fetch-Site: same-origin`. This ensures local development seamlessly satisfies `server.py` local same-origin enforcement.
 
 ---
 
-## 7. Checkpoint Completion Status
+## 7. Checkpoint U1-C Completion Status
 
-- [x] Application shell with institutional styling and responsive drawer
-- [x] Navigation with mobile bottom bar (fixing the 224px viewport bug)
-- [x] Pulse view with hero cards and truthful zero-signal state
-- [x] Opportunities view with multi-page snapshot pagination and rank preservation
-- [x] Retained 5m SVG candlestick chart and accessible data table
-- [x] Candidate X-Ray drawer with factor scores, geometry, and `CONFLICTING_OPEN_POSITION`
-- [x] Typed same-origin API client and snapshot invariant collector
-- [x] 100% test pass rate (18 Vitest tests + 17 Node regression tests)
-- [x] Production build clean with zero external CDNs or sourcemaps
-- [x] Worktree clean and ready for owner review at commit checkpoint
+- [x] Corrected all API paths to canonical backend interfaces (`/api/opportunity-rankings`, `/api/cash-candles`, `/api/signals`, `/api/paper-portfolio`).
+- [x] Verified ranking pagination uses `limit` + `offset` (rejection of `page`).
+- [x] Enforced strict required parameters for `cash-candles` (`run_id` + `batch_id`).
+- [x] Clarified signal join invariants with strict `UNAVAILABLE` fallback.
+- [x] Implemented paper account validation and `/api/paper-accounts` discovery.
+- [x] Realigned health DTO eliminating assumed `market_state` or `clock_drift` fields.
+- [x] Verified loopback Host/Origin restrictions with proxy header rewrite.
+- [x] Added live disposable loopback integration test suite (`test_ui_api_loopback_parity.py`).
+- [x] 100% test pass rate across all suites (10 Python loopback + 30 Vitest + 17 Node regression).
+- [x] Clean production build and strict TypeScript verification.

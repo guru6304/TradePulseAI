@@ -161,3 +161,4 @@ describe('collectRankingSnapshot', () => {
     expect(result?.data.status).toBe('RANKING_UNAVAILABLE_NO_DURABLE_SCAN');
   });
 });
+

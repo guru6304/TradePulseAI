@@ -303,4 +303,54 @@ describe('React Terminal Components', () => {
     fireEvent.click(screen.getByRole('button', { name: /Paper & Lineage/i }));
     expect(screen.getByText('CONFLICTING_OPEN_POSITION')).toBeInTheDocument();
   });
+
+  it('displays UNAVAILABLE in X-Ray drawer when signal cannot be proven or joined', async () => {
+    // When getSignals returns empty items (join cannot be proven)
+    vi.spyOn(apiClient, 'getSignals').mockResolvedValueOnce({
+      status: 'ok',
+      total_count: 0,
+      limit: 200,
+      offset: 0,
+      items: [],
+    });
+
+    render(<App />);
+
+    await waitFor(async () => {
+      const items = await screen.findAllByText('RELIANCE');
+      expect(items.length).toBeGreaterThan(0);
+    });
+
+    fireEvent.click(screen.getByRole('button', { name: /View all \(1\) →/i }));
+    const inspectBtn = await screen.findByRole('button', { name: /Inspect RELIANCE/i });
+    fireEvent.click(inspectBtn);
+
+    expect(await screen.findByRole('dialog')).toBeInTheDocument();
+    expect(
+      await screen.findByText(/The selected rank could not be uniquely matched to retained signal identity/i)
+    ).toBeInTheDocument();
+  });
+
+  it('displays truthful unconfigured paper portfolio notice when account_id is null', async () => {
+    vi.spyOn(apiClient, 'getHealth').mockResolvedValueOnce({
+      ...mockHealth,
+      paper_account_id: null,
+    });
+    vi.spyOn(apiClient, 'getPaperAccounts').mockResolvedValueOnce({
+      status: 'ok',
+      execution_mode: 'SIMULATED',
+      accounts: [],
+      next_cursor: null,
+      through_sequence: 0,
+      truncated: false,
+    });
+
+    render(<App />);
+
+    window.location.hash = '#/paper';
+    fireEvent(window, new HashChangeEvent('hashchange'));
+
+    expect(await screen.findByText(/No Reconciled Paper Account/i)).toBeInTheDocument();
+    expect(screen.getByText(/Virtual simulated trading requires a configured and reconciled paper account/i)).toBeInTheDocument();
+  });
 });

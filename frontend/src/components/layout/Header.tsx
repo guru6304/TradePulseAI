@@ -36,23 +36,32 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileNav }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const sessionState = health?.scheduler?.session_state || 'SESSION_UNVERIFIED';
-  const sessionLabel =
-    sessionState === 'OPEN' || sessionState === 'MARKET_OPEN'
-      ? 'NSE OPEN'
-      : sessionState === 'CLOSED' || sessionState === 'MARKET_CLOSED'
-      ? 'NSE CLOSED'
-      : sessionState === 'PRE_OPEN'
-      ? 'NSE PRE-OPEN'
-      : sessionState === 'POST_CLOSE'
-      ? 'NSE POST-CLOSE'
-      : 'NSE SESSION';
+  const getSessionText = () => {
+    if (!health) return 'Session unverified / IST';
+    if (health.evidence_scope === 'DETERMINISTIC_OFFLINE_DEMO') return 'Synthetic demo / IST';
+    const state = health.scheduler?.session_state;
+    const known: Record<string, string> = {
+      OPEN: 'Market open',
+      MARKET_OPEN: 'Market open',
+      CLOSED: 'Market closed',
+      MARKET_CLOSED: 'Market closed',
+      PRE_OPEN: 'Before market',
+      POST_CLOSE: 'After market',
+      WEEKEND: 'Weekend',
+      HOLIDAY: 'Market holiday',
+    };
+    return `${(state && known[state]) || 'Session unverified'} / IST`;
+  };
 
-  const lastScan = health?.last_scan;
-  const asOfText = lastScan?.completed_at_ist
-    ? formatIstTime(lastScan.completed_at_ist)
-    : 'As of IST';
+  const candleTimestamp = health?.broker?.last_candle_timestamp_ist;
+  const scanTimestamp = health?.last_scan?.completed_at_ist;
+  const timeText = candleTimestamp
+    ? formatIstTime(candleTimestamp)
+    : scanTimestamp
+    ? formatIstTime(scanTimestamp)
+    : 'Awaiting evidence';
 
+  const hasAlerts = Boolean(health?.operations?.alerts && health.operations.alerts.length > 0);
   const netPnl = paperPortfolio?.accounting?.realized_net_pnl_inr ?? null;
 
   return (
@@ -78,9 +87,9 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileNav }) => {
           <div className="hidden sm:block h-4 w-px bg-outline-variant/60" />
 
           <div className="flex items-center gap-1.5 font-label-numeric-sm text-label-numeric-sm text-on-surface-variant">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary-container" />
+            <span className={`w-1.5 h-1.5 rounded-full ${hasAlerts ? 'bg-amber-400' : 'bg-primary-container'}`} />
             <span className="tabular-nums font-mono">
-              {sessionLabel} • {asOfText}
+              {getSessionText()} • {timeText}
             </span>
           </div>
         </div>

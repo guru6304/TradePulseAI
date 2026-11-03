@@ -95,3 +95,4 @@ export function stableStringify(obj: unknown): string {
   const keys = Object.keys(obj as Record<string, unknown>).sort();
   return '{' + keys.map(k => JSON.stringify(k) + ':' + stableStringify((obj as Record<string, unknown>)[k])).join(',') + '}';
 }
+
