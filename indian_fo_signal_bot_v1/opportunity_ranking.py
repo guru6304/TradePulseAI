@@ -38,7 +38,7 @@ def _number(value):
     return type(value) in (int, float) and math.isfinite(value) and value > 0
 
 
-def build_snapshot(evaluation, *, provider, as_of, previous=None):
+def build_snapshot(evaluation, *, provider, as_of, previous=None, source_valid_until=None):
     """An explicit scan-write consumer calls this after existing eligibility gates.
 
     The snapshot reports candidate priority only. No score, rank or source label
@@ -137,6 +137,14 @@ def build_snapshot(evaluation, *, provider, as_of, previous=None):
                     for row in rows]
     version = digest(dict(policy=POLICY, scope=scope, rows=version_rows))
     until = min((_clock(row["source_data_watermark"]) + timedelta(minutes=5, seconds=60) for row in rows), default=now)
+    if source_valid_until is not None:
+        # rank_history supplies expiry derived from the complete retained input
+        # universe. This gives a healthy empty result a source-bound lifetime;
+        # neither a read clock nor an empty candidate list can extend evidence.
+        coverage_until = _clock(source_valid_until)
+        if not now <= coverage_until <= now + timedelta(seconds=60):
+            raise ValueError("RANKING_SOURCE_COVERAGE_EXPIRED")
+        until = min(until, coverage_until) if rows else coverage_until
     result = dict(schema_version=SCHEMA, policy=POLICY, scope=scope, run_id=evaluation.get("run_id"),
         as_of=now.isoformat(), valid_until=until.isoformat(), rank_version=version,
         previous_rank_version=previous["rank_version"] if previous else None,

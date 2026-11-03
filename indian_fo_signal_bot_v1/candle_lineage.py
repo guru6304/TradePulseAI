@@ -215,6 +215,7 @@ def make_snapshot(config, equities, indices, chains, zones, reference, *, rank_h
         zones={key: sorted(value) for key, value in zones.items()})
     if rank_history_required:
         snapshot["rank_history_required"] = True
+        snapshot["rank_coverage_required"] = True
     # Original zone state/time are frozen for resumption, not additional work identities.
     snapshot["work_id"] = work_identity(snapshot)
     encoded(snapshot)
@@ -227,6 +228,8 @@ def work_identity(snapshot):
         auxiliary=snapshot["auxiliary"])
     if "rank_history_required" in snapshot:
         identity["rank_history_required"] = snapshot["rank_history_required"]
+    if "rank_coverage_required" in snapshot:
+        identity["rank_coverage_required"] = snapshot["rank_coverage_required"]
     return digest(identity)
 
 

@@ -1,3 +1,11 @@
+# R2 — ranking reliability; owner review next
+
+Checkpoint: **2026-11-03 IST**, branch `main`, approved base `663a868`, workspace `C:\Users\91810\TradePulseAI-Worktrees\main`. Read [the R2 report](../research/TP_RANK_ENGINE_R2_REPORT.md) and [final source-bound receipt](../research/evidence/TP_RANK_R2_20261103_after02.json) for concrete changes, before/after evidence and limits. Source and API contract addenda are part of this local checkpoint; no operational database migration or activation occurred.
+
+The checkpoint reconciles SCANNER freshness with the conservative ranking/paper boundary, binds complete-universe expiry, blocks current rows after retained failure/PENDING work and preserves scoring/paper/Option Apex safety. Git history and owner handoff record its local commit SHA. **Stop for owner review; no push, merge, R3 or live action.** Historical checkpoint text below is retained.
+
+---
+
 # H1 checkpoint 2 — Option Apex prospective preflight
 
 Current checkpoint: **2026-11-03 IST**, branch `main`, base `627b61c`; clean at start. Backend-only, paper-only, offline. Local checkpoint commit is recorded in Git history and the owner handoff. This block supersedes the historical checkpoint 1 next action below.

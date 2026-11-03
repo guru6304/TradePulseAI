@@ -10,6 +10,7 @@ from unittest.mock import patch
 if "test_bot" not in sys.modules and not hasattr(sys.modules.get("__main__"), "_test_config_defaults"):
     import test_bot
 _fixtures = sys.modules.get("test_bot") or sys.modules["__main__"]
+from brokers import CandleFreshnessError
 
 
 def setUpModule():
@@ -150,9 +151,8 @@ class TestTrackAOrderBlockTriggers(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "OBSERVATION_TIME_INVALID"):
                 self.evaluate(fixture, contract, later, now=clock)
         fixture.scenario.now -= timedelta(minutes=1)
-        forming = fixture.scan()
-        with self.assertRaises(ValueError):
-            self.evaluate(fixture, contract, forming)
+        with self.assertRaises(CandleFreshnessError):
+            fixture.scan()  # no retained future input when the prior close is stale
         fixture.scenario.now += timedelta(minutes=1)
         with self.assertRaisesRegex(ValueError, "OBSERVATION_GAP_OR_ORDER"):
             self.evaluate(fixture, contract, self.later(fixture, contract))

@@ -11,6 +11,7 @@ from unittest.mock import patch
 if "test_bot" not in sys.modules and not hasattr(sys.modules.get("__main__"), "_test_config_defaults"):
     import test_bot
 _fixtures = sys.modules.get("test_bot") or sys.modules["__main__"]
+from brokers import CandleFreshnessError
 
 
 def setUpModule():
@@ -164,9 +165,8 @@ class TestAstraVWAPPaperTriggers(unittest.TestCase):
                     self.evaluate(fixture, contract, later, now=clock)
         # An unfinished last wire bar cannot become the required later input.
         fixture.scenario.now -= timedelta(minutes=1)
-        forming = fixture.scan()
-        with self.assertRaises(ValueError):
-            self.evaluate(fixture, contract, forming)
+        with self.assertRaises(CandleFreshnessError):
+            fixture.scan()  # stale prior close is rejected before paper observation
         fixture.scenario.now += timedelta(minutes=1)
         gap = self.later(fixture)
         with self.assertRaisesRegex(ValueError, "OBSERVATION_GAP_OR_ORDER"):

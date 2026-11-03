@@ -554,6 +554,8 @@ class DashboardRequestHandler(BaseHTTPRequestHandler):
         """Read stored candidate priority using the server clock; never refresh it."""
         if self.engine.store is None:
             return 503, {"status": "UNAVAILABLE", "message": "Required storage unavailable."}
+        if self.engine.last_persistence_error == "SCAN_FAILURE_RECORD_UNAVAILABLE":
+            return 503, {"status": "UNAVAILABLE", "message": "Latest scan failure requires storage recovery."}
         try:
             if set(query) - {"run_id", "limit", "offset"} or any(len(values) != 1 for values in query.values()):
                 raise ValueError()

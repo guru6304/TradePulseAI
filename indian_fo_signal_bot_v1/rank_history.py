@@ -5,7 +5,7 @@ inputs, explanations and signals, and never acquire data or refresh a snapshot.
 One predecessor is checked without recursively walking the entire history.
 """
 import copy
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 from candle_lineage import (code_fingerprint, digest, encoded, load,
@@ -125,6 +125,14 @@ def _source(conn, work, result, read_cache=None):
     _require(isinstance(batches, list) and bool(batches), "RANK_DURABLE_CASH_INPUT_REQUIRED")
     by_symbol = {batch["content"]["identity"]["symbol"]: batch for batch in batches}
     _require(len(by_symbol) == len(batches), "RANK_AMBIGUOUS_CASH_IDENTITY")
+    if snapshot.get("rank_coverage_required") is True:
+        cash_strategies = {"strat_1_order_block", "strat_2_vwap_pullback",
+                           "strat_4_orb_filtered", "strat_5_supertrend_pullback"}
+        observed = [(trace.get("symbol"), trace.get("strategy_id"))
+                    for trace in evaluation["strategy_evaluations"] if trace.get("symbol") in by_symbol]
+        _require(len(observed) == len(by_symbol)*len(cash_strategies)
+                 and set(observed) == {(symbol, strategy) for symbol in by_symbol for strategy in cash_strategies},
+                 "RANK_STRATEGY_COVERAGE_INCOMPLETE")
     signals = {compute_signal_dedup_key(signal, result["broker"]): signal for signal in result["signals"]}
     _require(len(signals) == len(result["signals"]), "RANK_DUPLICATE_SIGNAL_IDENTITY")
     qualified_cash_ids = set()
@@ -188,6 +196,62 @@ def _source(conn, work, result, read_cache=None):
     return evaluation, source, _scope(profile, result["data_mode"])
 
 
+def _coverage(snapshot):
+    """Currentness comes from all required retained series, even with no setups."""
+    profile = snapshot["profile"]
+    reference = _clock(snapshot["reference"])
+    expected_cash = [m["symbol"] for m in profile["equities"]]
+    series = {b["content"]["identity"]["symbol"]: b["content"]["candles"] for b in snapshot["batches"]}
+    _require(len(series) == len(snapshot["batches"]) == len(expected_cash)
+             and set(series) == set(expected_cash), "RANK_INCOMPLETE_UNIVERSE")
+    indices = snapshot["auxiliary"]["index_candles"]
+    _require(set(indices) == set(profile["indices"]) and not set(indices).intersection(series),
+             "RANK_INCOMPLETE_INDEX_COVERAGE")
+    series.update(indices)
+    limit = min(profile["parameters"]["live_candle_max_delay_seconds"], 60)
+    watermarks = {}
+    for symbol, rows in series.items():
+        bars = filter_completed_candles(rows, interval_min=5, now=reference)
+        _require(bool(bars), "RANK_COMPLETED_COVERAGE_REQUIRED")
+        watermark = parse_ist_timestamp(bars[-1]["timestamp"])
+        close = watermark + timedelta(minutes=5)
+        _require(watermark.date() == reference.date() and 0 <= (reference-close).total_seconds() <= limit,
+                 "RANK_STALE_UNIVERSE_COVERAGE")
+        watermarks[symbol] = watermark.isoformat()
+    _require(bool(watermarks) and len(set(watermarks.values())) == 1, "RANK_UNSYNCHRONIZED_COVERAGE")
+    until = min(_clock(stamp)+timedelta(minutes=5, seconds=limit) for stamp in watermarks.values())
+    return dict(schema_version="tradepulse.rank-coverage.v1", complete=True,
+        expected_symbols=sorted(series), observed_symbols=sorted(watermarks),
+        source_data_watermarks=watermarks, max_close_lag_seconds=limit, valid_until=until.isoformat())
+
+
+def _current_scan_state(store, conn, scope, cache):
+    """Provider-wide fail-closed overlay; does not rewrite immutable history.
+
+    Pending work already blocks new scanner work by provider. Failure ordering
+    uses persisted row IDs, so equal-second clocks and clock rollback cannot
+    resurrect a predecessor. Only a genuinely committed current source clears it.
+    """
+    pending = conn.execute("""SELECT run_id FROM cash_candle_scans WHERE status='PENDING'
+        AND json_extract(snapshot_json,'$.profile.provider')=? LIMIT 1""", (scope["provider"],)).fetchone()
+    if pending:
+        load(store, pending[0], connection=conn, read_cache=cache)
+        return dict(reason_code="PENDING_SCAN_REQUIRES_RECOVERY", run_id=pending[0])
+    latest = _latest_committed(conn, scope["profile_digest"])
+    if latest is None:
+        return dict(reason_code="NO_CURRENT_COMMITTED_SCAN", run_id=None)
+    latest_work = load(store, latest[0], connection=conn, read_cache=cache)
+    if (latest_work["result"].get("candle_freshness") or {}).get("live_signal_allowed") is not True:
+        return dict(reason_code="LATEST_SCAN_NOT_CURRENT", run_id=latest[0])
+    committed = conn.execute("SELECT id FROM scan_runs WHERE run_id=?", (latest[0],)).fetchone()
+    _require(committed is not None, "RANK_COMMITTED_SCAN_RUN_MISSING")
+    failed = conn.execute("""SELECT run_id FROM scan_runs WHERE id>? AND broker=?
+        AND data_mode='LIVE' AND is_simulated=0 AND status IN ('FAILED','RECOVERY_REQUIRED')
+        ORDER BY id DESC LIMIT 1""", (committed[0], latest_work["result"]["broker"])).fetchone()
+    return (dict(reason_code="NEWER_SCAN_FAILED", run_id=failed[0]) if failed
+            else dict(reason_code="LATEST_COMMITTED_SCAN_CURRENT", run_id=latest[0]))
+
+
 def _base_priority(ranking):
     """Fields independent of older ancestry, all recomputable from this source."""
     ignored = {"previous_rank", "rank_change_reason", "component_changes"}
@@ -234,8 +298,11 @@ def _validate(store, conn, work, result, read_cache):
              and body["source"] == source and result.get("ranking_required") is True
              and work["snapshot"].get("rank_history_required") is True,
              "RANK_SOURCE_BINDING_FAILURE")
+    coverage = _coverage(work["snapshot"]) if work["snapshot"].get("rank_coverage_required") is True else None
+    _require(body.get("coverage") == coverage, "RANK_COVERAGE_BINDING_FAILURE")
+    expiry = coverage["valid_until"] if coverage else None
     if read_cache.get((_SHALLOW_PREDECESSOR, work["run_id"])):
-        rebuilt = build_snapshot(evaluation, provider=scope["provider"], as_of=body["reference"])
+        rebuilt = build_snapshot(evaluation, provider=scope["provider"], as_of=body["reference"], source_valid_until=expiry)
         _require(_base_priority(body["ranking"]) == _base_priority(rebuilt), "RANK_PREDECESSOR_PRIORITY_FAILURE")
         return body
     prior_row = _preceding(conn, row)
@@ -243,7 +310,7 @@ def _validate(store, conn, work, result, read_cache):
     _require(body["previous_snapshot"] == (_descriptor(prior_row, prior) if prior else None),
              "RANK_PREDECESSOR_LINK_FAILURE")
     rebuilt = build_snapshot(evaluation, provider=scope["provider"], as_of=body["reference"],
-                             previous=prior["ranking"] if prior else None)
+                             previous=prior["ranking"] if prior else None, source_valid_until=expiry)
     _require(body["ranking"] == rebuilt, "RANK_RECONSTRUCTION_FAILURE")
     return body
 
@@ -292,11 +359,15 @@ def record(store, conn, work, summary):
                      (prior_row["reference"], prior_row["work_id"], prior_row["run_id"]),
                      "RANK_OUT_OF_ORDER_SOURCE")
         prior = _predecessor(store, conn, prior_row, cache)
+        coverage = _coverage(work["snapshot"]) if work["snapshot"].get("rank_coverage_required") is True else None
         ranking = build_snapshot(evaluation, provider=scope["provider"], as_of=reference,
-                                 previous=prior["ranking"] if prior else None)
+                                 previous=prior["ranking"] if prior else None,
+                                 source_valid_until=coverage["valid_until"] if coverage else None)
         body = dict(schema_version=SCHEMA, run_id=work["run_id"], work_id=work["snapshot"]["work_id"],
             scope=scope, reference=reference, source=source, ranking=ranking,
             previous_snapshot=_descriptor(prior_row, prior) if prior else None)
+        if coverage is not None:
+            body["coverage"] = coverage
         payload = encoded(body)
         conn.execute("INSERT INTO cash_rank_snapshots VALUES (?,?,?,?,?,?)",
             (work["run_id"], body["work_id"], scope_digest, reference, payload, digest(body)))
@@ -353,6 +424,9 @@ def read_current(store, config, now, run_id=None, limit=20, offset=0):
                 status = "ARCHIVED_DIFFERENT_CODE"
             elif (work["result"].get("candle_freshness") or {}).get("live_signal_allowed") is not True:
                 status = "ARCHIVED_NON_CURRENT_SCAN"
+            scan_state = _current_scan_state(store, conn, requested_scope, cache)
+            if status == "CURRENT_CANDIDATE_PRIORITY" and scan_state["reason_code"] != "LATEST_COMMITTED_SCAN_CURRENT":
+                status = "ARCHIVED_NON_CURRENT_SCAN"
             rows = ranking["rows"][offset:offset + limit]
             metadata = {key: copy.deepcopy(ranking[key]) for key in (
                 "policy", "rank_version", "previous_rank_version", "valid_until", "evidence_scope")}
@@ -367,6 +441,8 @@ def read_current(store, config, now, run_id=None, limit=20, offset=0):
                 exclusions_truncated=len(ranking["exclusions"]) > 100,
                 removals_truncated=len(ranking["removals"]) > 100,
                 source_data_watermarks_truncated=len({entry["source_data_watermark"] for entry in ranking["rows"]}) > 100)
+            metadata["coverage"] = copy.deepcopy(body.get("coverage"))
+            metadata["current_scan_state"] = scan_state
             return dict(status=status, actionable=False, scope=copy.deepcopy(body["scope"]),
                 as_of=clock.isoformat(), current_rows=copy.deepcopy(rows) if status == "CURRENT_CANDIDATE_PRIORITY" else [],
                 historical_rows=copy.deepcopy(rows), pagination=dict(offset=offset, limit=limit, total=len(ranking["rows"])),

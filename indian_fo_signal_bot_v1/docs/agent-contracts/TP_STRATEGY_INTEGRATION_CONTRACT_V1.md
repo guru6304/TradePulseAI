@@ -1,5 +1,15 @@
 # TradePulse strategy integration contract V1
 
+## R2 ranking reliability addendum (2026-11-03 IST)
+
+SCANNER-context live candle admission now measures age from completed close with `max_close_lag_seconds=min(configured max_delay_seconds,60)`. Smaller configured limits remain stricter; REFERENCE/DIAGNOSTIC allowance is unchanged. Scanner acquisition, repeated commit/entry guards and newly prepared cash lineage use this same ceiling. No scoring weights, normalizations, sort/tie policy, strategy rules or paper fill policies change.
+
+New rank-required input snapshots carry `rank_coverage_required:true`, bound into work identity. Rank publication requires complete configured cash/index coverage at one completed five-minute watermark and all four cash evaluator traces (a valid UNAVAILABLE/REJECTED trace is still a completed evaluation). A missing/throwing evaluator cannot publish partial cash priority. The retained history body adds authenticated `tradepulse.rank-coverage.v1` metadata; empty results expire at the same source-derived close+configured-at-most-60s boundary as covered inputs. Legacy snapshots without this flag retain their prior reconstruction semantics and cannot become current under changed code.
+
+Ranking reads retain historical rows but use the existing `ARCHIVED_NON_CURRENT_SCAN` status and empty `current_rows` when same-provider PENDING work or a later recorded LIVE failed attempt remains unresolved. This applies to pinned run reads too. Persisted scan row order resolves equal-second/clock-rollback ambiguity conservatively; a genuinely new committed/current input clears the failure barrier, while replay/recovery does not. Pre-input generic failures are recorded after transaction cleanup in existing `scan_runs`. No table/schema migration is added. If failure recording is unavailable, the running HTTP API returns existing 503 UNAVAILABLE; this process-local guard cannot reconstruct an unrecorded failure after restart.
+
+Option Apex admission, four cash policies, source authenticity caveats, account conflict protection and default-off scheduling remain intact. Rank is advisory and does not allocate paper capital. Full source-grounded changes, evidence and remaining acceptance gaps are in [the R2 report](../research/TP_RANK_ENGINE_R2_REPORT.md).
+
 ## H1 checkpoint 2 additive preflight (2026-11-03 IST)
 
 `option_preflight.prospective_preflight(declaration=None, *, master=None, decision_at)` is a pure offline boundary, schema `tradepulse.option-prospective-preflight.v1`. It separates `declaration_valid` from `source_qualified`, `prospective_ready` and `forward_entry_allowed`. The last three are always false in this checkpoint. A structurally valid declaration returns UNAVAILABLE / `INDEPENDENT_SOURCE_QUALIFICATION_UNAVAILABLE`; every result includes `OPTION_APEX_FORWARD_LIFECYCLE_DISABLED`. Caller qualification flags cannot activate it.

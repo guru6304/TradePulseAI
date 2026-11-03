@@ -289,6 +289,7 @@ class TestSharedMarketDataContract(unittest.TestCase):
                 self.assertIsNone(engine.store)
 
     def test_valid_current_cash_scan_uses_real_evaluators_without_receipt_or_delivery(self):
+        self.now -= timedelta(seconds=5)  # complete5m source is exactly60s old
         import scanner_engine
         names = ("evaluate_order_block_fvg", "evaluate_vwap_pullback", "evaluate_orb_breakout", "evaluate_supertrend_pullback")
         from contextlib import ExitStack
@@ -312,6 +313,7 @@ class TestSharedMarketDataContract(unittest.TestCase):
                 self.assertIsNone(engine.store)
 
     def test_scan_evidence_expires_before_later_dispatch_and_is_provider_scoped(self):
+        self.now -= timedelta(seconds=5)  # SCANNER close-age ceiling
         for provider in self.PROVIDERS:
             rows = self._rows(count=3, interval=5) if provider == "angelone" else self._rows()
             with self.subTest(provider=provider):
@@ -387,6 +389,7 @@ class TestSharedMarketDataContract(unittest.TestCase):
         self.assertEqual(handler._handle_scans({})[1]["items"][0]["status"], "FAILED")
 
     def test_cash_dashboard_fresh_mock_wire_no_signal_uses_actual_evaluators_and_store(self):
+        self.now -= timedelta(seconds=5)  # preserve fresh positive control at60s
         import scanner_engine
         from contextlib import ExitStack
         # Three complete fixture sessions plus the current partial session exceed

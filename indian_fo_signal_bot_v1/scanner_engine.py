@@ -659,15 +659,17 @@ class IntradayBotEngine:
 
         try:
             persisted_signals_count = 0
+            # Resolve local adapter scope before validation/setup so a failed
+            # pre-acquisition configuration check can also be retained safely.
+            adapter = self.broker.get_active_adapter()
+            broker_label = adapter.name
+            is_simulated = bool(adapter.is_simulated)
             self.config.validate(require_live_credentials=False)
             if hasattr(self.broker, "attach_persistence_store"):
                 self.broker.attach_persistence_store(self.store)
-            adapter = self.broker.get_active_adapter()
             if hasattr(adapter, "attach_persistence_store"):
                 adapter.attach_persistence_store(self.store)
 
-            broker_label = adapter.name
-            is_simulated = bool(adapter.is_simulated)
             data_mode = "SIMULATED" if is_simulated else "LIVE"
             provider, data_mode, state_context = self._scanner_scope(adapter)
             if recovery is not None and recovery["status"] == "COMMITTED":
@@ -1427,11 +1429,32 @@ class IntradayBotEngine:
                     error_type=type(exc).__name__)
             raise
         finally:
+            failed_attempt = sys.exc_info()[1]
             try:
                 if lineage_tx is not None:
                     lineage_tx.__exit__(*sys.exc_info())
             finally:
-                self._scan_lock.release()
+                try:
+                    # Persist pre-input failures after any result rollback. A
+                    # generic acquisition/configuration failure must invalidate
+                    # current priority just as a provider validation error does.
+                    # Durable failed work already has a PENDING recovery barrier;
+                    # never overwrite a successfully committed scan outcome.
+                    if (failed_attempt is not None and is_simulated is False and self.store is not None
+                            and durable_work is None and not result_committed):
+                        try:
+                            failure_run_id = ("scan_failure_"+uuid.uuid4().hex if recovery is not None
+                                and recovery["status"] == "COMMITTED" else run_id)
+                            self.store.record_scan_run(run_id=failure_run_id, started_at_ist=started_ist,
+                                completed_at_ist=format_ist_timestamp(self._now_ist()),
+                                duration_ms=(time.perf_counter()-started_wall)*1000, status="FAILED",
+                                broker=broker_label, data_mode="LIVE", is_simulated=False,
+                                error_type=type(failed_attempt).__name__, error_message="SCAN_ATTEMPT_FAILED")
+                        except (PersistenceError, PersistenceValidationError):
+                            self.last_persistence_status = "ERROR"
+                            self.last_persistence_error = "SCAN_FAILURE_RECORD_UNAVAILABLE"
+                finally:
+                    self._scan_lock.release()
 
 
 class MarketScanScheduler:

@@ -1,0 +1,185 @@
+test_delayed_commit_rolls_back_rank_and_recovery_cannot_be_current (test_r2_ranking_reliability.TestR2RankingReliability.test_delayed_commit_rolls_back_rank_and_recovery_cannot_be_current) ... FAIL
+test_failed_partial_acquisition_does_not_leave_previous_rank_current (test_r2_ranking_reliability.TestR2RankingReliability.test_failed_partial_acquisition_does_not_leave_previous_rank_current) ... FAIL
+test_forming_tail_and_previous_slot_do_not_rescue_coverage (test_r2_ranking_reliability.TestR2RankingReliability.test_forming_tail_and_previous_slot_do_not_rescue_coverage) ... ok
+test_fresh_empty_result_expires_with_completed_universe_not_read_clock (test_r2_ranking_reliability.TestR2RankingReliability.test_fresh_empty_result_expires_with_completed_universe_not_read_clock) ... FAIL
+test_generic_preinput_failure_is_durable_across_restart (test_r2_ranking_reliability.TestR2RankingReliability.test_generic_preinput_failure_is_durable_across_restart) ... FAIL
+test_new_success_restores_fresh_empty_after_failure (test_r2_ranking_reliability.TestR2RankingReliability.test_new_success_restores_fresh_empty_after_failure) ... FAIL
+test_other_provider_failure_and_skipped_overlap_do_not_revoke_current (test_r2_ranking_reliability.TestR2RankingReliability.test_other_provider_failure_and_skipped_overlap_do_not_revoke_current) ... ok
+test_same_second_missing_volume_failure_revokes_default_and_pinned_rows (test_r2_ranking_reliability.TestR2RankingReliability.test_same_second_missing_volume_failure_revokes_default_and_pinned_rows) ... ERROR
+test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) ... 
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=60, age=60) ... FAIL
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=60, age=61) ... FAIL
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=120, age=61) ... FAIL
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=30, age=30) ... FAIL
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=30, age=31) ... FAIL
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=0, age=0) ... FAIL
+  test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=0, age=1) ... FAIL
+test_unresolved_pending_even_older_reference_revokes_current (test_r2_ranking_reliability.TestR2RankingReliability.test_unresolved_pending_even_older_reference_revokes_current) ... FAIL
+
+======================================================================
+ERROR: test_same_second_missing_volume_failure_revokes_default_and_pinned_rows (test_r2_ranking_reliability.TestR2RankingReliability.test_same_second_missing_volume_failure_revokes_default_and_pinned_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 68, in test_same_second_missing_volume_failure_revokes_default_and_pinned_rows
+    self.f.scan()
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_astra_paper_triggers.py", line 69, in scan
+    return self.engine.run_single_scan(paper_portfolio=paper)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\scanner_engine.py", line 763, in run_single_scan
+    else self._fetch_scan_candles(eq_meta, provider))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\scanner_engine.py", line 295, in _fetch_scan_candles
+    candles = self.broker.fetch_candles(meta, interval_min=5)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\brokers.py", line 4179, in fetch_candles
+    candles = adapter.get_intraday_candles(symbol_meta, interval_min=interval_min)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\brokers.py", line 496, in guarded
+    raise exc from None
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\brokers.py", line 480, in guarded
+    return function(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\brokers.py", line 1908, in get_intraday_candles
+    raw = self._request_json(
+          ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\brokers.py", line 1029, in _request_json
+    raise BrokerDataError(err_str) from None
+brokers.BrokerDataError: Angel One SmartAPI candle data (RELIANCE) failed (KeyError).
+
+======================================================================
+FAIL: test_delayed_commit_rolls_back_rank_and_recovery_cannot_be_current (test_r2_ranking_reliability.TestR2RankingReliability.test_delayed_commit_rolls_back_rank_and_recovery_cannot_be_current)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 128, in test_delayed_commit_rolls_back_rank_and_recovery_cannot_be_current
+    with self.assertRaises(CandleFreshnessError):
+AssertionError: CandleFreshnessError not raised
+
+======================================================================
+FAIL: test_failed_partial_acquisition_does_not_leave_previous_rank_current (test_r2_ranking_reliability.TestR2RankingReliability.test_failed_partial_acquisition_does_not_leave_previous_rank_current)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 97, in test_failed_partial_acquisition_does_not_leave_previous_rank_current
+    self.first()
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 38, in first
+    self.assertEqual(len(self.view()["current_rows"]), 1)
+AssertionError: 2 != 1
+
+======================================================================
+FAIL: test_fresh_empty_result_expires_with_completed_universe_not_read_clock (test_r2_ranking_reliability.TestR2RankingReliability.test_fresh_empty_result_expires_with_completed_universe_not_read_clock)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 116, in test_fresh_empty_result_expires_with_completed_universe_not_read_clock
+    self.assertEqual(view["status"], "CURRENT_CANDIDATE_PRIORITY")
+AssertionError: 'STALE_OR_FUTURE_SNAPSHOT' != 'CURRENT_CANDIDATE_PRIORITY'
+- STALE_OR_FUTURE_SNAPSHOT
++ CURRENT_CANDIDATE_PRIORITY
+
+
+======================================================================
+FAIL: test_generic_preinput_failure_is_durable_across_restart (test_r2_ranking_reliability.TestR2RankingReliability.test_generic_preinput_failure_is_durable_across_restart)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 77, in test_generic_preinput_failure_is_durable_across_restart
+    self.assert_archived(first["run_id"])
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 43, in assert_archived
+    self.assertEqual(view["current_rows"], [])
+AssertionError: Lists differ: [{'actionable': False, 'candidate_id': 'si[1548 chars]CE'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'actionable': False, 'candidate_id': 'signal:v2:["angelone","LIVE","SCANNER","","RELIANCE","NSE_EQUITY_INTRADAY","STRAT_4_ORB_FILTERED","BULLISH (BUY)","LONG_EQUITY_INTRADAY","RELIANCE EQ",5,"2026-10-16 11:40:00"]', 'component_changes': {'actual_target1_rr': {'current': 1.5999999999999959, 'previous': None}, 'rule_quality': {'current': 78, 'previous': None}}, 'component_versions': {'actual_target1_rr': 'PRICE_LEVEL_GEOMETRY_V1', 'rule_quality': 'EXISTING_EVALUATOR_V1'}, 'direction': 'LONG', 'instrument_identity': {'exchange': 'NSE', 'historical_validity': 'NOT_ESTABLISHED', 'identifier': '2885', 'instrument_type': 'EQ', 'is_index': False, 'provider': 'angelone', 'response_binding': 'REQUEST_BOUND_NO_ECHO', 'segment': 'NSE_EQUITY_INTRADAY', 'source': 'CHECKED_IN_BOTCONFIG_REFERENCE_V1', 'source_revision': '5e61c646b92c22c5546eed4b1a3bc839ecd5584fd469c5616046eefed8024bcc', 'symbol': 'RELIANCE'}, 'missing_components': ['RELATIVE_STRENGTH', 'SECTOR', 'REGIME', 'LIQUIDITY_DEPTH', 'OBSERVED_SPREAD', 'NET_EXECUTABLE_REWARD', 'EMPIRICAL_EDGE'], 'opportunity_key': 'e7b3f08512697240961878e374466daea8321405b3e833a2cf9ca40064f78e87', 'position_type': 'LONG_EQUITY_INTRADAY', 'previous_rank': None, 'priority_scope': 'QUALIFIED_SCANNER_CANDIDATE_ONLY', 'rank': 1, 'rank_change_reason': 'NEWLY_QUALIFIED', 'score_components': {'actual_target1_rr': 1.5999999999999959, 'rule_quality': 78}, 'source_data_watermark': '2026-10-16T11:40:00+05:30', 'source_digest': '10420f99063582369b4e929c49c4ff4e73bba618477bbc2f442123ee9d4f2a90', 'strategy_id': 'strat_4_orb_filtered', 'symbol': 'RELIANCE'}
+
+Diff is 2285 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_new_success_restores_fresh_empty_after_failure (test_r2_ranking_reliability.TestR2RankingReliability.test_new_success_restores_fresh_empty_after_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 154, in test_new_success_restores_fresh_empty_after_failure
+    self.assert_archived()
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 43, in assert_archived
+    self.assertEqual(view["current_rows"], [])
+AssertionError: Lists differ: [{'actionable': False, 'candidate_id': 'si[1548 chars]CE'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'actionable': False, 'candidate_id': 'signal:v2:["angelone","LIVE","SCANNER","","RELIANCE","NSE_EQUITY_INTRADAY","STRAT_4_ORB_FILTERED","BULLISH (BUY)","LONG_EQUITY_INTRADAY","RELIANCE EQ",5,"2026-10-16 11:40:00"]', 'component_changes': {'actual_target1_rr': {'current': 1.5999999999999959, 'previous': None}, 'rule_quality': {'current': 78, 'previous': None}}, 'component_versions': {'actual_target1_rr': 'PRICE_LEVEL_GEOMETRY_V1', 'rule_quality': 'EXISTING_EVALUATOR_V1'}, 'direction': 'LONG', 'instrument_identity': {'exchange': 'NSE', 'historical_validity': 'NOT_ESTABLISHED', 'identifier': '2885', 'instrument_type': 'EQ', 'is_index': False, 'provider': 'angelone', 'response_binding': 'REQUEST_BOUND_NO_ECHO', 'segment': 'NSE_EQUITY_INTRADAY', 'source': 'CHECKED_IN_BOTCONFIG_REFERENCE_V1', 'source_revision': '5e61c646b92c22c5546eed4b1a3bc839ecd5584fd469c5616046eefed8024bcc', 'symbol': 'RELIANCE'}, 'missing_components': ['RELATIVE_STRENGTH', 'SECTOR', 'REGIME', 'LIQUIDITY_DEPTH', 'OBSERVED_SPREAD', 'NET_EXECUTABLE_REWARD', 'EMPIRICAL_EDGE'], 'opportunity_key': 'e7b3f08512697240961878e374466daea8321405b3e833a2cf9ca40064f78e87', 'position_type': 'LONG_EQUITY_INTRADAY', 'previous_rank': None, 'priority_scope': 'QUALIFIED_SCANNER_CANDIDATE_ONLY', 'rank': 1, 'rank_change_reason': 'NEWLY_QUALIFIED', 'score_components': {'actual_target1_rr': 1.5999999999999959, 'rule_quality': 78}, 'source_data_watermark': '2026-10-16T11:40:00+05:30', 'source_digest': '10420f99063582369b4e929c49c4ff4e73bba618477bbc2f442123ee9d4f2a90', 'strategy_id': 'strat_4_orb_filtered', 'symbol': 'RELIANCE'}
+
+Diff is 2285 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=60, age=60)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 58, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["max_close_lag_seconds"], min(configured, 60))
+AssertionError: 360 != 60
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=60, age=61)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 57, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["live_signal_allowed"], allowed)
+AssertionError: True != False
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=120, age=61)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 57, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["live_signal_allowed"], allowed)
+AssertionError: True != False
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=30, age=30)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 58, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["max_close_lag_seconds"], min(configured, 60))
+AssertionError: 330 != 30
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=30, age=31)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 57, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["live_signal_allowed"], allowed)
+AssertionError: True != False
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=0, age=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 58, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["max_close_lag_seconds"], min(configured, 60))
+AssertionError: 300 != 0
+
+======================================================================
+FAIL: test_scanner_close_clock_cap_and_tighter_configuration (test_r2_ranking_reliability.TestR2RankingReliability.test_scanner_close_clock_cap_and_tighter_configuration) (configured=0, age=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 57, in test_scanner_close_clock_cap_and_tighter_configuration
+    self.assertEqual(report["live_signal_allowed"], allowed)
+AssertionError: True != False
+
+======================================================================
+FAIL: test_unresolved_pending_even_older_reference_revokes_current (test_r2_ranking_reliability.TestR2RankingReliability.test_unresolved_pending_even_older_reference_revokes_current)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 91, in test_unresolved_pending_even_older_reference_revokes_current
+    self.assert_archived()
+  File "C:\Users\91810\TradePulseAI-Worktrees\main\indian_fo_signal_bot_v1\test_r2_ranking_reliability.py", line 43, in assert_archived
+    self.assertEqual(view["current_rows"], [])
+AssertionError: Lists differ: [{'actionable': False, 'candidate_id': 'si[1548 chars]CE'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'actionable': False, 'candidate_id': 'signal:v2:["angelone","LIVE","SCANNER","","RELIANCE","NSE_EQUITY_INTRADAY","STRAT_4_ORB_FILTERED","BULLISH (BUY)","LONG_EQUITY_INTRADAY","RELIANCE EQ",5,"2026-10-16 11:40:00"]', 'component_changes': {'actual_target1_rr': {'current': 1.5999999999999959, 'previous': None}, 'rule_quality': {'current': 78, 'previous': None}}, 'component_versions': {'actual_target1_rr': 'PRICE_LEVEL_GEOMETRY_V1', 'rule_quality': 'EXISTING_EVALUATOR_V1'}, 'direction': 'LONG', 'instrument_identity': {'exchange': 'NSE', 'historical_validity': 'NOT_ESTABLISHED', 'identifier': '2885', 'instrument_type': 'EQ', 'is_index': False, 'provider': 'angelone', 'response_binding': 'REQUEST_BOUND_NO_ECHO', 'segment': 'NSE_EQUITY_INTRADAY', 'source': 'CHECKED_IN_BOTCONFIG_REFERENCE_V1', 'source_revision': '5e61c646b92c22c5546eed4b1a3bc839ecd5584fd469c5616046eefed8024bcc', 'symbol': 'RELIANCE'}, 'missing_components': ['RELATIVE_STRENGTH', 'SECTOR', 'REGIME', 'LIQUIDITY_DEPTH', 'OBSERVED_SPREAD', 'NET_EXECUTABLE_REWARD', 'EMPIRICAL_EDGE'], 'opportunity_key': 'e7b3f08512697240961878e374466daea8321405b3e833a2cf9ca40064f78e87', 'position_type': 'LONG_EQUITY_INTRADAY', 'previous_rank': None, 'priority_scope': 'QUALIFIED_SCANNER_CANDIDATE_ONLY', 'rank': 1, 'rank_change_reason': 'NEWLY_QUALIFIED', 'score_components': {'actual_target1_rr': 1.5999999999999959, 'rule_quality': 78}, 'source_data_watermark': '2026-10-16T11:40:00+05:30', 'source_digest': '10420f99063582369b4e929c49c4ff4e73bba618477bbc2f442123ee9d4f2a90', 'strategy_id': 'strat_4_orb_filtered', 'symbol': 'RELIANCE'}
+
+Diff is 2285 characters long. Set self.maxDiff to None to see it.
+
+----------------------------------------------------------------------
+Ran 10 tests in 2.731s
+
+FAILED (failures=13, errors=1)

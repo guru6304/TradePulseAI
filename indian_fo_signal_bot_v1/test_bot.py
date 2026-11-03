@@ -7879,7 +7879,7 @@ class TestMarketDataFreshness(unittest.TestCase):
 
     def test_fresh_completed_bar_and_configured_age_boundary(self):
         from datetime import timedelta
-        for delay, allowed in ((360, True), (361, False)):
+        for delay, allowed in ((60, True), (61, False)):
             now = datetime(2026, 10, 16, 10, 35, tzinfo=IST) + timedelta(seconds=delay)
             _, report = self._assess(now_ist=now)
             self.assertEqual(report["live_signal_allowed"], allowed)
@@ -7892,7 +7892,7 @@ class TestMarketDataFreshness(unittest.TestCase):
         from datetime import timedelta
         now = self.now + timedelta(minutes=7)
         self.assertFalse(self._assess(now_ist=now)[1]["is_fresh"])
-        self.assertTrue(self._assess(now_ist=now, max_delay_seconds=120)[1]["is_fresh"])
+        self.assertFalse(self._assess(now_ist=now, max_delay_seconds=120)[1]["is_fresh"])
         self.assertFalse(self._assess(now_ist=now, max_staleness_minutes=10000)[1]["is_fresh"])
 
     def test_stale_completed_bar_cannot_be_rescued_by_a_forming_bar(self):
@@ -10373,7 +10373,7 @@ def load_tests(loader, tests, pattern):
                        "test_track_a_order_block_triggers", "test_track_a_order_block_execution",
                        "test_track_a_terminal_http", "test_track_a_supertrend_triggers",
                        "test_track_a_supertrend_execution", "test_track_a_cold_http", "test_h1_paper_conflicts",
-                       "test_h1_option_preflight"):
+                       "test_h1_option_preflight", "test_r2_ranking_reliability"):
             tests.addTests(loader.loadTestsFromName(module))
     return tests
 

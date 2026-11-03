@@ -296,7 +296,11 @@ def assess_live_candle_batch(
     latest, closed = completed[-1]
     result.update(latest_completed_timestamp_ist=latest["timestamp"],
                   wall_clock_age_minutes=round((ref - parse_ist_timestamp(latest["timestamp"])).total_seconds()/60, 4))
-    max_lag = interval_min * 60 + max_delay_seconds
+    # Scanner decisions measure delay from the completed CLOSE, not bar start.
+    # Reference/diagnostic views retain their separate legacy allowance. A
+    # configured smaller delay remains stricter; configuration cannot relax the
+    # prospective ranking/paper ceiling of 60 seconds.
+    max_lag = min(max_delay_seconds, 60.0) if context == "SCANNER" else interval_min * 60 + max_delay_seconds
     if max_staleness_minutes is not None:
         if (isinstance(max_staleness_minutes, bool) or not isinstance(max_staleness_minutes, (int, float))
                 or not math.isfinite(max_staleness_minutes) or max_staleness_minutes <= 0):
